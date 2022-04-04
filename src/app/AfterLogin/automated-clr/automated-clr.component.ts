@@ -2304,27 +2304,18 @@ export class AutomatedCLRComponent implements OnInit {
     }
   }
   onOBTTypechange(){
-    console.log(this.masterOBTType);
-    console.log(this.OBTResellerList.length);
-    console.log(this.OBT_Reseller___DirectFilter.value.length);
     if(this.OBTResellerList.length == this.OBT_Reseller___DirectFilter.value.length){
       this.masterOBTType = true;
     }else{
       this.masterOBTType = false;
     }
-    console.log(this.masterOBTType);
-    console.log(this.OBTResellerList.length);
   }
   checkUncheckOBTType(){
-    console.log(this.masterOBTType);
-    console.log(this.OBTResellerList.length);
     if(this.masterOBTType == true){
       this.OBT_Reseller___DirectFilter.setValue(this.OBTResellerList);
     }else{
       this.OBT_Reseller___DirectFilter.setValue("");
     }
-    console.log(this.masterOBTType);
-    console.log(this.OBTResellerList.length);
   }
   onRegionchange(){
     if(this.RegionList.length == this.RegionFilter.value.length){
@@ -3830,12 +3821,6 @@ export class ProjectTeamDailog {
             if(data.code == 200){
               // alert(data.message);
               this.dialogRef.close([{SelectionType : 'Update_p',RevenueID : this.RevenueID,Implementation_Type : this.Implementation_Type,
-              Pipeline_status : this.Pipeline_status,Pipeline_comments : this.Pipeline_comments,
-              // OBT_Reseller___Direct : this.OBT_Reseller___Direct.value,Service_configuration : this.Service_configuration
-              Project_Effort : this.Project_Effort,Record_Status : this.Record_Status,ProjectLevel : this.ProjectLevel,
-              GlobalProjectManager : this.GlobalProjectManager.value,AssignmentDate : Date,Golivedate : DateGo_Live,
-              AssigneeFullName : this.AssigneeFullName.value,RegionalProjectManager : this.RegionalProjectManager.value}]);
-              console.log([{SelectionType : 'Update_p',RevenueID : this.RevenueID,Implementation_Type : this.Implementation_Type,
               Pipeline_status : this.Pipeline_status,Pipeline_comments : this.Pipeline_comments,
               // OBT_Reseller___Direct : this.OBT_Reseller___Direct.value,Service_configuration : this.Service_configuration
               Project_Effort : this.Project_Effort,Record_Status : this.Record_Status,ProjectLevel : this.ProjectLevel,
