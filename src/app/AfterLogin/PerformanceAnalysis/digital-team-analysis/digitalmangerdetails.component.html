@@ -1,0 +1,74 @@
+<div class="row" style="margin: 0px;padding: 0px;">
+    <!-- <div class="col-md-12">
+        <label style="margin: 8px 0px 0px 15px;font-size: 16px;font-weight: bold;font-family: Arial, Helvetica, sans-serif;">Count  :&nbsp;&nbsp;</label>
+        <label style="margin: 8px 25px 0px 0px;font-size: 16px;font-weight: bold;font-family: Arial, Helvetica, sans-serif;">{{FilteredCount}}</label>       
+    </div> -->
+    <div class="col-md-12">
+        <div class="example-container" [ngStyle]="{'height' : (screenHeight-115)+'px'}" style="border: 1px solid rgb(196, 196, 196);">
+            <table mat-table [dataSource]="dataSource" matSort>
+                <ng-container matColumnDef="Client">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="padding-left: 10px;background-color:  rgb(112, 173, 71);color: white;">Client</th>
+                    <td mat-cell *matCellDef="let element" style="padding-left: 10px;"> {{element.Client}} </td>
+                </ng-container>
+                <ng-container matColumnDef="RevenueID">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  rgb(112, 173, 71);color: white;">Revenue ID</th>
+                    <td mat-cell *matCellDef="let element"> {{element.RevenueID}} </td>
+                </ng-container>
+                <ng-container matColumnDef="RevenueVolume">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  rgb(112, 173, 71);color: white;">Revenue Volume</th>
+                    <td mat-cell *matCellDef="let element" class="manager_text"> {{element.RevenueVolume}} </td>
+                </ng-container>
+                <ng-container matColumnDef="Region">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  rgb(112, 173, 71);color: white;">Region</th>
+                    <td mat-cell *matCellDef="let element"> {{element.Region}} </td>
+                </ng-container>
+                <ng-container matColumnDef="Country">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  rgb(112, 173, 71);color: white;">Country</th>
+                    <td mat-cell *matCellDef="let element"> {{element.Country}} </td>
+                </ng-container>
+                <ng-container matColumnDef="ProjectEffort">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  rgb(112, 173, 71);color: white;">Total Complexity Score</th>
+                    <td mat-cell *matCellDef="let element"> {{element.ProjectEffort}} </td>
+                </ng-container>
+                <ng-container matColumnDef="GlobalCISOBTLead">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  rgb(112, 173, 71);color: white;"> Global Digital OBT Lead</th>
+                    <td mat-cell *matCellDef="let element"> {{element.GlobalCISOBTLead}} </td>
+                </ng-container>
+                <ng-container matColumnDef="RegionalCISOBTLead">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  rgb(112, 173, 71);color: white;">Regional Digital OBT Lead</th>
+                    <td mat-cell *matCellDef="let element" > {{element.RegionalCISOBTLead}} </td>
+                </ng-container>
+                <ng-container matColumnDef="LocalDigitalOBTLead">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  rgb(112, 173, 71);color: white;"> Local Digital OBT Lead</th>
+                    <td mat-cell *matCellDef="let element"> {{element.LocalDigitalOBTLead}} </td>
+                </ng-container>
+                <ng-container matColumnDef="GlobalCISPortraitLead">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  rgb(112, 173, 71);color: white;"> Global Digital Portrait Lead</th>
+                    <td mat-cell *matCellDef="let element"> {{element.GlobalCISPortraitLead}} </td>
+                </ng-container>
+                <ng-container matColumnDef="RegionalCISPortraitLead">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  rgb(112, 173, 71);color: white;">Regional Digital Portrait Lead</th>
+                    <td mat-cell *matCellDef="let element" > {{element.RegionalCISPortraitLead}} </td>
+                </ng-container>
+                <ng-container matColumnDef="GlobalCISHRFeedSpecialist">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  rgb(112, 173, 71);color: white;"> Global Digital HR Feed Specialist</th>
+                    <td mat-cell *matCellDef="let element"> {{element.GlobalCISHRFeedSpecialist}} </td>
+                </ng-container>
+                <ng-container matColumnDef="Golive">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  rgb(112, 173, 71);color: white;"> Go Live Date</th>
+                    <td mat-cell *matCellDef="let element"> {{element.Golive}} </td>
+                </ng-container>
+                <ng-container matColumnDef="ProjectStatus">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  rgb(112, 173, 71);color: white;"> Project Status</th>
+                    <td mat-cell *matCellDef="let element"> {{element.ProjectStatus}} </td>
+                </ng-container>
+                <ng-container matColumnDef="ProjectLevel">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  rgb(112, 173, 71);color: white;border-right: none;"> Project Level</th>
+                    <td mat-cell *matCellDef="let element" style="border-right: none;"> {{element.ProjectLevel}} </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky : true;"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </div>
+    </div>
+</div>

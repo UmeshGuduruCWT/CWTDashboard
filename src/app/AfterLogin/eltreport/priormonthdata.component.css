@@ -1,0 +1,33 @@
+table {
+    width: 100%;
+  }
+  tr.mat-footer-row {
+    font-weight: bold;
+  }
+  .textSizes
+  {
+    font-size: 15px;
+    font-weight: bold;
+    color : #333F48 ;
+    font-family: "Montserrat", sans-serif;
+  }
+  .mat-cell,.mat-header-cell {
+    min-width: 80px;
+    max-width: 250px;
+    white-space: normal; 
+    /* width: max-content;
+    white-space: normal; */
+  }
+  .showlessText{
+    /* text-overflow : clip; */
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 180px;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .showlessText:hover{
+    color : #333F48;
+    font-weight: bold;
+    text-decoration: underline;
+  }

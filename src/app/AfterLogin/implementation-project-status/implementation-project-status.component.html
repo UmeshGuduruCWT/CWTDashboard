@@ -1,0 +1,280 @@
+<mat-drawer-container>
+    <mat-drawer mode="side" #sidenav opened style="position: fixed;padding-top: 60px;width: 19%;">
+        <div class="row" style="margin: 0px;padding: 0px;">
+            <div class="col-12" style="margin: 0px;padding: 0px;">
+                <div class="sticky">
+                    <div class="row col-12" style="background-color: #333F48;color: white;height: 60px;padding: 15px 10px 5px 10px; margin : 0px;text-align: center">
+                        <label class="col-5" style="height: 35px;font-size: 20px;text-align: center;margin-top: 10px;padding-left: 25px">Filters</label>
+                        <div class="col-2" >
+                            <button mat-icon-button style="color: white;cursor: pointer;" (click)="ResetFilters()">
+                                <mat-icon>settings_backup_restore</mat-icon>
+                            </button>
+                        </div>
+                        <div class="col-5" style="margin-top: 5px;text-align: right;padding: 0px;">
+                            <button class="btn-style" (click)="SetGraph()" [ngStyle]="{'background-color': Apply_disable == true ?  '#DCDCDC' : '#F16950','color' :  Apply_disable == true ? '#AEAEAE' : 'white'}" [disabled]="Apply_disable">Apply</button>
+                        </div>
+                    </div>
+                </div>
+                <mat-form-field class="col-12" style="color: gray;margin-top: 10px;">
+                    <mat-label>Start date</mat-label>
+                    <input matInput [matDatepicker]="start_date" (dateChange)="StartdateChange()" [(ngModel)]="dateStart"><!-- [max]="today_max" -->
+                    <mat-datepicker-toggle matSuffix [for]="start_date"></mat-datepicker-toggle>
+                    <mat-datepicker #start_date color="primary"></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field class="col-12" style="color: gray;margin-top: 10px;">
+                    <mat-label>End date</mat-label>
+                    <input matInput [matDatepicker]="end_date" (dateChange)="EnddateChange()" [(ngModel)]="dateEnd"><!-- [max]="today_max" -->
+                    <mat-datepicker-toggle matSuffix [for]="end_date"></mat-datepicker-toggle>
+                    <mat-datepicker #end_date color="primary"></mat-datepicker>
+                </mat-form-field>
+                <mat-accordion multi="true" style="margin: 0px;padding: 0px;">
+                    <mat-expansion-panel class="mat-elevation-z0" style="margin: 0px 0px 0px 0px;" [expanded]="true">
+                        <mat-expansion-panel-header [collapsedHeight]="'35px'" [expandedHeight]="'35px'">
+                            <mat-panel-title style="margin-left: 0px">
+                                <label style="padding-top: 10px;">Project Status</label>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <mat-divider style="width: 100%;margin: 10px 0px 0px 0px;"></mat-divider>
+                        <mat-nav-list>
+                            <mat-list-item style="height: 35px;"><mat-checkbox class="example-margin" [(ngModel)]="masterStatus" name="masterStatus" (change)="checkUncheckStatus()">Select all</mat-checkbox></mat-list-item>
+                            <mat-list-item style="height: 35px;" *ngFor="let status of statusList;"><mat-checkbox class="example-margin" [(ngModel)]="status.isSelected" (change)="statusSelected()" name="status.Milestone__Project_Status">{{status.Milestone__Project_Status}}</mat-checkbox></mat-list-item>
+                        </mat-nav-list>
+                    </mat-expansion-panel>
+                    <!-- <div class="li_main" style="margin-left: 10px;">
+                        <li class="li_items" *ngFor="let Sstatus of statusListSelected;"><label>{{Sstatus.Milestone__Project_Status}}</label><label class="li_button" (click)="deselectstatus(Sstatus.Milestone__Project_Status)">X</label></li>
+                    </div> -->
+                    <mat-expansion-panel class="mat-elevation-z0" style="margin: 10px 0px 0px 0px;" [expanded]="true">
+                        <mat-expansion-panel-header [collapsedHeight]="'35px'" [expandedHeight]="'35px'">
+                            <mat-panel-title style="margin-left: 0px">
+                                <label style="padding-top: 10px;">Project Level</label>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <mat-divider style="width: 100%;margin: 10px 0px 0px 0px;"></mat-divider>
+                        <mat-nav-list>
+                            <mat-list-item style="height: 35px;"><mat-checkbox class="example-margin" [(ngModel)]="masterLevel" name="masterLevel" (change)="checkUncheckLevel()">Select all</mat-checkbox></mat-list-item>
+                            <mat-list-item style="height: 35px;" *ngFor="let level of levelsList"><mat-checkbox class="example-margin" [(ngModel)]="level.isSelected" (change)="levelSelected()" name="level.Workspace__Project_Level">{{level.Workspace__Project_Level}}</mat-checkbox></mat-list-item>
+                        </mat-nav-list>
+                    </mat-expansion-panel>
+                    <!-- <div class="li_main" style="margin-left: 10px;">
+                        <li class="li_items" *ngFor="let Slevel of levelsListSelected"><label>{{Slevel.Workspace__Project_Level}}</label><label class="li_button" (click)="deselectlevels(Slevel.Workspace__Project_Level)">X</label></li>
+                    </div> -->
+                    <mat-expansion-panel class="mat-elevation-z0" style="margin: 10px 0px 0px 0px;" [expanded]="true">
+                        <mat-expansion-panel-header [collapsedHeight]="'35px'" [expandedHeight]="'35px'">
+                            <mat-panel-title style="margin-left: 0px">
+                                <label style="padding-top: 10px;">Region</label>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <mat-divider style="width: 100%;margin: 10px 0px 0px 0px;"></mat-divider>
+                        <mat-nav-list>
+                            <mat-list-item style="height: 35px;"><mat-checkbox class="example-margin" [(ngModel)]="masterRegion" name="masterRegion" (change)="checkUncheckRegion()">Select all</mat-checkbox></mat-list-item>
+                            <mat-list-item style="height: 35px;" *ngFor="let region of regionList" ><mat-checkbox class="example-margin" [(ngModel)]="region.isSelected" (change)="regionSelected()" name="region.Milestone__Region">{{region.Milestone__Region}}</mat-checkbox></mat-list-item>
+                        </mat-nav-list>
+                    </mat-expansion-panel>
+                    <!-- <div class="li_main" style="margin-left: 10px;">
+                        <li class="li_items" *ngFor="let Sregion of regionListSelected"><label>{{Sregion.Milestone__Region}}</label><label class="li_button" (click)="deselectregion(Sregion.Milestone__Region)">X</label></li>
+                    </div> -->
+                    <!-- <mat-expansion-panel class="mat-elevation-z0" class="mat-elevation-z0" style="margin: 0px" #assigneEp (opened)="assigneEp.expanded = true" (closed)="assigneEp.expanded = false">
+                        <mat-expansion-panel-header [collapsedHeight]="'35px'" [expandedHeight]="'35px'">
+                            <mat-panel-title>
+                                <label>Assigne To</label>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <mat-nav-list>
+                            <mat-list-item style="height: 35px;"><mat-checkbox class="example-margin" [(ngModel)]="masterAssigne" name="masterAssigne" (change)="checkUncheckAssigne()">Select all</mat-checkbox></mat-list-item>
+                            <mat-list-item style="height: 35px;" *ngFor="let assign of AssigneeList"><mat-checkbox class="example-margin" [(ngModel)]="assign.isSelected" (change)="AssigneSelected()" name="assign.Milestone__Assignee__Full_Name">{{assign.Milestone__Assignee__Full_Name}}</mat-checkbox></mat-list-item>
+                        </mat-nav-list>
+                    </mat-expansion-panel>
+                    <div class="li_main" [ngStyle]="{'position' : assigneEp.expanded == true ? 'sticky' : 'static'}" style="bottom: 0px;padding-bottom: 5px;">
+                        <li class="li_items" *ngFor="let Sassign of AssigneeListSelected"><label>{{Sassign.Milestone__Assignee__Full_Name}}</label><label class="li_button" (click)="deselectAssigne(Sassign.Milestone__Assignee__Full_Name)">X</label></li>
+                    </div> -->
+                    <mat-expansion-panel class="mat-elevation-z0" style="margin: 10px 0px 0px 0px;" [expanded]="true">
+                        <!-- #assigneReportEp (opened)="assigneReportEp.expanded = true" (closed)="assigneReportEp.expanded = false" -->
+                        <mat-expansion-panel-header [collapsedHeight]="'35px'" [expandedHeight]="'35px'">
+                            <mat-panel-title style="margin-left: 0px">
+                                <label style="padding-top: 10px;">Group Name</label>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <mat-divider style="width: 100%;margin: 10px 0px 0px 0px;"></mat-divider>
+                        <mat-nav-list>
+                            <mat-list-item style="height: 35px;"><mat-checkbox class="example-margin" [(ngModel)]="masterGroupName" name="masterGroupName" (change)="checkUncheckGroup_Name()">Select all</mat-checkbox></mat-list-item>
+                            <mat-list-item style="height: 35px;" *ngFor="let GroupName of Group_NameList"><mat-checkbox class="example-margin" [(ngModel)]="GroupName.isSelected" (change)="Group_NameSelected()" name="GroupName.Group_Name">{{GroupName.Group_Name}}</mat-checkbox></mat-list-item>
+                        </mat-nav-list>
+                    </mat-expansion-panel>
+                    <!-- <div class="li_main" style="margin-left: 10px;">
+                        <li class="li_items" *ngFor="let SGroupName of Group_NameListSelected;"><label>{{SGroupName.Group_Name}}</label><label class="li_button" (click)="deselectGroupName(SGroupName.Group_Name)">X</label></li>
+                    </div> -->
+                    <mat-expansion-panel class="mat-elevation-z0" style="margin: 10px 0px 0px 0px;" [expanded]="true">
+                        <!-- #assigneReportEp (opened)="assigneReportEp.expanded = true" (closed)="assigneReportEp.expanded = false" -->
+                        <mat-expansion-panel-header [collapsedHeight]="'35px'" [expandedHeight]="'35px'">
+                            <mat-panel-title style="margin-left: 0px">
+                                <label style="padding-top: 10px;">Assignee & Reports To</label>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <mat-divider style="width: 100%;margin: 10px 0px 0px 0px;"></mat-divider>
+                        <mat-nav-list>
+                            <mat-list-item style="height: 35px;"><mat-checkbox class="example-margin" [(ngModel)]="masterAssignReport" name="masterAssignReport" (change)="checkUncheckAssign_Report()">Select all</mat-checkbox></mat-list-item>
+                            <mat-list-item style="height: 35px;" *ngFor="let assingReport of Assignee_ReportList"><mat-checkbox class="example-margin" [(ngModel)]="assingReport.isSelected" (change)="Assign_ReportSelected()" name="assingReport.Milestone__Assignee__Reports_to__Full_Name">{{assingReport.Milestone__Assignee__Reports_to__Full_Name}}</mat-checkbox></mat-list-item>
+                        </mat-nav-list>
+                    </mat-expansion-panel>
+                    <!-- <div class="li_main" style="margin-left: 10px;">
+                        <li class="li_items" *ngFor="let SassingReport of Assignee_ReportListSelected;"><label>{{SassingReport.Milestone__Assignee__Reports_to__Full_Name}}</label><label class="li_button" (click)="deselectAssignReport(SassingReport.Milestone__Assignee__Reports_to__Full_Name)">X</label></li>
+                    </div> -->
+                </mat-accordion>
+            </div>
+        </div>
+    </mat-drawer>
+    <mat-drawer-content>
+        <div class="row" style="margin: 0px;padding: 0px;">
+            <div class="row col-md-12">
+                <div class="col-md-6">
+                    <mat-card class="example-card mat-elevation-z2" style="margin-left: 15px;height: auto;overflow: auto;padding: 0px;">
+                        <div class="col-12" style="height: 35px;background-color: #34495E ;color:white;padding: 5px 0px 0px 0px; margin : 0px;text-align: center">
+                            <label style="width: 100%;font-size: 16px;margin-top: 5px;text-align: center;font-family: Montserrat, sans-serif">Project Count By Leaders</label>
+                            <!-- <label style="width: 100%;font-size: 10px;margin: 0px;height: 18px;text-align: center;">Distinct count of Workspace Title</label> -->
+                        </div>
+                        <div class="col-md-12" style="margin-bottom: 10px;">
+                            <canvas id="LPcanvas">
+                            </canvas>
+                        </div>
+                    </mat-card>
+                </div>
+                <div class="col-md-6">
+                    <mat-card class="example-card mat-elevation-z2" style="margin-left: 15px;height: auto;overflow: auto;padding: 0px;">
+                        <div class="col-12" style="height: 35px;background-color: #34495E ;color:white;padding: 5px 0px 0px 0px; margin : 0px;text-align: center">
+                            <label style="width: 100%;font-size: 16px;margin-top: 5px;text-align: center;font-family: Montserrat, sans-serif">Project Count By Group Name</label>
+                            <!-- <label style="width: 100%;font-size: 10px;margin: 0px;height: 18px;text-align: center;">Distinct count of Workspace Title</label> -->
+                        </div>
+                        <div class="col-md-12" style="margin-bottom: 10px;">
+                            <canvas id="GNcanvas">
+                            </canvas>
+                        </div>
+                    </mat-card>
+                </div>
+                <div class="col-md-6">
+                    <mat-card class="example-card mat-elevation-z2" style="margin-left: 15px;height: auto;overflow: auto;padding: 0px;">
+                        <div class="col-12" style="height: 35px;background-color: #34495E ;color:white;padding: 5px 0px 0px 0px; margin : 0px;text-align: center">
+                            <label style="width: 100%;font-size: 16px;margin-top: 5px;text-align: center;font-family: Montserrat, sans-serif">Project Count By Status</label>
+                            <!-- <label style="width: 100%;font-size: 10px;margin: 0px;height: 18px;text-align: center;">Distinct count of Workspace Title</label> -->
+                        </div>
+                        <div class="col-12" style="margin-bottom: 10px;">
+                            <canvas id="PScanvas">
+                            </canvas>
+                        </div>
+                    </mat-card>
+                </div>
+                <div class="col-md-6">
+                    <mat-card class="example-card mat-elevation-z2" style="margin-left: 15px;height: auto;overflow: auto;padding: 0px;">
+                        <div class="col-12" style="height: 35px;background-color: #34495E ;color:white;padding: 5px 0px 0px 0px; margin : 0px;text-align: center">
+                            <label style="width: 100%;font-size: 16px;margin-top: 5px;text-align: center;font-family: Montserrat, sans-serif">Project Count By Project Levels</label>
+                            <!-- <label style="width: 100%;font-size: 10px;margin: 0px;height: 18px;text-align: center;">Distinct count of Workspace Title</label> -->
+                        </div>
+                        <div class="col-12" style="margin-bottom: 10px;">
+                            <canvas id="PLcanvas">
+                            </canvas>
+                        </div>
+                    </mat-card>
+                </div>
+                <label class="col-md-12" style="margin-left: 15px;height: 25px;">
+                    <button mat-raised-button style="height: 33px;background-color: #F16950;color: white;" (click)="exportAsXLSX()">Export
+                        <mat-icon style="font-size: 18px;color: white;">save_alt</mat-icon>
+                    </button>
+                </label>
+                <div class="col-md-12">
+                    <div class="example-container" [ngStyle]="{'height' : (screenHeight-115)+'px'}" style="margin-left: 15px;border: 1px solid rgb(196, 196, 196);">
+                        <table mat-table [dataSource]="dataSource" matSort>
+                            <ng-container matColumnDef="Workspace_Title">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="padding-left: 10px;background-color:  rgb(112, 173, 71);color: white;"> Workspace : Title </th>
+                                <td mat-cell *matCellDef="let element" style="padding-left: 10px;"> {{element.Workspace_Title}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Milestone_Title">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  rgb(112, 173, 71);color: white;"> Milestone Title </th>
+                                <td mat-cell *matCellDef="let element"> {{element.Milestone_Title}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Milestone__Assignee__Reports_to__Full_Name">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  rgb(112, 173, 71);color: white;"> M : Assignee Reports to Full Name </th>
+                                <td mat-cell *matCellDef="let element"> {{element.Milestone__Assignee__Reports_to__Full_Name}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Milestone__Assignee__Full_Name">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  rgb(112, 173, 71);color: white;">M : Assignee FullName</th>
+                                <td mat-cell *matCellDef="let element" > {{element.Milestone__Assignee__Full_Name}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Task_Start_Date_c">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  rgb(112, 173, 71);color: white;"> T : Start Date </th>
+                                <td mat-cell *matCellDef="let element"> {{element.Task_Start_Date_c}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Group_Name">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  rgb(112, 173, 71);color: white;"> Group Name </th>
+                                <td mat-cell *matCellDef="let element"> {{element.Group_Name}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Milestone__Region">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  rgb(112, 173, 71);color: white;"> M : Region </th>
+                                <td mat-cell *matCellDef="let element"> {{element.Milestone__Region}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Milestone__Project_Status">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  rgb(112, 173, 71);color: white;"> M : Project Status </th>
+                                <td mat-cell *matCellDef="let element"> {{element.Milestone__Project_Status}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Workspace__Project_Level">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  rgb(112, 173, 71);color: white;"> W :Project Level </th>
+                                <td mat-cell *matCellDef="let element"> {{element.Workspace__Project_Level}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Milestone__CRM_Revenue_ID__">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  rgb(112, 173, 71);color: white;"> M: CRM Revenue Id #</th>
+                                <td mat-cell *matCellDef="let element"> {{element.Milestone__CRM_Revenue_ID__}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Task_Title">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  rgb(112, 173, 71);color: white;"> T : Title </th>
+                                <td mat-cell *matCellDef="let element"> {{element.Task_Title}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Task__Task_Record_ID_Key">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  rgb(112, 173, 71);color: white;"> T : Task Record Id Key </th>
+                                <td mat-cell *matCellDef="let element"> {{element.Task__Task_Record_ID_Key}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Workspace__CRM_Customer_Row_ID">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  rgb(112, 173, 71);color: white;"> W: Customer Row Id </th>
+                                <td mat-cell *matCellDef="let element"> {{element.Workspace__CRM_Customer_Row_ID}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Workspace__ELT_Overall_Status">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  rgb(112, 173, 71);color: white;"> W: ELT Overall Status </th>
+                                <td mat-cell *matCellDef="let element"> {{element.Workspace__ELT_Overall_Status}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Workspace__ELT_Overall_Comments">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  rgb(112, 173, 71);color: white;"> W: ELT Overall Comments</th>
+                                <td mat-cell *matCellDef="let element"><label (click)="ShowComment(element.Workspace_Title,element.Milestone__Project_Status,element.Workspace__ELT_Overall_Comments)" class="showlessText"> {{element.Workspace__ELT_Overall_Comments}}</label> </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Milestone__Country">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  rgb(112, 173, 71);color: white;"> M: Country </th>
+                                <td mat-cell *matCellDef="let element"><label (click)="ShowComment(element.Workspace_Title,element.Milestone__Project_Status,element.Milestone__Country)" class="showlessText"> {{element.Milestone__Country}}</label> </td>
+                            </ng-container>
+                            <ng-container matColumnDef="C__Complete">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  rgb(112, 173, 71);color: white;"> % Complete </th>
+                                <td mat-cell *matCellDef="let element"> {{element.C__Complete}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Milestone__Project_Notes">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  rgb(112, 173, 71);color: white;"> M: Project Notes </th>
+                                <td mat-cell *matCellDef="let element"><label (click)="ShowComment(element.Workspace_Title,element.Milestone__Project_Status,element.Milestone__Project_Notes)" class="showlessText">{{element.Milestone__Project_Notes}}</label> </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Milestone__Reason_Code">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  rgb(112, 173, 71);color: white;"> M: Reason Code </th>
+                                <td mat-cell *matCellDef="let element"><label (click)="ShowComment(element.Workspace_Title,element.Milestone__Project_Status,element.Milestone__Reason_Code)" class="showlessText">{{element.Milestone__Reason_Code}}</label> </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Milestone__Closed_Loop_Owner">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="padding-right: 10px;background-color:  rgb(112, 173, 71);color: white;"> M Closed Loop Owner </th>
+                                <td mat-cell *matCellDef="let element" style="padding-right: 10px;"> {{element.Milestone__Closed_Loop_Owner}} </td>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky : true;"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-12" style="text-align: right">
+                    <label style="color: red">* W = Workspace, M = Milestone, T = Task</label>
+                </div>
+            </div>
+            <div style="position: absolute;cursor: pointer;width: 30px;height: 30px;background-color: #333F48;margin-left: 0px;margin-top: 20%;" class="mat-elevation-z2" (click)= "sidenav.toggle()"><mat-icon *ngIf="!sidenav.opened" style="color: white;font-size: 24px;margin-top: 2px;margin-left: 3px;">arrow_forward_ios</mat-icon><mat-icon *ngIf="sidenav.opened" style="color: white;font-size: 24px;margin-top: 2px;margin-left: 8px;">arrow_back_ios</mat-icon></div>
+        </div>
+        <!-- <div style="height: 40px;text-align: center;background-color: #333F48;">
+            <label style="text-align: center;margin-top: 10px;font-size: 12px;color: white;font-family: Montserrat, sans-serif">Copyright ©2020 @CWT | All rights reserved</label>
+        </div> -->
+    </mat-drawer-content>
+</mat-drawer-container>

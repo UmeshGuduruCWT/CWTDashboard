@@ -1,0 +1,92 @@
+<div class="row" style="margin: 0px;padding: 0px;">
+    <div class="col-12" style="margin: 0px;padding: 0px;text-align: center">
+        <a class="col-md-5" style="text-align: left;float: left;">
+            <button  mat-raised-button (click)="NewUser()" style="background-color: #F16950;color: white;margin-top: 20px;margin-left: 25px;"> Add New </button>
+        </a>
+        <a class="col-md-2"></a>
+        <!-- <mat-form-field class="col-md-2 mat-form-wrap" style="color: gray;margin-top: 10px">
+            <mat-label style="font-size: 15px;font-weight: bold">Search</mat-label>
+            <input style="color: gray;" [(ngModel)]="Search" name="Search" matInput>
+            <mat-icon matSuffix style="padding-top: 10px">search</mat-icon>
+        </mat-form-field> -->
+        <a class="col-md-5" style="float: right;text-align: right;padding-right: 15px;">
+            <button mat-raised-button [matMenuTriggerFor]="menu1" style="height: 33px;background-color: #F16950;color: white;margin-top: 20px;margin-right: 25px;">Export<mat-icon style="color: white;font-size: 20px;margin-top: 4px;">save_alt</mat-icon></button>
+        </a>
+        <mat-menu #menu1="matMenu">
+            <!-- <button mat-menu-item>PDF</button> -->
+            <button mat-menu-item (click)="exportHierarchy()">Excel</button>
+        </mat-menu>
+        <!-- <button style="background-color: #F16950;color: white;"><mat-icon style="color: white;font-size: 20px;margin-top: 4px;">add</mat-icon></button> -->
+    </div>
+    <div class="col-12">
+        <div class="example-container mat-elevation-z2" [ngStyle]="{'height': screenHeight > 960 ?  screenHeight-160+'px' : screenHeight-160+'px'}">
+            <table mat-table [dataSource]="dataSource" matSort style="text-align: center">
+                <ng-container matColumnDef="HierarchyID">
+                    <th mat-header-cell *matHeaderCellDef class="textSizes" style="text-align: center"> HierarchyID </th>
+                    <td mat-cell *matCellDef="let element" style="padding-right: 8px;"> {{element.HierarchyID}} </td>
+                </ng-container>
+                <ng-container matColumnDef="User_ID">
+                    <th mat-header-cell *matHeaderCellDef class="textSizes" style="text-align: center"> User ID</th>
+                    <td mat-cell *matCellDef="let element" style="padding-right: 8px;"> {{element.User_ID}} </td>
+                </ng-container>
+                <ng-container matColumnDef="Name">
+                    <th mat-header-cell *matHeaderCellDef class="textSizes" style="text-align: center"> Name </th>
+                    <td mat-cell *matCellDef="let element" style="padding-right: 8px;"> {{element.Name}} </td>
+                </ng-container>
+                <ng-container matColumnDef="LeaderTwo">
+                    <th mat-header-cell *matHeaderCellDef class="textSizes" style="text-align: center"> Leader II </th>
+                    <td mat-cell *matCellDef="let element" style="padding-right: 8px;"> {{element.LeaderTwo}} </td>
+                </ng-container>
+                <ng-container matColumnDef="LeaderOne">
+                    <th mat-header-cell *matHeaderCellDef class="textSizes" style="text-align: center"> Leader I </th>
+                    <td mat-cell *matCellDef="let element" style="padding-right: 8px;"> {{element.LeaderOne}} </td>
+                </ng-container>
+                <ng-container matColumnDef="Sr_Leader">
+                    <th mat-header-cell *matHeaderCellDef class="textSizes" style="text-align: center"> Senior Leader </th>
+                    <td mat-cell *matCellDef="let element" style="padding-right: 8px;"> {{element.Sr_Leader}} </td>
+                </ng-container>
+                <ng-container matColumnDef="VP">
+                    <th mat-header-cell *matHeaderCellDef class="textSizes" style="text-align: center"> VP </th>
+                    <td mat-cell *matCellDef="let element" style="padding-right: 8px;"> {{element.VP}} </td>
+                </ng-container>
+                <ng-container matColumnDef="Email_Address">
+                    <th mat-header-cell *matHeaderCellDef class="textSizes" style="text-align: center"> Email Address </th>
+                    <td mat-cell *matCellDef="let element" style="padding-right: 8px;"> {{element.Email_Address}} </td>
+                </ng-container>
+                <ng-container matColumnDef="Region">
+                    <th mat-header-cell *matHeaderCellDef class="textSizes" style="text-align: center"> Region</th>
+                    <td mat-cell *matCellDef="let element" style="padding-right: 8px;"> {{element.Region}} </td>
+                </ng-container>
+                <ng-container matColumnDef="Location">
+                    <th mat-header-cell *matHeaderCellDef class="textSizes" style="text-align: center"> Location </th>
+                    <td mat-cell *matCellDef="let element" style="padding-right: 8px;"> {{element.Location}} </td>
+                </ng-container>
+                <ng-container matColumnDef="Role">
+                    <th mat-header-cell *matHeaderCellDef class="textSizes" style="text-align: center"> Role </th>
+                    <td mat-cell *matCellDef="let element" style="padding-right: 8px;"> {{element.Role}} </td>
+                </ng-container>
+                <ng-container matColumnDef="Title">
+                    <th mat-header-cell *matHeaderCellDef class="textSizes" style="text-align: center"> Title </th>
+                    <td mat-cell *matCellDef="let element" style="padding-right: 8px;"> {{element.Title}} </td>
+                </ng-container>
+                <ng-container matColumnDef="UserStatus">
+                    <th mat-header-cell *matHeaderCellDef class="textSizes" style="text-align: center"> User Status</th>
+                    <td mat-cell *matCellDef="let element" style="padding-right: 8px;"> {{element.UserStatus}} </td>
+                </ng-container>
+                <ng-container matColumnDef="actions" stickyEnd>
+                    <th mat-header-cell *matHeaderCellDef></th>
+                    <td mat-cell *matCellDef="let element; let j=index;" style="padding-left: 15px;background-color: rgb(241, 241, 241)">
+                        <button mat-icon-button style="color:gray;margin-right: 10px;" (click)="RowSelected(j,element.HierarchyID,element.User_ID,element.Name,element.LeaderTwo,element.LeaderOne,element.Sr_Leader,element.VP,element.Email_Address,element.Region,element.Location,element.Role,element.Title,element.UserStatus)">
+                            <mat-icon aria-label="Edit">edit</mat-icon>
+                        </button>
+                        <button mat-icon-button style="color:gray;margin-right: 10px;" (click)="RowSelecteddelete(j,element.User_ID,element.Name)">
+                            <mat-icon aria-label="Edit">delete</mat-icon>
+                        </button>
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true" style="padding-top: 0px;margin-top: 0px;"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,10 @@
+<h1 mat-dialog-title>Are you Sure</h1>
+<div mat-dialog-content>
+  <p>you want to provide Access for</p>
+  <p> {{data.Username}} to this {{data.ReportDisplayName}}?</p>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No</button>
+  <button mat-button (click)="onYesClick()" cdkFocusInitial>Yes</button>
+  <button mat-button (click)="onRejectClick()">Reject</button>
+</div>

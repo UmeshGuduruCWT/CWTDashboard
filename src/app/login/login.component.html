@@ -1,0 +1,35 @@
+<!-- <div class="center" [ngStyle]="{'height' : (screenHeight-60)+'px','line-height' : (screenHeight-60)+'px'}" style="background-color:  #F16950;"> -->
+<div class="center" [ngStyle]="{'height' : (screenHeight)+'px','line-height' : (screenHeight)+'px'}" style="background-color:  #F16950;">    
+    <div>
+        <mat-card class="example-card mat-elevation-z4" style="text-align: left;">
+            <div class="col-md-12" style="text-align: center;">
+                <label class="header_text">Login to your Account</label>
+            </div>
+            <mat-form-field class="col-md-12 mat-form-wrap"appearance="outline">
+                <mat-label>UID / Email Id</mat-label>
+                <input style="color: gray;" [(ngModel)]="UIDEmail" type="text" name="UIDEmail" matInput required>
+                <mat-icon matSuffix>account_circle</mat-icon>
+            </mat-form-field>
+            <mat-form-field class="col-md-12 mat-form-wrap"appearance="outline">
+                <mat-label>Password</mat-label>
+                <input style="color: gray;" [(ngModel)]="Password" name="Password" matInput required [type]="hide ? 'password' : 'text'">
+                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+            </mat-form-field>
+            <div class="col-md-12" style="text-align: center;">
+                <button mat-raised-button (click)="SignIN()" style="background-color: #F16950;color: white;">Login</button>
+            </div>
+            <label class="signin_button" style="width: 100%;text-align: center;margin-top: 15px;" (click)="OnForgotPasswordClick()">Forgot Password?</label>
+            <!-- <div class="col-md-12" style="text-align: center;margin-top: 15px;">
+                <label style="font-size: 15px;font-family : Arial;">New User? <label class="signin_button">Create an Account.</label></label>
+            </div> -->
+        </mat-card>
+        <mat-card class="example-card mat-elevation-z4" style="height: 55px;">
+            <div class="col-md-12" style="text-align: center;">
+                <label style="font-size: 15px;font-family : Arial;">New User? <label class="signin_button" (click)="OnRegisterClick()">Create an Account.</label></label>
+                <!-- <label class="signin_button" (click)="OnForgotPasswordClick()">Forgot Password?</label> -->
+            </div>
+        </mat-card>
+    </div>
+</div>

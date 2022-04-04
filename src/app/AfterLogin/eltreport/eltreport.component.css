@@ -1,0 +1,81 @@
+/* Styles for tab labels */
+.mat-tab-label {
+    color: white;
+}
+/* Styles for the active tab label */
+.mat-tab-label.mat-tab-label-active {
+    color: yellow ;
+    /* #F16950 */
+    font-size: 15px;
+    font-weight: bold;
+    background-color: #333F48;
+    font-family: "Montserrat", sans-serif;
+}
+.mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar { height:2px;background-color: yellow; }
+/* .row {margin-left:0px;margin-right:0px}
+.container {width:100%;max-width:none;padding:0;} */
+  .example-additional-selection {
+    opacity: 0.75;
+    font-size: 0.75em;
+  }
+  /* .example-container {
+    border-radius: 5px;
+  } */
+  table {
+    width: 100%;
+  }
+  tr.mat-footer-row {
+    font-weight: bold;
+  }
+  /* .mat-table-sticky {
+    border-top: 1px solid #e0e0e0;
+  } */
+  .textSizes
+  {
+    font-size: 15px;
+    font-weight: bold;
+    color : #333F48 ;
+    font-family: "Montserrat", sans-serif;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  .mat-cell,.mat-header-cell {
+    min-width: 80px;
+    max-width: 250px;
+    white-space: normal; 
+    /* width: max-content;
+    white-space: normal; */
+  }
+  .showlessText{
+    /* text-overflow : clip; */
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 180px;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .showlessText:hover{
+    color : #333F48;
+    font-weight: bold;
+    text-decoration: underline;
+  }
+  ::ng-deep .mat-tooltip {
+    background-color:  rgba(0, 0, 0, 0.74);
+    color: white;
+    font-size: 13px;
+    width : 300px
+}
+.Hyperlink{
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 180px;
+  cursor: pointer;
+  padding-top: 3px;
+  margin: 0px;
+  white-space: nowrap;
+}
+.Hyperlink:hover{
+  color : #067bd4;
+  font-weight: bold;
+  text-decoration: underline;
+}

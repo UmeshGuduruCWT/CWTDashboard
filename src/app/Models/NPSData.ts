@@ -1,0 +1,150 @@
+export interface NPSData{
+    code : number;
+    message : string;
+    NPSViewData : NPSViewData[];
+    NPSvalues : NPSvalues[];
+    NewRegionWiseNPSScore : NewRegionWiseNPSScore[];
+    ExistingRegionWiseNPSScore : ExistingRegionWiseNPSScore[];
+    NewRegionWiseNPSCount : NewRegionWiseNPSCount[];
+    NERegionWiseNPSCount : NERegionWiseNPSCount[];
+    NERegionWiseNPSScore : NERegionWiseNPSScore[];
+    ExistingRegionWiseNPSCount : ExistingRegionWiseNPSCount[];
+    NewSemanticAnalysisOne : SemanticAnalysis[];
+    NewSemanticAnalysisTwo : SemanticAnalysis[];
+    NewSemanticAnalysisThree : SemanticAnalysis[];
+    ExistingSemanticAnalysisOne : SemanticAnalysis[];
+    ExistingSemanticAnalysisTwo : SemanticAnalysis[];
+    ExistingSemanticAnalysisThree : SemanticAnalysis[];
+    NESemanticAnalysisOne : SemanticAnalysis[];
+    NESemanticAnalysisTwo : SemanticAnalysis[];
+    NESemanticAnalysisThree : SemanticAnalysis[];
+
+}
+export interface NPSvalues{
+    NewBusinessSurveySent : number;
+    NewBusinessSurveyReceived : number;
+    NESurveySent : number;
+    NESurveyReceived : number;
+    ExistingSurveySent : number;
+    ExistingSurveyReceived : number;
+    NewBusinessPromoter : number;
+    NewBusinessPassive : number;
+    NewBusinessDetractor : number;
+    ExistingPromoter : number;
+    ExistingPassive : number;
+    ExistingDetractor : number;
+    NEPromoter : number;
+    NEPassive : number;
+    NEDetractor : number;
+    YearMonth : string;
+    isSelected : boolean;
+}
+export interface NewRegionWiseNPSScore{
+    Region : string;
+    NPSScore : number;
+    Score : number;
+    PromoterCount : number;
+    DetractorCount  : number;
+}
+export interface NPSViewData{
+    NpsId : number;
+    ClientName : string;
+    Company : string;
+    CustomerContactNumber : string;
+    Country : string;
+    GoLiveDate : Date;
+    GlobalProjectManager : string;
+    RegionalProjectManager : string;
+    LocalProjectManager : string;
+    ClientType : string;
+    Email : string;
+    Region : string;
+    Language : string;
+    SingleResource : string;
+    RecordStatus : string;
+    DateServeySent : Date;
+    DateSurveyReceived : Date;
+    DateServey_Sent : string;
+    DateSurvey_Received : string;
+    ClientScope : string;
+    DQS : string;
+    DSD : string;
+    OnlineTeam : string;
+    Status : string;
+    AssignLeaderForClosedLoop : string;
+    NPSScore : number;
+    NPSIndicator : string;
+    NPSCommentsWhatwasPositive : string;
+    NPSComments_Howcouldwehaveimproved : string;
+    NPSComments_Whatistheonethingwecandotomakeyouhappier : string;
+    NPSCommentsOne : string;
+    NPSCommentsTwo : string;
+    NPSCommentsThree : string;
+    ReasonType : string;
+    ClientFeedback : string;
+    Action : string;
+    InsertedBy : string;
+    InsertedOn : string;
+    Inserted_On : string;
+    UpdatedBy : string;
+    UpdatedOn  : string;
+    Updated_On : string;
+}
+export interface ExistingRegionWiseNPSScore{
+    Region : string;
+    NPSScore : number;
+    Score : number;
+    PromoterCount : number;
+    DetractorCount  : number;
+}
+export interface NERegionWiseNPSScore{
+    Region : string;
+    NPSScore : number;
+    Score : number;
+    PromoterCount : number;
+    DetractorCount  : number;
+}
+export interface NewRegionWiseNPSCount{
+    Region : string
+    PromoterCount : number;
+    PassiveCount  : number;
+    DetractorCount  : number;
+    NPSIndicator : string;
+    APACCount  : number;
+    EMEACount : number;
+    LATAMCount : number;
+    NORAMCount : number;
+    GlobalCount : number;
+    Total  : number;
+
+}
+export interface NERegionWiseNPSCount{
+    Region : string
+    PromoterCount : number;
+    PassiveCount  : number;
+    DetractorCount  : number;
+    NPSIndicator : string;
+    APACCount  : number;
+    EMEACount : number;
+    LATAMCount : number;
+    NORAMCount : number;
+    GlobalCount : number;
+    Total  : number;
+}
+export interface ExistingRegionWiseNPSCount{
+    Region : string
+    PromoterCount : number;
+    PassiveCount  : number;
+    DetractorCount  : number;
+    NPSIndicator : string;
+    APACCount  : number;
+    EMEACount : number;
+    LATAMCount : number;
+    NORAMCount : number;
+    GlobalCount : number;
+    Total  : number;
+}
+export interface SemanticAnalysis{
+    Comment : string;
+    Count : number;
+}

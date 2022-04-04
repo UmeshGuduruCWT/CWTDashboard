@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>Hi {{data.Name}}</h1>
+<div mat-dialog-content>
+  <p>Are you sure, Do you want to Delete this Client? {{data.SelectedClient}}</p>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button style="background-color: #F16950;color: white;" (click)="onNoClick()">No Thanks</button>
+  <button mat-raised-button style="background-color: #F16950;color: white;margin-left: 15px;" (click)="onYesClick()" cdkFocusInitial>Ok</button>
+</div>

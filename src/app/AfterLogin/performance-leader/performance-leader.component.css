@@ -1,0 +1,47 @@
+.sub_headers{
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 5px 10px 5px 10px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+.sub_values{
+    color:#123;
+    font-size: 12px;
+    font-weight: bold;
+}
+.mainlabel{
+    color: black;
+    width: 100%;
+    font-size: 13px;
+    margin-top: 8px;
+    text-align: right;
+}
+.spacer {
+    flex: 1 1 auto;
+}
+.mat-tab-label {
+    color: white;
+}
+/* Styles for the active tab label */
+.mat-tab-label.mat-tab-label-active {
+    color: yellow ;
+    /* #F16950 */
+    font-size: 15px;
+    font-weight: bold;
+    background-color: #333F48;
+    font-family: "Montserrat", sans-serif;
+}
+.mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar { height:2px;background-color: yellow; }
+/* .row {margin-left:0px;margin-right:0px}
+.container {width:100%;max-width:none;padding:0;} */
+  .example-additional-selection {
+    opacity: 0.75;
+    font-size: 0.75em;
+  }
+  /* .example-container {
+    border-radius: 5px;
+  } */
+  table {
+    width: 100%;
+  }

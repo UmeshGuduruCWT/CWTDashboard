@@ -1,0 +1,177 @@
+<div style="margin : 0px">
+    <div class="row" style="margin: 0px;padding: 0px;">
+        <div class="col-lg-12">
+            <mat-card class="example-card mat-elevation-z2" style="height: auto;margin-top: 25px;padding: 15px 0px 0px 0px;">
+                <div class="row col-md-12" style="margin: 0px;padding: 0px;height: auto;">
+                    <mat-form-field class="col-md-2 mat-form-wrap" style="color: gray;">
+                        <mat-label style="font-size: 15px;font-weight: bold">Years</mat-label>
+                        <mat-select [(ngModel)]="Yearslist" [formControl]="Years" multiple (selectionChange)="onYearschange()">
+                            <mat-select-trigger>
+                            {{Years.value ? Years.value[0] : ''}}
+                            <span *ngIf="Years.value?.length > 1" class="example-additional-selection">
+                                (+{{Years.value.length - 1}} {{Years.value?.length === 2 ? 'Year' : 'Years'}})
+                            </span>
+                            </mat-select-trigger>
+                            <div style="padding-top: 15px">
+                                <mat-checkbox style="margin-left: 15px;margin-top: 25px;" class="example-margin" color="primary" [(ngModel)]="masteryear" name="masteryear" (change)="checkUncheckYears()">Select all</mat-checkbox>
+                            </div>
+                            <mat-divider style="margin-left: 5px;margin-right: 5px"></mat-divider>
+                            <mat-option *ngFor="let year of Years_F" [value]="year.Go_Live_Year">{{year.Go_Live_Year}}</mat-option>
+                            <!-- <mat-option  [value]="0" (click)="YearsAllSelect()" >all</mat-option> -->
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field class="col-md-2 mat-form-wrap" style="color: gray;">
+                        <mat-label style="font-size: 15px;font-weight: bold">Project Level</mat-label>
+                        <mat-select [(ngModel)]="Levelslist" [formControl]="Levels" multiple (selectionChange)="onLevelschange()">
+                            <mat-select-trigger>
+                                <span *ngIf="Levels.value?.length == Levels_f.length" class="example-additional-selection"> 
+                                    Selected All
+                                </span>
+                                <div *ngIf="Levels.value?.length != Levels_f.length">
+                                    {{Levels.value ? Levels.value[0] : ''}}
+                                    <span *ngIf="Levels.value?.length > 1" class="example-additional-selection">
+                                        (+{{Levels.value.length - 1}} {{Levels.value?.length === 2 ? 'Level' : 'Levels'}})
+                                    </span>
+                                </div>
+                            </mat-select-trigger>
+                            <div style="padding-top: 15px">
+                                <mat-checkbox style="margin-left: 15px;margin-top: 25px;" class="example-margin" color="primary" [(ngModel)]="masterlevel" name="masterlevel" (change)="checkUncheckLevel()">Select all</mat-checkbox>
+                            </div>
+                            <mat-divider style="margin-left: 5px;margin-right: 5px"></mat-divider>
+                            <mat-option *ngFor="let levels of Levels_f" [value]="levels.iMeet_Project_Level">{{levels.iMeet_Project_Level}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field class="col-md-2 mat-form-wrap" style="color: gray;">
+                        <mat-label style="font-size: 15px;font-weight: bold">Region</mat-label>
+                        <mat-select [(ngModel)]="Regionslist" [formControl]="Regions" multiple (selectionChange)="onRegionschange()">
+                            <mat-select-trigger>
+                                <span *ngIf="Regions.value?.length == Regions_f.length" class="example-additional-selection"> 
+                                    Selected All
+                                </span>
+                                <div *ngIf="Regions.value?.length != Regions_f.length">
+                                    {{Regions.value ? Regions.value[0] : ''}}
+                                    <span *ngIf="Regions.value?.length > 1" class="example-additional-selection">
+                                        (+{{Regions.value.length - 1}} {{Regions.value?.length === 2 ? 'Region' : 'Regions'}})
+                                    </span>
+                                </div>
+                            </mat-select-trigger>
+                            <div style="padding-top: 15px">
+                                <mat-checkbox style="margin-left: 15px;margin-top: 25px;" class="example-margin" color="primary" [(ngModel)]="masterregion" name="masterregion" (change)="checkUncheckRegion()">Select all</mat-checkbox>
+                            </div>
+                            <mat-divider style="margin-left: 5px;margin-right: 5px"></mat-divider>
+                            <mat-option *ngFor="let h_region of Regions_f" [value]="h_region.Region__Opportunity_">{{h_region.Region__Opportunity_}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field class="col-md-2 mat-form-wrap" style="color: gray;">
+                        <mat-label style="font-size: 15px;font-weight: bold">Quarter</mat-label>
+                        <mat-select [(ngModel)]="Quarteslist" [formControl]="Quarters" multiple (selectionChange)="onQuarterchange()">
+                            <mat-select-trigger>
+                            <span *ngIf="Quarters.value?.length == Quarters_f.length" class="example-additional-selection"> 
+                                Selected All
+                            </span>
+                            <div *ngIf="Quarters.value?.length != Quarters_f.length">
+                                {{Quarters.value ? Quarters.value[0] : ''}}
+                                <span *ngIf="Quarters.value?.length > 1" class="example-additional-selection">
+                                    (+{{Quarters.value.length - 1}} {{Quarters.value?.length === 2 ? 'Quarter' : 'Quarters'}})
+                                </span>
+                            </div>
+                            </mat-select-trigger>
+                            <div style="padding-top: 15px">
+                                <mat-checkbox style="margin-left: 15px;margin-top: 25px;" class="example-margin" color="primary" [(ngModel)]="masterquarter" name="masterquarter" (change)="checkUncheckQuarter()">Select all</mat-checkbox>
+                            </div>
+                            <mat-divider style="margin-left: 5px;margin-right: 5px"></mat-divider>
+                            <mat-option *ngFor="let quarter of Quarters_f" [value]="quarter.Quarter">{{quarter.Quarter}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field class="col-md-2 mat-form-wrap" style="color: gray;">
+                        <mat-label style="font-size: 15px;font-weight: bold">Project Status</mat-label>
+                        <mat-select [(ngModel)]="Statuslist" [formControl]="Status" multiple (selectionChange)="onStatuschange()">
+                            <mat-select-trigger>
+                                <span *ngIf="Status.value?.length == Status_f.length" class="example-additional-selection"> 
+                                    Selected All
+                                </span>
+                                <div *ngIf="Status.value?.length != Status_f.length">
+                                    {{Status.value ? Status.value[0] : ''}}
+                                    <span *ngIf="Status.value?.length > 1" class="example-additional-selection">
+                                        (+{{Status.value.length - 1}} {{Status.value?.length === 2 ? 'Status' : 'Status'}})
+                                    </span>
+                                </div>
+                            </mat-select-trigger>
+                            <div style="padding-top: 15px">
+                                <mat-checkbox style="margin-left: 15px;margin-top: 25px;" class="example-margin" color="primary" [(ngModel)]="masterstatus" name="masterstatus" (change)="checkUncheckStatus()">Select all</mat-checkbox>
+                            </div>
+                            <mat-divider style="margin-left: 5px;margin-right: 5px"></mat-divider>
+                            <mat-option *ngFor="let status of Status_f" [value]="status.iMeet_Milestone___Project_Status">{{status.iMeet_Milestone___Project_Status}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <div class="sticky">
+                        <div class="row col-12" style="height: 50px;padding: 9px 0px 0px 0px; margin : 0px;text-align: center">
+                            <div class="col-12" style="margin: 0px;text-align: right;padding-right: 15px;">
+                                <button mat-raised-button (click)="setdata()" style="background-color: #F16950;color: white;">Apply</button>
+                                <!-- [ngStyle]="{'background-color': Apply_disable == true ?  '#DCDCDC' : '#F16950','color' :  Apply_disable == true ? '#AEAEAE' : 'white'}" style="height: 33px;padding-left: 5px;padding-right: 5px;margin-right: 15px;float: right" [disabled]="Apply_disable" -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </mat-card>
+        </div>
+    </div>
+</div>
+<mat-accordion multi="true" style="margin: 10px;">
+    <mat-expansion-panel *ngFor="let sr_leader of SeniorLeaders;let i = index" style="margin-left: 15px;margin-right: 15px;" expanded='false' hideToggle="true">
+        <mat-expansion-panel-header (click)="srleader_click(sr_leader.SeniorIcon,sr_leader.SeniorLeader)">
+            <!-- [ngClass]="tickets-container-header" -->
+            <mat-panel-title style="padding-top: 8px">
+                <mat-icon >{{sr_leader.SeniorIcon  ? 'indeterminate_check_box' : 'add_box' }}</mat-icon>
+                <div class="col-md-9" style="padding-top: 3px">{{sr_leader.SeniorLeader}}</div>
+            </mat-panel-title>
+            <mat-panel-description style="padding-top: 5px">
+                <label style="margin-right: 25px" class="mainlabel"><a class="sub_headers">Innovation : <label class="sub_values">{{sr_leader.Innovation}}</label></a> | <a class="sub_headers">NPS : <label class="sub_values">{{sr_leader.NPS}}</label></a> | <a class="sub_headers">CycleTime : <label class="sub_values">{{sr_leader.CycleTime}}</label></a> | <a class="sub_headers">Volume : <label class="sub_values" style="width: 90px;">{{sr_leader.Volume_string}}</label></a> | <a class="sub_headers">Projects : <label class="sub_values" style="width: 35px;">{{sr_leader.Projects}}</label></a></label>
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+        <mat-accordion multi="true" style="margin-bottom: 5px;">
+            <mat-expansion-panel *ngFor="let leaders of sr_leader['Leaders']" expanded='false' hideToggle="true">
+                <mat-expansion-panel-header (click)="leader_click(i,leaders.Leadericon,leaders.Leader)">
+                    <mat-panel-title style="padding-top: 8px">
+                        <mat-icon >{{leaders.Leadericon  ? 'indeterminate_check_box' : 'add_box' }}</mat-icon>
+                        <div class="col-md-9" style="padding-top: 3px">{{leaders.Leader}}</div>
+                    </mat-panel-title>
+                    <mat-panel-description style="padding-top: 5px">
+                        <label class="mainlabel"><a class="sub_headers">Innovation : <label class="sub_values">{{leaders.LeaderInnovation}}</label></a> | <a class="sub_headers">NPS : <label class="sub_values">{{leaders.LeaderNPS}}</label></a> | <a class="sub_headers">CycleTime : <label class="sub_values">{{leaders.LeaderCycleTime}}</label></a> | <a class="sub_headers">Volume : <label class="sub_values" style="width: 90px;">{{leaders.LeaderVolume_string}}</label></a> | <a class="sub_headers">Projects : <label class="sub_values" style="width: 35px;">{{leaders.LeaderProjects}}</label></a></label>
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <div class="example-container" style="border : 1px solid black;height: auto;">
+                    <!-- mat-elevation-z2 -->
+                    <table mat-table [dataSource]="leaders['Assignees']" style="text-align: center;">
+                        <ng-container matColumnDef="Assigne">
+                            <th mat-header-cell *matHeaderCellDef class="textSizes" style="border-right: 1px solid #e0e0e0;padding-right: 8px;background-color:  rgb(80, 100, 100);color: white;">Assigne</th>
+                            <td mat-cell *matCellDef="let element" style="border-right: 1px solid #e0e0e0;padding-right: 8px;text-align: left"> {{element.Assigne}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="AssigneInnovation">
+                            <th mat-header-cell *matHeaderCellDef class="textSizes" style="border-right: 1px solid #e0e0e0;padding-right: 8px;background-color:  rgb(80, 100, 100);color: white;text-align: center">Innovation</th>
+                            <td mat-cell *matCellDef="let element" style="border-right: 1px solid #e0e0e0;padding-right: 8px;text-align: center"> {{element.AssigneInnovation}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="AssigneNPS">
+                            <th mat-header-cell *matHeaderCellDef class="textSizes" style="border-right: 1px solid #e0e0e0;padding-right: 8px;background-color:  rgb(80, 100, 100);color: white;text-align: center">NPS</th>
+                            <td mat-cell *matCellDef="let element" style="border-right: 1px solid #e0e0e0;padding-right: 8px;text-align: center"> {{element.AssigneNPS}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="AssigneCycleTime">
+                            <th mat-header-cell *matHeaderCellDef class="textSizes" style="border-right: 1px solid #e0e0e0;padding-right: 8px;background-color:  rgb(80, 100, 100);color: white;text-align: center">Cycle Time</th>
+                            <td mat-cell *matCellDef="let element" style="border-right: 1px solid #e0e0e0;padding-right: 8px;text-align: center"> {{element.AssigneCycleTime}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="AssigneVolume_string">
+                            <th mat-header-cell *matHeaderCellDef class="textSizes" style="width: 150px;border-right: 1px solid #e0e0e0;padding-right: 8px;background-color:  rgb(80, 100, 100);color: white;text-align: center">Volume</th>
+                            <td mat-cell *matCellDef="let element" style="border-right: 1px solid #e0e0e0;padding-right: 8px;text-align: center"> {{element.AssigneVolume_string}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="AssigneProjects">
+                            <th mat-header-cell *matHeaderCellDef class="textSizes" style="width: 150px;padding-right: 8px;background-color:  rgb(80, 100, 100);color: white;text-align: center">Project Count</th>
+                            <td mat-cell *matCellDef="let element" style="padding-right: 8px;text-align: center"> {{element.AssigneProjects}} </td>
+                        </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="displayedColumn" style="border-bottom: 1px solid black;height: 35px;"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumn;" style="height: 35px;"></tr>
+                    </table>
+                </div>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </mat-expansion-panel>
+</mat-accordion>

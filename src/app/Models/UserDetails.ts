@@ -1,0 +1,30 @@
+export interface UserDetails{
+    message: string;
+    code: number;
+    FirstName: string;
+    LastName: string;
+    UID: string;
+    UserID: number;
+    EmailId: string;
+    Password: string;
+    JobType : string;
+    UserStatus: string;
+    Manager: string;
+    InsertedDate: Date;
+    AccountStatus: string;
+    UpdatedOn: Date;
+    UpdatedBy: string;
+    AccessID: number;
+    IMPS: boolean;
+    CTO: boolean;
+    StageGate: boolean;
+    LessonsLearnt: boolean;
+    CapacityTracker: boolean;
+    AutomatedCLR: boolean;
+    CycleTime: boolean;
+    EltReport: boolean;
+    C_Hierarchy: boolean;
+    ResourceUtilization: boolean;
+    Prospect: boolean;
+    UserAccessStatus: string;
+}

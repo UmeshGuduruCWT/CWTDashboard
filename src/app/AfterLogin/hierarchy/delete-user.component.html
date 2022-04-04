@@ -1,0 +1,8 @@
+<div class="row" style="margin: 20px;width : 300px;">
+    <h1 class="col-md-12" style="font-size :18px;font-weight: bold;color: #F16950">{{data.User_ID}} <label style="font-size : 16px;color: rgb(59, 59, 59)"> ({{data.Name}}) </label></h1>
+    <p class="col-md-12" style="font-size :16px;color: rgb(59, 59, 59);margin-top: 20px;">Are you sure You want to delete?</p>
+    <div class="col-md-12" style="text-align: center;margin-top: 20px;">
+        <button mat-raised-button style="background-color: #F16950;color: white;margin-right: 20px;height: 30px;" (click)="YesClick()">Yes</button>
+        <button mat-raised-button style="background-color: #F16950;color: white;height: 30px;" mat-dialog-close>No</button>
+    </div>
+</div>

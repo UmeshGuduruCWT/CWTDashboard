@@ -1,0 +1,105 @@
+<!-- <div class="col-md-12">
+    <div class="example-container" style="margin: 20px;border: 1px solid rgb(196, 196, 196);">
+        <table mat-table [dataSource]="dataSource">
+            <ng-container matColumnDef="UID">
+                <th mat-header-cell *matHeaderCellDef class="maintextSizes" style="width: 15%;padding-left: 10px;">UID</th>
+                <td mat-cell *matCellDef="let element" style="padding-left: 10px;"> {{element.UID}} </td>
+            </ng-container>
+            <ng-container matColumnDef="UserName">
+                <th mat-header-cell *matHeaderCellDef class="maintextSizes" style="width: 15%;"> User </th>
+                <td mat-cell *matCellDef="let element"> {{element.UserName}} </td>
+            </ng-container>
+            <ng-container matColumnDef="Progress">
+                <th mat-header-cell *matHeaderCellDef class="maintextSizes" style="width: 40%;"> Progress </th>
+                <td mat-cell *matCellDef="let element"> <mat-progress-bar mode="determinate" color="warn" [value]="element.Progress"></mat-progress-bar></td>
+            </ng-container>
+            <ng-container matColumnDef="Count">
+                <th mat-header-cell *matHeaderCellDef class="maintextSizes" style="width: 15%;"> Number of Clicks </th>
+                <td mat-cell *matCellDef="let element"> {{element.Count}} </td>
+            </ng-container>
+            <ng-container matColumnDef="LastUsedOn">
+                <th mat-header-cell *matHeaderCellDef class="maintextSizes" style="width: 15%;border-right: 0px solid black;padding-right: 10px;"> Last Used On </th>
+                <td mat-cell *matCellDef="let element" style="border-right: 0px solid black;padding-right: 10px;"> {{element.LastUsedOn}} </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;" style="height: 35px;"></tr>
+        </table>
+    </div>
+</div> -->
+<mat-accordion multi="true"  style="margin: 10px;padding: 0px;">
+    <div class="mat-elevation-z1" style="border-radius: 0px;background-color:  #333F48;;margin-left: 14.5px;margin-right: 14.5px;padding-left: 30px;height: 50px;padding-top: 15px;">
+        <label style="font-size: 16px;font-weight: bold;font-family: Arial, Helvetica, sans-serif;color: white;">Users Usage of Reports</label>
+        <label style="font-size : 12px;font-family: Arial, Helvetica, sans-serif;color: white;">&nbsp; Total Users : {{TotalUsers}}&nbsp;||&nbsp;Total Clicks : {{TotalClicks}}</label>
+    </div>
+    <mat-expansion-panel class="mat-elevation-z1" *ngFor="let user_usage_data of UsageData;let i = index" style="border-radius: 0px;margin-left: 15px;margin-right: 15px;" expanded='false' ><!-- hideToggle="true" -->
+        <mat-expansion-panel-header style="padding: 13px 20px 13px 0px" [collapsedHeight]="'60px'" [expandedHeight]="'60px'">
+            <!-- [ngClass]="tickets-container-header" -->
+            <mat-panel-title>
+                <!-- <mat-icon >{{user_usage_data.icon  ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</mat-icon> -->
+                <div class="col-12" [matTooltip]="'Progress : ' + user_usage_data.Progress + '%'">
+                    <div class="col-12">
+                        <label style="font-size: 12px;font-weight: bold;font-family: Arial, Helvetica, sans-serif;">{{user_usage_data.UID}}</label>
+                        <label style="font-size : 11px;font-family: Arial, Helvetica, sans-serif;">&nbsp; ({{user_usage_data.UserName}})&nbsp;&nbsp;||&nbsp;&nbsp;Last Login : {{user_usage_data.LastLogin}}&nbsp;&nbsp;||&nbsp;&nbsp;No of Clicks : {{user_usage_data.Count}} </label>
+                    </div>
+                    <div class="col-12">
+                        <div class="progress" style="border-radius : 10px;height : 8px;">
+                            <div class="progress-bar" role="progressbar" [ngStyle]="{'width' : (user_usage_data.Progress)+'%',
+                            'background-color' : (user_usage_data.Progress <= 16) ?  
+                            '#FF0000' : (user_usage_data.Progress > 16 && user_usage_data.Progress <= 32) ?
+                            '#F28F1F' : (user_usage_data.Progress > 32 && user_usage_data.Progress <= 49) ?
+                            '#FFC200' : (user_usage_data.Progress > 49 && user_usage_data.Progress <= 66) ?
+                            '#5DADE2' : (user_usage_data.Progress > 66 && user_usage_data.Progress <= 83) ?
+                            '#424F9B' : (user_usage_data.Progress > 83) ?
+                            '#0A905D' : '#000000'}" style="border-radius : 5px;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <!-- [gutterSize]="0" -->
+        <mat-grid-list *ngIf="user_usage_data.Count > 0" [cols]="user_usage_data.Count" [gutterSize]="0" rowHeight="50px" class="mat-elevation-z1" style="margin-bottom: 10px;margin-left: 15px;margin-right: 15px;">
+            <mat-grid-tile
+                *ngFor="let report of user_usage_data['Reports'];let r = index"
+                [colspan]="report.Count"
+                [rowspan]="report.row"
+                [style.background]="report.color" (click)="reportData(i,r,report.ReportName)"><p style="width: 100%;height: 100%;cursor: pointer;" [matTooltip]="'Report : ' + report.ReportName + ' || ' + 'Count : ' + report.Count" class="my-tooltip"></p>
+            </mat-grid-tile>
+        </mat-grid-list>
+        <div *ngIf="user_usage_data.show">
+            <div class="mat-elevation-z1" *ngFor="let report_data of ReportData;let re = index" style="height: auto;margin-bottom: 10px;margin-left: 15px;margin-right: 15px;">
+                <div class="col-12">
+                    <label class="report_header">{{report_data.ReportName}}&nbsp;&nbsp;||&nbsp;&nbsp;<label style="font-size : 11px;font-family: Arial, Helvetica, sans-serif; padding-top: 10px;">Last Used On : {{report_data.LastUsed}}&nbsp;&nbsp;||&nbsp;&nbsp;No of Clicks : {{report_data.Count}} </label></label>
+                    <mat-divider style="width: 100%;"></mat-divider>
+                    <div *ngIf="report_data.Count > 0" class="col-12">
+                        <div *ngFor="let type of report_data['Types'];let t = index">
+                            <label class="type_header">Type of Use : {{type.TypeofUse}}&nbsp;&nbsp;||&nbsp;&nbsp;Last Used On : {{type.LastUsed}}&nbsp;&nbsp;||&nbsp;&nbsp;No of Clicks : {{type.Count}}</label>
+                        </div>
+                    </div>
+                    <!-- <mat-grid-list *ngIf="report_data.Count > 0" [cols]="report_data.Count" [gutterSize]="0" rowHeight="25px" class="mat-elevation-z1" style="margin: 10px 15px;border-radius: 5px;">
+                        <mat-grid-tile
+                            *ngFor="let type of report_data['Types'];let t = index"
+                            [colspan]="type.Count"
+                            [rowspan]="type.row"
+                            [style.background]="type.color"><p style="width: 100%;height: 100%;cursor: pointer;" [matTooltip]="'Type of Use : ' + type.TypeofUse + ' || ' + 'Count : ' + type.Count" class="my-tooltip"></p>
+                        </mat-grid-tile>
+                    </mat-grid-list> -->
+                </div>
+            </div>
+        </div>
+        <!-- <mat-accordion multi="true" style="margin-bottom: 5px;">
+            <mat-expansion-panel class="mat-elevation-z1" *ngFor="let reports of user_usage_data['Reports'];let j = index" style="border-radius: 0px;margin-left: 15px;margin-right: 15px;" expanded='false'>
+                <mat-expansion-panel-header style="padding: 13px 20px 13px 0px" [collapsedHeight]="'60px'" [expandedHeight]="'60px'">
+                    <mat-panel-title>
+                        <div class="col-12">
+                            <div class="col-12">
+                                <label style="font-size: 12px;font-weight: bold;font-family: Arial, Helvetica, sans-serif;">{{reports.ReportName}}&nbsp;&nbsp;||&nbsp;&nbsp;</label>
+                                <label style="font-size : 11px;font-family: Arial, Helvetica, sans-serif;">Last Used On : {{reports.LastUsed}}&nbsp;&nbsp;||&nbsp;&nbsp;No of Clicks : {{reports.Count}} </label>
+                            </div>
+                        </div>
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+            </mat-expansion-panel>
+        </mat-accordion> -->
+    </mat-expansion-panel>
+</mat-accordion>

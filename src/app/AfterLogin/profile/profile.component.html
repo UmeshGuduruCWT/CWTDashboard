@@ -1,0 +1,187 @@
+<div class="col-md-12">
+    <mat-card style="margin : 30px 15px 15px 15px;">
+        <mat-form-field class="col-md-3 mat-form-wrap"appearance="outline">
+            <mat-label>UID</mat-label>
+            <input style="color: gray;text-transform: uppercase;" [(ngModel)]="UID" type="text" name="UID" matInput required disabled>
+            <mat-icon matSuffix>person_pin</mat-icon>
+        </mat-form-field>
+        <mat-form-field class="col-md-3 mat-form-wrap"appearance="outline">
+            <mat-label>First Name</mat-label>
+            <input style="color: gray;" [(ngModel)]="FirstName" type="text" name="FirstName" matInput required>
+            <mat-icon matSuffix>person</mat-icon>
+        </mat-form-field>
+        <mat-form-field class="col-md-3 mat-form-wrap"appearance="outline">
+            <mat-label>Last Name</mat-label>
+            <input style="color: gray;" [(ngModel)]="LastName" type="text" name="LastName" matInput required>
+            <mat-icon matSuffix>person</mat-icon>
+        </mat-form-field>
+        <mat-form-field class="col-md-3 mat-form-wrap"appearance="outline">
+            <mat-label>Email Id</mat-label>
+            <input style="color: gray;" [(ngModel)]="Email" type="text" name="Email" matInput required>
+            <mat-icon matSuffix>email</mat-icon>
+        </mat-form-field>
+        <mat-form-field class="col-md-3 mat-form-wrap"appearance="outline">
+            <mat-label>Manager (Firstname Lastname)</mat-label>
+            <input style="color: gray;" [(ngModel)]="Manager" type="text" name="Manager" matInput required>
+            <mat-icon matSuffix>account_circle</mat-icon>
+        </mat-form-field>
+        <mat-form-field class="col-md-3 mat-form-wrap"appearance="outline">
+            <mat-label>Password</mat-label>
+            <input style="color: gray;" [(ngModel)]="Password" name="Password" matInput required [type]="hide ? 'password' : 'text'">
+            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+        </mat-form-field>
+        <mat-form-field class="col-md-3 mat-form-wrap"appearance="outline">
+            <mat-label>Confirm Password</mat-label>
+            <input style="color: gray;" [(ngModel)]="C_Password" name="C_Password" matInput required [type]="c_hide ? 'password' : 'text'">
+            <button mat-icon-button matSuffix (click)="c_hide = !c_hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="c_hide">
+                <mat-icon>{{c_hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+        </mat-form-field>
+        <mat-form-field class="col-md-3 mat-form-wrap"appearance="outline">
+            <mat-label>JobType</mat-label>
+            <mat-select [(value)]="JobType">
+                <mat-option value="Project Manager">Project Manager</mat-option>
+                <mat-option value="Team Manager">Team Manager</mat-option>
+                <mat-option value="Leader">Leader</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <div class="col-md-12" style="text-align: center;">
+            <button mat-raised-button (click)="Update()" style="background-color: #F16950;color: white;">Update</button>
+        </div>
+    </mat-card>
+</div>
+<div style="margin : 30px 0px 15px 15px;">
+    <div class="row col-md-12">
+        <div class="col-md-3">
+            <mat-card class="col-md-12 example-card mat-elevation-z2" style="margin-top: 15px;" (click)="RequestAccess('AutomatedCLR')" [matTooltip]="TTAutomatedCLR" matTooltipClass="my-tooltip">
+                <button class="col-md-3"  mat-icon-button>
+                    <mat-icon [ngStyle]="{'color': CLR_Status == 'Approved' ? '#52BE80' : CLR_Status == 'Requested' ? '#2980B9' : CLR_Status == 'Declined' || (CLR_Status == 'NoRequests' && AutomatedCLR == false) ? '#E74C3C' : '#52BE80'}" aria-label="Side nav toggle icon">{{CLR_icon}}</mat-icon>
+                </button>
+                <label class="col-md-9" style="color: black;font-size: 15px;font-weight: bold;font-family: Arial, Helvetica, sans-serif;text-align: center;">Automated CLR</label>
+                <!-- <mat-icon style="color:black;font-size: 25px;" >offline_pin</mat-icon>&nbsp;&nbsp;<label style="height: 40px; background-color: red;padding-bottom: 5px;"> Automated CLR</label> -->
+            </mat-card>
+        </div>
+        <div class="col-md-3">
+            <mat-card class="example-card mat-elevation-z2" style="margin-top: 15px;" (click)="RequestAccess('AutomatedCLREdits')" [matTooltip]="TTCLREdits" matTooltipClass="my-tooltip">
+                <button class="col-md-3" mat-icon-button>
+                    <mat-icon [ngStyle]="{'color': CLREdits_Status == 'Approved' ? '#52BE80' : CLREdits_Status == 'Requested' ? '#2980B9' : CLREdits_Status == 'Declined' || (CLREdits_Status == 'NoRequests' && AutomatedCLRedits == false) ? '#E74C3C' : '#52BE80'}" aria-label="Side nav toggle icon">{{CLREdits_icon}}</mat-icon>
+                </button>
+                <label class="col-md-9" style="text-align: center;color: black;font-size: 15px;font-weight: bold;font-family: Arial, Helvetica, sans-serif;padding-right: 10px;">Automated CLR Edits</label>
+            </mat-card>
+        </div>
+        <div class="col-md-3">
+            <mat-card class="example-card mat-elevation-z2" style="margin-top: 15px;" (click)="RequestAccess('CycleTime')" [matTooltip]="TTCycleTime" matTooltipClass="my-tooltip">
+                <button class="col-md-3" mat-icon-button>
+                    <mat-icon [ngStyle]="{'color': CycleTime_Status == 'Approved' ? '#52BE80' : CycleTime_Status == 'Requested' ? '#2980B9' : CycleTime_Status == 'Declined' || (CycleTime_Status == 'NoRequests' && CycleTime == false) ? '#E74C3C' : '#52BE80'}" aria-label="Side nav toggle icon">{{CycleTime_icon}}</mat-icon>
+                </button>
+                <label class="col-md-9" style="text-align: center;color: black;font-size: 15px;font-weight: bold;font-family: Arial, Helvetica, sans-serif;padding-right: 10px;">Cycle Time Report</label>
+            </mat-card>
+        </div>
+        <div class="col-md-3">
+            <mat-card class="example-card mat-elevation-z2" style="margin-top: 15px;" (click)="RequestAccess('ELTReport')" [matTooltip]="TTELT" matTooltipClass="my-tooltip">
+                <button class="col-md-3" mat-icon-button>
+                    <mat-icon [ngStyle]="{'color': Elt_Status == 'Approved' ? '#52BE80' : Elt_Status == 'Requested' ? '#2980B9' : Elt_Status == 'Declined' || (Elt_Status == 'NoRequests' && Elt == false) ? '#E74C3C' : '#52BE80'}" aria-label="Side nav toggle icon">{{Elt_icon}}</mat-icon>
+                </button>
+                <label class="col-md-9" style="text-align: center;color: black;font-size: 15px;font-weight: bold;font-family: Arial, Helvetica, sans-serif;padding-right: 10px;">ELT Report</label>
+            </mat-card>
+        </div>
+        <div class="col-md-3">
+            <mat-card class="example-card mat-elevation-z2" style="margin-top: 15px;" (click)="RequestAccess('CTO')" [matTooltip]="TTCTO" matTooltipClass="my-tooltip">
+                <button class="col-md-3" mat-icon-button>
+                    <mat-icon [ngStyle]="{'color': CTO_Status == 'Approved' ? '#52BE80' : CTO_Status == 'Requested' ? '#2980B9' : CTO_Status == 'Declined' || (CTO_Status == 'NoRequests' && CTO == false) ? '#E74C3C' : '#52BE80'}" aria-label="Side nav toggle icon">{{CTO_icon}}</mat-icon>
+                </button>
+                <label class="col-md-9" style="text-align: center;color: black;font-size: 15px;font-weight: bold;font-family: Arial, Helvetica, sans-serif;padding-right: 10px;">Critical Task Overdue</label>
+            </mat-card>
+        </div>
+        <div class="col-md-3">
+            <mat-card class="example-card mat-elevation-z2" style="margin-top: 15px;" (click)="RequestAccess('LL')" [matTooltip]="TTLL" matTooltipClass="my-tooltip">
+                <button class="col-md-3" mat-icon-button>
+                    <mat-icon [ngStyle]="{'color': LL_Status == 'Approved' ? '#52BE80' : LL_Status == 'Requested' ? '#2980B9' : LL_Status == 'Declined' || (LL_Status == 'NoRequests' && LL == false) ? '#E74C3C' : '#52BE80'}" aria-label="Side nav toggle icon">{{LL_icon}}</mat-icon>
+                </button>
+                <label class="col-md-9" style="text-align: center;color: black;font-size: 15px;font-weight: bold;font-family: Arial, Helvetica, sans-serif;padding-right: 10px;">Lessons Learnt</label>
+            </mat-card>
+        </div>
+        <div class="col-md-3">
+            <mat-card class="example-card mat-elevation-z2" style="margin-top: 15px;" (click)="RequestAccess('StageGate')" [matTooltip]="TTStageGate" matTooltipClass="my-tooltip">
+                <button class="col-md-3" mat-icon-button>
+                    <mat-icon [ngStyle]="{'color': StageGate_Status == 'Approved' ? '#52BE80' : StageGate_Status == 'Requested' ? '#2980B9' : StageGate_Status == 'Declined' || (StageGate_Status == 'NoRequests' && StageGate == false) ? '#E74C3C' : '#52BE80'}"  aria-label="Side nav toggle icon">{{StageGate_icon}}</mat-icon>
+                </button>
+                <label class="col-md-9" style="text-align: center;color: black;font-size: 15px;font-weight: bold;font-family: Arial, Helvetica, sans-serif;padding-right: 10px;">Stage Gate Testing</label>
+            </mat-card>
+        </div>
+        <div class="col-md-3">
+            <mat-card class="example-card mat-elevation-z2" style="margin-top: 15px;" (click)="RequestAccess('MarketCommentEdits')" [matTooltip]="TTMarketEditss" matTooltipClass="my-tooltip">
+                <button class="col-md-3" mat-icon-button>
+                    <mat-icon [ngStyle]="{'color': CommentEdit_Status == 'Approved' ? '#52BE80' : CommentEdit_Status == 'Requested' ? '#2980B9' : CommentEdit_Status == 'Declined' || (CommentEdit_Status == 'NoRequests' && CommentEdit == false) ? '#E74C3C' : '#52BE80'}"  aria-label="Side nav toggle icon">{{CommentEdit_icon}}</mat-icon>
+                </button>
+                <label class="col-md-9" style="text-align: center;color: black;font-size: 15px;font-weight: bold;font-family: Arial, Helvetica, sans-serif;padding-right: 10px;">Market Comment Edits</label>
+            </mat-card>
+        </div>
+        <div class="col-md-3">
+            <mat-card class="example-card mat-elevation-z2" style="margin-top: 15px;" (click)="RequestAccess('IMPS')" [matTooltip]="TTIMPS" matTooltipClass="my-tooltip">
+                <button class="col-md-3" mat-icon-button>
+                    <mat-icon [ngStyle]="{'color': Imps_Status == 'Approved' ? '#52BE80' : Imps_Status == 'Requested' ? '#2980B9' : Imps_Status == 'Declined' || (Imps_Status == 'NoRequests' && IMPS == false) ? '#E74C3C' : '#52BE80'}"  aria-label="Side nav toggle icon">{{imps_icon}}</mat-icon>
+                </button>
+                <label class="col-md-9" style="text-align: center;color: black;font-size: 15px;font-weight: bold;font-family: Arial, Helvetica, sans-serif;padding-right: 10px;">Implementation Project Status</label>
+            </mat-card>
+        </div>
+        <div class="col-md-3">
+            <mat-card class="example-card mat-elevation-z2" style="margin-top: 15px;" (click)="RequestAccess('MarketReport')" [matTooltip]="TTMarket" matTooltipClass="my-tooltip">
+                <button class="col-md-3" mat-icon-button>
+                    <mat-icon [ngStyle]="{'color': Market_Status == 'Approved' ? '#52BE80' : Market_Status == 'Requested' ? '#2980B9' : Market_Status == 'Declined' || (Market_Status == 'NoRequests' && MarketReport == false) ? '#E74C3C' : '#52BE80'}"  aria-label="Side nav toggle icon">{{Market_icon}}</mat-icon>
+                    <!--  -->
+                </button>
+                <label class="col-md-9" style="text-align: center;color: black;font-size: 15px;font-weight: bold;font-family: Arial, Helvetica, sans-serif;padding-right: 10px;">Implementation Market Report</label>
+            </mat-card>
+        </div>
+        <!-- <div class="col-md-3">
+            <mat-card class="example-card mat-elevation-z2" style="margin-top: 15px;" (click)="RequestAccess('NPS')" [matTooltip]="TTNPS" matTooltipClass="my-tooltip">
+                <button class="col-md-3" mat-icon-button>
+                    <mat-icon [ngStyle]="{'color': NPS_Status == 'Approved' ? '#52BE80' : NPS_Status == 'Requested' ? '#2980B9' : NPS_Status == 'Declined' || (NPS_Status == 'NoRequests' && NPS == false) ? '#E74C3C' : '#52BE80'}"  aria-label="Side nav toggle icon">{{NPS_icon}}</mat-icon>
+                   
+                </button>
+                <label class="col-md-9" style="text-align: center;color: black;font-size: 15px;font-weight: bold;font-family: Arial, Helvetica, sans-serif;padding-right: 10px;">NPS</label>
+            </mat-card>
+        </div> -->
+    </div>
+</div>
+
+<!-- <div class="col-md-12">
+    <div class="example-container" [ngStyle]="{'min-height' : ((screenHeight/2)-90)+'px'}" style="margin-left: 15px;border: 1px solid rgb(196, 196, 196);">
+        <table mat-table [dataSource]="dataSource">
+            <ng-container matColumnDef="Client">
+                <th mat-header-cell *matHeaderCellDef class="maintextSizes" style="padding-left: 10px;">Leaders</th>
+                <td mat-cell *matCellDef="let element"  style="padding-left: 10px;"> {{element.Client}} </td>
+            </ng-container>
+            <ng-container matColumnDef="Task1">
+                <th mat-header-cell *matHeaderCellDef class="maintextSizes"> Online testing completed </th>
+                <td mat-cell *matCellDef="let element"> {{element.Task1}} </td>
+            </ng-container>
+            <ng-container matColumnDef="Task2">
+                <th mat-header-cell *matHeaderCellDef class="maintextSizes"> Offline Testing Completed </th>
+                <td mat-cell *matCellDef="let element"> {{element.Task2}} </td>
+            </ng-container>
+            <ng-container matColumnDef="Task3">
+                <th mat-header-cell *matHeaderCellDef class="maintextSizes"> DO NOT DELETE - Offline Testing Completed </th>
+                <td mat-cell *matCellDef="let element"> {{element.Task3}} </td>
+            </ng-container>
+            <ng-container matColumnDef="Task4">
+                <th mat-header-cell *matHeaderCellDef class="maintextSizes"> DO NOT DELETE - Online testing completed </th>
+                <td mat-cell *matCellDef="let element"> {{element.Task4}} </td>
+            </ng-container>
+            <ng-container matColumnDef="Task5">
+                <th mat-header-cell *matHeaderCellDef class="maintextSizes"> MyCWT Hotel Web-Mobile Testing Completed </th>
+                <td mat-cell *matCellDef="let element"> {{element.Task5}} </td>
+            </ng-container>
+            <ng-container matColumnDef="GrandTotal">
+                <th mat-header-cell *matHeaderCellDef class="maintextSizes" style="padding-right: 10px;border-right: none;"> GrandTotal </th>
+                
+                <td mat-cell *matCellDef="let element"  style="padding-right: 10px;border-right: none;"> {{element.GrandTotal}} </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;" style="height: 35px;"></tr>
+        </table>
+    </div>
+</div> -->

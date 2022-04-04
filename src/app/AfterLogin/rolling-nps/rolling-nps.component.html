@@ -1,0 +1,210 @@
+<div class="row" style="margin: 0px;padding: 0px;">
+    <div class="col-md-3"></div>
+    <div class="col-md-6" style="margin-top: 50px;">
+        <div class="example-container"  style="height: auto;border: 2px solid black;">
+            <table mat-table [dataSource]="dataSource">
+                <ng-container matColumnDef="RowLabel">
+                    <th mat-header-cell *matHeaderCellDef class="textSizes" style="padding-left: 10px;background-color:  rgb(250, 191, 143);color: black;border-top:2px solid black">NPS Indicator</th>
+                    <td mat-cell *matCellDef="let element" class="text_sizes" style="padding-left: 10px;color: black;">{{element.RowLabel}}</td>
+                    <td mat-footer-cell *matFooterCellDef class="textSizes" style="background-color:  rgb(213, 216, 220);color: black;border-top:2px solid black">Grand Total</td>
+                </ng-container>
+                <ng-container matColumnDef="APAC">
+                    <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color:  rgb(250, 191, 143);color: black;border-top:2px solid black">APAC</th>
+                    <td mat-cell *matCellDef="let element" class="text_sizes"> {{element.APAC}} </td>
+                    <td mat-footer-cell *matFooterCellDef class="textSizes" style="background-color:  rgb(213, 216, 220);color: black;border-top:2px solid black">{{CurrentMonthAPACTotal}}</td>
+                </ng-container>
+                <ng-container matColumnDef="EMEA">
+                    <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color:  rgb(250, 191, 143);color: black;border-top:2px solid black">EMEA</th>
+                    <td mat-cell *matCellDef="let element" class="text_sizes"> {{element.EMEA}} </td>
+                    <td mat-footer-cell *matFooterCellDef class="textSizes" style="background-color:  rgb(213, 216, 220);color: black;border-top:2px solid black">{{CurrentMonthEMEATotal}}</td>
+                </ng-container>
+                <ng-container matColumnDef="Global">
+                    <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color:  rgb(250, 191, 143);color: black;border-top:2px solid black">Global</th>
+                    <td mat-cell *matCellDef="let element" class="text_sizes"> {{element.Global}} </td>
+                    <td mat-footer-cell *matFooterCellDef class="textSizes" style="background-color:  rgb(213, 216, 220);color: black;border-top:2px solid black">{{CurrentMonthGlobalTotal}}</td>
+                </ng-container>
+                <ng-container matColumnDef="LATAM">
+                    <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color:  rgb(250, 191, 143);color: black;border-top:2px solid black">LATAM</th>
+                    <td mat-cell *matCellDef="let element" class="text_sizes"> {{element.LATAM}} </td>
+                    <td mat-footer-cell *matFooterCellDef class="textSizes" style="background-color:  rgb(213, 216, 220);color: black;border-top:2px solid black">{{CurrentMonthLATAMTotal}}</td>
+                </ng-container>
+                <ng-container matColumnDef="NORAM">
+                    <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color:  rgb(250, 191, 143);color: black;border-top:2px solid black">NORAM</th>
+                    <td mat-cell *matCellDef="let element" class="text_sizes"> {{element.NORAM}} </td>
+                    <td mat-footer-cell *matFooterCellDef class="textSizes" style="background-color:  rgb(213, 216, 220);color: black;border-top:2px solid black">{{CurrentMonthNORAMTotal}}</td>
+                </ng-container>
+                <ng-container matColumnDef="GrandTotal">
+                    <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color:  rgb(250, 191, 143);color: black;border-top:2px solid black;font-weight: bold;">Grand Total</th>
+                    <td mat-cell *matCellDef="let element" class="text_sizes"> {{element.GrandTotal}} </td>
+                    <td mat-footer-cell *matFooterCellDef class="textSizes" style="background-color:  rgb(213, 216, 220);color: black;border-top:2px solid black">{{CurrentMonthGrandTotal}}</td>
+                </ng-container>
+                <ng-container matColumnDef="NPS">
+                    <th mat-header-cell *matHeaderCellDef class="textSizes" style="padding-right: 10px;background-color:  #F9E79F;border-right: none;color: black;font-weight: bold;border-top:2px solid black">NPS</th>
+                    <td mat-cell *matCellDef="let element" class="text_sizes" style="padding-right: 10px;font-weight: bold;border-right: none;"> {{element.NPS}} % </td>
+                    <td mat-footer-cell *matFooterCellDef class="textSizes" style="background-color:  #58D68D;color: black;padding-right: 10px;border-right: none;border-top:2px solid black">{{CurrentMonthNPS}}</td>
+                </ng-container>
+                <!-- <ng-container  matColumnDef="loader" sticky>
+                    <th mat-header-cell *matHeaderCellDef style="text-align: center;width: 100%;border-right: none;border-bottom: none;padding-left: 0px;padding-right: 0px;" colspan="25">
+                        <div *ngIf="isLoading_OR" style="display: flex; justify-content: center;align-items: center;" [ngStyle]="{'height' : (screenHeight-365)+'px','width' : (screenWidth-50)+'px'}">
+                            <div class="sk-circle">
+                                <a style="width: 100%">
+                                    <img [src]="imageUrl" style="height: 50px;margin: 85px 0px 0px 0px;">
+                                </a>
+                                <div class="sk-circle1 sk-child"></div>
+                                <div class="sk-circle2 sk-child"></div>
+                                <div class="sk-circle3 sk-child"></div>
+                                <div class="sk-circle4 sk-child"></div>
+                                <div class="sk-circle5 sk-child"></div>
+                                <div class="sk-circle6 sk-child"></div>
+                                <div class="sk-circle7 sk-child"></div>
+                                <div class="sk-circle8 sk-child"></div>
+                                <div class="sk-circle9 sk-child"></div>
+                                <div class="sk-circle10 sk-child"></div>
+                                <div class="sk-circle11 sk-child"></div>
+                                <div class="sk-circle12 sk-child"></div>
+                            </div>
+                        </div>
+                    </th>
+                </ng-container> -->
+                <ng-container matColumnDef="header">
+                    <th mat-header-cell *matHeaderCellDef class="textSizes_header" style="background-color: #3B8AD9;text-align: center;" colspan="8">{{CurrentMonth}}</th>
+                </ng-container>
+                <ng-container matColumnDef="YTD">
+                    <th mat-footer-cell *matFooterCellDef  style="font-weight: bold;background-color: #F9E79F;text-align: center;border-top: 2px solid black;border-right: 1px solid black;cursor : pointer" (click)="LoadYTDData()" colspan="7">{{ytdtext}}</th>
+                </ng-container>
+                <ng-container matColumnDef="YTDTotal">
+                    <th mat-footer-cell *matFooterCellDef  style="font-weight: bold;border-right: none;border-top: 2px solid black;background-color: rgb(250, 191, 143);color: black;text-align: center;cursor : pointer" (click)="LoadYTDData()">{{YTDNPSTotal}}</th>
+                </ng-container>
+                <ng-container matColumnDef="RollingNPS">
+                    <th mat-footer-cell *matFooterCellDef  style="font-weight: bold;background-color: #F9E79F;text-align: center;border-top: 1px solid black;border-right: 1px solid black;cursor : pointer" colspan="7" (click)="LoadPreviousMonthsData()">Rolling NPS 12 Months</th>
+                </ng-container>
+                <ng-container matColumnDef="RollingNPSTotal">
+                    <th mat-footer-cell *matFooterCellDef  style="font-weight: bold;border-right: none;border-top: 1px solid black;background-color: #58D68D;color: black;text-align: center;cursor : pointer" (click)="LoadPreviousMonthsData()">{{PrevYearTotal}}</th>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="['header']; sticky: true" style="height: 30px;max-height: 30px;"></tr>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky : true;" style="height: 30px;max-height: 30px;"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;" style="height: 30px;max-height: 30px;"></tr>
+                <tr mat-footer-row *matFooterRowDef="displayedColumns; sticky: true" style="height: 30px;max-height: 30px;"></tr>
+                <tr mat-footer-row *matFooterRowDef="['YTD','YTDTotal'];sticky: true" style="height: 30px;max-height: 30px;"></tr>
+                <tr mat-footer-row *matFooterRowDef="['RollingNPS','RollingNPSTotal'];sticky: true" style="height: 30px;max-height: 30px;"></tr>
+            </table>
+        </div>
+    </div>
+    <div class="col-md-12" style="margin-top: 20px;margin-bottom: 20px;text-align: center;">
+        <mat-form-field style="width: 250px;">
+            <mat-label style="font-size: 15px;">Year-Month</mat-label>
+            <mat-select [formControl]="YearMonth"  multiple (selectionChange)="onYearMonthchange()">
+                <mat-select-trigger>
+                    {{YearMonth.value ? YearMonth.value[0] : ''}}
+                    <span *ngIf="YearMonth.value?.length > 1" class="example-additional-selection">
+                      (+{{YearMonth.value.length - 1}} {{YearMonth.value?.length === 2 ? 'Year-Month' : 'Year-Months'}})
+                    </span>
+                </mat-select-trigger>
+                <mat-option>
+                    <ngx-mat-select-search
+                      [formControl]="yearmonthsearch"
+                      placeholderLabel=""
+                      noEntriesFoundLabel="'no match found'">
+                    </ngx-mat-select-search>
+                </mat-option>
+                <div style="padding-top: 15px">
+                    <mat-checkbox style="margin-left: 15px;margin-top: 25px;" class="example-margin" [(ngModel)]="masterYearMonth" name="masterYearMonth" (change)="checkUncheckYearMonth()" color="primary">Select all</mat-checkbox>
+                </div>
+                <mat-divider style="margin-left: 5px;margin-right: 5px"></mat-divider>
+                <mat-option *ngFor="let month of YearMonthData | async" [value]="month.YearMonth">{{month.YearMonth}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <button mat-raised-button (click)="OnApplyClick()" style="background-color: #F16950;color: white;margin-left: 25px;width: 200px;">Apply</button>
+    </div>
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <div class="example-container"  style="height: auto;border: 2px solid black;">
+            <table mat-table [dataSource]="dataSource_nps">
+                <ng-container matColumnDef="RowLabel">
+                    <th mat-header-cell *matHeaderCellDef class="textSizes" style="padding-left: 10px;background-color:  rgb(250, 191, 143);color: black;">NPS Indicator</th>
+                    <td mat-cell *matCellDef="let element" class="text_sizes" style="padding-left: 10px;color: black;">{{element.RowLabel}}</td>
+                    <td mat-footer-cell *matFooterCellDef class="textSizes" style="background-color:  rgb(213, 216, 220);color: black;border-top:2px solid black">Grand Total</td>
+                </ng-container>
+                <ng-container matColumnDef="APAC">
+                    <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color:  rgb(250, 191, 143);color: black;">APAC</th>
+                    <td mat-cell *matCellDef="let element" class="text_sizes"> {{element.APAC}} </td>
+                    <td mat-footer-cell *matFooterCellDef class="textSizes" style="background-color:  rgb(213, 216, 220);color: black;border-top:2px solid black">{{CurrentMonthAPACTotal_d}}</td>
+                </ng-container>
+                <ng-container matColumnDef="EMEA">
+                    <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color:  rgb(250, 191, 143);color: black;">EMEA</th>
+                    <td mat-cell *matCellDef="let element" class="text_sizes"> {{element.EMEA}} </td>
+                    <td mat-footer-cell *matFooterCellDef class="textSizes" style="background-color:  rgb(213, 216, 220);color: black;border-top:2px solid black">{{CurrentMonthEMEATotal_d}}</td>
+                </ng-container>
+                <ng-container matColumnDef="Global">
+                    <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color:  rgb(250, 191, 143);color: black;">Global</th>
+                    <td mat-cell *matCellDef="let element" class="text_sizes"> {{element.Global}} </td>
+                    <td mat-footer-cell *matFooterCellDef class="textSizes" style="background-color:  rgb(213, 216, 220);color: black;border-top:2px solid black">{{CurrentMonthGlobalTotal_d}}</td>
+                </ng-container>
+                <ng-container matColumnDef="LATAM">
+                    <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color:  rgb(250, 191, 143);color: black;">LATAM</th>
+                    <td mat-cell *matCellDef="let element" class="text_sizes"> {{element.LATAM}} </td>
+                    <td mat-footer-cell *matFooterCellDef class="textSizes" style="background-color:  rgb(213, 216, 220);color: black;border-top:2px solid black">{{CurrentMonthLATAMTotal_d}}</td>
+                </ng-container>
+                <ng-container matColumnDef="NORAM">
+                    <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color:  rgb(250, 191, 143);color: black;">NORAM</th>
+                    <td mat-cell *matCellDef="let element" class="text_sizes"> {{element.NORAM}} </td>
+                    <td mat-footer-cell *matFooterCellDef class="textSizes" style="background-color:  rgb(213, 216, 220);color: black;border-top:2px solid black">{{CurrentMonthNORAMTotal_d}}</td>
+                </ng-container>
+                <ng-container matColumnDef="GrandTotal">
+                    <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color:  rgb(250, 191, 143);color: black;font-weight: bold;">Grand Total</th>
+                    <td mat-cell *matCellDef="let element" class="text_sizes"> {{element.GrandTotal}} </td>
+                    <td mat-footer-cell *matFooterCellDef class="textSizes" style="background-color:  rgb(213, 216, 220);color: black;border-top:2px solid black">{{CurrentMonthGrandTotal_d}}</td>
+                </ng-container>
+                <ng-container matColumnDef="NPS">
+                    <th mat-header-cell *matHeaderCellDef class="textSizes" style="padding-right: 10px;background-color:  #F9E79F;border-right: none;color: black;font-weight: bold;">NPS</th>
+                    <td mat-cell *matCellDef="let element" class="text_sizes" style="padding-right: 10px;font-weight: bold;border-right: none;"> {{element.NPS}} % </td>
+                    <td mat-footer-cell *matFooterCellDef class="textSizes" style="background-color:  #58D68D;color: black;padding-right: 10px;border-right: none;border-top:2px solid black">{{CurrentMonthNPS_d}}</td>
+                </ng-container>
+                <!-- <ng-container  matColumnDef="loader" sticky>
+                    <th mat-header-cell *matHeaderCellDef style="text-align: center;width: 100%;border-right: none;border-bottom: none;padding-left: 0px;padding-right: 0px;" colspan="25">
+                        <div *ngIf="isLoading_OR" style="display: flex; justify-content: center;align-items: center;" [ngStyle]="{'height' : (screenHeight-365)+'px','width' : (screenWidth-50)+'px'}">
+                            <div class="sk-circle">
+                                <a style="width: 100%">
+                                    <img [src]="imageUrl" style="height: 50px;margin: 85px 0px 0px 0px;">
+                                </a>
+                                <div class="sk-circle1 sk-child"></div>
+                                <div class="sk-circle2 sk-child"></div>
+                                <div class="sk-circle3 sk-child"></div>
+                                <div class="sk-circle4 sk-child"></div>
+                                <div class="sk-circle5 sk-child"></div>
+                                <div class="sk-circle6 sk-child"></div>
+                                <div class="sk-circle7 sk-child"></div>
+                                <div class="sk-circle8 sk-child"></div>
+                                <div class="sk-circle9 sk-child"></div>
+                                <div class="sk-circle10 sk-child"></div>
+                                <div class="sk-circle11 sk-child"></div>
+                                <div class="sk-circle12 sk-child"></div>
+                            </div>
+                        </div>
+                    </th>
+                </ng-container> -->
+                <ng-container matColumnDef="header">
+                    <th mat-header-cell *matHeaderCellDef class="textSizes_header" style="background-color: #3B8AD9;text-align: center;border-bottom: 2px solid black" colspan="8">{{headerText}}</th>
+                </ng-container>
+                <ng-container matColumnDef="YTD">
+                    <th mat-footer-cell *matFooterCellDef  style="font-weight: bold;background-color: #F9E79F;text-align: center;border-top: 2px solid black;border-right: 1px solid black;cursor : pointer" colspan="7">{{s_ytdtext}}</th>
+                </ng-container>
+                <ng-container matColumnDef="YTDTotal">
+                    <th mat-footer-cell *matFooterCellDef  style="font-weight: bold;border-right: none;border-top: 2px solid black;background-color: rgb(250, 191, 143);color: black;text-align: center;cursor : pointer">{{S_YTDNPSTotal}}</th>
+                </ng-container>
+                <ng-container matColumnDef="RollingNPS">
+                    <th mat-footer-cell *matFooterCellDef  style="font-weight: bold;background-color: #F9E79F;text-align: center;border-top: 1px solid black;border-right: 1px solid black;cursor : pointer;" colspan="7">Rolling NPS 12 Months</th>
+                </ng-container>
+                <ng-container matColumnDef="RollingNPSTotal">
+                    <th mat-footer-cell *matFooterCellDef  style="font-weight: bold;border-right: none;border-top: 1px solid black;background-color: #58D68D;color: black;text-align: center;cursor : pointer;">{{S_PrevYearTotal}}</th>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="['header']; sticky: true" style="height: 30px;max-height: 30px;"></tr>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns_nps; sticky : true;" style="height: 30px;max-height: 30px;"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns_nps;" style="height: 30px;max-height: 30px;"></tr>
+                <tr mat-footer-row *matFooterRowDef="displayedColumns_nps; sticky: true" style="height: 30px;max-height: 30px;"></tr>
+                <tr mat-footer-row *matFooterRowDef="['YTD','YTDTotal'];sticky: true" style="height: 30px;max-height: 30px;"></tr>
+                <tr mat-footer-row *matFooterRowDef="['RollingNPS','RollingNPSTotal'];sticky: true" style="height: 30px;max-height: 30px;"></tr>
+            </table>
+        </div>
+    </div>
+</div>

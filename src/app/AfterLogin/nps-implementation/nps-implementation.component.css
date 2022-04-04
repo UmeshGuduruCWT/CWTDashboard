@@ -1,0 +1,63 @@
+.header_wrap{
+    width: 98.2%;
+    background-color: #FF5736;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    font-size: 23px;
+    height: 50px;
+    border-radius: 5px;
+    margin-top: 25px;
+    margin-left: 0.9%;
+    padding-top: 12.5px;
+    letter-spacing: 2px;
+}
+.nps_values{
+    background-color: #0070C0;
+    height: 120px;
+    border-radius: 5px;
+    margin-top: 25px;
+}
+.nps_value_header{
+    width: 100%;
+    text-align: center;
+    color: white;
+    font-size: 16px;
+    font-weight: normal;
+    margin-top: 15px;
+}
+.nps_value_value{
+    width: 100%;
+    text-align: center;
+    color: white;
+    font-size: 40px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    margin-top: 20px;
+}
+.nps_graph_wrap{
+    border: 1px solid #0070C0;
+    height: auto;
+    margin-top: 20px;
+}
+canvas {
+    background-color: white;
+}
+.nps_graph_header{
+    background-color: #0070C0;
+    color: white;
+    height: 35px;
+    padding-top: 7.5px;
+    font-size: 20px;
+    letter-spacing: 1px;
+    text-align: center;
+}
+.nps_semanticgraph_header{
+    background-color: #0070C0;
+    color: white;
+    height: 60px;
+    padding-top: 7.5px;
+    font-size: 20px;
+    letter-spacing: 1px;
+    text-align: center;
+}

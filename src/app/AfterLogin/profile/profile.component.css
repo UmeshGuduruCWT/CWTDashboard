@@ -1,0 +1,38 @@
+.maintextSizes{
+    text-align: center;
+    background-color: rgb(80, 100, 100);
+    font-family: "Montserrat", sans-serif;
+    font-size: 13px;
+    color: white;
+}
+table {
+    width: 100%;
+  }
+.example-container {
+    /* max-height: 370px; */
+    overflow: auto; 
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+::ng-deep .my-tooltip {
+  white-space: pre-line;
+  font-size: 12px;
+}
+.mat-cell,.mat-header-cell {
+    /* width: max-content; */
+    /* min-width: 100px;
+    max-width: 250px; */
+    word-wrap: break-word !important;
+    text-align:  center;
+    border-right: 1px solid rgb(196, 196, 196);
+    padding-left: 10px;
+    padding-right: 10px;
+    /* white-space: nowrap; */
+  }
+  .mat-cell{
+    font-size: 13px;
+    text-align: center;
+  }
+  ::ng-deep .mat-expansion-panel-body{
+    padding: 0 !important;
+  }

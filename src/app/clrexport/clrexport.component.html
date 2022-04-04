@@ -1,0 +1,60 @@
+<div class="col-12">
+  <div class="example-container3 mat-elevation-z2" style="margin: 15px;">
+      <table mat-table matTableFilter [exampleEntity]="filterEntity" [filterType]="filterType" matSort  [dataSource]="dataSource_VCtPc" style="text-align: center;">
+          <ng-container matColumnDef="GoLiveMonth">
+              <th mat-header-cell mat-sort-header *matHeaderCellDef class="textSizes" style="background-color:  rgb(112, 173, 71);color: white;text-align: center;"> Go Live Month </th>
+              <td mat-cell *matCellDef="let element"> {{element.GoLiveMonth}} </td>
+              <td mat-footer-cell *matFooterCellDef> Grand Total </td>
+          </ng-container>
+          <ng-container matColumnDef="Revenue_Total_Volume">
+              <th mat-header-cell mat-sort-header *matHeaderCellDef class="textSizes" style="text-align: center;background-color: rgb(77, 94, 118);color: white"> Revenue Total Volume USD </th>
+              <td mat-cell *matCellDef="let element"> {{element.Revenue_Total_Volume}} </td>
+              <td mat-footer-cell *matFooterCellDef>{{ChartRevenueTotalVolume}}</td>
+          </ng-container>
+          <ng-container matColumnDef="ProjectsCount">
+              <th mat-header-cell mat-sort-header *matHeaderCellDef class="textSizes" style="text-align: center;background-color: rgb(241, 130, 38);color: white"> Count of Projects </th>
+              <td mat-cell *matCellDef="let element"> {{element.ProjectsCount}} </td>
+              <td mat-footer-cell *matFooterCellDef>{{ChartProjectCount}}</td>
+          </ng-container>
+          <ng-container matColumnDef="AvgCycleTime">
+              <th mat-header-cell mat-sort-header *matHeaderCellDef class="textSizes" style="text-align: center;background-color: rgb(0, 100, 200);color : white"> Average of Cycle Time </th>
+              <td mat-cell *matCellDef="let element"> {{element.AvgCycleTime}} </td>
+              <td mat-footer-cell *matFooterCellDef>{{ChartAvgCycleTime}}</td>
+          </ng-container>
+          <ng-container matColumnDef="GoLiveMonthh">
+              <th mat-header-cell *matHeaderCellDef colspan="1">
+                  <mat-form-field appearance="outline">
+                      <input matInput placeholder="Go Live Month" [(ngModel)]="filterEntity.GoLiveMonth">
+                  </mat-form-field>
+              </th>
+          </ng-container>
+          <ng-container matColumnDef="Revenue_Total_Volumeh">
+              <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader">
+                  <!-- <mat-form-field appearance="outline">
+                      <input matInput placeholder="Revenue Volume" [(ngModel)]="filterEntity.Revenue_Total_Volume">
+                  </mat-form-field> -->
+              </th>
+          </ng-container>
+          <ng-container matColumnDef="ProjectsCounth">
+              <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader">
+                  <mat-form-field appearance="outline">
+                      <input matInput placeholder="Projects Count" [(ngModel)]="filterEntity.ProjectsCount">
+                  </mat-form-field>
+              </th>
+          </ng-container>
+          <ng-container matColumnDef="AvgCycleTimeh">
+              <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader">
+                  <mat-form-field appearance="outline">
+                      <input matInput placeholder="Avg Cycle Time" [(ngModel)]="filterEntity.AvgCycleTime">
+                  </mat-form-field>
+              </th>
+          </ng-container>
+          <!-- <tr mat-header-row *matHeaderRowDef="['Go_Live_Monthh','Revenue_Total_Volumeh','ProjectsCounth','AvgCycleTimeh']" style="height: 35px;"></tr> -->
+          <tr mat-header-row *matHeaderRowDef="displayedColumns_VCTPC; sticky: true" style="padding-top: 0px;margin-top: 0px;height: 35px"></tr>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns_VCTPCheader; sticky: true" style="padding-top: 0px;margin-top: 0px;height: 35px"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns_VCTPC;" style="height: 35px;"></tr>
+          <tr mat-footer-row *matFooterRowDef="displayedColumns_VCTPC; sticky: true" style="height: 35px;"></tr>
+      </table>
+      <mat-paginator #paginator [pageSizeOptions]="[5, 10, 20]" [pageSize]="5" showFirstLastButtons></mat-paginator>
+  </div>
+</div>

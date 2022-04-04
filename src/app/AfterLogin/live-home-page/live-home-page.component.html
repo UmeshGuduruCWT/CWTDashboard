@@ -1,0 +1,303 @@
+<!-- <div class="center" [ngStyle]="{'height' : (screenHeight-60)+'px','line-height' : (screenHeight-60)+'px'}">
+    <a>
+        <img [src]="imageUrl" style="height: 135px;">
+    </a>
+</div> -->
+
+<!-- <div class="main_wrap">
+    <div class="inner" style="text-align: center">
+        <a class="loader_wrap"><img [src]="imageUrl"  style="cursor: pointer;"></a>
+    </div>
+</div> -->
+<div class="row" style="margin: 0px;padding: 0px;">
+    <div class="row col-md-12" style="margin: 0px;padding: 0px;text-align: center;">
+        <div class="col-md-3">
+        </div>
+        <div class="col-md-6" style="margin-top: 25px;margin-bottom: 25px;">
+            <a style="margin : 0 auto;"><img [src]="imageUrl" style="cursor: pointer;width: 150px;"></a>
+        </div>
+        <div class="col-md-3">
+        </div>
+        <div class="col-md-12" style="margin-bottom: 15px;">
+            <button mat-raised-button [ngStyle]="{'background-color' : GlobalData == true ? 'white' : '#F16950','color' : GlobalData == true ? '#F16950' : 'white'}" style="border : 1px solid #F16950;width: 100px;" (click)="GlobalClick()">Global</button>
+            <button mat-raised-button [ngStyle]="{'background-color' : APACData == true ? 'white' : '#F16950','color' : APACData == true ? '#F16950' : 'white'}" style="margin-left: 25px;border : 1px solid #F16950;width: 100px" (click)="APACClick()">APAC</button>
+            <button mat-raised-button [ngStyle]="{'background-color' : LATAMData == true ? 'white' : '#F16950','color' : LATAMData == true ? '#F16950' : 'white'}" style="margin-left: 25px;border : 1px solid #F16950;width: 100px" (click)="LATAMClick()">LATAM</button>
+            <button mat-raised-button [ngStyle]="{'background-color' : NORAMData == true ? 'white' : '#F16950','color' : NORAMData == true ? '#F16950' : 'white'}" style="margin-left: 25px;border : 1px solid #F16950;width: 100px" (click)="NORAMClick()">NORAM</button>
+            <button mat-raised-button [ngStyle]="{'background-color' : EMEAData == true ? 'white' : '#F16950','color' : EMEAData == true ? '#F16950' : 'white'}"style="margin-left: 25px;border : 1px solid #F16950;width: 100px" (click)="EMEAClick()">EMEA</button>
+        </div>
+        <div class="col-md-12" style="margin-bottom: 5px;">
+            <mat-form-field class="col-2" style="margin-left: 0px;">
+                <mat-label>Country</mat-label>
+                <mat-select [formControl]="Country_FC" [(ngModel)]="CountryNG" multiple (selectionChange)="onCountrychange()" [disabled]="DisableCountry">
+                    <mat-select-trigger>
+                        {{Country_FC.value ? Country_FC.value[0] : ''}}
+                        <span *ngIf="Country_FC.value?.length > 1" class="example-additional-selection">
+                          (+{{Country_FC.value.length - 1}} {{Country_FC.value?.length === 2 ? 'Country' : 'Countries'}})
+                        </span>
+                    </mat-select-trigger>
+                    <div style="padding-top: 15px">
+                        <mat-checkbox style="margin-left: 15px;margin-top: 25px;" class="example-margin" [(ngModel)]="mastercountry" name="mastercountry" (change)="checkUncheckCountry()" color="primary">Select all</mat-checkbox>
+                    </div>
+                    <mat-divider style="margin-left: 5px;margin-right: 5px"></mat-divider>
+                    <mat-option *ngFor="let country of CountryList" [value]="country.Country">{{country.Country}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col-md-12">
+            <label style="color: red;font-weight:  bold;"> *Does Not Include Partner Markets</label>
+            <!-- <label> *</label> -->
+        </div>
+    <!-- </div>
+    <div class="row col-md-12" style="margin-left: 15px;"> -->
+        <!-- <div class="col-md-1">
+        </div> -->
+        <div class="col-md-2" style="margin-left: 7%;">
+            <mat-card class=" example-card mat-elevation-z6" style="background-color: #212F3D;">
+                <label class="main_heading" style="color: #F7DC6F;">Year through last month</label><br>
+                <label class="sub_heading" style="color: #F7DC6F;">(Active & Closed)</label><br>
+                <mat-divider style="width: 90%;align-items: center;margin-left: 15px;text-align: center;"></mat-divider>
+                <div class="row col-md-12" style="margin: 15px 0px 0px 0px;padding : 0px;">
+                    <div class="col-md-6" style="margin: 0px;padding : 0px;">
+                        <label class="number_style" >{{PreMonthVolume}}</label>
+                        <label class="des_style" style="color: #58D68D;">Volume</label>
+                    </div>
+                    <div class="col-md-6" style="margin: 0px;padding : 0px;">
+                        <label class="number_style" >{{PreMonthRecords}}</label>
+                        <label class="des_style" style="color: #5DADE2;">Count</label>
+                    </div>
+                </div>
+            </mat-card>
+        </div>
+        <label style="margin-top: 85px;font-weight: bold;">+</label>
+        <div class="col-md-2">
+            <mat-card class="example-card mat-elevation-z6" style="background-color: #212F3D;">
+                <label class="main_heading" style="color: #F7DC6F;">Current Month</label><br>
+                <label class="sub_heading" style="color: #F7DC6F;">(Active & Closed)</label><br>
+                <mat-divider style="width: 90%;align-items: center;margin-left: 15px;text-align: center;"></mat-divider>
+                <div class="row col-md-12" style="margin: 15px 0px 0px 0px;padding : 0px;">
+                    <div class="col-md-6" style="margin: 0px;padding : 0px;">
+                        <label class="number_style">{{CurrentMonthVolume}}</label>
+                        <label class="des_style" style="color: #58D68D;">Volume</label>
+                    </div>
+                    <div class="col-md-6" style="margin: 0px;padding : 0px;">
+                        <label class="number_style">{{CurrentMonthRecords}}</label>
+                        <label class="des_style" style="color: #5DADE2;">Count</label>
+                    </div>
+                </div>
+            </mat-card>
+        </div>
+        <label style="margin-top: 85px;font-weight: bold;">+</label>
+        <div class="col-md-2">
+            <mat-card class="example-card mat-elevation-z6" style="background-color: #212F3D;">
+                <label class="main_heading" style="color: #F7DC6F;">Next Month</label><br>
+                <label class="sub_heading" style="color: #F7DC6F;">(Active)</label><br>
+                <mat-divider style="width: 90%;align-items: center;margin-left: 15px;text-align: center;"></mat-divider>
+                <div class="row col-md-12" style="margin: 15px 0px 0px 0px;padding : 0px;">
+                    <div class="col-md-6" style="margin: 0px;padding : 0px;">
+                        <label class="number_style">{{NextMonthVolume}}</label>
+                        <label class="des_style" style="color: #58D68D;">Volume</label>
+                    </div>
+                    <div class="col-md-6" style="margin: 0px;padding : 0px;">
+                        <label class="number_style">{{NextMonthRecords}}</label>
+                        <label class="des_style" style="color: #5DADE2;">Count</label>
+                    </div>
+                </div>
+            </mat-card>
+        </div>
+        <label style="margin-top: 85px;font-weight: bold;">+</label>
+        <div class="col-md-2">
+            <mat-card class="example-card mat-elevation-z6" style="background-color: #212F3D;">
+                <label class="main_heading" style="color: #F7DC6F;">Remaining Year </label><br>
+                <label class="sub_heading" style="color: #F7DC6F;">(Active & Date not Confirmed)</label><br>
+                <mat-divider style="width: 90%;align-items: center;margin-left: 15px;text-align: center;"></mat-divider>
+                <div class="row col-md-12" style="margin: 15px 0px 0px 0px;padding : 0px;">
+                    <div class="col-md-6" style="margin: 0px;padding : 0px;">
+                        <label class="number_style" >{{RoyMonthVolume}}</label>
+                        <label class="des_style" style="color: #58D68D;">Volume</label>
+                    </div>
+                    <div class="col-md-6" style="margin: 0px;padding : 0px;">
+                        <label class="number_style" >{{RoyMonthRecords}}</label>
+                        <label class="des_style" style="color: #5DADE2;">Count</label>
+                    </div>
+                </div>
+            </mat-card>
+        </div>
+        <label style="margin-top: 85px;font-weight: bold;">=</label>
+        <!-- <div class="col-md-3">
+        </div> -->
+        <div class="col-md-2">
+            <mat-card class="example-card mat-elevation-z6" style="background-color: #212F3D;">
+                <label class="main_heading" style="color: #7DCEA0;">Expected Current Year </label><br>
+                <label class="sub_heading" style="color: #212F3D;">212F3D</label><br>
+                <mat-divider style="width: 90%;align-items: center;margin-left: 15px;text-align: center;"></mat-divider>
+                <div class="row col-md-12" style="margin: 15px 0px 0px 0px;padding : 0px;">
+                    <div class="col-md-6" style="margin: 0px;padding : 0px;">
+                        <label class="number_style" style="color: #AF7AC5;font-size: 19px;">{{ExpectedCurrentMonthVolume}}</label>
+                        <label class="des_style" style="color: #58D68D;">Volume</label>
+                    </div>
+                    <div class="col-md-6" style="margin: 0px;padding : 0px;">
+                        <label class="number_style" style="color : #AF7AC5;font-size: 19px;">{{ExpectedCurrentMonthRecords}}</label>
+                        <label class="des_style" style="color: #5DADE2;">Count</label>
+                    </div>
+                </div>
+            </mat-card>
+        </div>
+        <div class="col-md-1">
+        </div>
+        <div class="col-10" style="margin-top: 15px;margin-bottom: 15px;">
+            <mat-divider></mat-divider>
+        </div>
+        <div class="col-md-1">
+        </div>
+    <!-- </div>
+    <div class="row col-md-12" style="margin-left: 15px;"> -->
+        <div class="col-md-2" style="margin-left: 7%;">
+            <mat-card class="example-card mat-elevation-z6" style="background-color: #212F3D;">
+                <label class="main_heading" style="color: #DC7633;">Future Years </label><br>
+                <label class="sub_heading" style="color: #DC7633;">(Active & Date not Confirmed)</label><br>
+                <mat-divider style="width: 90%;align-items: center;margin-left: 15px;text-align: center;"></mat-divider>
+                <div class="row col-md-12" style="margin: 15px 0px 0px 0px;padding : 0px;">
+                    <div class="col-md-6" style="margin: 0px;padding : 0px;">
+                        <label class="number_style" >{{FutureYearsVolume}}</label>
+                        <label class="des_style" style="color: #58D68D;">Volume</label>
+                    </div>
+                    <div class="col-md-6" style="margin: 0px;padding : 0px;">
+                        <label class="number_style" >{{FutureYearsRecords}}</label>
+                        <label class="des_style" style="color: #5DADE2;">Count</label>
+                    </div>
+                </div>
+            </mat-card>
+        </div>
+        <label style="margin-top: 85px;font-weight: bold;">+</label>
+        <div class="col-md-2">
+            <mat-card class="example-card mat-elevation-z6" style="background-color: #212F3D;">
+                <label class="main_heading" style="color: #DC7633;">On Hold</label><br>
+                <label class="sub_heading" style="color: #212F3D;">NA</label><br>
+                <mat-divider style="width: 90%;align-items: center;margin-left: 15px;text-align: center;"></mat-divider>
+                <div class="row col-md-12" style="margin: 15px 0px 0px 0px;padding : 0px;">
+                    <div class="col-md-6" style="margin: 0px;padding : 0px;">
+                        <label class="number_style">{{HoldVolume}}</label>
+                        <label class="des_style" style="color: #58D68D;">Volume</label>
+                    </div>
+                    <div class="col-md-6" style="margin: 0px;padding : 0px;">
+                        <label class="number_style">{{HoldRecords}}</label>
+                        <label class="des_style" style="color: #5DADE2;">Count</label>
+                    </div>
+                </div>
+            </mat-card>
+        </div>
+        <label style="margin-top: 85px;font-weight: bold;">+</label>
+        <div class="col-md-2">
+            <mat-card class="example-card mat-elevation-z6" style="background-color: #212F3D;">
+                <label class="main_heading" style="color: #DC7633;">Pipeline </label><br>
+                <label class="sub_heading" style="color: #212F3D;">NA</label><br>
+                <mat-divider style="width: 90%;align-items: center;margin-left: 15px;text-align: center;"></mat-divider>
+                <div class="row col-md-12" style="margin: 15px 0px 0px 0px;padding : 0px;">
+                    <div class="col-md-6" style="margin: 0px;padding : 0px;">
+                        <label class="number_style">{{PipelineVolume}}</label>
+                        <label class="des_style" style="color: #58D68D;">Volume</label>
+                    </div>
+                    <div class="col-md-6" style="margin: 0px;padding : 0px;">
+                        <label class="number_style">{{PipelineRecords}}</label>
+                        <label class="des_style" style="color: #5DADE2;">Count</label>
+                    </div>
+                </div>
+            </mat-card>
+        </div>
+        <label style="margin-top: 85px;font-weight: bold;">+</label>
+        <div class="col-md-2">
+            <mat-card class="example-card mat-elevation-z6" style="background-color: #212F3D;">
+                <label class="main_heading" style="color: #DC7633;">High Potential </label><br>
+                <label class="sub_heading" style="color: #212F3D;">NA</label><br>
+                <mat-divider style="width: 90%;align-items: center;margin-left: 15px;text-align: center;"></mat-divider>
+                <div class="row col-md-12" style="margin: 15px 0px 0px 0px;padding : 0px;">
+                    <div class="col-md-6" style="margin: 0px;padding : 0px;">
+                        <label class="number_style" >{{HighPotentialVolume}}</label>
+                        <label class="des_style" style="color: #58D68D;">Volume</label>
+                    </div>
+                    <div class="col-md-6" style="margin: 0px;padding : 0px;">
+                        <label class="number_style" >{{HighPotentialRecords}}</label>
+                        <label class="des_style" style="color: #5DADE2;">Count</label>
+                    </div>
+                </div>
+            </mat-card>
+        </div>
+        <label style="margin-top: 85px;font-weight: bold;">=</label>
+        <!-- <div class="col-md-3">
+        </div> -->
+        <div class="col-md-2">
+            <mat-card class="example-card mat-elevation-z6" style="background-color: #212F3D;">
+                <label class="main_heading" style="color: #7DCEA0;">Potential</label><br>
+                <label class="sub_heading" style="color: #212F3D;">NA</label><br>
+                <mat-divider style="width: 90%;align-items: center;margin-left: 15px;text-align: center;"></mat-divider>
+                <div class="row col-md-12" style="margin: 15px 0px 0px 0px;padding : 0px;">
+                    <div class="col-md-6" style="margin: 0px;padding : 0px;">
+                        <label class="number_style" style="color: #AF7AC5;font-size: 19px;">{{PotentialVolume}}</label>
+                        <label class="des_style" style="color: #58D68D;">Volume</label>
+                    </div>
+                    <div class="col-md-6" style="margin: 0px;padding : 0px;">
+                        <label class="number_style" style="color: #AF7AC5;font-size: 19px;">{{PotentialRecords}}</label>
+                        <label class="des_style" style="color: #5DADE2;">Count</label>
+                    </div>
+                </div>
+            </mat-card>
+        </div>
+    </div>
+</div>
+<!-- <div class="main_wrap">
+    <div class="inner" style="text-align: center">
+        <div class="loader_wrap">
+            <div class=" row" style="margin: 0px;padding: 0px;text-align: center;">
+                <a style="margin : 0 auto;"><img [src]="imageUrl" style="cursor: pointer;width: 150px;"></a>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4">
+                        <mat-card class="example-card mat-elevation-z6" style="float: right;height: 130px;text-align: center;background-color: #212F3D">
+                            <label class="heading_text">YTD Volume</label><br>
+                            <label class="heading_text">(Closed)</label><br>
+                            <label class="text_color" style="color : #229954">{{ClosedRevenue}}</label>
+                        </mat-card>
+                    </div>
+                    <div class="col-md-4">
+                        <mat-card class="example-card mat-elevation-z6" style="margin: 20px auto;height: 130px;text-align: center;color: white;background-color: #212F3D">
+                            <label class="heading_text">YTD Volume</label><br>
+                            <label class="heading_text">(Active)</label><br>
+                            <label class="text_color" style="color: #2E86C1">{{ActiveRevenue}}</label>
+                        </mat-card>
+                    </div>
+                    <div class="col-md-4">
+                        <mat-card class="example-card mat-elevation-z6" style="float: left;height: 130px;text-align: center;background-color: #212F3D">
+                            <label class="heading_text">Volume</label><br>
+                            <label class="heading_text">(Pipeline, Hold, No Date Confirmed)</label><br>
+                            <label class="text_color" style="color : #229954">{{otherRevenue}}</label>
+                        </mat-card>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <mat-card class="example-card mat-elevation-z6" style="float: right;height: 130px;text-align: center;color: white;background-color: #212F3D">
+                            <label class="heading_text">Volume for Current Month Top 25 Clients</label>
+                            <label class="heading_text">(Active / Closed)</label><br>
+                            <label class="text_color" style="color: #2E86C1;padding-top: 0px;">{{CurrentMonth}}</label>
+                        </mat-card>
+                    </div>
+                    <div class="col-md-4">
+                        <mat-card class="example-card mat-elevation-z6" style="margin: 20px auto;height: 130px;text-align: center;background-color: #212F3D">
+                            <label class="heading_text">Volume for Next Month Top 25 Clients</label>
+                            <label class="heading_text">(Active / Closed)</label><br>
+                            <label class="text_color" style="color : #229954;padding-top: 0px;">{{NextMonth}}</label>
+                        </mat-card>
+                    </div>
+                    <div class="col-md-4">
+                        <mat-card class="example-card mat-elevation-z6" style="float: left;height: 130px;text-align: center;color: white;background-color: #212F3D">
+                            <label class="heading_text">Volume for Rest of the Year Top 25 Clients</label>
+                            <label class="heading_text">(Active / Closed/ N-Active)</label><br>
+                            <label class="text_color" style="color: #2E86C1;padding-top: 0px;">$270M</label>
+                        </mat-card>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->

@@ -1,0 +1,63 @@
+<div class="row" style="margin: 0px;padding: 0px;" [ngStyle]="{'height': screenWidth > 768 ?  'auto' : '500px'}">
+    <div class="header_wrap">
+        <label class="col-md-12" style="font-size: 20px;padding-top: 15px;text-align: center;color: white">{{HeaderText}}</label>
+        <div class="inside_wrap">
+            <button mat-icon-button class="Cancel_button" tabindex="-1" (click)="OnCancelClick()">
+                <mat-icon style="font-size: 30px;">close</mat-icon>
+            </button>
+        </div>
+    </div>
+    <div class="row col-md-12" style="margin : 0px 0px 0px 0px;width: 100%;">
+        <mat-form-field class="col-md-3" style="margin-top: 10px;">
+            <mat-label style="font-size: 15px;">UID</mat-label>
+            <input style="color: gray;" [(ngModel)]="UID" name="UID" matInput disabled>
+        </mat-form-field>
+        <mat-form-field class="col-md-3" style="margin-top: 10px;">
+            <mat-label style="font-size: 15px;">User Access Status</mat-label>
+            <mat-select [(value)]="UserAccessStatus">
+                <mat-option value="Active">Active</mat-option>
+                <mat-option value="Deactivate">Deactivate</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field class="col-md-3" style="margin-top: 10px;">
+            <mat-label style="font-size: 15px;">AccountStatus</mat-label>
+            <mat-select [(value)]="AccountStatus">
+                <mat-option value="Admin">Admin</mat-option>
+                <mat-option value="User">User</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field class="col-md-3" style="margin-top: 10px;">
+            <mat-label style="font-size: 15px;">Job Type</mat-label>
+            <mat-select [(value)]="JobType">
+                <mat-option value="Project Manager">Project Manager</mat-option>
+                <mat-option value="Team Manager">Team Manager</mat-option>
+                <mat-option value="Client Management">Client Management</mat-option>
+                <mat-option value="Leader">Leader</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-checkbox class="col-md-3" style="margin-top: 10px;" [(ngModel)]="IMPS">IMPS</mat-checkbox>
+        <mat-checkbox class="col-md-3" style="margin-top: 10px;" [(ngModel)]="CTO">CTO</mat-checkbox>
+        <mat-checkbox class="col-md-3" style="margin-top: 10px;" [(ngModel)]="StageGate">Stage Gate</mat-checkbox>
+        <mat-checkbox class="col-md-3" style="margin-top: 10px;" [(ngModel)]="LessonsLearnt">Lessons Learnt</mat-checkbox>
+        <mat-checkbox class="col-md-3" style="margin-top: 10px;" [(ngModel)]="AutomatedCLR">Automated CLR</mat-checkbox>
+        <mat-checkbox class="col-md-3" style="margin-top: 10px;" [(ngModel)]="CLREdits">CLR Edits</mat-checkbox>
+        <mat-checkbox class="col-md-3" style="margin-top: 10px;" [(ngModel)]="MarketReport">Market Report</mat-checkbox>
+        <mat-checkbox class="col-md-3" style="margin-top: 10px;" [(ngModel)]="MarketCommentsEdit">Market Comment Edits</mat-checkbox>
+        <mat-checkbox class="col-md-3" style="margin-top: 10px;" [(ngModel)]="ELTReport">ELT Report</mat-checkbox>
+        <mat-checkbox class="col-md-3" style="margin-top: 10px;" [(ngModel)]="CycleTime">Cycle Time</mat-checkbox>
+        <mat-checkbox class="col-md-3" style="margin-top: 10px;" [(ngModel)]="CapacityTracker">Tracker</mat-checkbox>
+        <mat-checkbox class="col-md-3" style="margin-top: 10px;" [(ngModel)]="ResourceUtilization">Resource Utilization</mat-checkbox>
+        <mat-checkbox class="col-md-3" style="margin-top: 10px;" [(ngModel)]="CapacityHierarchy">Capacity Hierarchy</mat-checkbox>
+        <mat-checkbox class="col-md-3" style="margin-top: 10px;" [(ngModel)]="CapacityHierarchyEdits">Capacity Hierarchy Edits</mat-checkbox>
+        <mat-checkbox class="col-md-3" style="margin-top: 10px;" [(ngModel)]="NPS">NPS Dashboard</mat-checkbox>
+        <mat-checkbox class="col-md-3" style="margin-top: 10px;" [(ngModel)]="NPSClientInfo">NPS Create Survey</mat-checkbox>
+        <mat-checkbox class="col-md-3" style="margin-top: 10px;" [(ngModel)]="NPSEdit">NPS Survey Edit</mat-checkbox>
+        <mat-checkbox class="col-md-3" style="margin-top: 10px;" [(ngModel)]="NPSAdmin">NPS Admin</mat-checkbox>
+        <mat-checkbox class="col-md-3" style="margin-top: 10px;" [(ngModel)]="DigitalReport">Digital Report</mat-checkbox>
+        <mat-checkbox class="col-md-3" style="margin-top: 10px;" [(ngModel)]="PerformanceAnalysis">PT-DT Analysis</mat-checkbox>
+    </div>
+    <div class="col-md-12" style="margin: 15px 0px 0px 0px;padding: 0px;text-align: center">
+        <button mat-raised-button (click)="OnSaveClick()" style="background-color: #F16950;color: white;margin-right: 20px;margin-bottom: 30px">Update</button>
+        <!-- <button style="background-color: #F16950;color: white;"><mat-icon style="color: white;font-size: 20px;margin-top: 4px;">add</mat-icon></button> -->
+    </div>
+</div>

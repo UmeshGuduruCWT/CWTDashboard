@@ -1,0 +1,638 @@
+<mat-drawer-container>
+    <mat-drawer mode="side" #sidenav opened style="position: fixed;padding-top: 60px;width: 19%;">
+        <div class="row" style="margin: 0px;padding: 0px;">
+            <div class="col-12" style="margin: 0px;padding: 0px;">
+                <div class="sticky">
+                    <div class="row col-12" style="background-color: #333F48;color: white;height: 60px;padding: 15px 10px 5px 10px; margin : 0px;text-align: center">
+                        <label class="col-5" style="height: 35px;font-size: 20px;text-align: center;margin-top: 10px;padding-left: 25px">Filters</label>
+                        <div class="col-2" >
+                            <button mat-icon-button style="color: white;cursor: pointer;" (click)="ResetFilters()">
+                                <mat-icon>settings_backup_restore</mat-icon>
+                            </button>
+                        </div>
+                        <div class="col-5" style="margin-top: 5px;text-align: right;padding: 0px;">
+                            <button class="btn-style" (click)="SetGraph()" [ngStyle]="{'background-color': Apply_disable == true ?  '#DCDCDC' : '#F16950','color' :  Apply_disable == true ? '#AEAEAE' : 'white'}" [disabled]="Apply_disable">Apply</button>
+                        </div>
+                    </div>
+                </div>
+                <mat-accordion multi="true" style="margin: 0px;padding: 0px;">
+                    <mat-expansion-panel class="mat-elevation-z0" style="margin: 10px 0px 0px 0px;"  [expanded]="true">
+                        <mat-expansion-panel-header [collapsedHeight]="'35px'" [expandedHeight]="'35px'">
+                            <mat-panel-title style="margin-left: 0px">
+                                <label style="padding-top: 10px;">OwnerShip</label>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <mat-divider style="width: 100%;margin: 10px 0px 0px 0px;"></mat-divider>
+                        <mat-nav-list>
+                            <mat-list-item style="height: 35px;"><mat-checkbox class="example-margin" [(ngModel)]="masterownerShip" name="masterownerShip" (change)="checkUncheckOwnerShip()">Select all</mat-checkbox></mat-list-item>
+                            <mat-list-item style="height: 35px;" *ngFor="let OwnerShip of OwnerShipList"><mat-checkbox class="example-margin" [(ngModel)]="OwnerShip.isSelected" (change)="OwnerShipSelected()" name="OwnerShip.OwnerShip">{{OwnerShip.OwnerShip}}</mat-checkbox></mat-list-item>
+                        </mat-nav-list>
+                    </mat-expansion-panel>
+                    <mat-expansion-panel class="mat-elevation-z0" style="margin: 10px 0px 0px 0px;" [expanded]="true">
+                        <mat-expansion-panel-header [collapsedHeight]="'35px'" [expandedHeight]="'35px'">
+                            <mat-panel-title style="margin-left: 0px">
+                                <label style="padding-top: 10px;">Go Live year</label>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <mat-divider style="width: 100%;margin: 10px 0px 0px 0px;"></mat-divider>
+                        <mat-nav-list>
+                            <mat-list-item style="height: 35px;"><mat-checkbox class="example-margin" [(ngModel)]="masteryear" name="masteryear" (change)="checkUncheckYears()">Select all</mat-checkbox></mat-list-item>
+                            <mat-list-item style="height: 35px;" *ngFor="let year of yearList;"><mat-checkbox class="example-margin" [(ngModel)]="year.isSelected" (change)="yearsSelected()" name="year.Go_Live_Year">{{year.Go_Live_Year}}</mat-checkbox></mat-list-item>
+                        </mat-nav-list>
+                    </mat-expansion-panel>
+                    <!-- <div class="li_main" [ngStyle]="{'position' : yearEp.expanded == true ? 'sticky' : 'static'}" style="bottom: 0px;padding-bottom: 5px;">
+                        <li class="li_items" *ngFor="let Syear of yearListSelected;"><label>{{Syear.Go_Live_Year}}</label><label class="li_button" (click)="deselectyear(Syear.Go_Live_Year)">X</label></li>
+                    </div> -->
+                    <!-- <div class="li_main" [ngStyle]="{'position' : qtrEp.expanded == true ? 'sticky' : 'static'}" style="bottom: 0px;padding-bottom: 5px;">
+                        <li class="li_items" *ngFor="let Squarter of quarterListSelected;"><label>{{Squarter.Quarter}}</label><label class="li_button" (click)="deselectqtr(Squarter.Quarter)">X</label></li>
+                    </div> -->
+                    <mat-expansion-panel class="mat-elevation-z0" style="margin: 10px 0px 0px 0px;" [expanded]="true">
+                        <mat-expansion-panel-header [collapsedHeight]="'35px'" [expandedHeight]="'35px'">
+                            <mat-panel-title style="margin-left: 0px">
+                                <label style="padding-top: 10px;">Go Live Month</label>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <mat-divider style="width: 100%;margin: 10px 0px 0px 0px;"></mat-divider>
+                        <mat-nav-list>
+                            <mat-list-item style="height: 35px;"><mat-checkbox class="example-margin" [(ngModel)]="mastermonth" name="mastermonth" (change)="checkUncheckMonths()">Select all</mat-checkbox></mat-list-item>
+                            <mat-list-item style="height: 35px;" *ngFor="let month of monthList"><mat-checkbox class="example-margin" [(ngModel)]="month.isSelected" (change)="monthsSelected()" name="month.Go_Live_Month">{{month.Go_Live_Month}}</mat-checkbox></mat-list-item>
+                        </mat-nav-list>
+                    </mat-expansion-panel>
+                    <!-- <div class="li_main" [ngStyle]="{'position' : monthEp.expanded == true ? 'sticky' : 'static'}" style="bottom: 0px;padding-bottom: 5px;">
+                        <li class="li_items" *ngFor="let Smonth of monthListSelected;"><label>{{Smonth.Go_Live_Month}}</label><label class="li_button" (click)="deselectmonth(Smonth.Go_Live_Month)">X</label></li>
+                    </div> -->
+                    <mat-expansion-panel class="mat-elevation-z0" style="margin: 10px 0px 0px 0px;" [expanded]="true">
+                        <mat-expansion-panel-header [collapsedHeight]="'35px'" [expandedHeight]="'35px'">
+                            <mat-panel-title style="margin-left: 0px">
+                                <label style="padding-top: 10px;">Project Level</label>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <mat-divider style="width: 100%;margin: 10px 0px 0px 0px;"></mat-divider>
+                        <mat-nav-list>
+                            <mat-list-item style="height: 35px;"><mat-checkbox class="example-margin" [(ngModel)]="masterlevel" name="masterlevel" (change)="checkUncheckLevel()">Select all</mat-checkbox></mat-list-item>
+                            <mat-list-item style="height: 35px;" *ngFor="let level of levelList"><mat-checkbox class="example-margin" [(ngModel)]="level.isSelected" (change)="levelSelected()" name="level.iMeet_Project_Level">{{level.iMeet_Project_Level}}</mat-checkbox></mat-list-item>
+                        </mat-nav-list>
+                    </mat-expansion-panel>
+                    <!-- <div class="li_main" [ngStyle]="{'position' : levelEp.expanded == true ? 'sticky' : 'static'}" style="bottom: 0px;padding-bottom: 5px;">
+                        <li class="li_items" *ngFor="let Slevel of levelListSelected"><label>{{Slevel.iMeet_Project_Level}}</label><label class="li_button" (click)="deselectlevel(Slevel.iMeet_Project_Level)">X</label></li>
+                    </div> -->
+                    <mat-expansion-panel class="mat-elevation-z0" style="margin: 10px 0px 0px 0px;" [expanded]="true">
+                        <mat-expansion-panel-header [collapsedHeight]="'35px'" [expandedHeight]="'35px'">
+                            <mat-panel-title style="margin-left: 0px">
+                                <label style="padding-top: 10px;">Region</label>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <mat-divider style="width: 100%;margin: 10px 0px 0px 0px;"></mat-divider>
+                        <mat-nav-list>
+                            <mat-list-item style="height: 35px;"><mat-checkbox class="example-margin" [(ngModel)]="masterregion" name="masterregion" (change)="checkUncheckRegion()">Select all</mat-checkbox></mat-list-item>
+                            <mat-list-item style="height: 35px;" *ngFor="let region of regionList" ><mat-checkbox class="example-margin" [(ngModel)]="region.isSelected" (change)="regionSelected()" name="region.Region__Opportunity_">{{region.Region__Opportunity_}}</mat-checkbox></mat-list-item>
+                        </mat-nav-list>
+                    </mat-expansion-panel>
+                    <!-- <div class="li_main" [ngStyle]="{'position' : regionEp.expanded == true ? 'sticky' : 'static'}" style="bottom: 0px;padding-bottom: 5px;">
+                        <li class="li_items" *ngFor="let Sregion of regionListSelected"><label>{{Sregion.Region__Opportunity_}}</label><label class="li_button" (click)="deselectregion(Sregion.Region__Opportunity_)">X</label></li>
+                    </div> -->
+                    <!-- <mat-expansion-panel class="mat-elevation-z0" style="margin: 10px 0px 0px 0px;" [expanded]="true">
+                        <mat-expansion-panel-header [collapsedHeight]="'35px'" [expandedHeight]="'35px'">
+                            <mat-panel-title style="margin-left: 0px">
+                                <label style="padding-top: 10px;">Status</label>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <mat-divider style="width: 100%;margin: 10px 0px 0px 0px;"></mat-divider>
+                        <mat-nav-list>
+                            <mat-list-item style="height: 35px;"><mat-checkbox class="example-margin" [(ngModel)]="masterstatus" name="masterstatus" (change)="checkUncheckStatus()">Select all</mat-checkbox></mat-list-item>
+                            <mat-list-item style="height: 35px;" *ngFor="let status of statusList"><mat-checkbox class="example-margin" [(ngModel)]="status.isSelected" (change)="statusSelected()" name="status.Backlog_Started">{{status.Backlog_Started}}</mat-checkbox></mat-list-item>
+                        </mat-nav-list>
+                    </mat-expansion-panel> -->
+                    <!-- <div class="li_main" [ngStyle]="{'position' : statusEp.expanded == true ? 'sticky' : 'static'}" style="bottom: 0px;padding-bottom: 5px;">
+                        <li class="li_items" *ngFor="let Sstatus of statusListSelected;"><label>{{Sstatus.Backlog_Started}}</label><label class="li_button" (click)="deselectstatus(Sstatus.Backlog_Started)">X</label></li>
+                    </div> -->
+                    <!-- <mat-expansion-panel class="mat-elevation-z0" style="margin: 10px 0px 0px 0px;" [expanded]="true">
+                        <mat-expansion-panel-header [collapsedHeight]="'35px'" [expandedHeight]="'35px'">
+                            <mat-panel-title style="margin-left: 0px">
+                                <label style="padding-top: 10px;">Market Leaders</label>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <mat-divider style="width: 100%;margin: 10px 0px 0px 0px;"></mat-divider>
+                        <mat-nav-list>
+                            <mat-list-item style="height: 35px;"><mat-checkbox class="example-margin" [(ngModel)]="masterleader" name="masterleader" (change)="checkUncheckLeader()">Select all</mat-checkbox></mat-list-item>
+                            <mat-list-item style="height: 35px;" *ngFor="let marketleader of marketleaderList"><mat-checkbox class="example-margin" [(ngModel)]="marketleader.isSelected" (change)="leaderSelected()" name="marketleader.Market_Leader">{{marketleader.Market_Leader}}</mat-checkbox></mat-list-item>
+                        </mat-nav-list>
+                    </mat-expansion-panel> -->
+                    <!-- <mat-expansion-panel class="mat-elevation-z0" style="margin: 10px 0px 0px 0px;" [expanded]="true">
+                        <mat-expansion-panel-header [collapsedHeight]="'35px'" [expandedHeight]="'35px'">
+                            <mat-panel-title style="margin-left: 0px">
+                                <label style="padding-top: 10px;">Country</label>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <mat-divider style="width: 100%;margin: 10px 0px 0px 0px;"></mat-divider>
+                        <mat-nav-list>
+                            <mat-list-item style="height: 35px;"><mat-checkbox class="example-margin" [(ngModel)]="masterCountry" name="masterCountry" (change)="checkUncheckCountry()">Select all</mat-checkbox></mat-list-item>
+                            <mat-list-item style="height: 35px;" *ngFor="let countrylist of CountryList"><mat-checkbox class="example-margin" [(ngModel)]="countrylist.isSelected" (change)="CountrySelected()" name="countrylist.Country">{{countrylist.Country}}</mat-checkbox></mat-list-item>
+                        </mat-nav-list>
+                    </mat-expansion-panel> -->
+                    <!-- <div class="li_main" [ngStyle]="{'position' : leadersEp.expanded == true ? 'sticky' : 'static'}" style="bottom: 0px;padding-bottom: 5px;">
+                        <li class="li_items" *ngFor="let Smarketleader of marketleaderListSelected"><label>{{Smarketleader.Market_Leader}}</label><label class="li_button" (click)="deselectmarket(Smarketleader.Market_Leader)">X</label></li>
+                    </div> -->
+                    <mat-expansion-panel class="mat-elevation-z0" style="margin: 10px 0px 0px 0px;" [expanded]="true">
+                        <mat-expansion-panel-header [collapsedHeight]="'35px'" [expandedHeight]="'35px'">
+                            <mat-panel-title style="margin-left: 0px">
+                                <label style="padding-top: 10px;">Project Status</label>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <mat-divider style="width: 100%;margin: 10px 0px 0px 0px;"></mat-divider>
+                        <mat-nav-list>
+                            <mat-list-item style="height: 35px;"><mat-checkbox class="example-margin" [(ngModel)]="masterMilestonestatus" name="masterMilestonestatus" (change)="checkUncheckMilestoneStatus()">Select all</mat-checkbox></mat-list-item>
+                            <mat-list-item style="height: 35px;" *ngFor="let Milestonestatus of MilestonestatusList"><mat-checkbox class="example-margin" [(ngModel)]="Milestonestatus.isSelected" (change)="MilestoneStatusSelected()" name="Milestonestatus.iMeet_Milestone___Project_Status">{{Milestonestatus.iMeet_Milestone___Project_Status}}</mat-checkbox></mat-list-item>
+                        </mat-nav-list>
+                    </mat-expansion-panel>
+                    <!-- <div class="li_main" [ngStyle]="{'position' : PstatusEp.expanded == true ? 'sticky' : 'static'}" style="bottom: 0px;padding-bottom: 5px;">
+                        <li class="li_items" *ngFor="let SMilestonestatus of MilestonestatusListSelected"><label>{{SMilestonestatus.iMeet_Milestone___Project_Status}}</label><label class="li_button" (click)="deselectMilestoneStatus(SMilestonestatus.iMeet_Milestone___Project_Status)">X</label></li>
+                    </div> -->
+                    <mat-expansion-panel class="mat-elevation-z0" style="margin: 10px 0px 0px 0px;" [expanded]="true">
+                        <mat-expansion-panel-header [collapsedHeight]="'35px'" [expandedHeight]="'35px'">
+                            <mat-panel-title style="margin-left: 0px">
+                                <label style="padding-top: 10px;">Implementation Type</label>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <mat-divider style="width: 100%;margin: 10px 0px 0px 0px;"></mat-divider>
+                        <mat-nav-list>
+                            <mat-list-item style="height: 35px;"><mat-checkbox class="example-margin" [(ngModel)]="masterimplementation" name="masterimplementation" (change)="checkUncheckImplementation()">Select all</mat-checkbox></mat-list-item>
+                            <mat-list-item style="height: 35px;" *ngFor="let implementationtype of implementationtypeList"><mat-checkbox class="example-margin" [(ngModel)]="implementationtype.isSelected" (change)="typeSelected()" name="implementationtype.Implementation_Type">{{implementationtype.Implementation_Type}}</mat-checkbox></mat-list-item>
+                        </mat-nav-list>
+                    </mat-expansion-panel>
+                    <!-- <div class="li_main" style="padding-bottom: 5px">
+                        <li class="li_items" *ngFor="let Simplementationtype of implementationtypeListSelected"><label>{{Simplementationtype.Implementation_Type}}</label><label class="li_button" (click)="deselectType(Simplementationtype.Implementation_Type)">X</label></li>
+                    </div> -->
+                </mat-accordion>
+            </div>
+        </div>
+    </mat-drawer>
+    <mat-drawer-content>
+        <div class="row" style="margin: 0px;padding: 0px;">
+            <div class="row col-md-12">
+                <div class="col-md-12">
+                    <mat-card class="example-card mat-elevation-z2" style="margin-left: 15px;height: auto;overflow: auto;padding: 0px;">
+                        <div class="col-12" style="height: 40px;background-color: #34495E ;color:white;padding: 5px 0px 0px 0px; margin : 0px;text-align: center">
+                            <label style="width: 100%;font-size: 16px;margin-top: 8px;text-align: center;font-family: Montserrat, sans-serif">Month Wise Revenue Breakup</label>
+                            <!-- <label style="width: 100%;font-size: 10px;margin: 0px;height: 18px;text-align: center;">Distinct count of Workspace Title</label> -->
+                        </div>
+                        <div class="col-md-12" style="margin-top: 20px;margin-bottom: 10px;">
+                            <canvas id="MRcanvas" [ngStyle]="{'min-height' : ((screenHeight)-180)+'px'}">
+                            </canvas>
+                        </div>
+                    </mat-card>
+                </div>
+                <div class="col-md-12">
+                    <div class="example-container" style="margin-left: 15px;border: 1px solid rgb(196, 196, 196);">
+                        <table mat-table [dataSource]="dataSource2">
+                            <ng-container matColumnDef="Leftheaders" sticky>
+                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="min-width: 160px;font-size: 14px;padding-left: 10px;background-color:  rgb(213, 216, 220);color: black;border-right: 1px solid rgb(196, 196, 196);font-weight: bold;">{{CurrentYear}}</th>
+                                <td mat-cell *matCellDef="let element" class="textSizes" style="min-width: 160px;font-size: 14px;padding-left: 10px;background-color:  rgb(213, 216, 220);color: black;border-right: 1px solid rgb(196, 196, 196);"> {{element.Leftheaders}} </td>
+                                <td mat-footer-cell *matFooterCellDef class="textSizes" style="min-width: 160px;font-size: 14px;padding-left: 10px;background-color:  rgb(213, 216, 220);color: black;border-right: 1px solid rgb(196, 196, 196);">Comments</td>
+                            </ng-container>
+                            <ng-container matColumnDef="Jan">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color:  rgb(213, 216, 220);color: black;padding-left: 5px;text-align: center;font-weight: bold"> Jan </th>
+                                <td mat-cell *matCellDef="let element" class="row_textsize" style="padding-left: 5px;" class="row_textsize ref" (click)="PevDataDialog(element.Jan,'Jan')"> {{element.Jan}} </td>
+                                <td mat-footer-cell *matFooterCellDef class="row_textsize ref" (click)="CommentsDialog(1,'Jan',Jan_Comments)"><label class="showlessText ref">{{Jan_Comments}}</label></td>
+                            </ng-container>
+                            <ng-container matColumnDef="Feb">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color:  rgb(213, 216, 220);color: black;text-align: center;font-weight: bold"> Feb </th>
+                                <td mat-cell *matCellDef="let element" class="row_textsize ref" (click)="PevDataDialog(element.Feb,'Feb')"> {{element.Feb}} </td>
+                                <td mat-footer-cell *matFooterCellDef class="row_textsize ref" (click)="CommentsDialog(2,'Feb',Feb_Comments)"><label class="showlessText ref">{{Feb_Comments}}</label></td>
+                            </ng-container>
+                            <ng-container matColumnDef="Mar">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color:  rgb(213, 216, 220);color: black;text-align: center;font-weight: bold"> Mar </th>
+                                <td mat-cell *matCellDef="let element" class="row_textsize ref" (click)="PevDataDialog(element.Mar,'Mar')"> {{element.Mar}} </td>
+                                <td mat-footer-cell *matFooterCellDef class="row_textsize ref" (click)="CommentsDialog(3,'Mar',Mar_Comments)"><label class="showlessText ref">{{Mar_Comments}}</label></td>
+                            </ng-container>
+                            <ng-container matColumnDef="Apr">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color:  rgb(213, 216, 220);color: black;text-align: center;font-weight: bold"> Apr </th>
+                                <td mat-cell *matCellDef="let element" class="row_textsize ref" (click)="PevDataDialog(element.Apr,'Apr')"> {{element.Apr}} </td>
+                                <td mat-footer-cell *matFooterCellDef class="row_textsize ref" (click)="CommentsDialog(4,'Apr',Apr_Comments)"><label class="showlessText ref">{{Apr_Comments}}</label></td>
+                            </ng-container>
+                            <ng-container matColumnDef="May">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color:  rgb(213, 216, 220);color: black;text-align: center;font-weight: bold"> May </th>
+                                <td mat-cell *matCellDef="let element" class="row_textsize ref" (click)="PevDataDialog(element.May,'May')"> {{element.May}} </td>
+                                <td mat-footer-cell *matFooterCellDef class="row_textsize ref" (click)="CommentsDialog(5,'May',May_Comments)"><label class="showlessText ref">{{May_Comments}}</label></td>
+                            </ng-container>
+                            <ng-container matColumnDef="Jun">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color:  rgb(213, 216, 220);color: black;text-align: center;font-weight: bold"> Jun </th>
+                                <td mat-cell *matCellDef="let element" class="row_textsize ref" (click)="PevDataDialog(element.Jun,'Jun')"> {{element.Jun}} </td>
+                                <td mat-footer-cell *matFooterCellDef class="row_textsize ref" (click)="CommentsDialog(6,'Jun',Jun_Comments)"><label class="showlessText ref">{{Jun_Comments}}</label></td>
+                            </ng-container>
+                            <ng-container matColumnDef="Jul">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color:  rgb(213, 216, 220);color: black;text-align: center;font-weight: bold"> Jul </th>
+                                <td mat-cell *matCellDef="let element" class="row_textsize ref" (click)="PevDataDialog(element.Jul,'Jul')"> {{element.Jul}} </td>
+                                <td mat-footer-cell *matFooterCellDef class="row_textsize ref" (click)="CommentsDialog(7,'Jul',Jul_Comments)"><label class="showlessText ref">{{Jul_Comments}}</label></td>
+                            </ng-container>
+                            <ng-container matColumnDef="Aug">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color:  rgb(213, 216, 220);color: black;text-align: center;font-weight: bold"> Aug </th>
+                                <td mat-cell *matCellDef="let element" class="row_textsize ref" (click)="PevDataDialog(element.Aug,'Aug')"> {{element.Aug}} </td>
+                                <td mat-footer-cell *matFooterCellDef class="row_textsize ref" (click)="CommentsDialog(8,'Aug',Aug_Comments)"><label class="showlessText ref">{{Aug_Comments}}</label></td>
+                            </ng-container>
+                            <ng-container matColumnDef="Sep">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color:  rgb(213, 216, 220);color: black;text-align: center;font-weight: bold"> Sep </th>
+                                <td mat-cell *matCellDef="let element" class="row_textsize ref" (click)="PevDataDialog(element.Sep,'Sep')"> {{element.Sep}} </td>
+                                <td mat-footer-cell *matFooterCellDef class="row_textsize ref" (click)="CommentsDialog(9,'Sep',Sep_Comments)"><label class="showlessText ref">{{Sep_Comments}}</label></td>
+                            </ng-container>
+                            <ng-container matColumnDef="Oct">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color:  rgb(213, 216, 220);color: black;text-align: center;font-weight: bold;"> Oct </th>
+                                <td mat-cell *matCellDef="let element" class="row_textsize ref" (click)="PevDataDialog(element.Oct,'Oct')"> {{element.Oct}} </td>
+                                <td mat-footer-cell *matFooterCellDef class="row_textsize ref" (click)="CommentsDialog(10,'Oct',Oct_Comments)"><label class="showlessText ref">{{Oct_Comments}}</label></td>
+                            </ng-container>
+                            <ng-container matColumnDef="Nov">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color:  rgb(213, 216, 220);color: black;text-align: center;font-weight: bold"> Nov </th>
+                                <td mat-cell *matCellDef="let element" class="row_textsize ref" (click)="PevDataDialog(element.Nov,'Nov')"> {{element.Nov}} </td>
+                                <td mat-footer-cell *matFooterCellDef class="row_textsize" (click)="CommentsDialog(11,'Nov',Nov_Comments)"><label class="showlessText ref">{{Nov_Comments}}</label></td>
+                            </ng-container>
+                            <ng-container matColumnDef="Dec">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color:  rgb(213, 216, 220);color: black;text-align: center;font-weight: bold"> Dec </th>
+                                <td mat-cell *matCellDef="let element" class="row_textsize ref" (click)="PevDataDialog(element.Dec,'Dec')"> {{element.Dec}} </td>
+                                <td mat-footer-cell *matFooterCellDef class="row_textsize ref" (click)="CommentsDialog(12,'Dec',Dec_Comments)"><label class="showlessText">{{Dec_Comments}}</label></td>
+                            </ng-container>
+                            <ng-container matColumnDef="Total">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="padding-right: 10px;border-right: none;background-color:  rgb(213, 216, 220);color: black;text-align: center;font-weight: bold"> Total </th>
+                                <td mat-cell *matCellDef="let element" class="row_textsize ref" style="padding-right: 10px;border-right: none;" (click)="PevDataDialog(element.Total,'All')"> {{element.Total}} </td>
+                                <td mat-footer-cell *matFooterCellDef class="row_textsize ref" style="padding-right: 10px;border-right: none;"></td>
+                            </ng-container>
+                            <ng-container matColumnDef="MonthTotalName" sticky>
+                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="min-width: 160px;font-size: 14px;padding-left: 10px;border-right: 1px solid rgb(196, 196, 196);background-color:  rgb(213, 216, 220);color: black;">Current Total Volume</th>
+                            </ng-container>
+                            <ng-container matColumnDef="JanTotal">
+                                <th mat-header-cell *matHeaderCellDef  class="row_textsize ref" (click)="DataDialog(JanTotal,'Jan')">{{JanTotal}}</th>
+                            </ng-container>
+                            <ng-container matColumnDef="FebTotal">
+                                <th mat-header-cell *matHeaderCellDef  class="row_textsize ref" (click)="DataDialog(FebTotal,'Feb')">{{FebTotal}}</th>
+                            </ng-container>
+                            <ng-container matColumnDef="MarTotal">
+                                <th mat-header-cell *matHeaderCellDef  class="row_textsize ref" (click)="DataDialog(MarTotal,'Mar')">{{MarTotal}}</th>
+                            </ng-container>
+                            <ng-container matColumnDef="AprTotal">
+                                <th mat-header-cell *matHeaderCellDef  class="row_textsize ref" (click)="DataDialog(AprTotal,'Apr')">{{AprTotal}}</th>
+                            </ng-container>
+                            <ng-container matColumnDef="MayTotal">
+                                <th mat-header-cell *matHeaderCellDef  class="row_textsize ref" (click)="DataDialog(MayTotal,'May')">{{MayTotal}}</th>
+                            </ng-container>
+                            <ng-container matColumnDef="JunTotal">
+                                <th mat-header-cell *matHeaderCellDef  class="row_textsize ref" (click)="DataDialog(JunTotal,'Jun')">{{JunTotal}}</th>
+                            </ng-container>
+                            <ng-container matColumnDef="JulTotal">
+                                <th mat-header-cell *matHeaderCellDef  class="row_textsize ref" (click)="DataDialog(JulTotal,'Jul')">{{JulTotal}}</th>
+                            </ng-container>
+                            <ng-container matColumnDef="AugTotal">
+                                <th mat-header-cell *matHeaderCellDef  class="row_textsize ref" (click)="DataDialog(AugTotal,'Aug')">{{AugTotal}}</th>
+                            </ng-container>
+                            <ng-container matColumnDef="SepTotal">
+                                <th mat-header-cell *matHeaderCellDef  class="row_textsize ref" (click)="DataDialog(SepTotal,'Sep')">{{SepTotal}}</th>
+                            </ng-container>
+                            <ng-container matColumnDef="OctTotal">
+                                <th mat-header-cell *matHeaderCellDef  class="row_textsize ref" (click)="DataDialog(OctTotal,'Oct')">{{OctTotal}}</th>
+                            </ng-container>
+                            <ng-container matColumnDef="NovTotal">
+                                <th mat-header-cell *matHeaderCellDef  class="row_textsize ref" (click)="DataDialog(NovTotal,'Nov')">{{NovTotal}}</th>
+                            </ng-container>
+                            <ng-container matColumnDef="DecTotal">
+                                <th mat-header-cell *matHeaderCellDef  class="row_textsize ref" (click)="DataDialog(DecTotal,'Dec')">{{DecTotal}}</th>
+                            </ng-container>
+                            <ng-container matColumnDef="MonthsTotal">
+                                <th mat-header-cell *matHeaderCellDef  class="row_textsize ref" style="padding-right: 10px;border-right: none;" (click)="DataDialog(MonthsTotal,'All')">{{MonthsTotal}}</th>
+                            </ng-container>
+                            <ng-container matColumnDef="MonthTotalName_f" sticky>
+                                <th mat-footer-cell *matFooterCellDef class="textSizes" style="min-width: 160px;font-size: 14px;padding-left: 10px;border-right: 1px solid rgb(196, 196, 196);background-color:  rgb(213, 216, 220);color: black;font-weight: normal;">Delta</th>
+                            </ng-container>
+                            <ng-container matColumnDef="JanTotal_f">
+                                <th mat-footer-cell *matFooterCellDef  class="row_textsize" [ngStyle]="{'color': JanTotal_v == 'true' ? 'green' : 'red'}" style="font-weight: 500">{{JanTotal_f}}</th>
+                            </ng-container>
+                            <ng-container matColumnDef="FebTotal_f">
+                                <th mat-footer-cell *matFooterCellDef  class="row_textsize" [ngStyle]="{'color': FebTotal_v == 'true' ? 'green' : 'red'}" style="font-weight: 500">{{FebTotal_f}}</th>
+                            </ng-container>
+                            <ng-container matColumnDef="MarTotal_f">
+                                <th mat-footer-cell *matFooterCellDef  class="row_textsize" [ngStyle]="{'color': MarTotal_v == 'true' ? 'green' : 'red'}" style="font-weight: 500">{{MarTotal_f}}</th>
+                            </ng-container>
+                            <ng-container matColumnDef="AprTotal_f">
+                                <th mat-footer-cell *matFooterCellDef  class="row_textsize" [ngStyle]="{'color': AprTotal_v == 'true' ? 'green' : 'red'}" style="font-weight: 500">{{AprTotal_f}}</th>
+                            </ng-container>
+                            <ng-container matColumnDef="MayTotal_f">
+                                <th mat-footer-cell *matFooterCellDef  class="row_textsize" [ngStyle]="{'color': MayTotal_v == 'true' ? 'green' : 'red'}" style="font-weight: 500">{{MayTotal_f}}</th>
+                            </ng-container>
+                            <ng-container matColumnDef="JunTotal_f">
+                                <th mat-footer-cell *matFooterCellDef  class="row_textsize" [ngStyle]="{'color': JunTotal_v == 'true' ? 'green' : 'red'}" style="font-weight: 500">{{JunTotal_f}}</th>
+                            </ng-container>
+                            <ng-container matColumnDef="JulTotal_f">
+                                <th mat-footer-cell *matFooterCellDef  class="row_textsize" [ngStyle]="{'color': JulTotal_v == 'true' ? 'green' : 'red'}" style="font-weight: 500">{{JulTotal_f}}</th>
+                            </ng-container>
+                            <ng-container matColumnDef="AugTotal_f">
+                                <th mat-footer-cell *matFooterCellDef  class="row_textsize" [ngStyle]="{'color': AugTotal_v == 'true' ? 'green' : 'red'}" style="font-weight: 500">{{AugTotal_f}}</th>
+                            </ng-container>
+                            <ng-container matColumnDef="SepTotal_f">
+                                <th mat-footer-cell *matFooterCellDef  class="row_textsize" [ngStyle]="{'color': SepTotal_v == 'true' ? 'green' : 'red'}" style="font-weight: 500">{{SepTotal_f}}</th>
+                            </ng-container>
+                            <ng-container matColumnDef="OctTotal_f">
+                                <th mat-footer-cell *matFooterCellDef  class="row_textsize" [ngStyle]="{'color': OctTotal_v == 'true' ? 'green' : 'red'}" style="font-weight: 500">{{OctTotal_f}}</th>
+                            </ng-container>
+                            <ng-container matColumnDef="NovTotal_f">
+                                <th mat-footer-cell *matFooterCellDef  class="row_textsize" [ngStyle]="{'color': NovTotal_v == 'true' ? 'green' : 'red'}" style="font-weight: 500">{{NovTotal_f}}</th>
+                            </ng-container>
+                            <ng-container matColumnDef="DecTotal_f">
+                                <th mat-footer-cell *matFooterCellDef  class="row_textsize" [ngStyle]="{'color': DecTotal_v == 'true' ? 'green' : 'red'}" style="font-weight: 500;">{{DecTotal_f}}</th>
+                            </ng-container>
+                            <ng-container matColumnDef="MonthsTotal_f">
+                                <th mat-footer-cell *matFooterCellDef  class="row_textsize" [ngStyle]="{'color': Total_v == 'true' ? 'green' : 'red'}" style="font-weight: 500;padding-right: 10px;border-right: none;">{{MonthsTotal_f}}</th>
+                            </ng-container>
+                            <ng-container matColumnDef="header">
+                                <th mat-header-cell *matHeaderCellDef style="background-color: #34495E;text-align: center" colspan="14"> <label style="padding-top: 12px;font-size: 15px;color: white;">A-Active/Date Confirmed & C-Closed Data <label style="color: white;padding-top: 11px;font-weight: bold;font-size: 12px;font: normal;">&nbsp;&nbsp;(Last Updated On : {{LastUpdatedOn}})</label></label></th>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="['header']; sticky: true" style="height: 35px;"></tr>
+                            <tr mat-header-row *matHeaderRowDef="MonthlydisplayedColumns" style="height: 35px;"></tr>
+                            <tr mat-header-row *matHeaderRowDef="['MonthTotalName','JanTotal','FebTotal','MarTotal','AprTotal','MayTotal','JunTotal','JulTotal','AugTotal','SepTotal','OctTotal','NovTotal','DecTotal','MonthsTotal']" style="height: 35px;"></tr>
+                            <tr mat-row *matRowDef="let row; columns: MonthlydisplayedColumns;" style="height: 35px;"></tr>
+                            <tr mat-footer-row *matFooterRowDef="['MonthTotalName_f','JanTotal_f','FebTotal_f','MarTotal_f','AprTotal_f','MayTotal_f','JunTotal_f','JulTotal_f','AugTotal_f','SepTotal_f','OctTotal_f','NovTotal_f','DecTotal_f','MonthsTotal_f']" style="height: 35px;"></tr>
+                            <tr mat-footer-row *matFooterRowDef="MonthlydisplayedColumns;" style="height: 35px;border-top : 1px solid #dadada"></tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <mat-card class="example-card mat-elevation-z2" style="margin-left: 15px;height: auto;overflow: auto;padding: 0px;">
+                        <div class="col-12" style="height: 40px;background-color: #34495E ;color:white;padding: 5px 0px 0px 0px; margin : 0px;text-align: center">
+                            <label style="width: 100%;font-size: 16px;margin-top: 8px;text-align: center;font-family: Montserrat, sans-serif">Region Break up</label>
+                            <!-- <label style="width: 100%;font-size: 10px;margin: 0px;height: 18px;text-align: center;">Distinct count of Workspace Title</label> -->
+                        </div>
+                        <div class="col-md-12" style="margin-top: 10px;margin-bottom: 10px;">
+                            <canvas id="RWcanvas" height="220px">
+                            </canvas>
+                            <div class="example-container">
+                                <table mat-table [dataSource]="rw_dataSource" style="border: 1px solid rgb(196, 196, 196);">
+                                    <ng-container matColumnDef="Region__Opportunity_">
+                                        <th mat-header-cell *matHeaderCellDef class="textSizes" style="padding-left: 10px;background-color:  rgb(213, 216, 220);color: black;"> Region </th>
+                                        <td mat-cell *matCellDef="let element" style="padding-left: 10px;"> {{element.Region__Opportunity_}} </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="ProjectsCount">
+                                        <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color:  rgb(213, 216, 220);color: black;"> Project Count </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.ProjectsCount}} </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="RevenueVolume_string" >
+                                        <th mat-header-cell *matHeaderCellDef class="textSizes" style="padding-right: 10px;border-right: none;background-color:  rgb(213, 216, 220);color: black;"> Volume USD </th>
+                                        <td mat-cell *matCellDef="let element" style="padding-right: 10px;border-right: none;"> {{element.RevenueVolume_string}} </td>
+                                    </ng-container>
+                                    <tr mat-header-row *matHeaderRowDef="displayedColumnsrw;" style="padding-top: 0px;margin-top: 0px;height: 35px"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: displayedColumnsrw;" style="height: 35px;"></tr>
+                                </table>
+                            </div>
+                        </div>
+                    </mat-card>
+                </div>
+                <div class="col-md-6">
+                    <mat-card class="example-card mat-elevation-z2" style="margin-left: 15px;height: auto;overflow: auto;padding: 0px;">
+                        <div class="col-12" style="height: 40px;background-color: #34495E ;color:white;padding: 5px 0px 0px 0px; margin : 0px;text-align: center">
+                            <label style="width: 100%;font-size: 16px;margin-top: 8px;text-align: center;font-family: Montserrat, sans-serif">Project level Volume</label>
+                            <!-- <label style="width: 100%;font-size: 10px;margin: 0px;height: 18px;text-align: center;">Distinct count of Workspace Title</label> -->
+                        </div>
+                        <div class="col-md-12" style="margin-top: 10px;margin-bottom: 10px;">
+                            <canvas id="PLWcanvas" height="220px">
+                            </canvas>
+                            <div class="example-container">
+                                <table mat-table [dataSource]="plw_dataSource" style="border: 1px solid rgb(196, 196, 196);">
+                                    <ng-container matColumnDef="iMeet_Project_Level">
+                                        <th mat-header-cell *matHeaderCellDef class="textSizes" style="min-width: 150px;padding-left: 10px;background-color:  rgb(213, 216, 220);color: black;"> Project Level </th>
+                                        <td mat-cell *matCellDef="let element" style="padding-left: 10px;"> {{element.iMeet_Project_Level}} </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="ProjectsCount">
+                                        <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color:  rgb(213, 216, 220);color: black;"> Project Count </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.ProjectsCount}} </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="RevenueVolume_string" >
+                                        <th mat-header-cell *matHeaderCellDef class="textSizes" style="border-right: none;padding-right: 10px;background-color:  rgb(213, 216, 220);color: black;"> Volume USD </th>
+                                        <td mat-cell *matCellDef="let element" style="padding-right: 10px;border-right: none;"> {{element.RevenueVolume_string}} </td>
+                                    </ng-container>
+                                    <tr mat-header-row *matHeaderRowDef="displayedColumnsplw; sticky: true" style="padding-top: 0px;margin-top: 0px;height: 35px"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: displayedColumnsplw;" style="height: 35px;"></tr>
+                                </table>
+                            </div>
+                        </div>
+                    </mat-card>
+                </div>
+                <div class="col-md-12">
+                    <mat-card class="example-card mat-elevation-z2" style="margin-left: 15px;height: auto;overflow: auto;padding: 0px;">
+                        <div class="col-12" style="height: 40px;background-color: #34495E ;color:white;padding: 5px 0px 0px 0px; margin : 0px;text-align: center">
+                            <label style="width: 100%;font-size: 16px;margin-top: 8px;text-align: center;font-family: Montserrat, sans-serif">Revenue and Project Count</label>
+                            <!-- <label style="width: 100%;font-size: 10px;margin: 0px;height: 18px;text-align: center;">Distinct count of Workspace Title</label> -->
+                        </div>
+                        <div class="col-md-12" style="margin-top: 20px;margin-bottom: 10px;">
+                            <canvas id="CVcanvas" [ngStyle]="{'min-height' : ((screenHeight)-180)+'px'}">
+                            </canvas>
+                        </div>
+                    </mat-card>
+                </div>
+                <div class="col-md-12">
+                    <mat-card class="example-card mat-elevation-z2" style="margin-left: 15px;height: auto;overflow: auto;padding: 0px;">
+                        <div class="col-12" style="height: 40px;background-color: #34495E ;color:white;padding: 5px 0px 0px 0px; margin : 0px;text-align: center">
+                            <label style="width: 100%;font-size: 16px;margin-top: 8px;text-align: center;font-family: Montserrat, sans-serif">Average Cycle Time (Days)</label>
+                            <!-- <label style="width: 100%;font-size: 10px;margin: 0px;height: 18px;text-align: center;">Distinct count of Workspace Title</label> -->
+                        </div>
+                        <div class="col-md-12" style="margin-top: 20px;margin-bottom: 10px;">
+                            <canvas id="CTcanvas" [ngStyle]="{'min-height' : ((screenHeight)-180)+'px'}">
+                            </canvas>
+                        </div>
+                    </mat-card>
+                </div>
+                <!-- <div class="col-md-6">
+                    <mat-card class="example-card mat-elevation-z2" style="margin-left: 15px;height: auto;overflow: auto;padding: 0px;">
+                        <div class="col-12" style="height: 40px;background-color: #34495E ;color:white;padding: 5px 0px 0px 0px; margin : 0px;text-align: center">
+                            <label style="width: 100%;font-size: 16px;margin-top: 8px;text-align: center;font-family: Montserrat, sans-serif">Project level Volume</label>
+                        </div>
+                        <div class="col-md-12" style="margin-top: 10px;margin-bottom: 10px;">
+                            <canvas id="YPCcanvas" height="220px">
+                            </canvas>
+                        </div>
+                    </mat-card>
+                </div> -->
+                <div class="col-md-12">
+                    <div class="example-container" style="margin-left: 15px;border: 1px solid rgb(196, 196, 196);">
+                        <table mat-table matTableFilter [dataSource]="dataSource_VCtPc" style="text-align: center;">
+                            <ng-container matColumnDef="GoLiveMonth">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="padding-left: 10px;background-color:  rgb(112, 173, 71);color: white;text-align: center;"> Go Live Month </th>
+                                <td mat-cell *matCellDef="let element" style="padding-left: 10px;"> {{element.GoLiveMonth}} </td>
+                                <td mat-footer-cell *matFooterCellDef style="background-color:  rgb(213, 216, 220);color: black;padding-left: 10px;font-weight: bold;border-right: 1px solid rgb(196, 196, 196);"> Grand Total </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Revenue_Total_Volume">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="text-align: center;background-color: rgb(77, 94, 118);color: white"> Revenue Total Volume USD </th>
+                                <td mat-cell *matCellDef="let element"> {{element.Revenue_Total_Volume}} </td>
+                                <td mat-footer-cell *matFooterCellDef style="background-color:  rgb(213, 216, 220);color: black;text-align: center;font-weight: bold;border-right: 1px solid rgb(196, 196, 196);">{{ChartRevenueTotalVolume}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="ProjectsCount">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="text-align: center;background-color: rgb(241, 130, 38);color: white"> Count of Projects </th>
+                                <td mat-cell *matCellDef="let element"> {{element.ProjectsCount}} </td>
+                                <td mat-footer-cell *matFooterCellDef style="background-color:  rgb(213, 216, 220);color: black;text-align: center;font-weight: bold;border-right: 1px solid rgb(196, 196, 196);">{{ChartProjectCount}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="AvgCycleTime">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="padding-right: 10px;border-right: none;text-align: center;background-color: rgb(0, 100, 200);color : white"> Average of Cycle Time </th>
+                                <td mat-cell *matCellDef="let element" style="border-right: none;padding-right : 10px"> {{element.AvgCycleTime}} </td>
+                                <td mat-footer-cell *matFooterCellDef style="background-color:  rgb(213, 216, 220);color: black;text-align: center;padding-right: 10px;font-weight: bold;border-right: none;">{{ChartAvgCycleTime}}</td>
+                            </ng-container>
+                            <!-- <ng-container matColumnDef="GoLiveMonthh">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <mat-form-field appearance="outline">
+                                        <input matInput placeholder="Go Live Month" [(ngModel)]="filterEntity.GoLiveMonth">
+                                    </mat-form-field>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="Revenue_Total_Volumeh">
+                                <th mat-header-cell *matHeaderCellDef> -->
+                                    <!-- <mat-form-field appearance="outline">
+                                        <input matInput placeholder="Revenue Volume" [(ngModel)]="filterEntity.Revenue_Total_Volume">
+                                    </mat-form-field> -->
+                                <!-- </th>
+                            </ng-container>
+                            <ng-container matColumnDef="ProjectsCounth">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <mat-form-field appearance="outline">
+                                        <input matInput placeholder="Projects Count" [(ngModel)]="filterEntity.ProjectsCount">
+                                    </mat-form-field>
+                                </th>
+                            </ng-container> -->
+                            <!-- <ng-container matColumnDef="AvgCycleTimeh">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <mat-form-field appearance="outline">
+                                        <input matInput placeholder="Avg Cycle Time" [(ngModel)]="filterEntity.AvgCycleTime">
+                                    </mat-form-field>
+                                </th>
+                            </ng-container> -->
+                            <!-- <tr mat-header-row *matHeaderRowDef="['Go_Live_Monthh','Revenue_Total_Volumeh','ProjectsCounth','AvgCycleTimeh']" style="height: 35px;"></tr> -->
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns_VCTPC; sticky: true" style="padding-top: 0px;margin-top: 0px;height: 35px"></tr>
+                            <!-- <tr mat-header-row *matHeaderRowDef="displayedColumns_VCTPCheader; sticky: true" style="padding-top: 0px;margin-top: 0px;height: 35px"></tr> -->
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns_VCTPC;" style="height: 35px;"></tr>
+                            <tr mat-footer-row *matFooterRowDef="displayedColumns_VCTPC; sticky: true" style="height: 35px;"></tr>
+                        </table>
+                    </div>
+                </div>
+                <label class="col-md-12" style="margin-left: 15px;height: 25px;">
+                    <button mat-raised-button style="height: 33px;background-color: #F16950;color: white;" (click)="exportRegionWiseData()">Export
+                        <mat-icon style="font-size: 18px;color: white;">save_alt</mat-icon>
+                    </button>
+                </label>
+                <div class="col-md-12">
+                    <div class="example-container" [ngStyle]="{'height' : (screenHeight-115)+'px'}" style="margin-left: 15px;border: 1px solid rgb(196, 196, 196);">
+                        <table mat-table matTableFilter [exampleEntity]="filterEntity" [filterType]="filterType" [dataSource]="dataSource" matSort>
+                            <ng-container matColumnDef="Client">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="text-align: center;padding-left: 10px;background-color:  rgb(213, 216, 220);color: black;min-width: 100px;max-width: 200px;"> Client </th>
+                                <td mat-cell *matCellDef="let element" style="padding-left: 10px;"> {{element.Client}} </td>
+                                <td mat-footer-cell *matFooterCellDef style="background-color:  rgb(213, 216, 220);color: black;padding-left: 10px;border-right: 1px solid rgb(196, 196, 196);font-weight: bold;text-align: center;">Projects</td>
+                            </ng-container>
+                            <ng-container matColumnDef="Client_h">
+                                <th mat-header-cell *matHeaderCellDef class="formheader" style="padding-left: 10px;">
+                                    <mat-form-field appearance="outline" style="width: 180px;">
+                                        <mat-label>Account Name</mat-label>
+                                        <input (change)="FilterChange()" style="font-weight: bold" matInput  [(ngModel)]="filterEntity.Client">
+                                    </mat-form-field>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="GoLiveDate_c">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="text-align: center;background-color:  rgb(213, 216, 220);color: black;"> Go Live Date </th>
+                                <td mat-cell *matCellDef="let element"> {{element.GoLiveDate_c}} </td>
+                                <td mat-footer-cell *matFooterCellDef style="background-color:  rgb(213, 216, 220);color: black;border-right: 1px solid rgb(196, 196, 196);font-weight: bold;text-align: center;">{{SelectedProjectCount}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="GoLiveDate_c_h">
+                                <th mat-header-cell *matHeaderCellDef class="formheader">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Go Live Date</mat-label>
+                                        <input (change)="FilterChange()" style="font-weight: bold" matInput  [(ngModel)]="filterEntity.GoLiveDate_c">
+                                    </mat-form-field>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="iMeet_Project_Level">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="text-align: center;background-color:  rgb(213, 216, 220);color: black;"> Project Level </th>
+                                <td mat-cell *matCellDef="let element"> {{element.iMeet_Project_Level}} </td>
+                                <td mat-footer-cell *matFooterCellDef style="background-color:  rgb(213, 216, 220);color: black;"></td>
+                            </ng-container>
+                            <ng-container matColumnDef="iMeet_Project_Level_h">
+                                <th mat-header-cell *matHeaderCellDef class="formheader">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Project Level</mat-label>
+                                        <input (change)="FilterChange()" style="font-weight: bold" matInput  [(ngModel)]="filterEntity.iMeet_Project_Level">
+                                    </mat-form-field>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="Region__Opportunity_" >
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="text-align: center;background-color:  rgb(213, 216, 220);color: black;"> Region </th>
+                                <td mat-cell *matCellDef="let element"> {{element.Region__Opportunity_}} </td>
+                                <td mat-footer-cell *matFooterCellDef style="background-color:  rgb(213, 216, 220);color: black;"></td>
+                            </ng-container>
+                            <ng-container matColumnDef="Region__Opportunity__h">
+                                <th mat-header-cell *matHeaderCellDef class="formheader">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Region</mat-label>
+                                        <input (change)="FilterChange()" style="font-weight: bold" matInput  [(ngModel)]="filterEntity.Region__Opportunity_">
+                                    </mat-form-field>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="Country">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="text-align: center;background-color:  rgb(213, 216, 220);color: black;"> Country </th>
+                                <td mat-cell *matCellDef="let element"> {{element.Country}} </td>
+                                <td mat-footer-cell *matFooterCellDef style="background-color:  rgb(213, 216, 220);color: black;"></td>
+                            </ng-container>
+                            <ng-container matColumnDef="Country_h" sticky>
+                                <th mat-header-cell *matHeaderCellDef class="formheader">
+                                    <mat-form-field appearance="outline" >
+                                        <mat-label>Country</mat-label>
+                                        <input (change)="FilterChange()" style="font-weight: bold" matInput  [(ngModel)]="filterEntity.Country">
+                                    </mat-form-field>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="Implementation_Type">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="text-align: center;background-color:  rgb(213, 216, 220);color: black;font-size: 15px"> Implementation Type </th>
+                                <td mat-cell *matCellDef="let element"> {{element.Implementation_Type}} </td>
+                                <td mat-footer-cell *matFooterCellDef style="background-color:  rgb(213, 216, 220);color: black;border-right: 1px solid rgb(196, 196, 196);"></td>
+                            </ng-container>
+                            <ng-container matColumnDef="Implementation_Type_h">
+                                <th mat-header-cell *matHeaderCellDef class="formheader">
+                                    <mat-form-field appearance="outline" style="width: 140px;">
+                                        <mat-label>Implementation Type</mat-label>
+                                        <input (change)="FilterChange()" style="font-weight: bold" matInput  [(ngModel)]="filterEntity.Implementation_Type">
+                                    </mat-form-field>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="iMeet_Milestone___Project_Status">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="text-align: center;background-color:  rgb(213, 216, 220);color: black;"> Project Status </th>
+                                <td mat-cell *matCellDef="let element"> {{element.iMeet_Milestone___Project_Status}} </td>
+                                <td mat-footer-cell *matFooterCellDef style="background-color:  rgb(213, 216, 220);color: black;border-right: 1px solid rgb(196, 196, 196);font-weight: bold;text-align: center;">Grand Total</td>
+                            </ng-container>
+                            <ng-container matColumnDef="iMeet_Milestone___Project_Status_h">
+                                <th mat-header-cell *matHeaderCellDef class="formheader">
+                                    <mat-form-field appearance="outline"  style="width: 120px;">
+                                        <mat-label>Project Status</mat-label>
+                                        <input (change)="FilterChange()" style="font-weight: bold" matInput  [(ngModel)]="filterEntity.iMeet_Milestone___Project_Status">
+                                    </mat-form-field>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="Revenue_Total_Volume_USD">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="text-align: center;padding-right: 10px;border-right: none;background-color:  rgb(213, 216, 220);color: black;"> Revenue Total Volume $ </th>
+                                <td mat-cell *matCellDef="let element" style="padding-right: 10px;border-right: none;"> {{element.Revenue_Total_Volume}} </td>
+                                <td mat-footer-cell *matFooterCellDef style="background-color:  rgb(213, 216, 220);color: black;padding-right: 10px;font-weight: bold;text-align: center;border-right: none;"> {{TotalCost}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Revenue_Total_Volume_h">
+                                <th mat-header-cell *matHeaderCellDef class="formheader" style="padding-right: 10px;border-right: none;">
+                                    <mat-form-field appearance="outline"  style="width: 135px;">
+                                        <mat-label>Revenue USD</mat-label>
+                                        <input (change)="FilterChange()" style="font-weight: bold" matInput  [(ngModel)]="filterEntity.Revenue_Total_Volume_USD">
+                                    </mat-form-field>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="header">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes_header" style="background-color: #3B8AD9;text-align: center" colspan="8">{{StatusSelected}}</th>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="['header']; sticky: true"></tr>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true" style="padding-top: 0px;margin-top: 0px;height: 35px"></tr>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns_h; sticky: true" style="padding-top: 0px;margin-top: 0px;"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;" style="height: 35px;"></tr>
+                            <tr mat-footer-row *matFooterRowDef="displayedColumns; sticky: true" style="height: 35px;"></tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div style="position: absolute;cursor: pointer;width: 30px;height: 30px;background-color: #333F48;margin-left: 0px;margin-top: 20%;" class="mat-elevation-z2" (click)= "sidenav.toggle()"><mat-icon *ngIf="!sidenav.opened" style="color: white;font-size: 24px;margin-top: 2px;margin-left: 3px;">arrow_forward_ios</mat-icon><mat-icon *ngIf="sidenav.opened" style="color: white;font-size: 24px;margin-top: 2px;margin-left: 8px;">arrow_back_ios</mat-icon></div>
+        </div>
+        <!-- <div style="height: 40px;text-align: center;background-color: #333F48;">
+            <label style="text-align: center;margin-top: 10px;font-size: 12px;color: white;font-family: Montserrat, sans-serif">Copyright ©2020 @CWT | All rights reserved</label>
+        </div> -->
+    </mat-drawer-content>
+</mat-drawer-container>

@@ -1,0 +1,87 @@
+/* .mat-tab-label {
+  color: white;
+} */
+/* Styles for the active tab label */
+.mat-tab-label.mat-tab-label-active {
+  color: yellow !important;
+  /* #F16950 */
+  font-size: 20px;
+  font-weight: bold;
+  background-color: #333F48;
+  font-family: "Montserrat", sans-serif;
+}
+
+.mat-ink-bar{
+  background-color:yellow;
+}
+.mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar { height:2px;background-color: yellow; }
+.example-additional-selection {
+  opacity: 0.75;
+  font-size: 0.75em;
+}
+.example-container {
+  border-radius: 5px;
+}
+table {
+  width: 100%;
+}
+tr.mat-footer-row {
+  font-weight: bold;
+}
+.maintextSizes{
+  font-size: 15px;
+  font-weight: bold;
+  color : darkslategray;
+  font-family: "Arial";
+  text-align: left;
+  white-space: nowrap;
+  min-width: 100px;
+  max-width: 300px;
+}
+/* .maincelltextSizes{
+  min-width: 100px;
+  max-width: 300px;
+} */
+.textSizes
+{
+  height: 80px;
+  width: 50px;
+  white-space: nowrap;
+}
+th.textSizes > div {
+  transform: 
+    translate(0px, 15px)
+    rotate(270deg);
+  width: 30px;
+  font-size: 15px;
+  font-weight: bold;
+  color : darkslategray;
+  font-family: "Arial";
+  text-align: left;
+  white-space: nowrap;
+  margin-left: 0px;
+  padding-left: 0px;
+}
+/* .texttransform{
+  
+} */
+.celltextSizes{
+  text-align: center;
+}
+.mat-footer-cell{
+  text-align: center;
+}
+.example-container {
+  /* max-height: 750px;*/
+  overflow: auto; 
+  margin-top: 20px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+.mat-column-iMeet_Milestone___Project_Status,.mat-column-Local_PL_Leader,.mat-column-Regional_PL_Leader,.mat-column-Global_PL_Leader {
+  white-space: nowrap;
+}
+.mat-form-wrap{
+  width: 100%;
+  margin: 0px;
+}

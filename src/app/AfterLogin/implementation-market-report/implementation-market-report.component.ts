@@ -1,0 +1,2728 @@
+import { AfterViewInit,Component, OnInit,ViewChild, Inject } from '@angular/core';
+import { FormControl} from '@angular/forms';
+import { DashboardServiceService } from '../../dashboard-service.service';
+import { Responce, Data, VolumeCountCycleTime } from '../../Models/Responce';
+import { Chart } from 'chart.js';
+import 'chartjs-plugin-labels';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatTableFilter } from "mat-table-filter";
+import { Year, Month, Quarter, ProjectLevel, Region, Status, MarketLeader,Country, ImplementationType, MilestoneStatus, c_Year, c_Month, c_ProjectLevel, c_MilestoneStatus, rp_ProjectStatus, rp_Year, c_ImplementationType, Ownership } from '../../Models/Filters';
+import { DashboardComponent } from '../dashboard/dashboard.component';
+import { ExcelService } from '../../excel.service';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { DatePipe } from '@angular/common';
+import { ClrData } from '../../Models/ClrResponse';
+import { MatPaginator } from '@angular/material/paginator';
+import { LivedashboardComponent } from '../livedashboard/livedashboard.component';
+//import { ChartModule } from 'angular2-chartjs';
+//import 'chartjs-plugin-labels';
+export interface ImeetMilestoneProjectStatus {
+  iMeet_Milestone___Project_Status: string;
+  Client: string;
+  iMeet_Project_Level: string;
+  Revenue_Total_Volume_USD?: number;
+  Region__Opportunity_: string;
+  Implementation_Type: string;
+}
+// export class VolumeCountByCycleTime{
+//   Go_Live_Month: string;
+//   Revenue_Total_Volume_USD?: number;
+//   Revenue_Total_Volume : string;
+//   ProjectsCount: number;
+//   Average: number;
+//   AvgCycleTime : string;
+// }
+export interface MonthlyTotalRevenue {
+  Leftheaders: string;
+  Jan : string;
+  Feb : string;
+  Mar : string;
+  Apr : string;
+  May : string;
+  Jun : string;
+  Jul : string;
+  Aug : string;
+  Sep : string;
+  Oct : string;
+  Nov : string;
+  Dec : string;
+  Total : string;
+}
+// const Monthly_Total_Revenue: MonthlyTotalRevenue[] = [
+//   {Leftheaders: '', Jan: '', Feb: '', Mar: 'H',Apr : '', May : '',Jun : '',Jul : '',Aug : '',Sep : '',Oct : '',Nov : '',Dec : ''},
+// ];
+@Component({
+  selector: 'app-implementation-market-report',
+  templateUrl: './implementation-market-report.component.html',
+  styleUrls: ['./implementation-market-report.component.css']
+})
+export class ImplementationMarketReportComponent implements OnInit {
+  // years = new FormControl();
+  // months = new FormControl();
+  // quarters = new FormControl();
+  // levels = new FormControl();
+  // regions = new FormControl();
+  // statuss = new FormControl();
+  // marketleaders = new FormControl();
+  implementationtypes = new FormControl();
+  projectstatuses = new FormControl();
+  dataSource;
+  dataSource2;
+  dataSource_VCtPc;
+  screenWidth : number;
+  screenHeight : number;
+  StatusWiseData : Data[];
+  exceldata : any;
+  TotalCost : string;
+  MonthlyRevenue : Data[];
+  MonthlyTotalRevenueData : Data[];
+  // RegionWiseRevenue : Data[];
+  yearList : Year[];
+  yearListSelected : Year[];
+  SelectedYears : any;SelectedMonths : any;SelectedOwnership : any;SelectedLevels : any;SelectedRegions : any;SelectedStatus : any;SelectedLeader : any;SelectedCountry;SelectedMilestonestatus : any;Selectedprojectstatus : any;
+  c_SelectedYears : any;c_SelectedMonths : any;c_SelectedLevels : any;c_SelectedMilestonestatus : any;c_SelectedRegions : any;
+  rp_SelectedYears : any;
+  SelectedImplementation : any;
+  c_SelectedImplementation : any;
+  monthList : Month[];
+  monthListSelected : Month[];
+  OwnerShipList : Ownership[];
+  OwnerShipListSelected : Ownership[];
+  levelList : ProjectLevel[];//[] = ['Global', 'Local', 'Regional'];
+  levelListSelected : ProjectLevel[];
+  regionList : Region[];
+  regionListSelected : Region[];
+  statusList : Status[];//[] = ['Backlog', 'Started'];
+  statusListSelected : Status[];
+  marketleaderList : MarketLeader[];//[] = ['Barbara', 'Bindu Batia', 'Cathy voss','Chris Bowen'];
+  CountryList : Country[];
+  // marketleaderListSelected : MarketLeader[];
+  implementationtypeList: ImplementationType[];
+  implementationtypeListSelected : ImplementationType[];
+  MilestonestatusList : MilestoneStatus[];
+  MilestonestatusListSelected : MilestoneStatus[];
+  masteryear : boolean;masterownerShip : boolean;mastermonth : boolean;masterlevel : boolean;masterregion : boolean;masterstatus : boolean;masterleader : boolean;masterCountry : boolean;masterMilestonestatus : boolean;masterimplementation : boolean;
+  // c_masteryear : boolean;c_mastermonth : boolean;c_masterlevel : boolean;c_masterMilestonestatus : boolean;c_masterregion : boolean;c_masterimplementation : boolean;
+  Months : any = [];
+  Volume : any = [];
+  ProjectCount : any = [];
+  AvgCycleTime : any = [];
+  PLWProjectLevels : any = [];
+  PLWProjectCount : any = [];
+  PLWRevenueVolume : any = [];
+  RWRegions : any = [];
+  RWProjectCount  : any [];
+  RWRevenueVolume : any = [];
+  VolumeCountCycleTime : VolumeCountCycleTime[];
+  ProjectCountByYear : Data[];
+  displayedColumns: string[] = ['Client', 'GoLiveDate_c','iMeet_Project_Level','Region__Opportunity_','Country','Implementation_Type','iMeet_Milestone___Project_Status','Revenue_Total_Volume_USD'];
+  displayedColumns_h: string[] = ['Client_h', 'GoLiveDate_c_h','iMeet_Project_Level_h','Region__Opportunity__h','Country_h','Implementation_Type_h','iMeet_Milestone___Project_Status_h','Revenue_Total_Volume_h'];
+  displayedColumns_VCTPC: string[] = ['GoLiveMonth', 'Revenue_Total_Volume','ProjectsCount','AvgCycleTime'];
+  // displayedColumns_VCTPCheader: string[] = ['GoLiveMonthh', 'Revenue_Total_Volumeh','ProjectsCounth','AvgCycleTimeh'];
+  MonthlydisplayedColumns: any[] = ['Leftheaders', 'Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec','Total'];
+  displayedColumnsrw : any[] = ['Region__Opportunity_','ProjectsCount','RevenueVolume_string'];
+  displayedColumnsplw : any[] = ['iMeet_Project_Level','ProjectsCount','RevenueVolume_string'];
+  rw_dataSource;
+  plw_dataSource;
+  filterEntity : Data;
+  filterType: MatTableFilter;
+  chart : any;
+  ypcchart : any;
+  rwchart : any;
+  CVchart : any;
+  CTchart : any;
+  plwcanvas : any;
+  CurrentYear : number;
+  CurrentYears : number;
+  StatusSelectedList = [];
+  StatusSelected : string;
+  JanTotal : string;FebTotal : string;MarTotal : string;AprTotal : string;MayTotal : string;JunTotal : string;
+  JulTotal : string;AugTotal : string;SepTotal : string;OctTotal : string;NovTotal : string;DecTotal : string;MonthsTotal : string;
+  JanTotal_f : string;FebTotal_f : string;MarTotal_f : string;AprTotal_f : string;MayTotal_f : string;JunTotal_f : string;
+  JulTotal_f : string;AugTotal_f : string;SepTotal_f : string;OctTotal_f : string;NovTotal_f : string;DecTotal_f : string;MonthsTotal_f : string;
+  JanTotal_v : string;FebTotal_v : string;MarTotal_v : string;AprTotal_v : string;MayTotal_v : string;JunTotal_v : string;
+  JulTotal_v : string;AugTotal_v : string;SepTotal_v : string;OctTotal_v : string;NovTotal_v : string;DecTotal_v : string;Total_v : string
+  Jan_Comments : string;Feb_Comments : string;Mar_Comments : string;Apr_Comments : string;May_Comments : string;Jun_Comments : string;
+  Jul_Comments : string;Aug_Comments : string;Sep_Comments : string;Oct_Comments : string;Nov_Comments : string;Dec_Comments : string;
+  SelectedProjectCount;
+  @ViewChild(MatSort) sort: MatSort;
+  // @ViewChild(MatPaginator) paginator: MatPaginator;
+  // private paginator: MatPaginator;
+  // private sort: MatSort;
+  // @ViewChild(MatSort) sort: MatSort;
+
+  // @ViewChild(MatSort) set matSort(ms: MatSort) {
+  //   this.sort = ms;
+  //   this.setDataSourceAttributes();
+  // }
+
+  // @ViewChild(MatPaginator) set matPaginator(mp: MatPaginator) {
+  //   this.paginator = mp;
+  //   this.setDataSourceAttributes();
+  // }
+
+  // setDataSourceAttributes() {
+  //   this.dataSource_VCtPc.paginator = this.paginator;
+  //   //this.dataSource_VCtPc.sort = this.sort;
+  // }
+  // Apply_disable2 : boolean;
+  // Apply_disable1 : boolean;
+  Apply_disable : boolean;
+  ChartRevenueTotalVolume : any;
+  ChartProjectCount : any;
+  ChartAvgCycleTime : any;
+
+  // SelectedDeltaMonthNumber;
+  // SelectedDeltaComment;
+  // SelectedDeltaMonth;
+  DeltaID;
+  DeltaValue;
+  // filterEntity: VolumeCountCycleTime;
+  // filterType: MatTableFilter;
+  constructor(public service : DashboardServiceService, public dialog: MatDialog,public datepipe : DatePipe, public dashboard : LivedashboardComponent, private excelService:ExcelService) 
+  {
+    //set screenWidth on page load
+    this.screenWidth = window.innerWidth;
+    this.screenHeight = window.innerHeight;
+    window.onresize = () => {
+      //set screenWidth on screen size change
+      this.screenWidth = window.innerWidth;
+      this.screenHeight = window.innerHeight;
+    };
+  }
+  ResetFilters(){
+    this.ngOnInit();
+  }
+  ngAfterViewInit() {
+    this.dataSource.sort = this.sort;
+    // this.GetData();
+  }
+  FilterChange(){
+    this.SelectedProjectCount = this.dataSource.filteredData.length;
+    this.TotalCost = Math.round(this.dataSource.filteredData.map(t => t.Revenue_Total_Volume_USD).reduce((acc,value) => acc + value,0)).toLocaleString("en-US",{style : "currency",currency:"USD"}).slice(0,-3);
+  }
+  LoginUID : string;
+  ngOnInit() {
+    this.LoginUID = localStorage.getItem("UID");
+    this.dashboard.ShowSpinnerHandler(true);
+    this.service.ImeetMilestoneFiltersList().subscribe(data =>{
+      this.yearList = data.Year;
+      this.masteryear = false;
+      // this.c_yearList = data.c_Year;
+      // this.c_masteryear = false;
+      this.CurrentYears = (new Date()).getFullYear();
+      for (var i = 0; i < this.yearList.length; i++) {
+        if(this.yearList[i].Go_Live_Year == this.CurrentYears+""){
+          //|| this.yearList[i].Go_Live_Year == (this.CurrentYear-1)+""
+          this.yearList[i].isSelected = true;
+          // this.c_yearList[i].isSelected = true;
+        }
+        else{
+          this.yearList[i].isSelected = false;
+          // this.c_yearList[i].isSelected = false;
+        }
+      }
+      this.getSelectedYear();
+      // this.c_getSelectedYear();
+      this.monthList = data.Months;
+      this.mastermonth = true;
+      this.getSelectedMonth();
+      // this.c_monthList = data.c_Months;
+      // this.c_mastermonth = true;
+      // this.c_getSelectedMonth();
+      this.OwnerShipList = data.OwnerShip;
+      this.masterownerShip = false;
+      for (var i = 0; i < this.OwnerShipList.length; i++) {
+        if(this.OwnerShipList[i].OwnerShip == "Partner"){
+          this.OwnerShipList[i].isSelected = false;
+        }
+        else{
+          this.OwnerShipList[i].isSelected = true;
+        }
+      }
+      this.getSelectedOwnerships();
+      this.levelList = data.ProjectLevel;
+      this.masterlevel = true;
+      this.getSelectedLevels();
+      // this.c_levelList = data.c_ProjectLevel;
+      // this.c_masterlevel = true;
+      // this.c_getSelectedLevels();
+      this.regionList = data.Region;
+      this.masterregion = true;
+      this.getSelectedRegion();
+      // this.c_regionList = data.Region;
+      // this.c_masterregion = true;
+      // this.c_getSelectedRegion();
+      // this.statusList = data.Status;
+      // this.masterstatus = true;
+      // this.getSelectedStatus();
+      this.marketleaderList = data.MarketLeaders;
+      this.masterleader = true;
+      this.getSelectedLeader();
+      this.CountryList = data.Country;
+      this.masterCountry = true;
+      this.getSelectedCountry();
+      this.implementationtypeList = data.ImplementationType;
+      this.masterimplementation = true;
+      this.getSelectedType();
+      // this.c_implementationtypeList = data.c_ImplementationType;
+      // this.c_masterimplementation = true;
+      // this.c_getSelectedType();
+      this.MilestonestatusList = data.MilestoneStatus;
+      this.masterMilestonestatus = false;
+      // this.c_MilestonestatusList = data.c_MilestoneStatus;
+      // this.c_masterMilestonestatus = false;
+      for (var i = 0; i < this.MilestonestatusList.length; i++) {
+        if(this.MilestonestatusList[i].iMeet_Milestone___Project_Status == "C-Closed" || this.MilestonestatusList[i].iMeet_Milestone___Project_Status == "A-Active/Date Confirmed"){
+          this.MilestonestatusList[i].isSelected = true;
+          // this.c_MilestonestatusList[i].isSelected = true;
+        }else{
+          this.MilestonestatusList[i].isSelected = false;
+          // this.c_MilestonestatusList[i].isSelected = false;
+        }
+      }
+      this.getSelectedMilestoneStatus();
+      // this.c_getSelectedMilestoneStatus();
+      // this.SetGraphChart();
+      this.dashboard.ShowSpinnerHandler(true);
+      this.SetGraph();
+    });
+    // this.service.ProjectStatusList().subscribe(data =>{
+    //   if (data.code == 200){
+    //     // this.projectstatusList = data.Data;
+    //     // this.masterprojectstatus = false;
+    //     // for (var i = 0; i < this.projectstatusList.length; i++) {
+    //     //   if(this.projectstatusList[i].iMeet_Milestone___Project_Status == "P-Pipeline"){
+    //     //     this.projectstatusList[i].isSelected = true;
+    //     //   }else{
+    //     //     this.projectstatusList[i].isSelected = false;
+    //     //   }
+    //     // }
+    //     // this.getSelectedProjectStatus();
+    //     // this.dashboard.ShowSpinnerHandler(true);
+    //     // this.SetGraph2();
+    //   }else{
+    //   }
+    // });
+    this.Apply_disable = true;
+    // this.Apply_disable1 = true;
+    // this.Apply_disable2 = true;
+  }
+  SetGraph(){
+    this.StatusSelectedList = [];
+    this.StatusSelected = null;
+    for(let i=0;i<this.MilestonestatusList.length;i++){
+      if(this.MilestonestatusList[i].isSelected == true){
+        if(this.MilestonestatusList[i].isSelected == null){
+          this.StatusSelectedList.push("Blanks");
+        }else{
+          this.StatusSelectedList.push(this.MilestonestatusList[i].iMeet_Milestone___Project_Status);
+        }
+      }else{
+      }
+    }
+    for(let i = 0;i<this.StatusSelectedList.length;i++){
+      if(this.StatusSelectedList.length == 1){
+        this.StatusSelected = this.StatusSelectedList[i];
+      }else if(this.StatusSelectedList.length >= 2){
+        if(i == 0){
+          this.StatusSelected = this.StatusSelectedList[i];
+        }else if(i == this.StatusSelectedList.length-1){
+          this.StatusSelected += " & "+this.StatusSelectedList[i] + " Data";
+        }else {
+          this.StatusSelected += ", "+this.StatusSelectedList[i];
+        }
+      }
+    }
+    var years = [];
+    var backgroundColor = [
+      'rgb(0, 100, 200)','rgb(241, 130, 38)','rgb(14, 61, 89)', 'rgb(255, 219, 105)', 'rgb(217,37,38)', 'rgb(75, 192, 192)', 'rgb(255, 99, 132)'
+    ]
+    var bordercolor = [
+      'rgb(0, 100, 200)','rgb(241, 130, 38)','rgb(14, 61, 89)', 'rgb(255, 219, 105)', 'rgb(217,37,38)', 'rgb(75, 192, 192)', 'rgb(255, 99, 132)'
+    ]
+    var bgColor = [
+      'rgba(39, 174, 96 ,0.5)','rgba(93, 173, 226,0.5)','rgba(14, 61, 89,0.5)', 'rgb(255, 219, 105)', 'rgb(217,37,38)', 'rgb(75, 192, 192)', 'rgb(255, 99, 132)'
+    ]
+    var bocolor = [
+      'rgba(229, 231, 233 ,1)','rgba(229, 231, 233 ,1)','rgba(229, 231, 233,1)', 'rgb(255, 219, 105)', 'rgb(217,37,38)', 'rgb(75, 192, 192)', 'rgb(255, 99, 132)'
+    ]
+    var hoverbgcolor = [
+      'rgba(39, 174, 96 ,1)','rgb(93, 173, 226,1)','rgba(14, 61, 89,1)'
+    ]
+    var anotherbackgroundColor = [
+      'rgb(241, 130, 38)','rgb(59, 138, 217)','rgb(14, 61, 89)', 'rgb(255, 219, 105)', 'rgb(217,37,38)', 'rgb(75, 192, 192)', 'rgb(255, 99, 132)'
+    ]
+    var anotherbordercolor = [
+      'rgb(241, 130, 38)','rgb(59, 138, 217)','rgb(14, 61, 89)', 'rgb(255, 219, 105)', 'rgb(217,37,38)', 'rgb(75, 192, 192)', 'rgb(255, 99, 132)'
+    ]
+    var str = this.SelectedYears+"";
+    var mydatasets = [];
+    years = null;
+    let j = 0;
+    let k = 0;
+    let l = 0;
+    var PCmydatasets = [];
+    var VolumeDataset = [];
+    var CountDataset = [];
+    var VolumeCountDataset = [];
+    var CycleCountDataset = [];
+    var CycleTimeDataset = [];
+    var Options = {
+      legend: {
+        display: true,
+        position : 'bottom' as 'bottom',
+        fullWidth : true,
+        labels: {
+            fontColor: '#000000',
+            fontSize :  13,
+            padding : 10,
+            fontStyle : 'bold',
+            fontFamily : 'Arial',
+        }
+      },
+      hover: {
+        mode: 'index' as 'index',
+        intersect: false
+      },
+      title: {
+        display: true,
+        text: ' '
+      },
+      plugins: {
+        labels: {
+          render: function (args) {
+            if(args.value == 0) {
+              return '$'+0;
+            }
+            else
+            {
+              // hundreds
+              if(args.value <= 999){
+                return '$'+Math.round(args.value);
+              }
+              // thousands
+              else if(args.value >= 1000 && args.value <= 999999){
+                return '$'+Math.round(args.value / 1000) + 'K';
+              }
+              // millions
+              else if(args.value >= 1000000 && args.value <= 999999999){
+                return '$'+Math.round(args.value / 1000000) + 'M';
+              }
+              // billions
+              else if(args.value >= 1000000000 && args.value <= 999999999999){
+                return '$'+Math.round(args.value / 1000000000) + 'B';
+              }
+              else
+                return '$'+Math.round(args.value);
+            }
+          },
+          fontColor: '#3B3B3B',
+          position: 'outside',
+          textMargin: 6,
+          fontSize: 12,
+          fontStyle : 'bold',
+          fontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
+        }
+      },
+      tooltips: {
+        mode: 'index' as 'index',
+        intersect: false,
+        callbacks: {
+          label: function(tooltipItems, data) {
+            return Math.round(data.datasets[tooltipItems.datasetIndex].data[tooltipItems.index]).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
+          }
+        }
+      },
+      // plugins: {
+      //   labels: false,
+      // },
+      scales: {
+        xAxes: [{
+          ticks: {
+            // mirror: true,
+            fontSize : 11,
+            fontStyle : 'bold',
+            fontColor : '#000000',
+            fontFamily : 'Arial',
+          },
+          gridLines: {
+            color: "rgba(0, 0, 0, 0)",
+          }
+        }],
+        yAxes: [{
+          ticks: {
+            beginAtZero:true,
+            // max:700,
+            fontSize : 11,
+            fontStyle : 'bold',
+            fontColor : '#000000',
+            fontFamily : 'Arial',
+            callback: function(label, index, labels) {
+              if(label == 0) {
+                return 0;
+              }
+              else
+              {
+                // hundreds
+                if(label <= 999){
+                  return label;
+                }
+                // thousands
+                else if(label >= 1000 && label <= 999999){
+                  return (label / 1000) + 'K';
+                }
+                // millions
+                else if(label >= 1000000 && label <= 999999999){
+                  return (label / 1000000) + 'M';
+                }
+                // billions
+                else if(label >= 1000000000 && label <= 999999999999){
+                  return (label / 1000000000) + 'B';
+                }
+                else
+                  return label;
+              }
+            }
+          },
+          gridLines: {
+            color: "rgba(0, 0, 0, 0)",
+          },
+          scaleLabel: {
+              display: true,
+              labelString: 'Revenue Total Volume USD',
+              fontSize : 13,
+              fontStyle : 'bold',
+              fontColor : '#000000',
+              fontFamily : 'Arial',
+          }
+        }]
+      },
+    }
+    var PCOptions = {
+      responsive : true,
+      // events: false,
+      legend: {
+        display: true,
+        position : 'bottom' as 'bottom',
+        fullWidth : true,
+        labels: {
+            fontColor: '#000000',
+            fontSize :  13,
+            padding : 15,
+            fontStyle : '600',
+            fontFamily : 'Arial',
+        }
+      },
+      plugins: {
+        labels: false,
+      },
+      tooltips: {
+        enabled: false,
+        callbacks: {
+          label: function(tooltipItem) {
+            return tooltipItem.yLabel;
+          }
+        }
+      },
+      // tooltips: {
+      //   mode: 'index',
+      //   intersect: false,
+      //   callbacks: {
+      //     label: function(tooltipItems, data) {
+      //       return data.datasets[tooltipItems.datasetIndex].label + 
+      //       " : " + 
+      //       data.datasets[tooltipItems.datasetIndex].data[tooltipItems.index];
+      //     }
+      //   }
+      // },
+      scales: {
+        yAxes: [{
+          ticks: {
+            fontSize : 10,
+            fontStyle : 'normal',
+            fontColor : '#000000',
+            fontFamily : 'Arial',
+          },
+          scaleLabel: {
+              display: true,
+              labelString: 'Projects Count',
+              fontSize : 12,
+              fontStyle : 'normal',
+              fontColor : '#000000',
+              fontFamily : 'Arial',
+          }
+        }],
+        xAxes: [{
+          ticks: {
+            fontSize : 10,
+            fontStyle : 'normal',
+            fontColor : '#000000',
+            fontFamily : 'Arial',
+          }
+        }]
+      },
+      hover: {
+        animationDuration: 0
+      },
+      animation: {
+        duration: 1,
+        onComplete: function () {
+          var chartInstance = this.chart,
+              ctx = chartInstance.ctx;
+          ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'bottom';
+          this.data.datasets.forEach(function (dataset, i) {
+              var meta = chartInstance.controller.getDatasetMeta(i);
+              meta.data.forEach(function (bar, index) {
+                  var data = dataset.data[index]; 
+                  ctx.font = "550 12px Arial";                    
+                  ctx.fillText(data, bar._model.x, bar._model.y - 5);
+              });
+          });
+        }
+      }
+    }
+    var Options2 = {
+      responsive : true,
+      bezierCurve: false,
+      hover: {
+        mode: 'index' as 'index',
+        intersect: false
+      },
+      legend: {
+        display: true,
+        position : 'bottom' as 'bottom',
+        fullWidth : true,
+        labels: {
+            fontColor: '#000000',
+            fontSize :  13,
+            padding : 10,
+            fontStyle : 'bold',
+            fontFamily : 'Arial',
+        }
+      },
+      plugins :{
+        labels: {
+          render: function (args) {
+            if(args.dataset.yAxisID == "B"){
+              return args.value
+            }else{
+              if(args.value == 0) {
+                return '$'+0;
+              }
+              else
+              {
+                // hundreds
+                if(args.value <= 999){
+                  return '$'+Math.round(args.value);
+                }
+                // thousands
+                else if(args.value >= 1000 && args.value <= 999999){
+                  return '$'+Math.round(args.value / 1000) + 'K';
+                }
+                // millions
+                else if(args.value >= 1000000 && args.value <= 999999999){
+                  return '$'+Math.round(args.value / 1000000) + 'M';
+                }
+                // billions
+                else if(args.value >= 1000000000 && args.value <= 999999999999){
+                  return '$'+Math.round(args.value / 1000000000) + 'B';
+                }
+                else
+                  return '$'+Math.round(args.value);
+              }
+            }
+          },
+          fontColor: '#3B3B3B',
+          // position: 'border',
+          textMargin: 6,
+          fontSize: 13,
+          fontStyle : 'bold',
+          fontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
+        }
+        // labels : false,
+      },
+      title: {
+        display: true,
+        text: ' '
+      },
+      tooltips: {
+        callbacks: {
+          label: function(tooltipItems, data) {
+            if(tooltipItems.datasetIndex === 0){
+              return " Project Count : " + 
+              Math.round(data.datasets[tooltipItems.datasetIndex].data[tooltipItems.index]);
+            }else if(tooltipItems.datasetIndex === 1){
+              return " Revenue Volume : " + 
+              Math.round(data.datasets[tooltipItems.datasetIndex].data[tooltipItems.index]).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
+            }
+          }
+        }
+      },
+      scales: {
+        yAxes: [{
+          id: 'A',
+          type: 'linear',
+          position: 'left',
+          // stacked: true,
+          ticks: {
+            fontSize : 11,
+            fontStyle : 'bold',
+            fontColor : '#000000',
+            fontFamily : 'Arial',
+            callback: function(label, index, labels) {
+              if(label == 0) {
+                return 0;
+              }
+              else
+              {
+                // hundreds
+                if(label <= 999){
+                  return label;
+                }
+                // thousands
+                else if(label >= 1000 && label <= 999999){
+                  return (label / 1000) + 'K';
+                }
+                // millions
+                else if(label >= 1000000 && label <= 999999999){
+                  return (label / 1000000) + 'M';
+                }
+                // billions
+                else if(label >= 1000000000 && label <= 999999999999){
+                  return (label / 1000000000) + 'B';
+                }
+                else
+                  return label;
+              }
+            }
+          },
+          gridLines: {
+            color: "rgba(0, 0, 0, 0)",
+          },
+          scaleLabel: {
+            display: true,
+            labelString: 'Revenue Total Volume USD',
+            fontSize : 13,
+            fontStyle : 'bold',
+            fontColor : '#000000',
+            fontFamily : 'Arial',
+          }
+        },{
+          id: 'B',
+          type: 'linear',
+          position: 'right',
+          ticks: {
+            fontSize : 11,
+            fontStyle : 'bold',
+            fontColor : '#000000',
+            fontFamily : 'Arial',
+          },
+          gridLines: {
+            color: "rgba(0, 0, 0, 0)",
+          },
+          scaleLabel: {
+            display: true,
+            labelString: 'Projects Count',
+            fontSize : 13,
+            fontStyle : 'bold',
+            fontColor : '#000000',
+            fontFamily : 'Arial',
+          }
+        }],
+        xAxes: [{
+          ticks: {
+            fontSize : 11,
+            fontStyle : 'bold',
+            fontColor : '#000000',
+            fontFamily : 'Arial',
+          },gridLines: {
+            color: "rgba(0, 0, 0, 0)",
+          }
+        }]
+      },
+    }
+    var Options3 = {
+      responsive : true,
+      bezierCurve: false,
+      hover: {
+        mode: 'index' as 'index',
+        intersect: false
+      },
+      legend: {
+        display: true,
+        position : 'bottom' as 'bottom',
+        fullWidth : true,
+        labels: {
+            fontColor: '#000000',
+            fontSize :  13,
+            padding : 10,
+            fontStyle : 'bold',
+            fontFamily : 'Arial',
+        }
+      },
+      title: {
+        display: true,
+        text: ' '
+      },
+      plugins :{
+        labels: {
+          render : function(args){
+            return Math.round(args.value);
+          },
+          fontColor: '#3B3B3B',
+          position: 'outside',
+          textMargin: 6,
+          fontSize: 13,
+          fontStyle : 'bold',
+          fontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
+        }
+        // labels : false,
+      },
+      tooltips: {
+        callbacks: {
+          label: function(tooltipItems, data) {
+            if(tooltipItems.datasetIndex === 0){
+              // return data.labels[tooltipItems.index] +
+              return " Project Count : " + 
+              Math.round(data.datasets[tooltipItems.datasetIndex].data[tooltipItems.index]);
+            }else if(tooltipItems.datasetIndex === 1){
+              // return data.labels[tooltipItems.index] +
+              return " Cycle Time : " + 
+              Math.round(data.datasets[tooltipItems.datasetIndex].data[tooltipItems.index]);
+            }
+          }
+        }
+      },
+      scales: {
+        yAxes: [{
+          id: 'A',
+          type: 'linear',
+          position: 'left',
+          // stacked: true,
+          ticks: {
+            fontSize : 11,
+            fontStyle : 'bold',
+            fontColor : '#000000',
+            fontFamily : 'Arial',
+          },
+          gridLines: {
+            color: "rgba(0, 0, 0, 0)",
+          },
+          scaleLabel: {
+            display: true,
+            labelString: 'Cycle Time',
+            fontSize : 13,
+            fontStyle : 'bold',
+            fontColor : '#000000',
+            fontFamily : 'Arial',
+          }
+        },{
+          id: 'B',
+          type: 'linear',
+          position: 'right',
+          ticks: {
+            fontSize : 11,
+            fontStyle : 'bold',
+            fontColor : '#000000',
+            fontFamily : 'Arial',
+          },
+          gridLines: {
+            color: "rgba(0, 0, 0, 0)",
+          },
+          scaleLabel: {
+            display: true,
+            labelString: 'Projects Count',
+            fontSize : 13,
+            fontStyle : 'bold',
+            fontColor : '#000000',
+            fontFamily : 'Arial',
+          }
+        }],
+        xAxes: [{
+          ticks: {
+            fontSize : 11,
+            fontStyle : 'bold',
+            fontColor : '#000000',
+            fontFamily : 'Arial',
+          },
+          gridLines: {
+            color: "rgba(0, 0, 0, 0)",
+          }
+        }]
+      },
+    }
+    if(str == null || str == ''){
+      alert("Please select year and Try Again");
+    }else{
+      years = str.split(',');
+      for(let i=0;i<years.length;i++){
+        if(years[i] == null || years[i] == ""){
+          alert("Please select year and Try Again");
+        }else{
+          this.dashboard.ShowSpinnerHandler(true);
+          this.service.MonthlyRevenueByYear(years[i],this.SelectedMonths,this.SelectedLevels,this.SelectedRegions,this.SelectedMilestonestatus,this.SelectedImplementation,this.SelectedCountry,this.SelectedOwnership).subscribe(data =>{
+            if(data.Data.length > 0){
+              // if(j==0){
+              //   mydatasets[j] = {
+              //     label : 'Target line',
+              //     data : [75000000,75000000,75000000,75000000,75000000,75000000,75000000,75000000,75000000,75000000,75000000,75000000],
+              //     type: 'line',
+              //     backgroundColor : '#E74C3C',
+              //     borderColor : '#E74C3C',
+              //     fill : false,
+              //     lineTension: 0,
+              //   }
+              //   mydatasets[j+1] = {
+              //     label : years[i]+" ("+Math.round(data.Data[0].January+data.Data[0].February+data.Data[0].March+data.Data[0].April+data.Data[0].May+data.Data[0].June+data.Data[0].July+data.Data[0].August+data.Data[0].September+data.Data[0].October+data.Data[0].November+data.Data[0].December).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3)+")",
+              //     data : [data.Data[0].January,data.Data[0].February,data.Data[0].March,data.Data[0].April,data.Data[0].May,data.Data[0].June,data.Data[0].July,data.Data[0].August,data.Data[0].September,data.Data[0].October,data.Data[0].November,data.Data[0].December],
+              //     backgroundColor : bgColor[j],
+              //     borderColor : bocolor[j],
+              //     borderWidth: 2,
+              //     hoverBackgroundColor : hoverbgcolor[j],
+              //     // type: 'line',
+              //     // fill : false,
+              //   }
+              // }else{
+              //   mydatasets[j+1] = {
+              //     label : years[i]+" ("+Math.round(data.Data[0].January+data.Data[0].February+data.Data[0].March+data.Data[0].April+data.Data[0].May+data.Data[0].June+data.Data[0].July+data.Data[0].August+data.Data[0].September+data.Data[0].October+data.Data[0].November+data.Data[0].December).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3)+")",
+              //     data : [data.Data[0].January,data.Data[0].February,data.Data[0].March,data.Data[0].April,data.Data[0].May,data.Data[0].June,data.Data[0].July,data.Data[0].August,data.Data[0].September,data.Data[0].October,data.Data[0].November,data.Data[0].December],
+              //     backgroundColor : bgColor[j],
+              //     borderColor : bocolor[j],
+              //     borderWidth: 2,
+              //     hoverBackgroundColor : hoverbgcolor[j],
+              //     // type: 'line',
+              //     // fill : false,
+              //   }
+              // }
+              mydatasets[j] = {
+                label : years[i]+" ("+Math.round(data.Data[0].January+data.Data[0].February+data.Data[0].March+data.Data[0].April+data.Data[0].May+data.Data[0].June+data.Data[0].July+data.Data[0].August+data.Data[0].September+data.Data[0].October+data.Data[0].November+data.Data[0].December).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3)+")",
+                data : [data.Data[0].January,data.Data[0].February,data.Data[0].March,data.Data[0].April,data.Data[0].May,data.Data[0].June,data.Data[0].July,data.Data[0].August,data.Data[0].September,data.Data[0].October,data.Data[0].November,data.Data[0].December],
+                backgroundColor : bgColor[j],
+                borderColor : bocolor[j],
+                borderWidth: 2,
+                hoverBackgroundColor : hoverbgcolor[j],
+                // type: 'line',
+                // fill : false,
+              }
+              if(i == 0){
+                if(this.chart != undefined){
+                  this.chart.destroy();
+                }
+                this.chart = new Chart('MRcanvas', {
+                  type : 'bar',
+                  data : {
+                    labels : ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+                    datasets : mydatasets
+                  },
+                  options: Options,
+                })
+              }else{
+                this.chart.update();
+              }
+              // chart.update();
+              // if(this.chart != undefined){
+              //  this.chart.update();
+              // }
+              j++;
+            }
+            this.dashboard.ShowSpinnerHandler(false);
+          });
+          this.service.ChartVolumeCycleTimeCounts(years[i],this.SelectedMonths,this.SelectedLevels,this.SelectedRegions,this.SelectedMilestonestatus,this.SelectedImplementation,this.SelectedCountry,this.SelectedOwnership).subscribe(data =>{
+            if(data.code == 200){
+              if(data.Data.length > 0){
+                CountDataset[k] = {
+                  label : years[i]+" Project Count",
+                  data: [data.Data[0].January_PC,data.Data[0].February_PC,data.Data[0].March_PC,data.Data[0].April_PC,data.Data[0].May_PC,data.Data[0].June_PC,data.Data[0].July_PC,data.Data[0].August_PC,data.Data[0].September_PC,data.Data[0].October_PC,data.Data[0].November_PC,data.Data[0].December_PC],
+                  backgroundColor : anotherbackgroundColor[k],
+                  borderColor : anotherbordercolor[k],
+                  fill : false,lineTension: 0,
+                  type : 'line',
+                  yAxisID: 'B',
+                }
+                VolumeDataset[k] = {
+                  label : years[i]+" Revenue Total Volume USD",
+                  data: [data.Data[0].January_RV,data.Data[0].February_RV,data.Data[0].March_RV,data.Data[0].April_RV,data.Data[0].May_RV,data.Data[0].June_RV,data.Data[0].July_RV,data.Data[0].August_RV,data.Data[0].September_RV,data.Data[0].October_RV,data.Data[0].November_RV,data.Data[0].December_RV],
+                  backgroundColor : bgColor[k],
+                  borderColor : bocolor[k],
+                  borderWidth : 2,
+                  hoverBackgroundColor : hoverbgcolor[k],
+                  fill : false,
+                  type : 'bar',
+                  yAxisID: 'A',
+                }
+                VolumeCountDataset = CountDataset.concat(VolumeDataset);
+                CycleTimeDataset[k] = {
+                  label : years[i]+" Cycle Time",
+                  data: [data.Data[0].January_A,data.Data[0].February_A,data.Data[0].March_A,data.Data[0].April_A,data.Data[0].May_A,data.Data[0].June_A,data.Data[0].July_A,data.Data[0].August_A,data.Data[0].September_A,data.Data[0].October_A,data.Data[0].November_A,data.Data[0].December_A],
+                  backgroundColor : bgColor[k],
+                  borderColor : bocolor[k],
+                  borderWidth : 2,
+                  hoverBackgroundColor : hoverbgcolor[k],
+                  fill : false,
+                  type : 'bar',
+                  yAxisID: 'A',
+                }
+                CycleCountDataset = CountDataset.concat(CycleTimeDataset);
+                if(i == 0){
+                  if(this.CVchart != undefined){
+                    this.CVchart.destroy();
+                  }
+                  this.CVchart = new Chart('CVcanvas', {
+                    type : 'bar',
+                    data : {
+                      //labels : this.Months,
+                      labels : ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+                      datasets: VolumeCountDataset
+                    },
+                    options: Options2,
+                  })
+                  if(this.CTchart != undefined){
+                    this.CTchart.destroy();
+                  }
+                  this.CTchart = new Chart('CTcanvas', {
+                    type : 'bar',
+                    data : {
+                      labels : ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+                      datasets: CycleCountDataset
+                    },
+                    options: Options3,
+                  })
+                }else{
+                  this.CVchart.update();
+                  this.CTchart.update();
+                }
+                k++;
+                // j++;
+              }
+            }
+          });
+          this.service.ProjectCountByYear(years[i],this.SelectedMonths,this.SelectedLevels,this.SelectedRegions,this.SelectedMilestonestatus,this.SelectedImplementation,this.SelectedCountry,this.SelectedOwnership).subscribe(data => {
+            if(data.code == 200){
+              if(data.Data.length > 0){
+                PCmydatasets[l] = {
+                  label : years[i]+"",
+                  data : [data.Data[0].January,data.Data[0].February,data.Data[0].March,data.Data[0].April,data.Data[0].May,data.Data[0].June,data.Data[0].July,data.Data[0].August,data.Data[0].September,data.Data[0].October,data.Data[0].November,data.Data[0].December],
+                  backgroundColor : anotherbackgroundColor[l],
+                  borderColor : anotherbordercolor[l],
+                  fill : false,
+                }
+                if(i == 0){
+                  if(this.ypcchart != undefined){
+                    this.ypcchart.destroy();
+                  }
+                  this.ypcchart = new Chart('YPCcanvas', {
+                    type : 'line',
+                    data : {
+                      labels : ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+                      datasets : PCmydatasets,
+                    },
+                    options: PCOptions,
+                  })
+                }else{
+                  this.ypcchart.update();
+                }
+                l++;
+              }
+            }
+          });
+          if(i == years.length-1){
+            this.dashboard.ShowSpinnerHandler(false);
+          }
+        }
+      }
+      this.PLWProjectLevels = [];
+      this.PLWProjectCount = [];
+      this.PLWRevenueVolume = [];
+      this.RWRegions = [];
+      this.RWRevenueVolume = [];
+      this.RWProjectCount = [];
+      this.dashboard.ShowSpinnerHandler(true);
+      this.rw_dataSource = null;
+      this.service.RegionWiseRevenue(this.SelectedYears,this.SelectedMonths,this.SelectedLevels,this.SelectedRegions,this.SelectedMilestonestatus,this.SelectedImplementation,this.SelectedCountry,this.SelectedOwnership).subscribe(data =>{
+        for(let i = 0;i<data.Data.length;i++){
+          if(data.Data[i].RevenueVolume == null){
+            data.Data[i].RevenueVolume_string = "$0";
+          }else{
+            data.Data[i].RevenueVolume_string = Math.round(data.Data[i].RevenueVolume).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
+            
+          }
+        }
+        data.Data.forEach(item =>{
+          this.RWRegions.push(item.Region__Opportunity_);
+          this.RWRevenueVolume.push(item.RevenueVolume);
+          this.RWProjectCount.push(item.ProjectsCount);
+        })
+        this.rw_dataSource = data.Data;
+        var Options = {
+          legend: {
+            display: true,
+            position : 'bottom' as 'bottom',
+            fullWidth : true,
+            labels: {
+                fontColor: '#000000',
+                fontSize :  11,
+                padding : 15,
+                fontStyle : '500',
+                fontFamily : 'Arial',
+            }
+          },
+          tooltips: {
+            mode: 'index',
+            yAlign: "bottom",
+            callbacks: {
+              label: function(tooltipItems, data) {
+                return data.labels[tooltipItems.index] +
+                " : " + 
+                Math.round(data.datasets[tooltipItems.datasetIndex].data[tooltipItems.index]).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3)
+                // + " || Projects Count : " + data.datasets[tooltipItems.datasetIndex].labels[tooltipItems.index];
+              }
+            }
+          },
+          events: ['mousemove'],
+          animation: {
+            duration: 500,
+            easing: "easeOutQuart",
+            onComplete: function () {
+              var ctx = this.chart.ctx;
+              ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontFamily, 'normal', Chart.defaults.global.defaultFontFamily);
+              ctx.textAlign = 'center';
+              ctx.textBaseline = 'ideographic';
+              this.data.datasets.forEach(function (dataset) {
+                for (var i = 0; i < dataset.data.length; i++) {
+                  var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model,
+                      total = dataset._meta[Object.keys(dataset._meta)[0]].total,
+                      mid_radius = model.innerRadius + (model.outerRadius - model.innerRadius)/2,
+                      start_angle = model.startAngle,
+                      end_angle = model.endAngle,
+                      mid_angle = start_angle + (end_angle - start_angle)/2;
+                  var x = mid_radius * Math.cos(mid_angle);
+                  var y = mid_radius * Math.sin(mid_angle);
+        
+                  ctx.fillStyle = '#000';
+                  ctx.font = '400 10px Arial';
+                  // if (i == 3){ // Darker text color for lighter background
+                  //   ctx.fillStyle = '#444';
+                  // }
+        
+                  var val = dataset.data[i];
+                  var percent = String(Math.round(val/total*100)) + "%";
+                  if(val != 0) {
+                    // ctx.fillText(dataset.data[i], model.x + x, model.y + y);
+                    // Display percent in another line, line break doesn't work for fillText
+                    ctx.fillText(dataset.labels[i], model.x + x, model.y + y);
+                    // ctx.fillText(percent, model.x + x, model.y + y + 15);
+                  }
+                }
+              });
+            }
+          }
+        }
+        var Options2 = {
+          showAllTooltips: true,
+          legend: {
+            display: true,
+            position : 'bottom' as 'bottom',
+            fullWidth : true,
+            labels: {
+                fontColor: '#000000',
+                fontSize :  11,
+                padding : 15,
+                fontStyle : '500',
+                fontFamily : 'Arial',
+            }
+          },
+          tooltips: {
+            callbacks: {
+              label: function(tooltipItems, data) {
+                if(tooltipItems.datasetIndex === 0){
+                  // return data.labels[tooltipItems.index] +
+                  return " Project Count : " + 
+                  Math.round(data.datasets[tooltipItems.datasetIndex].data[tooltipItems.index]);
+                }else if(tooltipItems.datasetIndex === 1){
+                  // return data.labels[tooltipItems.index] +
+                  return " Revenue Volume : " + 
+                  Math.round(data.datasets[tooltipItems.datasetIndex].data[tooltipItems.index]).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
+                }
+              }
+            }
+          },
+          plugins: {
+            labels: false,
+            //   {
+            //     render: 'value',
+            //     render: function (tooltipItems, data,args) {
+            //       if(tooltipItems.datasetIndex === 1){
+            //         return Math.round(args.value).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
+            //       }else{
+            //         return args.value;
+            //       }
+            //       //return Math.round(args.value).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
+            //     },
+
+            //     fontColor: '#6D6D6D',
+            //     position: 'outside',
+            //     textMargin: 6,
+            //     arc: false,
+            //     fontSize: 12,
+            //     fontStyle: 'bold',
+            //     fontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
+            //     textShadow: true,
+            //     shadowBlur: 15,
+            //     shadowOffsetX: -2,
+            //     shadowOffsetY: 2,
+            //     shadowColor: '#6D6D6D',
+            //   }
+            // ],
+          },
+          events: ['mousemove'],
+        }
+        if(this.rwchart != undefined){
+          this.rwchart.destroy();
+        }
+        this.rwchart = new Chart('RWcanvas', {
+          type : 'doughnut',
+          data : {
+            // labels : this.PLWProjectLevels,
+            labels : this.RWRegions,
+            datasets : [
+              {
+                label : "Project Count",
+                data : this.RWProjectCount,
+                hoverBackgroundColor: [
+                  'rgb(151, 187, 205,0.7)', 'rgb(253, 180, 92,0.7)', 'rgb(247, 70, 74,0.7)', 'rgb(70, 191, 189,0.7)', 'rgb(220, 220, 220,0.7)'
+                ],
+                backgroundColor: [
+                  'rgb(151, 187, 205)', 'rgb(253, 180, 92)', 'rgb(247, 70, 74)', 'rgb(70, 191, 189)', 'rgb(220, 220, 220)'
+                ]
+              },
+              {
+                label : "Revenue Volume",
+                data : this.RWRevenueVolume,
+                hoverBackgroundColor: [
+                  'rgb(151, 187, 205,0.7)', 'rgb(253, 180, 92,0.7)', 'rgb(247, 70, 74,0.7)', 'rgb(70, 191, 189,0.7)', 'rgb(220, 220, 220,0.7)'
+                ],
+                backgroundColor: [
+                  'rgb(151, 187, 205)', 'rgb(253, 180, 92)', 'rgb(247, 70, 74)', 'rgb(70, 191, 189)', 'rgb(220, 220, 220)'
+                ]
+              }
+            ]
+          },
+          options : Options2,
+        })
+        this.dashboard.ShowSpinnerHandler(false);
+      });
+      this.dashboard.ShowSpinnerHandler(true);
+      this.plw_dataSource = null;
+      this.service.ProjectLevelWise(this.SelectedYears,this.SelectedMonths,this.SelectedLevels,this.SelectedRegions,this.SelectedMilestonestatus,this.SelectedImplementation,this.SelectedCountry,this.SelectedOwnership).subscribe(data =>{
+        for(let i = 0;i<data.Data.length;i++){
+          if(data.Data[i].RevenueVolume == null){
+            data.Data[i].RevenueVolume_string = "$0";
+          }else{
+            data.Data[i].RevenueVolume_string = Math.round(data.Data[i].RevenueVolume).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
+          }
+        }
+        this.plw_dataSource = data.Data;
+        data.Data.forEach( item =>{
+          this.PLWProjectLevels.push(item.iMeet_Project_Level);
+          this.PLWProjectCount.push(item.ProjectsCount);
+          this.PLWRevenueVolume.push(item.RevenueVolume);
+        })
+        if(this.plwcanvas != undefined){
+          this.plwcanvas.destroy();
+        }
+        var Options = {
+          legend: {
+            display: true,
+            position : 'bottom' as 'bottom',
+            fullWidth : true,
+            labels: {
+                fontColor: '#000000',
+                fontSize :  11,
+                padding : 15,
+                fontStyle : '500',
+                fontFamily : 'Arial',
+            }
+          },
+          tooltips: {
+            callbacks: {
+              label: function(tooltipItems, data) {
+                if(tooltipItems.datasetIndex === 0){
+                  // return data.labels[tooltipItems.index] +
+                  return " Project Count : " + 
+                  Math.round(data.datasets[tooltipItems.datasetIndex].data[tooltipItems.index]);
+                }else if(tooltipItems.datasetIndex === 1){
+                  // return data.labels[tooltipItems.index] +
+                  return " Revenue Volume : " + 
+                  Math.round(data.datasets[tooltipItems.datasetIndex].data[tooltipItems.index]).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
+                }
+                
+              }
+            }
+          },
+          plugins: {
+            labels: false,
+          },
+          events: ['mousemove'],
+        }
+        this.plwcanvas = new Chart('PLWcanvas', {
+          type : 'doughnut',
+          data : {
+            labels : this.PLWProjectLevels,
+            // labels : ["---","GCG","National","MCG"],
+            datasets : [
+              {
+                label : "Project Count",
+                data : this.PLWProjectCount,
+                hoverBackgroundColor: [
+                  'rgb(255, 61, 103)', 'rgb(5, 155, 255)', 'rgb(255, 194, 51)'
+                ],
+                backgroundColor: [
+                  'rgb(255, 99, 132)', 'rgb(54, 162, 235)', 'rgb(255, 205, 86)'
+                ]
+                //           fill : false,
+              },
+              {
+                label : "Revenue Volume",
+                data : this.PLWRevenueVolume,
+                hoverBackgroundColor: [
+                  'rgb(255, 61, 103)', 'rgb(5, 155, 255)', 'rgb(255, 194, 51)'
+                ],
+                backgroundColor: [
+                  'rgb(255, 99, 132)', 'rgb(54, 162, 235)', 'rgb(255, 205, 86)'
+                ]
+              }
+            ]
+          },
+          options : Options,
+        })
+        this.dashboard.ShowSpinnerHandler(false);
+      })
+      this.dashboard.ShowSpinnerHandler(true);
+      this.StatusWiseData = [];      
+      this.filterEntity = null;
+      this.filterType = null;
+      this.dataSource = null;
+      this.service.ImeetMilestoneProjectStatus(this.SelectedYears,this.SelectedMonths,this.SelectedLevels,this.SelectedRegions,this.SelectedMilestonestatus,this.SelectedImplementation,this.SelectedCountry,this.SelectedOwnership).subscribe(data =>{
+        if(data.code == 200){
+          this.SelectedProjectCount = data.Data.length;
+          this.TotalCost = Math.round(data.Data.map(t => t.Revenue_Total_Volume_USD).reduce((acc,value) => acc + value,0)).toLocaleString("en-US",{style : "currency",currency:"USD"}).slice(0,-3);
+          this.StatusWiseData = data.Data;
+          for(let i = 0;i<data.Data.length;i++){
+            // this.StatusWiseData[i].Revenue_Total_Volume = this.StatusWiseData[i].Revenue_Total_Volume_USD.toLocaleString("en-US",{style : "currency",currency:"USD"}).slice(0,-3);
+            //this.StatusWiseData[i].Revenue_Total_Volume = Math.round(this.StatusWiseData[i].Revenue_Total_Volume_USD).toLocaleString().replace(/,/g, '');
+            if(this.StatusWiseData[i].Revenue_Total_Volume_USD == null){
+              this.StatusWiseData[i].Revenue_Total_Volume = "$0";
+            }else{
+              this.StatusWiseData[i].Revenue_Total_Volume = Math.round(this.StatusWiseData[i].Revenue_Total_Volume_USD).toLocaleString("en-US",{style : "currency",currency:"USD"}).slice(0,-3);
+            }
+            if(this.StatusWiseData[i].GoLiveDate == null){
+              this.StatusWiseData[i].GoLiveDate_c = "---";
+            }else{
+              this.StatusWiseData[i].GoLiveDate_c = this.datepipe.transform(this.StatusWiseData[i].GoLiveDate, "yyyy-MMM-dd");
+            }
+          }
+          this.filterEntity = new Data();
+          this.filterType = MatTableFilter.ANYWHERE;
+          this.dataSource = new MatTableDataSource(this.StatusWiseData);
+          this.dataSource.sort = this.sort;
+        }else{
+          this.dataSource = null;
+          this.SelectedProjectCount = 0;
+          this.TotalCost = "$0";
+        }
+        this.dashboard.ShowSpinnerHandler(false);
+      });
+      this.VolumeCountCycleTime = [];
+      this.dataSource_VCtPc = null;
+      this.service.ChartVolumeCycleTimeCounts(this.SelectedYears,this.SelectedMonths,this.SelectedLevels,this.SelectedRegions,this.SelectedMilestonestatus,this.SelectedImplementation,this.SelectedCountry,this.SelectedOwnership).subscribe(data => {
+        this.VolumeCountCycleTime = data.VolumeCountCycleTime;
+        // this.dataSource_VCtPc = data.VolumeCountCycleTime;
+        this.ChartProjectCount = Math.round(data.VolumeCountCycleTime.map(t => t.ProjectsCount).reduce((acc,value) => acc + value,0));
+        this.ChartRevenueTotalVolume = Math.round(data.VolumeCountCycleTime.map(t => t.Revenue_Total_Volume_USD).reduce((acc,value) => acc + value,0)).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
+        this.ChartAvgCycleTime = Math.round(data.VolumeCountCycleTime.map(t => t.Average).reduce((acc,value) => acc + value,0)/12);
+        for(let i =0; i<data.VolumeCountCycleTime.length; i++){
+          if(this.VolumeCountCycleTime[i].Average <= 0)
+          {
+            this.VolumeCountCycleTime[i].AvgCycleTime = '0';
+          }else{
+            this.VolumeCountCycleTime[i].AvgCycleTime = (Math.round(this.VolumeCountCycleTime[i].Average)).toFixed(0);
+          }
+          if(this.VolumeCountCycleTime[i].Revenue_Total_Volume_USD > 0){
+            this.VolumeCountCycleTime[i].Revenue_Total_Volume = this.VolumeCountCycleTime[i].Revenue_Total_Volume_USD.toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
+          }else{
+            this.VolumeCountCycleTime[i].Revenue_Total_Volume = "$0";
+          }
+        }
+        // this.filterEntity = new VolumeCountCycleTime();
+        // this.filterType = MatTableFilter.ANYWHERE;
+        this.dataSource_VCtPc = new MatTableDataSource(this.VolumeCountCycleTime);
+          // this.dataSource_VCtPc.sort = this.sort;
+          // this.dataSource_VCtPc.paginator = this.paginator;
+        this.dashboard.ShowSpinnerHandler(false);
+      });
+    }
+    this.LoadingMonthlyTotalRevenue();
+    this.Apply_disable = true;
+  }
+  FormatingNumber(number : any){
+    if(number == 0) {
+      return '$'+0;
+    }
+    else
+    {
+      // hundreds
+      if(number <= 999){
+        return '$'+Math.round(number);
+      }
+      // thousands
+      else if(number >= 1000 && number <= 999999){
+        return '$'+Math.round(number / 1000) + 'K';
+      }
+      // millions
+      else if(number >= 1000000 && number <= 999999999){
+        return '$'+Math.round(number / 1000000) + 'M';
+      }
+      // billions
+      else if(number >= 1000000000 && number <= 999999999999){
+        return '$'+Math.round(number / 1000000000) + 'B';
+      }
+      else
+        return '$'+Math.round(number);
+    }
+  }
+  LastUpdatedOn;
+  LoadingMonthlyTotalRevenue(){
+    this.dashboard.ShowSpinnerHandler(true);
+    this.service.MonthlyTotalRevenue().subscribe(data => {
+      if(data.code == 200){
+        this.LastUpdatedOn = this.datepipe.transform(data.LastUpdatedOn,"MMM-d-y, h:mm a") +" IST";
+        if(data.Data != null && data.Data.length > 0){
+          this.MonthlyTotalRevenueData = data.Data;
+          this.DeltaID = this.MonthlyTotalRevenueData[0].DeltaID;
+          this.JanTotal = Math.round(this.MonthlyTotalRevenueData[0].CWJanuary).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
+          this.FebTotal = Math.round(this.MonthlyTotalRevenueData[0].CWFebruary).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
+          this.MarTotal = Math.round(this.MonthlyTotalRevenueData[0].CWMarch).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
+          this.AprTotal = Math.round(this.MonthlyTotalRevenueData[0].CWApril).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
+          this.MayTotal = Math.round(this.MonthlyTotalRevenueData[0].CWMay).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
+          this.JunTotal = Math.round(this.MonthlyTotalRevenueData[0].CWJune).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
+          this.JulTotal = Math.round(this.MonthlyTotalRevenueData[0].CWJuly).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
+          this.AugTotal = Math.round(this.MonthlyTotalRevenueData[0].CWAugust).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
+          this.SepTotal = Math.round(this.MonthlyTotalRevenueData[0].CWSeptember).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
+          this.OctTotal = Math.round(this.MonthlyTotalRevenueData[0].CWOctober).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
+          this.NovTotal = Math.round(this.MonthlyTotalRevenueData[0].CWNovember).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
+          this.DecTotal = Math.round(this.MonthlyTotalRevenueData[0].CWDecember).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
+          this.MonthsTotal = Math.round(this.MonthlyTotalRevenueData[0].CWTotal).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
+          
+          this.JanTotal_f = Math.round(this.MonthlyTotalRevenueData[0].CWJanuary-this.MonthlyTotalRevenueData[0].LWJanuary).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3),
+          this.FebTotal_f = Math.round(this.MonthlyTotalRevenueData[0].CWFebruary-this.MonthlyTotalRevenueData[0].LWFebruary).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3), 
+          this.MarTotal_f = Math.round(this.MonthlyTotalRevenueData[0].CWMarch-this.MonthlyTotalRevenueData[0].LWMarch).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3),
+          this.AprTotal_f = Math.round(this.MonthlyTotalRevenueData[0].CWApril-this.MonthlyTotalRevenueData[0].LWApril).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3), 
+          this.MayTotal_f = Math.round(this.MonthlyTotalRevenueData[0].CWMay-this.MonthlyTotalRevenueData[0].LWMay).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3),
+          this.JunTotal_f = Math.round(this.MonthlyTotalRevenueData[0].CWJune-this.MonthlyTotalRevenueData[0].LWJune).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3),
+          this.JulTotal_f = Math.round(this.MonthlyTotalRevenueData[0].CWJuly-this.MonthlyTotalRevenueData[0].LWJuly).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3),
+          this.AugTotal_f = Math.round(this.MonthlyTotalRevenueData[0].CWAugust-this.MonthlyTotalRevenueData[0].LWAugust).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3),
+          this.SepTotal_f = Math.round(this.MonthlyTotalRevenueData[0].CWSeptember-this.MonthlyTotalRevenueData[0].LWSeptember).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3),
+          this.OctTotal_f = Math.round(this.MonthlyTotalRevenueData[0].CWOctober-this.MonthlyTotalRevenueData[0].LWOctober).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3),
+          this.NovTotal_f = Math.round(this.MonthlyTotalRevenueData[0].CWNovember-this.MonthlyTotalRevenueData[0].LWNovember).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3),
+          this.DecTotal_f = Math.round(this.MonthlyTotalRevenueData[0].CWDecember-this.MonthlyTotalRevenueData[0].LWDecember).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3)
+          this.MonthsTotal_f = Math.round(this.MonthlyTotalRevenueData[0].CWTotal-this.MonthlyTotalRevenueData[0].LWTotal).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3)
+          if((this.MonthlyTotalRevenueData[0].CWJanuary-this.MonthlyTotalRevenueData[0].LWJanuary) >= 0){
+            this.JanTotal_v = "true";
+          }else{
+            this.JanTotal_v = "false";
+          }
+          if((this.MonthlyTotalRevenueData[0].CWFebruary-this.MonthlyTotalRevenueData[0].LWFebruary) >= 0){
+            this.FebTotal_v = "true";
+          }else{
+            this.FebTotal_v = "false";
+          }
+          if((this.MonthlyTotalRevenueData[0].CWMarch-this.MonthlyTotalRevenueData[0].LWMarch) >= 0){
+            this.MarTotal_v = "true";
+          }else{
+            this.MarTotal_v = "false";
+          }
+          if((this.MonthlyTotalRevenueData[0].CWApril-this.MonthlyTotalRevenueData[0].LWApril) >= 0){
+            this.AprTotal_v = "true";
+          }else{
+            this.AprTotal_v = "false";
+          }
+          if((this.MonthlyTotalRevenueData[0].CWMay-this.MonthlyTotalRevenueData[0].LWMay) >= 0){
+            this.MayTotal_v = "true";
+          }else{
+            this.MayTotal_v = "false";
+          }
+          if((this.MonthlyTotalRevenueData[0].CWJune-this.MonthlyTotalRevenueData[0].LWJune) >= 0){
+            this.JunTotal_v = "true";
+          }else{
+            this.JunTotal_v = "false";
+          }
+          if((this.MonthlyTotalRevenueData[0].CWJuly-this.MonthlyTotalRevenueData[0].LWJuly) >= 0){
+            this.JulTotal_v = "true";
+          }else{
+            this.JulTotal_v = "false";
+          }
+          if((this.MonthlyTotalRevenueData[0].CWAugust-this.MonthlyTotalRevenueData[0].LWAugust) >= 0){
+            this.AugTotal_v = "true";
+          }else{
+            this.AugTotal_v = "false";
+          }
+          if((this.MonthlyTotalRevenueData[0].CWSeptember-this.MonthlyTotalRevenueData[0].LWSeptember) >= 0){
+            this.SepTotal_v = "true";
+          }else{
+            this.SepTotal_v = "false";
+          }
+          if((this.MonthlyTotalRevenueData[0].CWOctober-this.MonthlyTotalRevenueData[0].LWOctober) >= 0){
+            this.OctTotal_v = "true";
+          }else{
+            this.OctTotal_v = "false";
+          }
+          if((this.MonthlyTotalRevenueData[0].CWNovember-this.MonthlyTotalRevenueData[0].LWNovember) >= 0){
+            this.NovTotal_v = "true";
+          }else{
+            this.NovTotal_v = "false";
+          }
+          if((this.MonthlyTotalRevenueData[0].CWDecember-this.MonthlyTotalRevenueData[0].LWDecember) >= 0){
+            this.DecTotal_v = "true";
+          }else{
+            this.DecTotal_v = "false";
+          }
+          if((this.MonthlyTotalRevenueData[0].CWTotal-this.MonthlyTotalRevenueData[0].LWTotal) >= 0){
+            this.Total_v = "true";
+          }else{
+            this.Total_v = "false";
+          }
+          this.Jan_Comments = this.MonthlyTotalRevenueData[0].JanComments;
+          this.Feb_Comments = this.MonthlyTotalRevenueData[0].FebComments;
+          this.Mar_Comments = this.MonthlyTotalRevenueData[0].MarComments;
+          this.Apr_Comments = this.MonthlyTotalRevenueData[0].AprComments;
+          this.May_Comments = this.MonthlyTotalRevenueData[0].MayComments;
+          this.Jun_Comments = this.MonthlyTotalRevenueData[0].JunComments;
+          this.Jul_Comments = this.MonthlyTotalRevenueData[0].JulComments;
+          this.Aug_Comments = this.MonthlyTotalRevenueData[0].AugComments;
+          this.Sep_Comments = this.MonthlyTotalRevenueData[0].SepComments;
+          this.Oct_Comments = this.MonthlyTotalRevenueData[0].OctComments;
+          this.Nov_Comments = this.MonthlyTotalRevenueData[0].NovComments;
+          this.Dec_Comments = this.MonthlyTotalRevenueData[0].DecComments;
+          let Monthly_Total_Revenue : MonthlyTotalRevenue[] = [
+            {
+              Leftheaders: 'Previous Total Volume',
+              Jan : Math.round(this.MonthlyTotalRevenueData[0].LWJanuary).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3), 
+              Feb : Math.round(this.MonthlyTotalRevenueData[0].LWFebruary).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3), 
+              Mar : Math.round(this.MonthlyTotalRevenueData[0].LWMarch).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3),
+              Apr : Math.round(this.MonthlyTotalRevenueData[0].LWApril).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3), 
+              May : Math.round(this.MonthlyTotalRevenueData[0].LWMay).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3),
+              Jun : Math.round(this.MonthlyTotalRevenueData[0].LWJune).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3),
+              Jul : Math.round(this.MonthlyTotalRevenueData[0].LWJuly).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3),
+              Aug : Math.round(this.MonthlyTotalRevenueData[0].LWAugust).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3),
+              Sep : Math.round(this.MonthlyTotalRevenueData[0].LWSeptember).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3),
+              Oct : Math.round(this.MonthlyTotalRevenueData[0].LWOctober).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3),
+              Nov : Math.round(this.MonthlyTotalRevenueData[0].LWNovember).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3),
+              Dec : Math.round(this.MonthlyTotalRevenueData[0].LWDecember).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3),
+              Total : Math.round(this.MonthlyTotalRevenueData[0].LWTotal).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3)
+            }
+            // {
+            //   Leftheaders: 'Variations',
+            //   Jan :Math.round(this.MonthlyTotalRevenueData[0].CWJanuary-this.MonthlyTotalRevenueData[0].LWJanuary).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3),
+            //   Feb :Math.round(this.MonthlyTotalRevenueData[0].CWFebruary-this.MonthlyTotalRevenueData[0].LWFebruary).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3), 
+            //   Mar :Math.round(this.MonthlyTotalRevenueData[0].CWMarch-this.MonthlyTotalRevenueData[0].LWMarch).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3),
+            //   Apr :Math.round(this.MonthlyTotalRevenueData[0].CWApril-this.MonthlyTotalRevenueData[0].LWApril).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3), 
+            //   May :Math.round(this.MonthlyTotalRevenueData[0].CWMay-this.MonthlyTotalRevenueData[0].LWMay).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3),
+            //   Jun :Math.round(this.MonthlyTotalRevenueData[0].CWJune-this.MonthlyTotalRevenueData[0].LWJune).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3),
+            //   Jul :Math.round(this.MonthlyTotalRevenueData[0].CWJuly-this.MonthlyTotalRevenueData[0].LWJuly).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3),
+            //   Aug :Math.round(this.MonthlyTotalRevenueData[0].CWAugust-this.MonthlyTotalRevenueData[0].LWAugust).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3),
+            //   Sep :Math.round(this.MonthlyTotalRevenueData[0].CWSeptember-this.MonthlyTotalRevenueData[0].LWSeptember).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3),
+            //   Oct :Math.round(this.MonthlyTotalRevenueData[0].CWOctober-this.MonthlyTotalRevenueData[0].LWOctober).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3),
+            //   Nov :Math.round(this.MonthlyTotalRevenueData[0].CWNovember-this.MonthlyTotalRevenueData[0].LWNovember).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3),
+            //   Dec :Math.round(this.MonthlyTotalRevenueData[0].CWDecember-this.MonthlyTotalRevenueData[0].LWDecember).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3)
+            // }
+          ];
+          this.CurrentYear = data.GlobalManager;
+          this.dataSource2 = Monthly_Total_Revenue;
+          this.dashboard.ShowSpinnerHandler(false);
+        }else{
+          this.dashboard.ShowSpinnerHandler(false);
+          alert("There is No data to display");
+        }
+      }else{
+        this.dashboard.ShowSpinnerHandler(false);
+        alert("Something Went Wrong!Unable to load Data");
+      }
+    })
+  }
+  // PevSelectedDeltaMonth : string;
+  // PevMonthDeltaValue : string;
+  PevDataDialog(Monthvolume : number, MonthName : string){
+    // this.PevSelectedDeltaMonth = MonthName;
+    // this.PevMonthDeltaValue = Monthvolume;
+    // alert(this.PevMonthDeltaValue + " " + this.PevSelectedDeltaMonth);
+    this.openDialog2(Monthvolume,MonthName,"Previous Week || ");
+  }
+  SetGraphChart(){
+    this.dashboard.ShowSpinnerHandler(true);
+    var years = [];
+    var backgroundColor = [
+      'rgb(241, 130, 38)','rgb(59, 138, 217)','rgb(14, 61, 89)', 'rgb(255, 219, 105)', 'rgb(217,37,38)', 'rgb(75, 192, 192)', 'rgb(255, 99, 132)'
+    ]
+    var bordercolor = [
+      'rgb(241, 130, 38)','rgb(59, 138, 217)','rgb(14, 61, 89)', 'rgb(255, 219, 105)', 'rgb(217,37,38)', 'rgb(75, 192, 192)', 'rgb(255, 99, 132)'
+    ]
+    var str = this.c_SelectedYears+"";
+    var mydatasets = [];
+    var VolumeDataset = [];
+    var CountDataset = [];
+    var VolumeCountDataset = [];
+    var CycleCountDataset = [];
+    var CycleTimeDataset = [];
+    years = null;
+    let j = 0;
+    let k = 0;
+    // this.Months = [];
+    // this.Volume = [];
+    // this.ProjectCount = [];
+    // this.AvgCycleTime = [];
+    
+    var Options = {
+      responsive : true,
+      events: false,
+      legend: {
+        display: true,
+        position : 'bottom' as 'bottom',
+        fullWidth : true,
+        labels: {
+            fontColor: '#000000',
+            fontSize :  13,
+            padding : 15,
+            fontStyle : '600',
+            fontFamily : 'Arial',
+        }
+      },
+      plugins: {
+        labels: false,
+      },
+      tooltips: {
+        enabled: false,
+        callbacks: {
+          label: function(tooltipItem) {
+            return tooltipItem.yLabel;
+          }
+        }
+      },
+      // tooltips: {
+      //   mode: 'index',
+      //   intersect: false,
+      //   callbacks: {
+      //     label: function(tooltipItems, data) {
+      //       return data.datasets[tooltipItems.datasetIndex].label + 
+      //       " : " + 
+      //       data.datasets[tooltipItems.datasetIndex].data[tooltipItems.index];
+      //     }
+      //   }
+      // },
+      scales: {
+        yAxes: [{
+          ticks: {
+            fontSize : 10,
+            fontStyle : 'normal',
+            fontColor : '#000000',
+            fontFamily : 'Arial',
+          },
+          scaleLabel: {
+              display: true,
+              labelString: 'Projects Count',
+              fontSize : 12,
+              fontStyle : 'normal',
+              fontColor : '#000000',
+              fontFamily : 'Arial',
+          }
+        }],
+        xAxes: [{
+          ticks: {
+            fontSize : 10,
+            fontStyle : 'normal',
+            fontColor : '#000000',
+            fontFamily : 'Arial',
+          }
+        }]
+      },
+      hover: {
+        animationDuration: 0
+      },
+      animation: {
+        duration: 1,
+        onComplete: function () {
+          var chartInstance = this.chart,
+              ctx = chartInstance.ctx;
+          ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'bottom';
+          this.data.datasets.forEach(function (dataset, i) {
+              var meta = chartInstance.controller.getDatasetMeta(i);
+              meta.data.forEach(function (bar, index) {
+                  var data = dataset.data[index]; 
+                  ctx.font = "550 12px Arial";                    
+                  ctx.fillText(data, bar._model.x, bar._model.y - 5);
+              });
+          });
+        }
+      }
+    }
+    var Options2 = {
+      responsive : true,
+      hover: {
+        mode: 'index',
+        intersect: false
+      },
+      legend: {
+        display: true,
+        position : 'bottom' as 'bottom',
+        fullWidth : true,
+        labels: {
+            fontColor: '#000000',
+            fontSize :  13,
+            padding : 15,
+            fontStyle : '600',
+            fontFamily : 'Arial',
+        }
+      },
+      plugins: {
+        labels: false,
+      },
+      tooltips: {
+        callbacks: {
+          label: function(tooltipItems, data) {
+            if(tooltipItems.datasetIndex === 0){
+              // return data.labels[tooltipItems.index] +
+              return " Project Count : " + 
+              Math.round(data.datasets[tooltipItems.datasetIndex].data[tooltipItems.index]);
+            }else if(tooltipItems.datasetIndex === 1){
+              // return data.labels[tooltipItems.index] +
+              return " Revenue Volume : " + 
+              Math.round(data.datasets[tooltipItems.datasetIndex].data[tooltipItems.index]).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
+            }
+            
+          }
+        }
+      },
+      scales: {
+        yAxes: [{
+          id: 'A',
+          type: 'linear',
+          position: 'left',
+          ticks: {
+            fontSize : 12,
+            fontStyle : 'normal',
+            fontColor : '#000000',
+            fontFamily : 'Arial',
+            callback: function(label, index, labels) {
+              if(label == 0) {
+                return 0;
+              }
+              else
+              {
+                // hundreds
+                if(label <= 999){
+                  return label;
+                }
+                // thousands
+                else if(label >= 1000 && label <= 999999){
+                  return (label / 1000) + 'K';
+                }
+                // millions
+                else if(label >= 1000000 && label <= 999999999){
+                  return (label / 1000000) + 'M';
+                }
+                // billions
+                else if(label >= 1000000000 && label <= 999999999999){
+                  return (label / 1000000000) + 'B';
+                }
+                else
+                  return label;
+              }
+            }
+          },
+          scaleLabel: {
+            display: true,
+            labelString: 'Revenue Total Volume USD',
+            fontSize : 14,
+            fontStyle : 'normal',
+            fontColor : '#000000',
+            fontFamily : 'Arial',
+          }
+        },{
+          id: 'B',
+          type: 'linear',
+          position: 'right',
+          ticks: {
+            fontSize : 12,
+            fontStyle : 'normal',
+            fontColor : '#000000',
+            fontFamily : 'Arial',
+          },
+          scaleLabel: {
+            display: true,
+            labelString: 'Projects Count',
+            fontSize : 14,
+            fontStyle : 'normal',
+            fontColor : '#000000',
+            fontFamily : 'Arial',
+          }
+        }],
+        xAxes: [{
+          ticks: {
+            fontSize : 12,
+            fontStyle : 'normal',
+            fontColor : '#000000',
+            fontFamily : 'Arial',
+          }
+        }]
+      },
+    }
+    var Options3 = {
+      responsive : true,
+      hover: {
+        mode: 'index',
+        intersect: false
+      },
+      legend: {
+        display: true,
+        position : 'bottom' as 'bottom',
+        fullWidth : true,
+        labels: {
+            fontColor: '#000000',
+            fontSize :  13,
+            padding : 15,
+            fontStyle : '600',
+            fontFamily : 'Arial',
+        }
+      },
+      plugins: {
+        labels: false,
+      },
+      tooltips: {
+        callbacks: {
+          label: function(tooltipItems, data) {
+            if(tooltipItems.datasetIndex === 0){
+              // return data.labels[tooltipItems.index] +
+              return " Project Count : " + 
+              Math.round(data.datasets[tooltipItems.datasetIndex].data[tooltipItems.index]);
+            }else if(tooltipItems.datasetIndex === 1){
+              // return data.labels[tooltipItems.index] +
+              return " Cycle Time : " + 
+              Math.round(data.datasets[tooltipItems.datasetIndex].data[tooltipItems.index]);
+            }
+          }
+        }
+      },
+      scales: {
+        yAxes: [{
+          id: 'A',
+          type: 'linear',
+          position: 'left',
+          ticks: {
+            fontSize : 12,
+            fontStyle : 'normal',
+            fontColor : '#000000',
+            fontFamily : 'Arial',
+          },
+          scaleLabel: {
+            display: true,
+            labelString: 'Cycle Time',
+            fontSize : 14,
+            fontStyle : 'normal',
+            fontColor : '#000000',
+            fontFamily : 'Arial',
+          }
+        },{
+          id: 'B',
+          type: 'linear',
+          position: 'right',
+          ticks: {
+            fontSize : 12,
+            fontStyle : 'normal',
+            fontColor : '#000000',
+            fontFamily : 'Arial',
+          },
+          scaleLabel: {
+            display: true,
+            labelString: 'Projects Count',
+            fontSize : 14,
+            fontStyle : 'normal',
+            fontColor : '#000000',
+            fontFamily : 'Arial',
+          }
+        }],
+        xAxes: [{
+          ticks: {
+            fontSize : 12,
+            fontStyle : 'normal',
+            fontColor : '#000000',
+            fontFamily : 'Arial',
+          }
+        }]
+      },
+    }
+    if(str == null || str == '' || this.c_SelectedYears == null){
+      alert("Please select year and Try Again");
+      // this.Apply_disable2 = false;
+      this.dashboard.ShowSpinnerHandler(false);
+    }else{
+      years = str.split(',');
+      if(years.length > 2){
+        alert("You can select only 2 years for Comparision");
+        this.dashboard.ShowSpinnerHandler(false);
+        // this.Apply_disable2 = false;
+      }else{
+        for(let i=0;i<years.length;i++){
+          if(years[i] == null || years[i] == ""){
+            alert("Please select year and Try Again");
+          }else{
+            // this.service.ChartVolumeCycleTimeCount(years[i],this.SelectedMonths,this.SelectedLevels,this.SelectedRegions,this.SelectedLeader,this.SelectedMilestonestatus,this.SelectedImplementation).subscribe(data =>{
+            //   if(data.code == 200){
+            //     if(data.Data.length > 0){
+            //       CountDataset[k] = {
+            //         label : years[i]+" Project Count",
+            //         data: [data.Data[0].January_PC,data.Data[0].February_PC,data.Data[0].March_PC,data.Data[0].April_PC,data.Data[0].May_PC,data.Data[0].June_PC,data.Data[0].July_PC,data.Data[0].August_PC,data.Data[0].September_PC,data.Data[0].October_PC,data.Data[0].November_PC,data.Data[0].December_PC],
+            //         backgroundColor : backgroundColor[k],
+            //         borderColor : bordercolor[k],
+            //         fill : false,
+            //         type : 'line',
+            //         yAxisID: 'B',
+            //       }
+            //       VolumeDataset[k] = {
+            //         label : years[i]+" Revenue Total Volume USD",
+            //         data: [data.Data[0].January_RV,data.Data[0].February_RV,data.Data[0].March_RV,data.Data[0].April_RV,data.Data[0].May_RV,data.Data[0].June_RV,data.Data[0].July_RV,data.Data[0].August_RV,data.Data[0].September_RV,data.Data[0].October_RV,data.Data[0].November_RV,data.Data[0].December_RV],
+            //         backgroundColor : backgroundColor[k],
+            //         borderColor : bordercolor[k],
+            //         fill : false,
+            //         type : 'bar',
+            //         yAxisID: 'A',
+            //       }
+            //       VolumeCountDataset = CountDataset.concat(VolumeDataset);
+            //       CycleTimeDataset[k] = {
+            //         label : years[i]+" Cycle Time",
+            //         data: [data.Data[0].January_A,data.Data[0].February_A,data.Data[0].March_A,data.Data[0].April_A,data.Data[0].May_A,data.Data[0].June_A,data.Data[0].July_A,data.Data[0].August_A,data.Data[0].September_A,data.Data[0].October_A,data.Data[0].November_A,data.Data[0].December_A],
+            //         backgroundColor : backgroundColor[k],
+            //         borderColor : bordercolor[k],
+            //         fill : false,
+            //         type : 'bar',
+            //         yAxisID: 'A',
+            //       }
+            //       CycleCountDataset = CountDataset.concat(CycleTimeDataset);
+            //       if(i == 0){
+            //         if(this.CVchart != undefined){
+            //           this.CVchart.destroy();
+            //         }
+            //         this.CVchart = new Chart('CVcanvas', {
+            //           type : 'bar',
+            //           data : {
+            //             //labels : this.Months,
+            //             labels : ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+            //             datasets: VolumeCountDataset
+            //           },
+            //           options: Options2,
+            //         })
+            //         if(this.CTchart != undefined){
+            //           this.CTchart.destroy();
+            //         }
+            //         this.CTchart = new Chart('CTcanvas', {
+            //           type : 'bar',
+            //           data : {
+            //             labels : ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+            //             datasets: CycleCountDataset
+            //           },
+            //           options: Options3,
+            //         })
+            //       }else{
+            //         this.CVchart.update();
+            //         this.CTchart.update();
+            //       }
+            //       k++;
+            //       // j++;
+            //     }
+            //   }
+            // });
+            // this.service.ProjectCountByYear(years[i],this.SelectedMonths,this.SelectedLevels,this.SelectedRegions,this.SelectedLeader,this.SelectedMilestonestatus,this.SelectedImplementation).subscribe(data => {
+            //   if(data.code == 200){
+            //     if(data.Data.length > 0){
+            //       mydatasets[j] = {
+            //         label : years[i]+"",
+            //         data : [data.Data[0].January,data.Data[0].February,data.Data[0].March,data.Data[0].April,data.Data[0].May,data.Data[0].June,data.Data[0].July,data.Data[0].August,data.Data[0].September,data.Data[0].October,data.Data[0].November,data.Data[0].December],
+            //         backgroundColor : backgroundColor[j],
+            //         borderColor : bordercolor[j],
+            //         fill : false,
+            //       }
+            //       if(i == 0){
+            //         if(this.ypcchart != undefined){
+            //           this.ypcchart.destroy();
+            //         }
+            //         this.ypcchart = new Chart('YPCcanvas', {
+            //           type : 'line',
+            //           data : {
+            //             labels : ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+            //             datasets : mydatasets,
+            //           },
+            //           options: Options,
+            //         })
+            //       }else{
+            //         this.ypcchart.update();
+            //       }
+            //       j++;
+            //     }
+            //   }
+            // });
+          }
+          if(i == years.length-1){
+            this.dashboard.ShowSpinnerHandler(false);
+          }
+        }
+        // this.Apply_disable2 = true;
+      }
+    }
+  }
+  openDialog(MonthNumber: number,MonthName : string,Comment : string): void {
+    const dialogRef = this.dialog.open(CommentsDialog, {
+      width: '600px',
+      data: {
+        SelectedDeltaMonthNumber : MonthNumber,
+        SelectedDeltaMonth : MonthName,
+        SelectedDeltaComment : Comment,
+        SelectedVolume : '',
+        Jan_comment : this.Jan_Comments,
+        Feb_comment : this.Feb_Comments,
+        Mar_comment : this.Mar_Comments,
+        Apr_comment : this.Apr_Comments,
+        May_comment : this.May_Comments,
+        Jun_comment : this.Jun_Comments,
+        Jul_comment : this.Jul_Comments,
+        Aug_comment : this.Aug_Comments,
+        Sep_comment : this.Sep_Comments,
+        Oct_comment : this.Oct_Comments,
+        Nov_comment : this.Nov_Comments,
+        Dec_comment : this.Dec_Comments,
+        DeltaID : this.DeltaID}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      this.LoadingMonthlyTotalRevenue();
+    });
+  }
+  CommentsDialog(MonthNumber : number,MonthName : string,sel_Comment : string){
+    // this.SelectedDeltaMonthNumber = MonthNumber;
+    // this.SelectedDeltaMonth = MonthName;
+    // this.SelectedDeltaComment = sel_Comment;
+    this.openDialog(MonthNumber,MonthName,sel_Comment);
+  }
+  openDialog2(Volume : number,Name : string,Comment : string) : void{
+    const dialogRef = this.dialog.open(DataDialog, {
+      // width: '600px',
+      data: {
+        SelectedDeltaMonthNumber : '',
+        SelectedDeltaMonth : Name,
+        SelectedDeltaComment : Comment,
+        SelectedVolume : Volume,
+        Jan_comment : '',
+        Feb_comment : '',
+        Mar_comment : '',
+        Apr_comment : '',
+        May_comment : '',
+        Jun_comment : '',
+        Jul_comment : '',
+        Aug_comment : '',
+        Sep_comment : '',
+        Oct_comment : '',
+        Nov_comment : '',
+        Dec_comment : '',
+        DeltaID : 0
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      //this.LoadingMonthlyTotalRevenue();
+    });
+  }
+  DataDialog(Monthvolume : number, MonthName : string){
+    // this.SelectedDeltaMonth = MonthName;
+    // this.DeltaValue = Monthvolume;
+    this.openDialog2(Monthvolume,MonthName,"Current Week || ");
+  }
+  exportAsXLSX(){
+    this.dashboard.ShowSpinnerHandler(true);
+    // this.service.ChartVolumeCycleTimeCount(this.c_SelectedMilestonestatus,this.c_SelectedLevels,this.c_SelectedYears,this.c_SelectedMonths,this.c_SelectedRegions,this.c_SelectedImplementation).subscribe(data => {
+    //   if(data.code == 200){
+    //     this.excelService.exportAsExcelFile(data.VolumeCountCycleTime, 'Chart Volume-Count-CycleTime');
+    //   }else{
+    //     alert("Something Went wrong, Please Try again later");
+    //   }
+    //   this.dashboard.ShowSpinnerHandler(false);
+    // });
+  }
+  exportRegionWiseData(){
+    this.dashboard.ShowSpinnerHandler(true);
+    this.service.ImeetMilestoneProjectStatus(this.SelectedYears,this.SelectedMonths,this.SelectedLevels,this.SelectedRegions,this.SelectedMilestonestatus,this.SelectedImplementation,this.SelectedCountry,this.SelectedOwnership).subscribe(data =>{
+      if(data.code == 200){
+        for(let i = 0;i<data.Data.length;i++){
+          if(data.Data[i].Revenue_Total_Volume_USD == null){
+            data.Data[i].RevenueVolumeUSD = null;
+          }else{
+            data.Data[i].RevenueVolumeUSD = data.Data[i].Revenue_Total_Volume_USD.toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3)
+          }
+          if(data.Data[i].GoLiveDate == null){
+            data.Data[i].GoLiveDate = null;
+          }else{
+            data.Data[i].GoLiveDate = new Date(data.Data[i].GoLiveDate);
+          }
+        }
+        const CustomizedData = data.Data.map(o => {
+          return { 
+            "Client": o.Client,
+            "Go-live Date" : o.GoLiveDate,
+            "iMeet Project Level" : o.iMeet_Project_Level,
+            "Region Opportunity" : o.Region__Opportunity_,
+            "Country" : o.Country,
+            "Implementation Type" : o.Implementation_Type,
+            "iMeet Milestone Project Status" : o.iMeet_Milestone___Project_Status,
+            "Revenue Volume USD" : o.RevenueVolumeUSD,
+          };
+        });
+        this.excelService.exportAsExcelFile(CustomizedData, 'Market Report');
+      }else{
+        alert("Something Went wrong, Please Try again later");
+      }
+      this.service.UsersUsageofReports(this.LoginUID,"Implementation Market Report","Region Wise Market Export").subscribe(data =>{
+      })
+      this.dashboard.ShowSpinnerHandler(false);
+    });
+  }
+  //Start of Year methods
+  checkUncheckYears() {
+    for (var i = 0; i < this.yearList.length; i++) {
+      this.yearList[i].isSelected = this.masteryear;
+    }
+    this.getSelectedYear();
+  }
+  yearsSelected() {
+    this.masteryear = this.yearList.every(function(item:any) {
+        return item.isSelected == true;
+    })
+    this.getSelectedYear();
+  }
+  getSelectedYear(){
+    this.Apply_disable = false;
+    this.SelectedYears = null;
+    for(let i=0;i<this.yearList.length;i++){
+      if(this.yearList[i].isSelected == true){
+        if(this.SelectedYears == null){
+          this.SelectedYears = this.yearList[i].Go_Live_Year;
+        }else{
+          this.SelectedYears += ","+this.yearList[i].Go_Live_Year;
+        }
+      }else{
+      }
+    }
+    this.yearListSelected = this.yearList.filter(s => s.isSelected == true);
+  }
+  // deselectyear(val : string){
+  //   for(let i=0;i<this.yearList.length;i++){
+  //     if(this.yearList[i].Go_Live_Year == val){
+  //       this.yearList[i].isSelected = false;
+  //     }else{
+  //     }
+  //   }
+  //   this.yearsSelected();
+  // }
+  // rp_checkUncheckYears() {
+  //   for (var i = 0; i < this.rp_yearList.length; i++) {
+  //     this.rp_yearList[i].isSelected = this.masterrp_year;
+  //   }
+  //   this.rp_getSelectedYear();
+  // }
+  // rp_yearsSelected() {
+  //   this.masterrp_year = this.rp_yearList.every(function(item:any) {
+  //       return item.isSelected == true;
+  //   })
+  //   this.rp_getSelectedYear();
+  // }
+  // rp_getSelectedYear(){
+  //   this.Apply_disable1 = false;
+  //   this.rp_SelectedYears = null;
+  //   for(let i=0;i<this.rp_yearList.length;i++){
+  //     if(this.rp_yearList[i].isSelected == true){
+  //       if(this.rp_SelectedYears == null){
+  //         this.rp_SelectedYears = this.rp_yearList[i].Go_Live_Year;
+  //       }else{
+  //         this.rp_SelectedYears += ","+this.rp_yearList[i].Go_Live_Year;
+  //       }
+  //     }else{
+  //     }
+  //   }
+  //   this.rp_yearSelected = this.rp_yearList.filter(s => s.isSelected == true);
+  // }
+  // rp_deselectyear(val : string){
+  //   for(let i=0;i<this.rp_yearList.length;i++){
+  //     if(this.rp_yearList[i].Go_Live_Year == val){
+  //       this.rp_yearList[i].isSelected = false;
+  //     }else{
+  //     }
+  //   }
+  //   this.rp_getSelectedYear();
+  // }
+  //End of Year Methods
+  //Start of Quarter Methods
+  checkUncheckOwnerShip() {
+    for (var i = 0; i < this.OwnerShipList.length; i++) {
+      this.OwnerShipList[i].isSelected = this.masterownerShip;
+    }
+    this.getSelectedOwnerships();
+  }
+  OwnerShipSelected() {
+    this.masterownerShip = this.OwnerShipList.every(function(item:any) {
+        return item.isSelected == true;
+    })
+    this.getSelectedOwnerships();
+  }
+  getSelectedOwnerships(){
+    this.Apply_disable = false;
+    this.SelectedOwnership = null;
+    for(let i=0;i<this.OwnerShipList.length;i++){
+      if(this.OwnerShipList[i].isSelected == true){
+        if(this.SelectedOwnership == null){
+          this.SelectedOwnership = this.OwnerShipList[i].OwnerShip;
+        }else{
+          this.SelectedOwnership += ","+this.OwnerShipList[i].OwnerShip;
+        }
+      }else{
+      }
+    }
+    this.OwnerShipListSelected = this.OwnerShipList.filter(s => s.isSelected == true);
+  }
+  // deselectqtr(val : string){
+  //   for(let i=0;i<this.quarterList.length;i++){
+  //     if(this.quarterList[i].Quarter == val){
+  //       this.quarterList[i].isSelected = false;
+  //     }else{
+  //     }
+  //   }
+  //   this.quarterSelected();
+  // }
+  //End of Quarter Methods
+  //Start of Month Methods
+  checkUncheckMonths() {
+    for (var i = 0; i < this.monthList.length; i++) {
+      this.monthList[i].isSelected = this.mastermonth;
+    }
+    this.getSelectedMonth();
+  }
+  monthsSelected() {
+    this.mastermonth = this.monthList.every(function(item:any) {
+        return item.isSelected == true;
+    })
+    this.getSelectedMonth();
+  }
+  getSelectedMonth(){
+    this.Apply_disable = false;
+    this.SelectedMonths = null;
+    for(let i=0;i<this.monthList.length;i++){
+      if(this.monthList[i].isSelected == true){
+        if(this.SelectedMonths == null){
+          this.SelectedMonths = this.monthList[i].Go_Live_Month;
+        }else{
+          this.SelectedMonths += ","+this.monthList[i].Go_Live_Month;
+        }
+      }else{
+      }
+    }
+    this.monthListSelected = this.monthList.filter(s => s.isSelected == true);
+  }
+  // deselectmonth(val : string){
+  //   for(let i=0;i<this.monthList.length;i++){
+  //     if(this.monthList[i].Go_Live_Month == val){
+  //       this.monthList[i].isSelected = false;
+  //     }else{
+  //     }
+  //   }
+  //   this.monthsSelected();
+  // }
+  //End of Month Methods
+  //Start of Project levels Methods
+  checkUncheckLevel() {
+    for (var i = 0; i < this.levelList.length; i++) {
+      this.levelList[i].isSelected = this.masterlevel;
+    }
+    this.getSelectedLevels();
+  }
+  levelSelected() {
+    this.masterlevel = this.levelList.every(function(item:any) {
+        return item.isSelected == true;
+    })
+    this.getSelectedLevels();
+  }
+  getSelectedLevels(){
+    this.Apply_disable = false;
+    this.SelectedLevels = null;
+    for(let i=0;i<this.levelList.length;i++){
+      if(this.levelList[i].isSelected == true){
+        if(this.SelectedLevels == null){
+          this.SelectedLevels = this.levelList[i].iMeet_Project_Level;
+        }else{
+          this.SelectedLevels += ","+this.levelList[i].iMeet_Project_Level;
+        }
+      }else{
+      }
+    }
+    this.levelListSelected = this.levelList.filter(s => s.isSelected == true);
+  }
+  // deselectlevel(val : string){
+  //   for(let i=0;i<this.levelList.length;i++){
+  //     if(this.levelList[i].iMeet_Project_Level == val){
+  //       this.levelList[i].isSelected = false;
+  //     }else{
+  //     }
+  //   }
+  //   this.levelSelected();
+  // }
+  //End of Project levels Methods
+  //Start of Region Methods
+  checkUncheckRegion() {
+    for (var i = 0; i < this.regionList.length; i++) {
+      this.regionList[i].isSelected = this.masterregion;
+    }
+    this.getSelectedRegion();
+  }
+  regionSelected() {
+    this.masterregion = this.regionList.every(function(item:any) {
+        return item.isSelected == true;
+    })
+    this.getSelectedRegion();
+  }
+  getSelectedRegion(){
+    this.Apply_disable = false;
+    this.SelectedRegions = null;
+    for(let i=0;i<this.regionList.length;i++){
+      if(this.regionList[i].isSelected == true){
+        if(this.SelectedRegions == null){
+          this.SelectedRegions = this.regionList[i].Region__Opportunity_;
+        }else{
+          this.SelectedRegions += ","+this.regionList[i].Region__Opportunity_;
+        }
+      }else{
+      }
+    }
+    this.regionListSelected = this.regionList.filter(s => s.isSelected == true);
+  }
+  // deselectregion(val : string){
+  //   for(let i=0;i<this.regionList.length;i++){
+  //     if(this.regionList[i].Region__Opportunity_ == val){
+  //       this.regionList[i].isSelected = false;
+  //     }else{
+  //     }
+  //   }
+  //   this.regionSelected();
+  // }
+  //End of Region Methods
+  //Start of Status Methods
+  checkUncheckStatus() {
+    for (var i = 0; i < this.statusList.length; i++) {
+      this.statusList[i].isSelected = this.masterstatus;
+    }
+    this.getSelectedStatus();
+  }
+  statusSelected() {
+    this.masterstatus = this.statusList.every(function(item:any) {
+        return item.isSelected == true;
+    })
+    this.getSelectedStatus();
+  }
+  getSelectedStatus(){
+    this.Apply_disable = false;
+    this.SelectedStatus = null;
+    for(let i=0;i<this.statusList.length;i++){
+      if(this.statusList[i].isSelected == true){
+        if(this.SelectedStatus == null){
+          this.SelectedStatus = this.statusList[i].Backlog_Started;
+        }else{
+          this.SelectedStatus += ","+this.statusList[i].Backlog_Started;
+        }
+      }else{
+      }
+    }
+    // this.statusListSelected = this.statusList.filter(s => s.isSelected == true);
+  }
+  // deselectstatus(val : string){
+  //   for(let i=0;i<this.statusList.length;i++){
+  //     if(this.statusList[i].Backlog_Started == val){
+  //       this.statusList[i].isSelected = false;
+  //     }else{
+  //     }
+  //   }
+  //   this.statusSelected();
+  // }
+  //End of Status Methods
+  //Start of Leader Methods
+  checkUncheckLeader() {
+    for (var i = 0; i < this.marketleaderList.length; i++) {
+      this.marketleaderList[i].isSelected = this.masterleader;
+    }
+    this.getSelectedLeader();
+  }
+  leaderSelected() {
+    this.masterleader = this.marketleaderList.every(function(item:any) {
+        return item.isSelected == true;
+    })
+    this.getSelectedLeader();
+  }
+  getSelectedLeader(){
+    this.Apply_disable = false;
+    this.SelectedLeader = null;
+    for(let i=0;i<this.marketleaderList.length;i++){
+      if(this.marketleaderList[i].isSelected == true){
+        if(this.SelectedLeader == null){
+          this.SelectedLeader = this.marketleaderList[i].Market_Leader;
+        }else{
+          this.SelectedLeader += ","+this.marketleaderList[i].Market_Leader;
+        }
+      }else{
+      }
+    }
+    // this.marketleaderListSelected = this.marketleaderList.filter(s => s.isSelected == true);
+  }
+  // deselectmarket(val : string){
+  //   for(let i=0;i<this.marketleaderList.length;i++){
+  //     if(this.marketleaderList[i].Market_Leader == val){
+  //       this.marketleaderList[i].isSelected = false;
+  //     }else{
+  //     }
+  //   }
+  //   this.leaderSelected();
+  // }
+  //End of Leader Methods
+  //Start of Country Methods
+  checkUncheckCountry() {
+    for (var i = 0; i < this.CountryList.length; i++) {
+      this.CountryList[i].isSelected = this.masterCountry;
+    }
+    this.getSelectedCountry();
+  }
+  CountrySelected() {
+    this.masterCountry = this.CountryList.every(function(item:any) {
+        return item.isSelected == true;
+    })
+    this.getSelectedCountry();
+  }
+  getSelectedCountry(){
+    this.Apply_disable = false;
+    this.SelectedCountry = null;
+    for(let i=0;i<this.CountryList.length;i++){
+      if(this.CountryList[i].isSelected == true){
+        if(this.SelectedCountry == null){
+          this.SelectedCountry = this.CountryList[i].Country;
+        }else{
+          this.SelectedCountry += ","+this.CountryList[i].Country;
+        }
+      }else{
+      }
+    }
+    // this.marketleaderListSelected = this.CountryList.filter(s => s.isSelected == true);
+  }
+  //End of Country Methods
+  //Start of Implementation Methods
+  checkUncheckImplementation() {
+    for (var i = 0; i < this.implementationtypeList.length; i++) {
+      this.implementationtypeList[i].isSelected = this.masterimplementation;
+    }
+    this.getSelectedType();
+  }
+  typeSelected() {
+    this.masterimplementation = this.implementationtypeList.every(function(item:any) {
+        return item.isSelected == true;
+    })
+    this.getSelectedType();
+  }
+  getSelectedType(){
+    this.Apply_disable = false;
+    this.SelectedImplementation = null;
+    for(let i=0;i<this.implementationtypeList.length;i++){
+      if(this.implementationtypeList[i].isSelected == true){
+        if(this.SelectedImplementation == null){
+          this.SelectedImplementation = this.implementationtypeList[i].Implementation_Type;
+        }else{
+          this.SelectedImplementation += ","+this.implementationtypeList[i].Implementation_Type;
+        }
+      }else{
+      }
+    }
+    // this.implementationtypeListSelected = this.implementationtypeList.filter(s => s.isSelected == true);
+  }
+  // deselectType(val : string){
+  //   for(let i=0;i<this.implementationtypeList.length;i++){
+  //     if(this.implementationtypeList[i].Implementation_Type == val){
+  //       this.implementationtypeList[i].isSelected = false;
+  //     }else{
+  //     }
+  //   }
+  //   this.typeSelected();
+  // }
+  //End of Implementation Methods
+  //Start of MilestoneStatus Methods
+  checkUncheckMilestoneStatus() {
+    for (var i = 0; i < this.MilestonestatusList.length; i++) {
+      this.MilestonestatusList[i].isSelected = this.masterMilestonestatus;
+    }
+    this.getSelectedMilestoneStatus();
+  }
+  MilestoneStatusSelected() {
+    this.masterMilestonestatus = this.MilestonestatusList.every(function(item:any) {
+        return item.isSelected == true;
+    })
+    this.getSelectedMilestoneStatus();
+  }
+  getSelectedMilestoneStatus(){
+    this.Apply_disable = false;
+    this.SelectedMilestonestatus = null;
+    for(let i=0;i<this.MilestonestatusList.length;i++){
+      if(this.MilestonestatusList[i].isSelected == true){
+        if(this.SelectedMilestonestatus == null){
+          this.SelectedMilestonestatus = this.MilestonestatusList[i].iMeet_Milestone___Project_Status;
+        }else{
+          this.SelectedMilestonestatus += ","+this.MilestonestatusList[i].iMeet_Milestone___Project_Status;
+        }
+      }else{
+      }
+      // this.SelectedMilestonestatus = this.MilestonestatusList.map(x => x.iMeet_Milestone___Project_Status).join(', ');
+    }
+    this.MilestonestatusListSelected = this.MilestonestatusList.filter(s => s.isSelected == true);
+  }
+  // deselectMilestoneStatus(val : string){
+  //   for(let i=0;i<this.MilestonestatusList.length;i++){
+  //     if(this.MilestonestatusList[i].iMeet_Milestone___Project_Status == val){
+  //       this.MilestonestatusList[i].isSelected = false;
+  //     }else{
+  //     }
+  //   }
+  //   this.MilestoneStatusSelected();
+  // }
+  //End of MilestoneStatus Methods
+  //Start of ProjectStatus Methods
+  // checkUncheckProjectStatus() {
+  //   for (var i = 0; i < this.projectstatusList.length; i++) {
+  //     this.projectstatusList[i].isSelected = this.masterprojectstatus;
+  //   }
+  //   this.getSelectedProjectStatus();
+  // }
+  // projectstatusSelected() {
+  //   this.masterprojectstatus = this.projectstatusList.every(function(item:any) {
+  //       return item.isSelected == true;
+  //   })
+  //   this.getSelectedProjectStatus();
+  // }
+  // getSelectedProjectStatus(){
+  //   this.Apply_disable1 = false;
+  //   this.Selectedprojectstatus = null;
+  //   for(let i=0;i<this.projectstatusList.length;i++){
+  //     if(this.projectstatusList[i].isSelected == true){
+  //       if(this.Selectedprojectstatus == null){
+  //         this.Selectedprojectstatus = this.projectstatusList[i].iMeet_Milestone___Project_Status;
+  //       }else{
+  //         this.Selectedprojectstatus += ","+this.projectstatusList[i].iMeet_Milestone___Project_Status;
+  //       }
+  //     }else{
+  //     }
+  //   }
+  //   this.projectstatusListSelected = this.projectstatusList.filter(s => s.isSelected == true);
+  // }
+  // deselectprojectstatus(val : string){
+  //   for(let i=0;i<this.projectstatusList.length;i++){
+  //     if(this.projectstatusList[i].iMeet_Milestone___Project_Status == val){
+  //       this.projectstatusList[i].isSelected = false;
+  //     }else{
+  //     }
+  //   }
+  //   this.projectstatusSelected();
+  // }
+  //End of Status Methods
+}
+export interface DialogData {
+  SelectedDeltaMonthNumber : number;
+  SelectedDeltaMonth : string;
+  SelectedDeltaComment : string;
+  SelectedVolume : string;
+  Jan_comment : string;
+  Feb_comment : string;
+  Mar_comment : string;
+  Apr_comment : string;
+  May_comment : string;
+  Jun_comment : string;
+  Jul_comment : string;
+  Aug_comment : string;
+  Sep_comment : string;
+  Oct_comment : string;
+  Nov_comment : string;
+  Dec_comment : string;
+  DeltaID : number;
+}
+@Component({
+  selector: 'app-commentsdailog',
+  templateUrl: './commentsdailog.component.html',
+  styleUrls: ['./commentsdailog.component.css']
+})
+export class CommentsDialog {
+  constructor(
+    public datepipe : DatePipe,
+    public service : DashboardServiceService,
+    public dialogRef: MatDialogRef<CommentsDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+  MonthComment : string;
+  MarketCommentEditOption : boolean = false;
+  ngOnInit() {
+    this.service.UserReportAccess(localStorage.getItem("UID")).subscribe(data=>{
+      if(data.code == 200){
+        if(data.Data[0].MarketCommentsEdit == true){
+          this.MarketCommentEditOption = true;
+        }else{
+          this.MarketCommentEditOption = false;
+        }
+      }
+    })
+    this.MonthComment = this.data.SelectedDeltaComment;
+  }
+  SaveComment(){
+    if(this.MarketCommentEditOption == false){
+      alert("You dont have the access to update the Comments, if you want to edit you can request it from your Profile Page.")
+    }else{
+      if(this.MonthComment == null || this.MonthComment == ""){
+        alert("Please enter the comments");
+      }else{
+        if(this.data.SelectedDeltaMonthNumber == 1){
+          this.data.Jan_comment = this.MonthComment;
+        }
+        if(this.data.SelectedDeltaMonthNumber == 2){
+          this.data.Feb_comment = this.MonthComment;
+        }
+        if(this.data.SelectedDeltaMonthNumber == 3){
+          this.data.Mar_comment = this.MonthComment;
+        }
+        if(this.data.SelectedDeltaMonthNumber == 4){
+          this.data.Apr_comment = this.MonthComment;
+        }
+        if(this.data.SelectedDeltaMonthNumber == 5){  
+          this.data.May_comment = this.MonthComment;
+        }
+        if(this.data.SelectedDeltaMonthNumber == 6){
+          this.data.Jun_comment = this.MonthComment;
+        }
+        if(this.data.SelectedDeltaMonthNumber == 7){
+          this.data.Jul_comment = this.MonthComment;
+        }
+        if(this.data.SelectedDeltaMonthNumber == 8){
+          this.data.Aug_comment = this.MonthComment;
+        }
+        if(this.data.SelectedDeltaMonthNumber == 9){
+          this.data.Sep_comment = this.MonthComment;
+        }
+        if(this.data.SelectedDeltaMonthNumber == 10){
+          this.data.Oct_comment = this.MonthComment;
+        }
+        if(this.data.SelectedDeltaMonthNumber == 11){
+          this.data.Nov_comment = this.MonthComment;
+        }
+        if(this.data.SelectedDeltaMonthNumber == 12){
+          this.data.Dec_comment = this.MonthComment;
+        }
+        this.service.UpdateMWDeltaComments(this.data.DeltaID,this.data.Jan_comment,this.data.Feb_comment,this.data.Mar_comment,this.data.Apr_comment,this.data.May_comment,this.data.Jun_comment,this.data.Jul_comment,this.data.Aug_comment,this.data.Sep_comment,this.data.Oct_comment,this.data.Nov_comment,this.data.Dec_comment).subscribe(data =>{
+          if(data.code == 200){
+            alert(""+data.message);
+            this.dialogRef.close();
+          }else{
+            alert("Something went wrong! Please try again later.");
+            this.dialogRef.close();
+          }
+        })
+      }
+    }
+  }
+}
+
+@Component({
+  selector: 'app-datadailog',
+  templateUrl: './datadailog.component.html',
+  styleUrls: ['./datadailog.component.css']
+})
+
+export class DataDialog {
+  constructor(
+    public datepipe : DatePipe,
+    public service : DashboardServiceService,
+    public dialogRef: MatDialogRef<DataDialog>,
+    private excelService:ExcelService,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+
+    // @ViewChild(MatSort, {static: true}) sort: MatSort;
+    // @ViewChild(MatSort, {static: true}) tablesort: MatSort;
+    @ViewChild(MatSort) sort: MatSort;
+    dataSource;
+    displayedColumns: any[] = ['iMeet_Workspace_Title','Implementation_Type','Revenue_Total_Volume_USD','Region__Opportunity_','Country','Revenue_ID','Task__Go_Live_Date','iMeet_Milestone___Project_Status','iMeet_Project_Level','Workspace__ELT_Overall_Status','Customer_Row_ID','Opportunity_ID','Go_Live_Year','DataSourceType'];
+    ClrData;
+    Data : ClrData[];
+    ngAfterViewInit() {
+      this.dataSource.sort = this.sort;
+      // this.GetData();
+    }
+  ngOnInit() {
+    if(this.data.SelectedDeltaComment == "Current Week || "){
+      this.service.MonthWiseClrData(this.data.SelectedDeltaMonth).subscribe(data =>{
+        if(data.code == 200){
+          this.Data = data.Data;
+          this.ClrData = data.Data;
+          for(let i = 0;i<this.Data.length;i++){
+            if(this.Data[i].Revenue_Total_Volume_USD == null){
+              this.Data[i].Revenue_Total_Volume = "$0";
+            }else{
+              // this.Data[i].Revenue_Total_Volume = Math.round(this.Data[i].Revenue_Total_Volume_USD).toLocaleString("en-US",{style : "currency",currency:"USD"}).slice(0,-3);
+              this.Data[i].Revenue_Total_Volume = Math.round(this.Data[i].Revenue_Total_Volume_USD).toLocaleString("en-US",{style : "currency",currency:"USD"}).slice(0,-3);
+            }
+            if(this.Data[i].Task__Go_Live_Date == null){
+            }else{
+              this.Data[i].Task__Go_Live_Date = this.datepipe.transform(this.Data[i].Task__Go_Live_Date, "yyyy-MM-dd");
+            }
+          }
+          this.dataSource = new MatTableDataSource(this.Data);
+          this.dataSource.sort = this.sort;
+        }else{
+          alert(data.message);
+          this.dialogRef.close();
+        }
+      })
+    }else{
+      this.service.MonthWiseOldClrData(this.data.SelectedDeltaMonth).subscribe(data =>{
+        if(data.code == 200){
+          this.Data = data.Data;
+          this.ClrData = data.Data;
+          for(let i = 0;i<this.Data.length;i++){
+            if(this.Data[i].Revenue_Total_Volume_USD == null){
+              this.Data[i].Revenue_Total_Volume = "$0";
+            }else{
+              // this.Data[i].Revenue_Total_Volume = Math.round(this.Data[i].Revenue_Total_Volume_USD).toLocaleString("en-US",{style : "currency",currency:"USD"}).slice(0,-3);
+              this.Data[i].Revenue_Total_Volume = Math.round(this.Data[i].Revenue_Total_Volume_USD).toLocaleString("en-US",{style : "currency",currency:"USD"}).slice(0,-3);
+            }
+            if(this.Data[i].Task__Go_Live_Date == null){
+            }else{
+              this.Data[i].Task__Go_Live_Date = this.datepipe.transform(this.Data[i].Task__Go_Live_Date, "yyyy-MM-dd");
+            }
+          }
+          this.dataSource = new MatTableDataSource(this.Data);
+          this.dataSource.sort = this.sort;
+          // this.dataSource = data.Data;
+        }else{
+          alert(data.message);
+          this.dialogRef.close();
+        }
+      })
+    }
+  }
+  ExportClick(){
+    if(this.ClrData != null){
+      this.excelService.exportAsExcelFile(this.ClrData, this.data.SelectedDeltaMonth+' Data');
+    }
+  }
+}

@@ -1,0 +1,228 @@
+<div class="col-md-12" style="text-align: right;"> 
+    <button  mat-raised-button (click)="downloadAsPDF()" style="background-color: #F16950;color: white;margin-right: 30px;margin-top: 15px;">Export To PDF</button>
+</div>
+<div style="background-color: white;text-align: center;">
+    <div  [ngStyle]="{'margin-left' : ((screenWidth-1400)/2)+'px'}">
+        <div id="combinedpdf" #pdfdatas style="width: 1400px;border: 2px solid black;margin-top: 20px;margin-bottom: 25px" >
+            <div class="col-12">
+                <div class="header_wrap">
+                    YTD {{CurrentYear}}: CWT Implementation Net Promoter Score - Overall
+                </div>
+            </div>
+            <div class="row col-12" style="margin-left: 0px;">
+                <div class="col-md-2 nps_values" style="margin-right: 3.7%;margin-left: 0.9%;">
+                    <p class="nps_value_header">Surveys Sent</p>
+                    <p class="nps_value_value">{{NE_SurveySent}}</p>
+                </div>
+                <div class="col-md-2 nps_values" style="margin-right: 3.7%;">
+                    <p class="nps_value_header">Response Rate%</p>
+                    <p class="nps_value_value">{{NE_ResponseRate}}</p>
+                </div>
+                <div class="col-md-2 nps_values" style="margin-right: 3.7%;">
+                    <p class="nps_value_header">Responses Recevied</p>
+                    <p class="nps_value_value">{{NE_ResponsesRecevied}}</p>
+                </div>
+                <div class="col-md-2 nps_values" style="margin-right: 3.7%;">
+                    <p class="nps_value_header">NPS Score</p>
+                    <p class="nps_value_value">{{NE_NPSScore}}</p>
+                </div>
+                <div class="col-md-2 nps_values">
+                    <p class="nps_value_header">NPS Target</p>
+                    <p class="nps_value_value">{{TargetNPSScore}}</p>
+                </div>
+            </div>
+            <div class="row col-md-12" style="margin-left: 0px;margin-bottom: 25px;">
+                <div class="col-md-4">
+                    <div class="nps_graph_wrap">
+                        <p class="nps_graph_header">NPS Breakdown</p>
+                        <canvas id="ne_nps_breakdown" height="170px">
+                        </canvas>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="nps_graph_wrap">
+                        <p class="nps_graph_header">NPS Score By Region</p>
+                        <canvas id="ne_nps_regionscore" height="170px">
+                        </canvas>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="nps_graph_wrap">
+                        <p class="nps_graph_header">NPS Count By Region</p>
+                        <canvas id="ne_nps_regioncount" height="170px">
+                        </canvas>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="nps_graph_wrap">
+                        <p class="nps_semanticgraph_header">What had a Positive Experience during your Implementation?</p>
+                        <canvas id="ne_nps_commentone" height="170px">
+                        </canvas>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="nps_graph_wrap">
+                        <p class="nps_semanticgraph_header">What can we improve to make yourexperience better?</p>
+                        <canvas id="ne_nps_commenttwo" height="170px">
+                        </canvas>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="nps_graph_wrap">
+                        <p class="nps_semanticgraph_header">What can we do to go above expectations?</p>
+                        <canvas id="ne_nps_commentthree" height="170px">
+                        </canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <mat-divider style="width: 1400px;margin-top: 20px;border: 1px solid #CECECE;"></mat-divider>
+        <div id="pdfdata" #pdfdata style="width: 1400px;border: 2px solid black;margin-top: 25px;"> 
+            <div class="col-12" style="margin:0px">
+                <div class="header_wrap">
+                    YTD {{CurrentYear}}: CWT Implementation Net Promoter Score - New Business
+                </div>
+            </div>
+            <div class="row col-12" style="margin-left: 0px;">
+                <div class="col-md-2 nps_values" style="margin-right: 3.7%;margin-left: 0.9%;">
+                    <p class="nps_value_header">Surveys Sent</p>
+                    <p class="nps_value_value">{{SurveySent}}</p>
+                </div>
+                <div class="col-md-2 nps_values" style="margin-right: 3.7%;">
+                    <p class="nps_value_header">Response Rate%</p>
+                    <p class="nps_value_value">{{ResponseRate}}</p>
+                </div>
+                <div class="col-md-2 nps_values" style="margin-right: 3.7%;">
+                    <p class="nps_value_header">Responses Recevied</p>
+                    <p class="nps_value_value">{{ResponsesRecevied}}</p>
+                </div>
+                <div class="col-md-2 nps_values" style="margin-right: 3.7%;">
+                    <p class="nps_value_header">NPS Score</p>
+                    <p class="nps_value_value">{{NPSScore}}</p>
+                </div>
+                <div class="col-md-2 nps_values">
+                    <p class="nps_value_header">NPS Target</p>
+                    <p class="nps_value_value">{{TargetNPSScore}}</p>
+                </div>
+            </div>
+            <div class="row col-12" style="margin-left: 0px;margin-bottom: 25px">
+                <div class="col-md-4">
+                    <div class="nps_graph_wrap">
+                        <p class="nps_graph_header">NPS Breakdown</p>
+                        <canvas id="n_nps_breakdown" height="170px">
+                        </canvas>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="nps_graph_wrap">
+                        <p class="nps_graph_header">NPS Score By Region</p>
+                        <canvas id="n_nps_regionscore" height="170px">
+                        </canvas>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="nps_graph_wrap">
+                        <p class="nps_graph_header">NPS Count By Region</p>
+                        <canvas id="n_nps_regioncount" height="170px">
+                        </canvas>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="nps_graph_wrap">
+                        <p class="nps_semanticgraph_header">What had a Positive Experience during your Implementation?</p>
+                        <canvas id="n_nps_commentone" height="170px">
+                        </canvas>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="nps_graph_wrap">
+                        <p class="nps_semanticgraph_header">What can we improve to make yourexperience better?</p>
+                        <canvas id="n_nps_commenttwo" height="170px">
+                        </canvas>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="nps_graph_wrap">
+                        <p class="nps_semanticgraph_header">What can we do to go above expectations?</p>
+                        <canvas id="n_nps_commentthree" height="170px">
+                        </canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <mat-divider style="width: 1400px;margin-top: 20px;border: 1px solid #CECECE;"></mat-divider>
+        <div id="pdfdatas" #pdfdatas style="width: 1400px;border: 2px solid black;margin-top: 20px;margin-bottom: 25px" >
+            <div class="col-12">
+                <div class="header_wrap">
+                    YTD {{CurrentYear}}: CWT Implementation Net Promoter Score - Existing Business
+                </div>
+            </div>
+            <div class="row col-12" style="margin-left: 0px;">
+                <div class="col-md-2 nps_values" style="margin-right: 3.7%;margin-left: 0.9%;">
+                    <p class="nps_value_header">Surveys Sent</p>
+                    <p class="nps_value_value">{{E_SurveySent}}</p>
+                </div>
+                <div class="col-md-2 nps_values" style="margin-right: 3.7%;">
+                    <p class="nps_value_header">Response Rate%</p>
+                    <p class="nps_value_value">{{E_ResponseRate}}</p>
+                </div>
+                <div class="col-md-2 nps_values" style="margin-right: 3.7%;">
+                    <p class="nps_value_header">Responses Recevied</p>
+                    <p class="nps_value_value">{{E_ResponsesRecevied}}</p>
+                </div>
+                <div class="col-md-2 nps_values" style="margin-right: 3.7%;">
+                    <p class="nps_value_header">NPS Score</p>
+                    <p class="nps_value_value">{{E_NPSScore}}</p>
+                </div>
+                <div class="col-md-2 nps_values">
+                    <p class="nps_value_header">NPS Target</p>
+                    <p class="nps_value_value">{{TargetNPSScore}}</p>
+                </div>
+            </div>
+            <div class="row col-md-12" style="margin-left: 0px;margin-bottom: 25px;">
+                <div class="col-md-4">
+                    <div class="nps_graph_wrap">
+                        <p class="nps_graph_header">NPS Breakdown</p>
+                        <canvas id="e_nps_breakdown" height="170px">
+                        </canvas>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="nps_graph_wrap">
+                        <p class="nps_graph_header">NPS Score By Region</p>
+                        <canvas id="e_nps_regionscore" height="170px">
+                        </canvas>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="nps_graph_wrap">
+                        <p class="nps_graph_header">NPS Count By Region</p>
+                        <canvas id="e_nps_regioncount" height="170px">
+                        </canvas>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="nps_graph_wrap">
+                        <p class="nps_semanticgraph_header">What had a Positive Experience during your Implementation?</p>
+                        <canvas id="e_nps_commentone" height="170px">
+                        </canvas>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="nps_graph_wrap">
+                        <p class="nps_semanticgraph_header">What can we improve to make yourexperience better?</p>
+                        <canvas id="e_nps_commenttwo" height="170px">
+                        </canvas>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="nps_graph_wrap">
+                        <p class="nps_semanticgraph_header">What can we do to go above expectations?</p>
+                        <canvas id="e_nps_commentthree" height="170px">
+                        </canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

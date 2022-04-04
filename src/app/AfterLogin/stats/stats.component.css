@@ -1,0 +1,13 @@
+.report_header{
+  width: 100%;
+  font-size: 13px;
+  font-weight: bold;
+  color: black;
+  height: 30px;
+}
+.type_header{
+  width: 100%;
+  font-size: 11px;
+  color: black;
+  height: 25px;
+}

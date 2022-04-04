@@ -1,0 +1,743 @@
+<mat-tab-group dynamicHeight  style="width : 100%;background-color: #F7DC6F">
+    <mat-tab label="Essential Tables">
+        <div style="background-color: white;margin: 0px;padding: 20px; width: 100%;height: 100%;">
+            <!-- <div class="row mat-elevation-z2 col-md-12" style="margin: 0px;padding: 0px;height: auto;">
+                <div class="col-12" style="margin: 0px;padding: 0px;height: 50px;background-color: rgb(80, 100, 100)">
+                    <label class="col-12" style="margin: 0px;padding: 15px 0px 0px 30px;font-size: 15px;color: white;font-family: Arial, Helvetica, sans-serif;font-weight: 550"> Select Date & Filters</label>
+                </div>
+                
+                <label class="col-12" style="margin: 0px 0px 10px 0px;padding: 15px 0px 0px 30px;font-size: 15px;font-family: Arial, Helvetica, sans-serif;font-weight: 550"> Sales Leader Type & Type Of Bid</label>
+                <div class="col-12">
+                    <mat-checkbox class="example-margin" [(ngModel)]="masterSalesLeaderTypeAndTypeOfBid" name="masterSalesLeaderTypeAndTypeOfBid" (change)="checkUncheckSalesLeaderTypeAndTypeOfBid()" style="margin-left: 15px;" color="warn">Select all</mat-checkbox>
+                    <li style="display: inline-block;" *ngFor="let SalesLeaderTypeAndTypeOfBid of SalesLeaderTypeAndTypeOfBidList"><mat-checkbox color="warn" class="example-margin" [(ngModel)]="SalesLeaderTypeAndTypeOfBid.isSelected" (change)="SalesLeaderTypeAndTypeOfBidSelected()" style="margin-left: 15px;" name="SalesLeaderTypeAndTypeOfBid.Sales_Leader_type_and_Type_of_bid">{{SalesLeaderTypeAndTypeOfBid.Sales_Leader_type_and_Type_of_bid}}</mat-checkbox></li>
+                </div>
+                <label class="col-12" style="margin: 0px 0px 10px 0px;padding: 15px 0px 0px 30px;font-size: 15px;font-family: Arial, Helvetica, sans-serif;font-weight: 550"> Prospect Type</label>
+                <div class="col-12">
+                    <mat-checkbox class="example-margin" [(ngModel)]="masterProspect_Type" name="masterProspect_Type" (change)="checkUncheckProspect_Type()" color="warn" style="margin-left: 15px;" >Select all</mat-checkbox>
+                    <li style="display: inline-block;" *ngFor="let Prospect_Type of Prospect_TypeList"><mat-checkbox color="warn" class="example-margin" [(ngModel)]="Prospect_Type.isSelected" (change)="Prospect_TypeSelected()" style="margin-left: 15px;" name="Prospect_Type.Prospect_Type">{{Prospect_Type.Prospect_Type}}</mat-checkbox></li>
+                </div>
+                <div class="col-6">
+                    <label class="col-4 mat-form-wrap" style="font-size: 15px;font-family: Arial, Helvetica, sans-serif;font-weight: 550">Start Date</label>
+                    <label class="col-2 mat-form-wrap" style="font-size: 15px;font-family: Arial, Helvetica, sans-serif;font-weight: 550">:</label>
+                    <mat-form-field class="col-6 mat-form-wrap" style="color :gray">
+                        <mat-label style="color :gray">Start Date</mat-label>
+                        <input style="color :gray" [(ngModel)]="start_dateET" [matDatepicker]="pickerET" matInput required>
+                        <mat-datepicker-toggle matSuffix [for]="pickerET"></mat-datepicker-toggle>
+                        <mat-datepicker #pickerET></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-12" style="height: 35px;margin: 0px 0px 15px 0px;padding: 0px;text-align: left;">
+                    <button mat-raised-button (click)="GetEssentialTables()" style="background-color: #F16950;color: white;padding-left: 5px;padding-right: 5px;margin-left: 30px">Apply</button>
+                </div>
+            </div> -->
+            <div class="row" style="margin: 0px;padding: 0px;">
+                <div class="col-12" style="height: auto;">
+                    <div class="mat-elevation-z2" style="width: 100%;height: auto;margin-top: 20px;border-radius: 5px;">
+                        <div class="col-12" style="background-color: rgb(80, 100, 100);margin: 0px;padding: 0px;">
+                            <label class="col-12" style="height: 35px;margin: 20px 0px 0px 0px;padding: 0px 0px 0px 30px;font-size: 16px;font-weight: 550;font-family: Arial, Helvetica, sans-serif;color: white;">Select Date & Filters</label>
+                            <!-- <mat-divider></mat-divider> -->
+                        </div>
+                        <label class="col-12" style="margin: 0px 0px 10px 0px;padding: 15px 0px 0px 40px;font-size: 15px;font-family: Arial, Helvetica, sans-serif;font-weight: 550"> Sales Leader Type & Type Of Bid</label>
+                        <div class="col-12" style="margin-left: 35px;">
+                            <mat-checkbox class="example-margin" [(ngModel)]="masterSalesLeaderTypeAndTypeOfBid" name="masterSalesLeaderTypeAndTypeOfBid" (change)="checkUncheckSalesLeaderTypeAndTypeOfBid()" style="margin-left: 15px;" color="warn">Select all</mat-checkbox>
+                            <li style="display: inline-block;" *ngFor="let SalesLeaderTypeAndTypeOfBid of SalesLeaderTypeAndTypeOfBidList"><mat-checkbox color="warn" class="example-margin" [(ngModel)]="SalesLeaderTypeAndTypeOfBid.isSelected" (change)="SalesLeaderTypeAndTypeOfBidSelected()" style="margin-left: 15px;" name="SalesLeaderTypeAndTypeOfBid.Sales_Leader_type_and_Type_of_bid">{{SalesLeaderTypeAndTypeOfBid.Sales_Leader_type_and_Type_of_bid}}</mat-checkbox></li>
+                        </div>
+                        <label class="col-12" style="margin: 0px 0px 10px 0px;padding: 15px 0px 0px 40px;font-size: 15px;font-family: Arial, Helvetica, sans-serif;font-weight: 550"> Prospect Type</label>
+                        <div class="col-12" style="margin-left: 35px;">
+                            <mat-checkbox class="example-margin" [(ngModel)]="masterProspect_Type" name="masterProspect_Type" (change)="checkUncheckProspect_Type()" color="warn" style="margin-left: 15px;" >Select all</mat-checkbox>
+                            <li style="display: inline-block;" *ngFor="let Prospect_Type of Prospect_TypeList"><mat-checkbox color="warn" class="example-margin" [(ngModel)]="Prospect_Type.isSelected" (change)="Prospect_TypeSelected()" style="margin-left: 15px;" name="Prospect_Type.Prospect_Type">{{Prospect_Type.Prospect_Type}}</mat-checkbox></li>
+                        </div>
+                        <div class="row col-12" style="margin-top: 20px;">
+                            <!-- <label style="font-size: 14px;width: 100%;font-weight: bold;margin-left: 10px;">Start Date</label> -->
+                            <!-- <label style="font-size: 14px;font-weight: 450;margin: 0px 10px 0px 10px;">:</label> -->
+                            <mat-form-field appearance="outline" style="color :gray;margin-left: 40px;">
+                                <mat-label style="color :gray">Start Date</mat-label>
+                                <input style="color :gray" [(ngModel)]="start_dateET" [matDatepicker]="pickerET" matInput required>
+                                <mat-datepicker-toggle matSuffix [for]="pickerET"></mat-datepicker-toggle>
+                                <mat-datepicker #pickerET></mat-datepicker>
+                            </mat-form-field>
+                            <div style="width: 50%;margin: 15px 0px 0px 25px;padding: 0px;text-align: left;">
+                                <button mat-raised-button (click)="GetEssentialTables()" [ngStyle]="{'background-color': Apply_disable == true ?  '#DCDCDC' : '#F16950','color' :  Apply_disable == true ? '#AEAEAE' : 'white'}" style="padding-left: 5px;padding-right: 5px;height:35px;margin-bottom: 15px;" [disabled]="Apply_disable">Apply</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin: 0px;padding: 0px;">
+                <div class="col-lg-6">
+                    <div class="example-container mat-elevation-z2" style="overflow : auto;height: auto;width: 100%;margin-top: 20px;">
+                        <table mat-table [dataSource]="dataSource_SSA" style="text-align: left;">
+                            <ng-container matColumnDef="Leftheaders">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes"></th>
+                                <td mat-cell *matCellDef="let element" class="textSizes"> {{element.Leftheaders}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="PerEssential">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes">% Essential </th>
+                                <td mat-cell *matCellDef="let element" style="padding-left: 10px;"> {{element.PerEssential}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Essential">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes">Essential</th>
+                                <td mat-cell *matCellDef="let element"> {{element.Essential}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Configurable">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes">Configurable</th>
+                                <td mat-cell *matCellDef="let element"> {{element.Configurable}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Customizable">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes">Customizable</th>
+                                <td mat-cell *matCellDef="let element"> {{element.Customizable}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Total">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes">Total</th>
+                                <td mat-cell *matCellDef="let element"> {{element.Total}} </td>
+                            </ng-container>
+                            <!-- Item Description Column -->
+                            <ng-container matColumnDef="header">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes_header" style="background-color: #3B8AD9;" colspan="6"> Self Service Accounts</th>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="['header']"></tr>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumnsSSA"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumnsSSA;"></tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="example-container mat-elevation-z2" style="overflow : auto;height: auto;width: 100%;margin-top: 20px;">
+                        <table mat-table [dataSource]="dataSource_DSDLA" style="text-align: left;">
+                            <ng-container matColumnDef="Leftheaders">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes"></th>
+                                <td mat-cell *matCellDef="let element" class="textSizes"> {{element.Leftheaders}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="PerEssential">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes">% Essential </th>
+                                <td mat-cell *matCellDef="let element" style="padding-left: 10px;"> {{element.PerEssential}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Essential">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes">Essential</th>
+                                <td mat-cell *matCellDef="let element"> {{element.Essential}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Configurable">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes">Configurable</th>
+                                <td mat-cell *matCellDef="let element"> {{element.Configurable}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Customizable">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes">Customizable</th>
+                                <td mat-cell *matCellDef="let element"> {{element.Customizable}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Total">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes">Total</th>
+                                <td mat-cell *matCellDef="let element"> {{element.Total}} </td>
+                            </ng-container>
+                            <!-- Item Description Column -->
+                            <ng-container matColumnDef="header">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes_header" style="background-color: #3B8AD9;" colspan="6"> DSD Lead Accounts</th>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="['header']"></tr>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumnsSSA"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumnsSSA;"></tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="example-container mat-elevation-z2" style="overflow : auto;height: auto;margin-top: 20px;">
+                        <table mat-table [dataSource]="dataSource_TA" style="text-align: left;">
+                            <ng-container matColumnDef="Leftheaders">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes"></th>
+                                <td mat-cell *matCellDef="let element" class="textSizes"> {{element.Leftheaders}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="PerEssential">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes">% Essential </th>
+                                <td mat-cell *matCellDef="let element" style="padding-left: 10px;"> {{element.PerEssential}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Essential">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes">Essential</th>
+                                <td mat-cell *matCellDef="let element"> {{element.Essential}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Configurable">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes">Configurable</th>
+                                <td mat-cell *matCellDef="let element"> {{element.Configurable}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Customizable">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes">Customizable</th>
+                                <td mat-cell *matCellDef="let element"> {{element.Customizable}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Total">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes">Total</th>
+                                <td mat-cell *matCellDef="let element"> {{element.Total}} </td>
+                            </ng-container>
+                            <!-- Item Description Column -->
+                            <ng-container matColumnDef="header">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes_header" style="background-color: #3B8AD9;" colspan="6"> Total Accounts</th>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="['header']"></tr>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumnsSSA"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumnsSSA;"></tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="example-container mat-elevation-z2" style="overflow : auto;height: auto;margin-top: 20px;">
+                        <table mat-table [dataSource]="dataSource_SSV" style="text-align: left;">
+                            <ng-container matColumnDef="Leftheaders">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes"></th>
+                                <td mat-cell *matCellDef="let element" class="textSizes"> {{element.Leftheaders}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="PerEssential">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes">% Essential </th>
+                                <td mat-cell *matCellDef="let element" style="padding-left: 10px;"> {{element.PerEssential}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Essential">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes">Essential</th>
+                                <td mat-cell *matCellDef="let element" style="padding-right: 10px;"> {{element.Essential}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Configurable">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes">Configurable</th>
+                                <td mat-cell *matCellDef="let element" style="padding-right: 10px;"> {{element.Configurable}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Customizable">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes">Customizable</th>
+                                <td mat-cell *matCellDef="let element" style="padding-right: 10px;"> {{element.Customizable}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Total">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes">Total</th>
+                                <td mat-cell *matCellDef="let element"> {{element.Total}} </td>
+                            </ng-container>
+                            <!-- Item Description Column -->
+                            <ng-container matColumnDef="header">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes_header" style="background-color: rgb(112, 173, 71);" colspan="6"> Self Service Volume</th>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="['header']"></tr>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumnsSSA"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumnsSSA;"></tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="example-container mat-elevation-z2" style="overflow : auto;height: auto;margin-top: 20px;">
+                        <table mat-table [dataSource]="dataSource_DSDLV" style="text-align: left;">
+                            <ng-container matColumnDef="Leftheaders">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes"></th>
+                                <td mat-cell *matCellDef="let element" class="textSizes"> {{element.Leftheaders}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="PerEssential">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes">% Essential </th>
+                                <td mat-cell *matCellDef="let element" style="padding-left: 10px;"> {{element.PerEssential}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Essential">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes">Essential</th>
+                                <td mat-cell *matCellDef="let element" style="padding-right: 10px;"> {{element.Essential}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Configurable">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes">Configurable</th>
+                                <td mat-cell *matCellDef="let element" style="padding-right: 10px;"> {{element.Configurable}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Customizable">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes">Customizable</th>
+                                <td mat-cell *matCellDef="let element" style="padding-right: 10px;"> {{element.Customizable}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Total">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes">Total</th>
+                                <td mat-cell *matCellDef="let element"> {{element.Total}} </td>
+                            </ng-container>
+                            <!-- Item Description Column -->
+                            <ng-container matColumnDef="header">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes_header" style="background-color: rgb(112, 173, 71);" colspan="6"> DSD Lead Volume</th>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="['header']"></tr>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumnsSSA"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumnsSSA;"></tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="example-container mat-elevation-z2" style="overflow : auto;height: auto;margin-top: 20px;">
+                        <table mat-table [dataSource]="dataSource_TV" style="text-align: left;">
+                            <ng-container matColumnDef="Leftheaders">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes"></th>
+                                <td mat-cell *matCellDef="let element" class="textSizes"> {{element.Leftheaders}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="PerEssential">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes">% Essential </th>
+                                <td mat-cell *matCellDef="let element" style="padding-left: 10px;"> {{element.PerEssential}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Essential">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes">Essential</th>
+                                <td mat-cell *matCellDef="let element" style="padding-right: 10px;"> {{element.Essential}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Configurable">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes">Configurable</th>
+                                <td mat-cell *matCellDef="let element" style="padding-right: 10px;"> {{element.Configurable}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Customizable">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes">Customizable</th>
+                                <td mat-cell *matCellDef="let element" style="padding-right: 10px;"> {{element.Customizable}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Total">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes">Total</th>
+                                <td mat-cell *matCellDef="let element"> {{element.Total}} </td>
+                            </ng-container>
+                            <!-- Item Description Column -->
+                            <ng-container matColumnDef="header">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes_header" style="background-color: rgb(112, 173, 71);" colspan="6"> Total Volume</th>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="['header']"></tr>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumnsSSA"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumnsSSA;"></tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="example-container mat-elevation-z2" style="overflow : auto;height: auto;margin-top: 20px;">
+                        <table mat-table [dataSource]="dataSource_WRA" style="text-align: left;">
+                            <ng-container matColumnDef="Leftheaders">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes"></th>
+                                <td mat-cell *matCellDef="let element" class="textSizes"> {{element.Leftheaders}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Essential">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes">Essential</th>
+                                <td mat-cell *matCellDef="let element"> {{element.Essential}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Configurable">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes">Configurable</th>
+                                <td mat-cell *matCellDef="let element"> {{element.Configurable}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Customizable">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes">Customizable</th>
+                                <td mat-cell *matCellDef="let element"> {{element.Customizable}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Total">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes">Total</th>
+                                <td mat-cell *matCellDef="let element"> {{element.Total}} </td>
+                            </ng-container>
+                            <!-- Item Description Column -->
+                            <ng-container matColumnDef="header">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes_header" style="background-color:rgb(80, 100, 100);" colspan="6"> Win Rate Accounts</th>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="['header']"></tr>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumnsWRAV"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumnsWRAV;"></tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="example-container mat-elevation-z2" style="overflow : auto;height: auto;margin-top: 20px;">
+                        <table mat-table [dataSource]="dataSource_WRV" style="text-align: left;">
+                            <ng-container matColumnDef="Leftheaders">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes"></th>
+                                <td mat-cell *matCellDef="let element" class="textSizes"> {{element.Leftheaders}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="PerEssential">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes">% Essential </th>
+                                <td mat-cell *matCellDef="let element"> {{element.PerEssential}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Essential">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes">Essential</th>
+                                <td mat-cell *matCellDef="let element"> {{element.Essential}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Configurable">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes">Configurable</th>
+                                <td mat-cell *matCellDef="let element"> {{element.Configurable}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Customizable">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes">Customizable</th>
+                                <td mat-cell *matCellDef="let element"> {{element.Customizable}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Total">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes">Total</th>
+                                <td mat-cell *matCellDef="let element"> {{element.Total}} </td>
+                            </ng-container>
+                            <!-- Item Description Column -->
+                            <ng-container matColumnDef="header">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes_header" style="background-color: rgb(80, 100, 100);" colspan="6"> Win Rate Volume</th>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="['header']"></tr>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumnsWRAV"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumnsWRAV;"></tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </mat-tab>
+    <mat-tab label="DSD Metrics" style="font-weight: bold">
+        <div style="background-color: white;margin: 0px;padding: 20px; width: 100%;height: 100%;">
+            <!-- <div class="row mat-elevation-z2" style="margin: 0px;padding: 0px;height: auto;border-radius :5px;">
+                <div class="row col-12" style="margin: 0px;padding: 0px;background-color: rgb(80, 100, 100);">
+                    <label class="col-10" style="height: 35px;margin: 20px 0px 0px 0px;padding: 0px 0px 0px 20px;font-size: 16px;font-weight: 550;font-family: Arial, Helvetica, sans-serif;color: white;text-align: center">Edit date fields to see a segment in time</label>
+                    <div class="col-2" style="height: 35px;margin: 15px 0px 15px 0px;padding: 0px;text-align: center">
+                        <button mat-raised-button (click)="GetDSDMetrics()" style="background-color: #F16950;color: white;padding-left: 5px;padding-right: 5px;">Apply</button>
+                    </div>
+                </div>
+                <div class="col-md-6" style="margin: 0px;">
+                    <label class="col-4 mat-form-wrap" style="font-size: 14px;font-weight: 450">Start Date</label>
+                    <label class="col-2 mat-form-wrap" style="font-size: 14px;font-weight: 450">:</label>
+                    <mat-form-field class="col-6 mat-form-wrap" style="color :gray">
+                        <mat-label style="color :gray">Start Date</mat-label>
+                        <input style="color :gray" [(ngModel)]="start_dateDM" [matDatepicker]="pickerdm" matInput required>
+                        <mat-datepicker-toggle matSuffix [for]="pickerdm"></mat-datepicker-toggle>
+                        <mat-datepicker #pickerdm></mat-datepicker>
+                    </mat-form-field>
+                </div>
+            </div> -->
+            <div class="row" style="margin: 0px;padding: 0px;">
+                <div class="col-12" style="height: auto;">
+                    <div class="mat-elevation-z2" style="width: 100%;height: auto;margin-top: 20px;border-radius: 5px;">
+                        <div class="col-12" style="background-color: rgb(80, 100, 100);margin: 0px;padding: 0px;">
+                            <label class="col-12" style="height: 35px;margin: 20px 0px 0px 0px;padding: 0px 0px 0px 30px;font-size: 16px;font-weight: 550;font-family: Arial, Helvetica, sans-serif;color: white;">Edit date fields to see a segment in time</label>
+                            <!-- <mat-divider></mat-divider> -->
+                        </div>
+                        <div class="row col-12" style="margin-top: 20px;">
+                            <!-- <label style="font-size: 14px;width: 100%;font-weight: bold;margin-left: 10px;">Start Date</label> -->
+                            <!-- <label style="font-size: 14px;font-weight: 450;margin: 0px 10px 0px 10px;">:</label> -->
+                            <mat-form-field appearance="outline" style="color :gray;margin-left: 40px;">
+                                <mat-label style="color :gray">Start Date</mat-label>
+                                <input style="color :gray" [(ngModel)]="start_dateDM" [matDatepicker]="pickerdm" matInput required>
+                                <mat-datepicker-toggle matSuffix [for]="pickerdm"></mat-datepicker-toggle>
+                                <mat-datepicker #pickerdm></mat-datepicker>
+                            </mat-form-field>
+                            <div style="width: 50%;margin: 15px 0px 0px 25px;padding: 0px;text-align: left;">
+                                <button mat-raised-button (click)="GetDSDMetrics()" style="background-color: #F16950;color: white;padding-left: 5px;padding-right: 5px;height:35px;margin-bottom: 15px;">Apply</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin: 0px;padding: 0px;">
+                <div class="col-lg-7">
+                    <div class="example-container mat-elevation-z2" style="height: auto;margin-top: 20px">
+                        <table mat-table [dataSource]="dataSource_WOV_A" style="text-align: left;">
+                            <ng-container matColumnDef="Leftheaders">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="width: 19%"></th>
+                                <td mat-cell *matCellDef="let element" class="textSizes" style="width: 19%"> {{element.Leftheaders}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Won">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="padding-left: 25px;background-color:  #3B8AD9;color: white;"> Won </th>
+                                <td mat-cell *matCellDef="let element" style="padding-left: 25px;"> {{element.Won}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="VerbalAward">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color:  #3B8AD9;color: white">Verbal award</th>
+                                <td mat-cell *matCellDef="let element"> {{element.VerbalAward}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Lost">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color:  #3B8AD9;color: white">Lost</th>
+                                <td mat-cell *matCellDef="let element"> {{element.Lost}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="PerWin">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color:  #3B8AD9;color: white">Win %</th>
+                                <td mat-cell *matCellDef="let element"> {{element.PerWin}} </td>
+                            </ng-container>
+                            <!-- Item Description Column -->
+                            <ng-container matColumnDef="header">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes_header" style="background-color:rgb(80, 100, 100);" colspan="6"> Win rate% Accounts without Verbal award</th>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="['header']"></tr>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumnsWOV_AV"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumnsWOV_AV;"></tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="example-container mat-elevation-z2" style="height: auto;margin-top: 20px;">
+                        <table mat-table [dataSource]="dataSource_IP" style="text-align: left;">
+                            <ng-container matColumnDef="Leftheaders">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes"></th>
+                                <td mat-cell *matCellDef="let element" class="textSizes"> {{element.Leftheaders}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Accounts">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="text-align: center;background-color:  #3B8AD9;color: white"> Accounts </th>
+                                <td mat-cell *matCellDef="let element" style="text-align: center"> {{element.Accounts}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Spend">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="text-align: center;background-color:  rgb(112, 173, 71);color: white">Spend</th>
+                                <td mat-cell *matCellDef="let element" style="text-align: center"> {{element.Spend}} </td>
+                            </ng-container>
+                            <!-- <ng-container matColumnDef="AvgDaysSinceStart">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="text-align: center;background-color:  #3B8AD9;color: white">Avg Days Since Start</th>
+                                <td mat-cell *matCellDef="let element" style="text-align: center"> {{element.AvgDaysSinceStart}} </td>
+                            </ng-container> -->
+                            <!-- Item Description Column -->
+                            <ng-container matColumnDef="header">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes_header" style="background-color: rgb(80, 100, 100);" colspan="6"> In Progress</th>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="['header']"></tr>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumnsIP"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumnsIP;"></tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="example-container mat-elevation-z2" style="height: auto;margin-top: 20px;">
+                        <table mat-table [dataSource]="dataSource_WOV_V" style="text-align: left;">
+                            <ng-container matColumnDef="Leftheaders">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="width: 19%"></th>
+                                <td mat-cell *matCellDef="let element" class="textSizes" style="width: 19%"> {{element.Leftheaders}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Won">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="padding-left: 25px;background-color:  rgb(112, 173, 71);color: white"> Won </th>
+                                <td mat-cell *matCellDef="let element" style="padding-left: 25px;"> {{element.Won}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="VerbalAward">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color:  rgb(112, 173, 71);color: white">Verbal award</th>
+                                <td mat-cell *matCellDef="let element"> {{element.VerbalAward}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Lost">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color:  rgb(112, 173, 71);color: white">Lost</th>
+                                <td mat-cell *matCellDef="let element"> {{element.Lost}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="PerWin">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color:  rgb(112, 173, 71);color: white">Win %</th>
+                                <td mat-cell *matCellDef="let element"> {{element.PerWin}} </td>
+                            </ng-container>
+                            <!-- Item Description Column -->
+                            <ng-container matColumnDef="header">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes_header" style="background-color: rgb(80, 100, 100);" colspan="6"> Win rate% Volume without Verbal award</th>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="['header']"></tr>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumnsWOV_AV"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumnsWOV_AV;"></tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="example-container mat-elevation-z2" style="height: auto;margin-top: 20px;">
+                        <table mat-table [dataSource]="dataSource_YTD" style="text-align: left;">
+                            <ng-container matColumnDef="Dsd_Lead">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="border-right: 1px solid #e0e0e0;background-color: rgb(132, 151, 176);color: white"> DSD Lead</th>
+                                <td mat-cell *matCellDef="let element" class="textSizes"style="border-right: 1px solid #e0e0e0;"> {{element.Dsd_Lead}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="TotalAccounts">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="text-align: center;background-color:  #3B8AD9;color: white"> Accounts </th>
+                                <td mat-cell *matCellDef="let element" style="text-align: center"> {{element.TotalAccounts}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="TVolumes">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="border-right: 1px solid #e0e0e0;text-align: center;background-color:  rgb(112, 173, 71);color: white"> Volume </th>
+                                <td mat-cell *matCellDef="let element" style="border-right: 1px solid #e0e0e0;text-align: center"> {{element.TVolumes}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="WonAccounts">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="text-align: center;background-color:  #3B8AD9;color: white"> Accounts </th>
+                                <td mat-cell *matCellDef="let element" style="text-align: center"> {{element.WonAccounts}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="WVolumes">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="border-right: 1px solid #e0e0e0;text-align: center;background-color:  rgb(112, 173, 71);color: white"> Volume </th>
+                                <td mat-cell *matCellDef="let element" style="border-right: 1px solid #e0e0e0;text-align: center"> {{element.WVolumes}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="LostAccounts">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="text-align: center;background-color:  #3B8AD9;color: white"> Accounts </th>
+                                <td mat-cell *matCellDef="let element" style="text-align: center"> {{element.LostAccounts}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="LVolumes">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="border-right: 1px solid #e0e0e0;text-align: center;background-color:  rgb(112, 173, 71);color: white"> Volume </th>
+                                <td mat-cell *matCellDef="let element" style="border-right: 1px solid #e0e0e0;text-align: center"> {{element.LVolumes}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="WinPerAccounts">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="text-align: center;background-color:  #3B8AD9;color: white"> Accounts </th>
+                                <td mat-cell *matCellDef="let element" style="text-align: center"> {{element.WinPerAccounts}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="WinPerVolume">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="text-align: center;background-color:  rgb(112, 173, 71);color: white"> Volume </th>
+                                <td mat-cell *matCellDef="let element" style="text-align: center"> {{element.WinPerVolume}} </td>
+                            </ng-container>
+                            <!-- First header Description Columns -->
+                            <ng-container matColumnDef="Firstheader">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes_header" style="background-color: rgb(80, 100, 100);" colspan="9">DSD Wise Accounts & Volume</th>
+                            </ng-container>
+                            <!-- Second header Description Columns -->
+                            <ng-container matColumnDef="headerone">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes_header"></th>
+                            </ng-container>
+                            <ng-container matColumnDef="headertwo">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes_header" style="background-color: rgb(237, 125, 49);color: black;text-align: center" colspan="2"> Total Ytd Activity</th>
+                            </ng-container>
+                            <ng-container matColumnDef="headerthree">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes_header" style="background-color: #10CCCC;color: black;text-align: center" colspan="2"> Won</th>
+                            </ng-container>
+                            <ng-container matColumnDef="headerfour">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes_header" style="background-color: rgb(237, 125, 49);color: black;text-align: center" colspan="2"> Lost</th>
+                            </ng-container>
+                            <ng-container matColumnDef="headerfive">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes_header" style="background-color: #10CCCC;color: black;text-align: center" colspan="2"> Win%</th>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="['Firstheader']"></tr>
+                            <tr mat-header-row *matHeaderRowDef="['headerone','headertwo','headerthree','headerfour','headerfive']"></tr>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumnsYTD"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumnsYTD;"></tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </mat-tab>
+    <mat-tab label="David Data">
+        <div style="background-color: white;margin: 0px;padding: 20px; width: 100%;height: 100%;">
+            <!-- <div class="row mat-elevation-z2" style="margin: 0px;padding: 0px;height: auto;border-radius :5px; ">
+                
+                <div class="row col-12" style="margin: 0px;padding: 0px;background-color: rgb(80, 100, 100);">
+                    <label class="col-10" style="height: 35px;margin: 20px 0px 0px 0px;padding: 0px 0px 0px 20px;font-size: 16px;font-weight: 550;font-family: Arial, Helvetica, sans-serif;color: white;text-align: center">Edit date fields to see a segment in time</label>
+                    <div class="col-2" style="height: 35px;margin: 15px 0px 15px 0px;padding: 0px;text-align: center">
+                        <button mat-raised-button (click)="GetDavidData()" style="background-color: #F16950;color: white;padding-left: 5px;padding-right: 5px;">Apply</button>
+                    </div>
+                </div>
+                <div class="col-md-6" style="margin: 0px;">
+                    <label class="col-4 mat-form-wrap" style="font-size: 14px;font-weight: 450">Start Date</label>
+                    <label class="col-2 mat-form-wrap" style="font-size: 14px;font-weight: 450">:</label>
+                    <mat-form-field class="col-6 mat-form-wrap" style="color :gray">
+                        <mat-label style="color :gray">Start Date</mat-label>
+                        <input style="color :gray" [(ngModel)]="start_date" [matDatepicker]="picker" matInput required>
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6" style="margin: 0px;">
+                    <label class="col-4 mat-form-wrap" style="font-size: 14px;font-weight: 450">End Date</label>
+                    <label class="col-2 mat-form-wrap" style="font-size: 14px;font-weight: 450">:</label>
+                    <mat-form-field class="col-6 mat-form-wrap" style="color :gray">
+                        <mat-label style="color :gray">End Date</mat-label>
+                        <input style="color :gray" [(ngModel)]="end_date" [matDatepicker]="picker2" matInput required>
+                        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                        <mat-datepicker #picker2></mat-datepicker>
+                    </mat-form-field>
+                </div>
+            </div> -->
+            <div class="row" style="margin: 0px;padding: 0px;">
+                <div class="col-12" style="height: auto;">
+                    <div class="mat-elevation-z2" style="width: 100%;height: auto;margin-top: 20px;border-radius: 5px;">
+                        <div class="col-12" style="background-color: rgb(80, 100, 100);margin: 0px;padding: 0px;">
+                            <label class="col-12" style="height: 35px;margin: 20px 0px 0px 0px;padding: 0px 0px 0px 30px;font-size: 16px;font-weight: 550;font-family: Arial, Helvetica, sans-serif;color: white;">Edit date fields to see a segment in time</label>
+                            <!-- <mat-divider></mat-divider> -->
+                        </div>
+                        <div class="row col-12" style="margin-top: 30px;">
+                            <mat-form-field appearance="outline" style="color :gray;margin-left: 40px;">
+                                <mat-label style="color :gray">Start Date</mat-label>
+                                <input style="color :gray" [(ngModel)]="start_date" [matDatepicker]="picker" matInput required>
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" style="color :gray;margin-left: 40px;"><!-- appearance="outline" -->
+                                <mat-label style="color :gray">End Date</mat-label>
+                                <input style="color :gray" [(ngModel)]="end_date" [matDatepicker]="picker2" matInput required>
+                                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                <mat-datepicker #picker2></mat-datepicker>
+                            </mat-form-field>
+                            <div style="margin: 15px 0px 0px 40px;padding: 0px;text-align: left;">
+                                <button mat-raised-button (click)="GetDavidData()" style="background-color: #F16950;color: white;padding-left: 5px;padding-right: 5px;height:35px;margin-bottom: 15px;">Apply</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin: 0px;padding: 0px;">
+                <div class="col-lg-6">
+                    <div class="example-container mat-elevation-z2" style="height: auto;margin-top: 20px;">
+                        <table mat-table [dataSource]="dataSource_DD_NB" style="text-align: left;">
+                            <ng-container matColumnDef="Leftheaders">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes"></th>
+                                <td mat-cell *matCellDef="let element" class="textSizes"> {{element.Leftheaders}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="PerEssential">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes">% Essential </th>
+                                <td mat-cell *matCellDef="let element"> {{element.PerEssential}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Essential">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes">Essential</th>
+                                <td mat-cell *matCellDef="let element"> {{element.Essential}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Configurable">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes">Configurable</th>
+                                <td mat-cell *matCellDef="let element"> {{element.Configurable}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Customizable">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes">Customizable</th>
+                                <td mat-cell *matCellDef="let element"> {{element.Customizable}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Total">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes">Total</th>
+                                <td mat-cell *matCellDef="let element"> {{element.Total}} </td>
+                            </ng-container>
+                            <!-- Item Description Column -->
+                            <ng-container matColumnDef="header">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes_header" style="background-color: #3B8AD9;" colspan="6"> New Business</th>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="['header']"></tr>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumnsSSA"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumnsSSA;"></tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="example-container mat-elevation-z2" style="height: auto;margin-top: 20px;">
+                        <table mat-table [dataSource]="dataSource_DD_R" style="text-align: left;">
+                            <ng-container matColumnDef="Leftheaders">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes"></th>
+                                <td mat-cell *matCellDef="let element" class="textSizes"> {{element.Leftheaders}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="PerEssential">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes">% Essential </th>
+                                <td mat-cell *matCellDef="let element"> {{element.PerEssential}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Essential">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes">Essential</th>
+                                <td mat-cell *matCellDef="let element"> {{element.Essential}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Configurable">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes">Configurable</th>
+                                <td mat-cell *matCellDef="let element"> {{element.Configurable}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Customizable">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes">Customizable</th>
+                                <td mat-cell *matCellDef="let element"> {{element.Customizable}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Total">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes">Total</th>
+                                <td mat-cell *matCellDef="let element"> {{element.Total}} </td>
+                            </ng-container>
+                            <!-- Item Description Column -->
+                            <ng-container matColumnDef="header">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes_header" style="background-color: #3B8AD9;" colspan="6">Renewal</th>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="['header']"></tr>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumnsSSA"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumnsSSA;"></tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-lg-8" style="margin: auto">
+                    <div class="example-container mat-elevation-z2" style="height: auto;margin-top: 20px;">
+                        <table mat-table [dataSource]="dataSource_DD_NBR" style="text-align: left;">
+                            <ng-container matColumnDef="Leftheaders">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes"></th>
+                                <td mat-cell *matCellDef="let element" class="textSizes"> {{element.Leftheaders}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="PerEssential">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes">% Essential </th>
+                                <td mat-cell *matCellDef="let element"> {{element.PerEssential}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Essential">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes">Essential</th>
+                                <td mat-cell *matCellDef="let element"> {{element.Essential}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Configurable">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes">Configurable</th>
+                                <td mat-cell *matCellDef="let element"> {{element.Configurable}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Customizable">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes">Customizable</th>
+                                <td mat-cell *matCellDef="let element"> {{element.Customizable}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Total">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes">Total</th>
+                                <td mat-cell *matCellDef="let element"> {{element.Total}} </td>
+                            </ng-container>
+                            <!-- Item Description Column -->
+                            <ng-container matColumnDef="header">
+                                <th mat-header-cell *matHeaderCellDef class="textSizes_header" style="background-color: #3B8AD9;" colspan="6"> Total Accounts (New Business + Renewal)</th>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="['header']"></tr>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumnsSSA"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumnsSSA;"></tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </mat-tab>
+</mat-tab-group>

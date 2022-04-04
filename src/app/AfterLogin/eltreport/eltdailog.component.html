@@ -1,0 +1,5 @@
+<div>
+    <label style="font-weight: bold;">{{data.Dailog_Client}} &nbsp;&nbsp;&nbsp;</label> <label [ngStyle]="{'color': data.Dailog_Status == 'On Track' ? '#229954' : data.Dailog_Status == 'Possible Risk' ? 'orange' : data.Dailog_Status == 'Risk' ? '#CB4335' : 'green'}">({{data.Dailog_Status}})</label>
+    <mat-divider></mat-divider>
+    <label style="margin-top: 8px;font-size: 15px;">{{data.Dailog_Comment}}</label>
+</div>

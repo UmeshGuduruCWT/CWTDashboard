@@ -1,0 +1,88 @@
+.btn-style{
+    border: none;
+    text-align: center;
+    border-radius: 5px;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    cursor: pointer;
+    height: 30px;
+    width: 53px;
+    font-family: "Montserrat", sans-serif;
+  }
+  .example-margin{
+    font-size: 13px;
+  }
+  .example-card{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 100%;
+    height: auto;
+  }
+  .example-container {
+    /* max-height: 500px; */
+    overflow: auto; 
+    width: 100%;
+    margin-top: 15px;
+    margin-bottom: 20px;
+  }
+  table {
+    width: 100%;
+    border-collapse: separate; /* Don't collapse */
+    border-spacing: 0;
+  }
+  .textSizes
+  {
+    font-size: 14px;
+    text-align: center;
+    font-family: "Montserrat", sans-serif;
+  }
+  .mat-cell,.mat-header-cell {
+    min-width: 100px;
+    max-width: 250px;
+    word-wrap: break-word !important;
+    text-align:  center;
+    border-right: 1px solid rgb(196, 196, 196);
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  .mat-form-wrap{
+    width: 100%;
+  }
+  .formheader{
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 0px;
+    /* padding-top: 10px; */
+    margin : 0px;
+    height: 80px;
+    width: 100%;
+    border-bottom: 1px solid black;
+    border-right : 1px solid black;
+  }
+  /* table th{
+    /* border-bottom: 2px solid black;
+    border-top: 2px solid black; 
+  } */
+  .mat-cell{
+    font-size: 13px;
+    text-align: center;
+  }
+  .mat-footer-cell{
+    border-top : 2px solid black
+  }
+  ::ng-deep .mat-sort-header-container {
+    display:flex;
+    justify-content:center;
+  }
+  ::ng-deep .mat-sort-header-arrow {
+    color: #fff;
+  }
+  ::ng-deep .mat-expansion-panel-body{
+    padding: 0 !important;
+  }
+  .manager_text:hover{
+    text-decoration: underline;
+    color: rgb(0, 106, 228);
+    cursor: pointer;
+  }

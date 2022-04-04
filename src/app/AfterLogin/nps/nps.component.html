@@ -1,0 +1,8 @@
+<div style="width: 100%;padding: 30px;text-align: right;">
+  <button mat-raised-button style="background-color: #F16950;color: white;" (click)="ExportNPS()">Export <mat-icon style="color: white;font-size: 20px;margin-top: 4px;">save_alt</mat-icon></button>
+</div>
+<div class="pdf-container">
+    <pdf-viewer [src]="src"
+                [original-size]="false"
+    ></pdf-viewer>
+</div>

@@ -1,0 +1,51 @@
+export interface PSDData {
+    PSDID: number;
+    Created_Date: Date;
+    Requestor: string;
+    Account_Name: string;
+    Account_Owner: string;
+    Customer_Row_ID: number;
+    Account_Category: string;
+    BT_Account_Record_Type: string;
+    Company_Alias: string;
+    Opportunity_ID: number;
+    Description: string;
+    Industry: string;
+    BT_Current_Service_Configuration: string;
+    BT_Current_GDS: string;
+    BT_Current_Online_Booking_Tool: string;
+    BT_Incumbent: string;
+    Opportunity_Name: string;
+    Product_Name: string;
+    Line_of_Business : any;
+    Opportunity_Owner: string;
+    Close_Date: Date;
+    Sales_Stage_Name: string;
+    Line_Win_Probability: number;
+    Initiative_Name: string;
+    Opportunity_Type: string;
+    Opportunity_Region: string;
+    Country_Scope: string;
+    Energy__Resources___Marine: string;
+    Invoicing_Period: string;
+    Pricing_Model: string;
+    PSD_Price_per_Transaction : number;
+    Total_Transactions: number;
+    Country: string;
+    Region__Revenue_: string;
+    Implementation_Status: string;
+    Total_Revenue_USD: number;
+    Estimated_Implementation_Start_Date : Date;
+    Implementation_End_Date : Date;
+    Implementation_Fee : number;
+    Go_Live_Date : Date;
+    Revenue_Car_Volume_USD : number;
+    Revenue_Status: string;
+    Revenue_Id: number;
+    Last_Update_Date: Date;
+}
+export interface PSDResponse {
+    message: string;
+    code: number;
+    Data: PSDData[];
+}

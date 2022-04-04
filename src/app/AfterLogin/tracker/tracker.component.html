@@ -1,0 +1,588 @@
+<div class="row" style="margin: 25px 0px 0px 0px;">
+    <div class="col-md-6">
+        <label style="margin: 8px 0px 0px 15px;font-size: 16px;font-weight: bold;font-family: Arial, Helvetica, sans-serif;">Filtered Volume  :&nbsp;&nbsp;</label>
+        <label style="margin: 8px 0px 0px 0px;font-size: 16px;font-weight: bold;font-family: Arial, Helvetica, sans-serif;">{{FilteredVolume}}</label>
+        <label style="margin: 8px 0px 0px 15px;font-size: 16px;font-weight: bold;font-family: Arial, Helvetica, sans-serif;">Filtered Count  :&nbsp;&nbsp;</label>
+        <label style="margin: 8px 0px 0px 0px;font-size: 16px;font-weight: bold;font-family: Arial, Helvetica, sans-serif;">{{FilteredCount}}</label>
+    </div>
+    <div class="col-md-6" style="text-align: right">
+        <a style="height: 35px;margin: 0px;padding: 0px;">
+            <button mat-raised-button (click)="ResetFilter()" style="background-color: #F16950;color: white;margin-right: 25px;">Reset Filter</button>
+            <button mat-raised-button style="background-color: #F16950;color: white;" (click)="exportTracker()">Export <mat-icon style="color: white;font-size: 20px;margin-top: 4px;">save_alt</mat-icon></button>
+        </a>
+    </div>
+</div>
+<div class="col-12">
+    <div class="example-container" [ngStyle]="{'height' : (screenHeight-207)+'px'}" style="border: 1px solid black;">
+        <table mat-table matTableFilter [dataSource]="dataSource" matSort style="text-align: left;">
+            <ng-container matColumnDef="Client" sticky>
+                <th mat-header-cell *matHeaderCellDef class="maintextSizes" mat-sort-header style="max-width: 140px;width: 140px;padding-left: 10px;background-color: #00B0F0;"> Client </th>
+                <td mat-cell *matCellDef="let element" class="texttd" style="padding-left: 10px;max-width: 140px;width: 140px;"><label (click)="ShowComment(element.Client,element.RevenueID,'')" class="showlessText"> {{element.Client}}</label></td>
+                <!-- <label (click)="ShowComment(element.Client,element.RevenueID,'')" class="showlessText"> {{element.Client}}</label>  -->
+            </ng-container>
+            <ng-container matColumnDef="Client_h" sticky>
+                <th mat-header-cell *matHeaderCellDef colspan="1" style="padding-left: 10px;max-width: 140px;width: 140px;" class="formheader" [ngStyle]="{'background-color' : ClientFilter.value == '' || ClientFilter.value == null ? '#FFFFFF' : '#F5B7B1'}" >
+                    <mat-form-field class="mat-form-wrap" appearance="outline">
+                        <mat-label>Client</mat-label>
+                        <input style="font-weight: bold" matInput [formControl]="ClientFilter">
+                    </mat-form-field>
+                </th>
+            </ng-container>
+            <ng-container matColumnDef="iMeetWorkspaceTitle">
+                <th mat-header-cell *matHeaderCellDef class="maintextSizes" mat-sort-header style="background-color: #FFC000;max-width: 140px;width: 140px;"> Workspace Title </th>
+                <td mat-cell *matCellDef="let element" class="texttd" style="max-width: 140px;width: 140px;"> {{element.iMeetWorkspaceTitle}} </td>
+            </ng-container>
+            <ng-container matColumnDef="iMeetWorkspaceTitle_h">
+                <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="max-width: 140px;width: 140px;" [ngStyle]="{'background-color' : iMeetWorkspaceTitleFilter.value == '' || iMeetWorkspaceTitleFilter.value == null ? '#FFFFFF' : '#F5B7B1'}" >
+                    <mat-form-field class="mat-form-wrap" appearance="outline">
+                        <mat-label>Workspace Title</mat-label>
+                        <input style="font-weight: bold" matInput [formControl]="iMeetWorkspaceTitleFilter">
+                    </mat-form-field>
+                </th>
+            </ng-container>
+            <ng-container matColumnDef="GManager">
+                <th mat-header-cell *matHeaderCellDef class="maintextSizes" style="max-width: 140px;width: 140px;background-color: #FFC000;" mat-sort-header> Global Manager </th>
+                <td mat-cell *matCellDef="let element" class="texttd" style="max-width: 140px;width: 140px;overflow: hidden;text-overflow: ellipsis;"> {{element.GManager}} </td>
+            </ng-container>
+            <ng-container matColumnDef="GManager_h">
+                <th mat-header-cell *matHeaderCellDef colspan="1" style="max-width: 140px;width: 140px;" class="formheader" [ngStyle]="{'background-color' : GManagerFilter.value == '' || GManagerFilter.value == null ? '#FFFFFF' : '#F5B7B1'}" >
+                    <mat-form-field class="mat-form-wrap" appearance="outline">
+                        <mat-label>Global Manager</mat-label>
+                        <input style="font-weight: bold" matInput [formControl]="GManagerFilter">
+                    </mat-form-field>
+                </th>
+            </ng-container>
+            <ng-container matColumnDef="RManager">
+                <th mat-header-cell *matHeaderCellDef class="maintextSizes" style="max-width: 140px;width: 140px;background-color: #FFC000;" mat-sort-header> Regional Manager </th>
+                <td mat-cell *matCellDef="let element" class="texttd" style="max-width: 140px;width: 140px;overflow: hidden;text-overflow: ellipsis;"> {{element.RManager}} </td>
+            </ng-container>
+            <ng-container matColumnDef="RManager_h">
+                <th mat-header-cell *matHeaderCellDef colspan="1" style="max-width: 140px;width: 140px;" class="formheader" [ngStyle]="{'background-color' : RManagerFilter.value == '' || RManagerFilter.value == null ? '#FFFFFF' : '#F5B7B1'}" >
+                    <mat-form-field class="mat-form-wrap" appearance="outline">
+                        <mat-label>Regional Manager</mat-label>
+                        <input style="font-weight: bold" matInput [formControl]="RManagerFilter">
+                    </mat-form-field>
+                </th>
+            </ng-container>
+            <ng-container matColumnDef="LManager">
+                <th mat-header-cell *matHeaderCellDef class="maintextSizes" style="max-width: 140px;width: 140px;background-color: #FFC000;" mat-sort-header> Local Manager </th>
+                <td mat-cell *matCellDef="let element" class="texttd" style="max-width: 140px;width: 140px;overflow: hidden;text-overflow: ellipsis;"> {{element.LManager}} </td>
+            </ng-container>
+            <ng-container matColumnDef="LManager_h">
+                <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="max-width: 140px;width: 140px;" [ngStyle]="{'background-color' : LManagerFilter.value == '' || LManagerFilter.value == null ? '#FFFFFF' : '#F5B7B1'}" >
+                    <mat-form-field class="mat-form-wrap" appearance="outline">
+                        <mat-label>Local Manager</mat-label>
+                        <input style="font-weight: bold" matInput [formControl]="LManagerFilter">
+                    </mat-form-field>
+                </th>
+            </ng-container>
+            <ng-container matColumnDef="RevenueID">
+                <th mat-header-cell *matHeaderCellDef class="maintextSizes" mat-sort-header style="max-width: 140px;width: 140px;background-color: #00B0F0;" > Revenue ID </th>
+                <td mat-cell *matCellDef="let element" class="texttd" style="max-width: 140px;width: 140px;"> {{element.RevenueID}} </td>
+            </ng-container>
+            <ng-container matColumnDef="RevenueID_h">
+                <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="max-width: 140px;width: 140px;" [ngStyle]="{'background-color' : RevenueIDFilter.value == '' || RevenueIDFilter.value == null ? '#FFFFFF' : '#F5B7B1'}" >
+                    <mat-form-field class="mat-form-wrap" appearance="outline">
+                        <mat-label>Revenue ID</mat-label>
+                        <input style="font-weight: bold" matInput [formControl]="RevenueIDFilter">
+                    </mat-form-field>
+                </th>
+            </ng-container>
+            <ng-container matColumnDef="Region" sticky>
+                <th mat-header-cell *matHeaderCellDef class="maintextSizes" mat-sort-header style="max-width: 140px;width: 140px;background-color: #00B0F0;" > Region </th>
+                <td mat-cell *matCellDef="let element" class="texttd" style="max-width: 140px;width: 140px;"> {{element.Region}} </td>
+            </ng-container>
+            <ng-container matColumnDef="Region_h" sticky>
+                <!-- <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" [ngStyle]="{'background-color' : RegionFilter.value == '' || RegionFilter.value == null ? '#FFFFFF' : '#F5B7B1'}">
+                    <mat-form-field class="mat-form-wrap" appearance="outline">
+                        <mat-label>Region</mat-label>
+                        <mat-select [formControl]="RegionFilter" multiple (selectionChange)="onRegionchange()">
+                            <mat-select-trigger>
+                                {{RegionFilter.value ? RegionFilter.value[0] : ''}}
+                                <span *ngIf="RegionFilter.value?.length > 1" class="example-additional-selection">
+                                  (+{{RegionFilter.value.length - 1}} {{RegionFilter.value?.length === 2 ? 'Region' : 'Regions'}})
+                                </span>
+                            </mat-select-trigger>
+                            <div style="padding-top: 15px">
+                                <mat-checkbox style="margin-left: 15px;margin-top: 25px;" class="example-margin" [(ngModel)]="masterRegion" name="masterRegion" (change)="checkUncheckRegion()" color="primary">Select all</mat-checkbox>
+                            </div>
+                            <mat-divider style="margin-left: 5px;margin-right: 5px"></mat-divider>
+                            <mat-option *ngFor="let Region of RegionList" [value]="Region">{{Region}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </th> -->
+                <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="max-width: 140px;width: 140px;" [ngStyle]="{'background-color' : RegionFilter.value == '' || RegionFilter.value == null ? '#FFFFFF' : '#F5B7B1'}" >
+                    <mat-form-field class="mat-form-wrap" appearance="outline">
+                        <mat-label>Region</mat-label>
+                        <input style="font-weight: bold" matInput [formControl]="RegionFilter">
+                    </mat-form-field>
+                </th>
+            </ng-container>
+            <ng-container matColumnDef="Country" sticky>
+                <th mat-header-cell *matHeaderCellDef class="maintextSizes" mat-sort-header style="max-width: 140px;width: 140px;background-color: #00B0F0;"> Country </th>
+                <td mat-cell *matCellDef="let element" class="texttd" style="max-width: 140px;width: 140px;"> {{element.Country}} </td>
+            </ng-container>
+            <ng-container matColumnDef="Country_h" sticky>
+                <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="max-width: 140px;width: 140px;" [ngStyle]="{'background-color' : CountryFilter.value == '' || CountryFilter.value == null ? '#FFFFFF' : '#F5B7B1'}" >
+                    <mat-form-field class="mat-form-wrap" appearance="outline">
+                        <mat-label>Country</mat-label>
+                        <input style="font-weight: bold" matInput [formControl]="CountryFilter">
+                    </mat-form-field>
+                </th>
+            </ng-container>
+            <ng-container matColumnDef="RevenueVolume">
+                <th mat-header-cell *matHeaderCellDef class="maintextSizes" mat-sort-header style="max-width: 140px;width: 140px;background-color: #00B0F0;"> Revenue Volume</th>
+                <td mat-cell *matCellDef="let element" class="texttd" style="max-width: 140px;width: 140px;"> {{element.RevenueVolumeUSD}} </td>
+            </ng-container>
+            <ng-container matColumnDef="RevenueVolume_h">
+                <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="max-width: 140px;width: 140px;" [ngStyle]="{'background-color' : RevenueVolumeFilter.value == '' || RevenueVolumeFilter.value == null ? '#FFFFFF' : '#F5B7B1'}" >
+                    <mat-form-field class="mat-form-wrap" appearance="outline">
+                        <mat-label>Revenue Volume</mat-label>
+                        <input style="font-weight: bold" matInput [formControl]="RevenueVolumeFilter">
+                    </mat-form-field>
+                </th>
+            </ng-container>
+            <ng-container matColumnDef="Project_Level">
+                <th mat-header-cell *matHeaderCellDef class="maintextSizes" mat-sort-header style="max-width: 140px;width: 140px;background-color: #FFC000;"> Project level</th>
+                <td mat-cell *matCellDef="let element" class="texttd" style="max-width: 140px;width: 140px;"> {{element.Project_Level}} </td>
+            </ng-container>
+            <ng-container matColumnDef="Project_Level_h">
+                <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="max-width: 140px;width: 140px;" [ngStyle]="{'background-color' : Project_LevelFilter.value == '' || Project_LevelFilter.value == null ? '#FFFFFF' : '#F5B7B1'}" >
+                    <mat-form-field class="mat-form-wrap" appearance="outline">
+                        <mat-label>Project Level</mat-label>
+                        <input style="font-weight: bold" matInput [formControl]="Project_LevelFilter">
+                    </mat-form-field>
+                </th>
+            </ng-container>
+            <ng-container matColumnDef="ImplementationType">
+                <th mat-header-cell *matHeaderCellDef class="maintextSizes" mat-sort-header style="background-color: #7030A0;color: white;max-width: 140px;width: 140px;"> Implementation Type </th>
+                <td mat-cell *matCellDef="let element" class="texttd" style="max-width: 140px;width: 140px;"> {{element.ImplementationType}} </td>
+            </ng-container>
+            <ng-container matColumnDef="ImplementationType_h">
+                <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="max-width: 140px;width: 140px;" [ngStyle]="{'background-color' : ImplementationTypeFilter.value == '' || ImplementationTypeFilter.value == null ? '#FFFFFF' : '#F5B7B1'}" >
+                    <mat-form-field class="mat-form-wrap" appearance="outline">
+                        <mat-label>Implementation Type</mat-label>
+                        <input style="font-weight: bold" matInput [formControl]="ImplementationTypeFilter">
+                    </mat-form-field>
+                </th>
+            </ng-container>
+            <ng-container matColumnDef="ProjectStatus">
+                <th mat-header-cell *matHeaderCellDef class="maintextSizes" mat-sort-header style="background-color: #FFC000;max-width: 140px;width: 140px;"> Project Status </th>
+                <td mat-cell *matCellDef="let element" class="texttd" style="max-width: 140px;width: 140px;"> <label (click)="ShowComment(element.Client,element.RevenueID,element.ProjectStatus)" class="showlessText"> {{element.ProjectStatus}}</label></td>
+            </ng-container>
+            <ng-container matColumnDef="ProjectStatus_h">
+                <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="max-width: 140px;width: 140px;" [ngStyle]="{'background-color' : ProjectStatusFilter.value == '' || ProjectStatusFilter.value == null ? '#FFFFFF' : '#F5B7B1'}" >
+                    <mat-form-field class="mat-form-wrap" appearance="outline">
+                        <mat-label>Project Status</mat-label>
+                        <input style="font-weight: bold" matInput [formControl]="ProjectStatusFilter">
+                    </mat-form-field>
+                </th>
+            </ng-container>
+            <ng-container matColumnDef="GlobalDigitalOBTLead">
+                <th mat-header-cell *matHeaderCellDef class="maintextSizes" mat-sort-header style="background-color: #797D7F;color: white;max-width: 140px;width: 140px;"> Global Digital OBT Lead </th>
+                <td mat-cell *matCellDef="let element" class="texttd" style="max-width: 140px;width: 140px;"> {{element.GlobalDigitalOBTLead}} </td>
+            </ng-container>
+            <ng-container matColumnDef="GlobalDigitalOBTLead_h">
+                <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="max-width: 140px;width: 140px;" [ngStyle]="{'background-color' : GlobalDigitalOBTLeadFilter.value == '' || GlobalDigitalOBTLeadFilter.value == null ? '#FFFFFF' : '#F5B7B1'}" >
+                    <mat-form-field class="mat-form-wrap" appearance="outline">
+                        <mat-label>GLobal Digital OBT Lead</mat-label>
+                        <input style="font-weight: bold" matInput [formControl]="GlobalDigitalOBTLeadFilter">
+                    </mat-form-field>
+                </th>
+            </ng-container>
+            <ng-container matColumnDef="RegionalDigitalOBTLead">
+                <th mat-header-cell *matHeaderCellDef class="maintextSizes" mat-sort-header style="background-color: #797D7F;color: white;max-width: 140px;width: 140px;"> Regional Digital OBT Lead </th>
+                <td mat-cell *matCellDef="let element" class="texttd" style="max-width: 140px;width: 140px;"> {{element.RegionalDigitalOBTLead}} </td>
+            </ng-container>
+            <ng-container matColumnDef="RegionalDigitalOBTLead_h">
+                <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="max-width: 140px;width: 140px;" [ngStyle]="{'background-color' : RegionalDigitalOBTLeadFilter.value == '' || RegionalDigitalOBTLeadFilter.value == null ? '#FFFFFF' : '#F5B7B1'}" >
+                    <mat-form-field class="mat-form-wrap" appearance="outline">
+                        <mat-label>Regional Digital OBT Lead</mat-label>
+                        <input style="font-weight: bold" matInput [formControl]="RegionalDigitalOBTLeadFilter">
+                    </mat-form-field>
+                </th>
+            </ng-container>
+            <ng-container matColumnDef="LocalDigitalOBTLead">
+                <th mat-header-cell *matHeaderCellDef class="maintextSizes" mat-sort-header style="background-color: #797D7F;color: white;max-width: 140px;width: 140px;"> Local Digital OBT Lead </th>
+                <td mat-cell *matCellDef="let element" class="texttd" style="max-width: 140px;width: 140px;"> {{element.LocalDigitalOBTLead}} </td>
+            </ng-container>
+            <ng-container matColumnDef="LocalDigitalOBTLead_h">
+                <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="max-width: 140px;width: 140px;" [ngStyle]="{'background-color' : LocalDigitalOBTLeadFilter.value == '' || LocalDigitalOBTLeadFilter.value == null ? '#FFFFFF' : '#F5B7B1'}" >
+                    <mat-form-field class="mat-form-wrap" appearance="outline">
+                        <mat-label>Local Digital OBT Lead</mat-label>
+                        <input style="font-weight: bold" matInput [formControl]="LocalDigitalOBTLeadFilter">
+                    </mat-form-field>
+                </th>
+            </ng-container>
+            <ng-container matColumnDef="GlobalDigitalPortraitLead">
+                <th mat-header-cell *matHeaderCellDef class="maintextSizes" mat-sort-header style="background-color: #797D7F;color: white;max-width: 140px;width: 140px;"> Global Digital Portrait Lead </th>
+                <td mat-cell *matCellDef="let element" class="texttd" style="max-width: 140px;width: 140px;"> {{element.GlobalDigitalPortraitLead}} </td>
+            </ng-container>
+            <ng-container matColumnDef="GlobalDigitalPortraitLead_h">
+                <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="max-width: 140px;width: 140px;" [ngStyle]="{'background-color' : GlobalDigitalPortraitLeadFilter.value == '' || GlobalDigitalPortraitLeadFilter.value == null ? '#FFFFFF' : '#F5B7B1'}" >
+                    <mat-form-field class="mat-form-wrap" appearance="outline">
+                        <mat-label>Global Digital Portrait Lead</mat-label>
+                        <input style="font-weight: bold" matInput [formControl]="GlobalDigitalPortraitLeadFilter">
+                    </mat-form-field>
+                </th>
+            </ng-container>
+            <ng-container matColumnDef="RegionalDigitalPortraitLead">
+                <th mat-header-cell *matHeaderCellDef class="maintextSizes" mat-sort-header style="background-color: #797D7F;color: white;max-width: 140px;width: 140px;"> Regional Digital Portrait Lead </th>
+                <td mat-cell *matCellDef="let element" class="texttd" style="max-width: 140px;width: 140px;"> {{element.RegionalDigitalPortraitLead}} </td>
+            </ng-container>
+            <ng-container matColumnDef="RegionalDigitalPortraitLead_h">
+                <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="max-width: 140px;width: 140px;" [ngStyle]="{'background-color' : RegionalDigitalPortraitLeadFilter.value == '' || RegionalDigitalPortraitLeadFilter.value == null ? '#FFFFFF' : '#F5B7B1'}" >
+                    <mat-form-field class="mat-form-wrap" appearance="outline">
+                        <mat-label>Regional Digital Portrait Lead</mat-label>
+                        <input style="font-weight: bold" matInput [formControl]="RegionalDigitalPortraitLeadFilter">
+                    </mat-form-field>
+                </th>
+            </ng-container>
+            <ng-container matColumnDef="GlobalDigitalHRFeedSpeciallist">
+                <th mat-header-cell *matHeaderCellDef class="maintextSizes" mat-sort-header style="background-color: #797D7F;color: white;max-width: 140px;width: 140px;"> Global Digital HR Feed Specialist</th>
+                <td mat-cell *matCellDef="let element" class="texttd" style="max-width: 140px;width: 140px;"> {{element.GlobalDigitalHRFeedSpeciallist}} </td>
+            </ng-container>
+            <ng-container matColumnDef="GlobalDigitalHRFeedSpeciallist_h">
+                <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="max-width: 140px;width: 140px;" [ngStyle]="{'background-color' : GlobalDigitalHRFeedSpeciallistFilter.value == '' || GlobalDigitalHRFeedSpeciallistFilter.value == null ? '#FFFFFF' : '#F5B7B1'}" >
+                    <mat-form-field class="mat-form-wrap" appearance="outline">
+                        <mat-label>Global Digital HR Feed Specialist</mat-label>
+                        <input style="font-weight: bold" matInput [formControl]="GlobalDigitalHRFeedSpeciallistFilter">
+                    </mat-form-field>
+                </th>
+            </ng-container>
+            <ng-container matColumnDef="GDS">
+                <th mat-header-cell *matHeaderCellDef class="maintextSizes" mat-sort-header style="background-color: #797D7F;color: white;max-width: 140px;width: 140px;"> GDS</th>
+                <td mat-cell *matCellDef="let element" class="texttd" style="max-width: 140px;width: 140px;"><label (click)="ShowComment(element.Client,element.RevenueID,element.GDS)" class="showlessText"> {{element.GDS}}</label></td>
+            </ng-container>
+            <ng-container matColumnDef="GDS_h">
+                <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="max-width: 140px;width: 140px;" [ngStyle]="{'background-color' : GDSFilter.value == '' || GDSFilter.value == null ? '#FFFFFF' : '#F5B7B1'}" >
+                    <mat-form-field class="mat-form-wrap" appearance="outline">
+                        <mat-label>GDS</mat-label>
+                        <input style="font-weight: bold" matInput [formControl]="GDSFilter">
+                    </mat-form-field>
+                </th>
+            </ng-container>
+            <ng-container matColumnDef="ComplexityScore">
+                <th mat-header-cell *matHeaderCellDef class="maintextSizes" mat-sort-header style="background-color: #797D7F;color: white;max-width: 100px;width: 100px;"> Complexity Score</th>
+                <td mat-cell *matCellDef="let element" class="texttd" style="max-width: 100px;width: 100px;"> {{element.ComplexityScore}} </td>
+            </ng-container>
+            <ng-container matColumnDef="ComplexityScore_h">
+                <th mat-header-cell *matHeaderCellDef colspan="1" style="max-width: 100px;width: 100px;" class="formheader" [ngStyle]="{'background-color' : ComplexityScoreFilter.value == '' || ComplexityScoreFilter.value == null ? '#FFFFFF' : '#F5B7B1'}" >
+                    <mat-form-field class="mat-form-wrap" appearance="outline">
+                        <mat-label>ComplexityScore</mat-label>
+                        <input style="font-weight: bold" matInput [formControl]="ComplexityScoreFilter">
+                    </mat-form-field>
+                </th>
+            </ng-container>
+            <ng-container matColumnDef="ProjectEffort">
+                <th mat-header-cell *matHeaderCellDef class="maintextSizes" mat-sort-header style="background-color: #7030A0;color: white;max-width: 100px;width: 100px;"> Project Effort </th>
+                <td mat-cell *matCellDef="let element" class="texttd" style="max-width: 100px;width: 100px;"> {{element.ProjectEffort}} </td>
+            </ng-container>
+            <ng-container matColumnDef="ProjectEffort_h">
+                <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="max-width: 100px;width: 100px;" [ngStyle]="{'background-color' : ProjectEffortFilter.value == '' || ProjectEffortFilter.value == null ? '#FFFFFF' : '#F5B7B1'}" >
+                    <mat-form-field class="mat-form-wrap" appearance="outline">
+                        <mat-label>Project Effort</mat-label>
+                        <input style="font-weight: bold" matInput [formControl]="ProjectEffortFilter">
+                    </mat-form-field>
+                </th>
+            </ng-container>
+            <ng-container matColumnDef="MilestoneProjectNotes">
+                <th mat-header-cell *matHeaderCellDef class="maintextSizes" mat-sort-header style="background-color: #FFC000;max-width: 140px;width: 140px;"> Milestone Project Notes </th>
+                <td mat-cell *matCellDef="let element" class="texttd" style="max-width: 140px;width: 140px;"> <label (click)="ShowComment(element.Client,element.RevenueID,element.MilestoneProjectNotes)" class="showlessText">{{element.MilestoneProjectNotes}} </label></td>
+            </ng-container>
+            <ng-container matColumnDef="MilestoneProjectNotes_h">
+                <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="max-width: 140px;width: 140px;" [ngStyle]="{'background-color' : MilestoneProjectNotesFilter.value == '' || MilestoneProjectNotesFilter.value == null ? '#FFFFFF' : '#F5B7B1'}" >
+                    <mat-form-field class="mat-form-wrap" appearance="outline">
+                        <mat-label>Milestone Project Notes  </mat-label>
+                        <input style="font-weight: bold" matInput [formControl]="MilestoneProjectNotesFilter">
+                    </mat-form-field>
+                </th>
+            </ng-container>
+            <ng-container matColumnDef="OwnershipType">
+                <th mat-header-cell *matHeaderCellDef class="maintextSizes" mat-sort-header style="background-color: #00B0F0;max-width: 140px;width: 140px;"> Ownership Type </th>
+                <td mat-cell *matCellDef="let element" class="texttd" style="max-width: 140px;width: 140px;"> {{element.OwnershipType}} </td>
+            </ng-container>
+            <ng-container matColumnDef="OwnershipType_h">
+                <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="max-width: 140px;width: 140px;" [ngStyle]="{'background-color' : OwnershipTypeFilter.value == '' || OwnershipTypeFilter.value == null ? '#FFFFFF' : '#F5B7B1'}" >
+                    <mat-form-field class="mat-form-wrap" appearance="outline">
+                        <mat-label>Ownership Type  </mat-label>
+                        <input style="font-weight: bold" matInput [formControl]="OwnershipTypeFilter">
+                    </mat-form-field>
+                </th>
+            </ng-container>
+            <ng-container matColumnDef="Proposed_Start_Date">
+                <th mat-header-cell *matHeaderCellDef class="maintextSizes" mat-sort-header style="background-color: #8EA9DB;max-width: 120px;width: 120px;"> Host External Kick-off / Proposed Start Date </th>
+                <td mat-cell *matCellDef="let element" style="max-width: 120px;width: 120px;" class="texttd"> {{element.Proposed_Start_Date}} </td>
+            </ng-container>
+            <ng-container matColumnDef="Proposed_Start_Date_h">
+                <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="max-width: 120px;width: 120px;" [ngStyle]="{'background-color' : Proposed_Start_DateFilter.value == '' || Proposed_Start_DateFilter.value == null ? '#FFFFFF' : '#F5B7B1'}" >
+                    <mat-form-field class="mat-form-wrap" appearance="outline">
+                        <mat-label>yyyy-MMM-dd</mat-label>
+                        <input style="font-weight: bold" matInput [formControl]="Proposed_Start_DateFilter">
+                    </mat-form-field>
+                </th>
+            </ng-container>
+            <ng-container matColumnDef="Proposed_End_Date">
+                <th mat-header-cell *matHeaderCellDef class="maintextSizes" mat-sort-header style="background-color: #8EA9DB;max-width: 120px;width: 120px;"> End of Hypercare </th>
+                <td mat-cell *matCellDef="let element" style="max-width: 120px;width: 120px;" class="texttd"> {{element.Proposed_End_Date}} </td>
+            </ng-container>
+            <ng-container matColumnDef="Proposed_End_Date_h">
+                <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="max-width: 120px;width: 120px;" [ngStyle]="{'background-color' : Proposed_End_DateFilter.value == '' || Proposed_End_DateFilter.value == null ? '#FFFFFF' : '#F5B7B1'}" >
+                    <mat-form-field class="mat-form-wrap" appearance="outline">
+                        <mat-label>yyyy-MMM-dd</mat-label>
+                        <input style="font-weight: bold" matInput [formControl]="Proposed_End_DateFilter">
+                    </mat-form-field>
+                </th>
+            </ng-container>
+            <ng-container matColumnDef="Go_Live_Date">
+                <th mat-header-cell *matHeaderCellDef class="maintextSizes" mat-sort-header style="background-color: #FFC000;max-width: 120px;width: 120px;"> Go Live Date </th>
+                <td mat-cell *matCellDef="let element" class="texttd" style="max-width: 120px;width: 120px;"> {{element.Go_Live_Date}} </td>
+            </ng-container>
+            <ng-container matColumnDef="Go_Live_Date_h">
+                <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="max-width: 120px;width: 120px;" [ngStyle]="{'background-color' : Go_Live_DateFilter.value == '' || Go_Live_DateFilter.value == null ? '#FFFFFF' : '#F5B7B1'}" >
+                    <mat-form-field class="mat-form-wrap" appearance="outline">
+                        <mat-label>yyyy-MMM-dd</mat-label>
+                        <input style="font-weight: bold" matInput [formControl]="Go_Live_DateFilter">
+                    </mat-form-field>
+                </th>
+            </ng-container>
+            <ng-container matColumnDef="CompleteDuration">
+                <th mat-header-cell *matHeaderCellDef class="maintextSizes" mat-sort-header style="background-color: #8EA9DB;max-width: 100px;width: 100px;"> Complete Duration </th>
+                <td mat-cell *matCellDef="let element" class="texttd" style="max-width: 100px;width: 100px;"> {{element.CompleteDuration}} </td>
+            </ng-container>
+            <ng-container matColumnDef="CompleteDuration_h">
+                <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="max-width: 100px;width: 100px;" [ngStyle]="{'background-color' : CompleteDurationFilter.value == '' || CompleteDurationFilter.value == null ? '#FFFFFF' : '#F5B7B1'}" >
+                    <mat-form-field class="mat-form-wrap" appearance="outline">
+                        <mat-label>Complete Duration</mat-label>
+                        <input style="font-weight: bold" matInput [formControl]="CompleteDurationFilter">
+                    </mat-form-field>
+                </th>
+            </ng-container>
+            <ng-container matColumnDef="Project_Start_Date">
+                <th mat-header-cell *matHeaderCellDef class="maintextSizes" mat-sort-header style="background-color: #FFC000;max-width: 120px;width: 120px;"> Project Start Date </th>
+                <td mat-cell *matCellDef="let element" class="texttd" style="max-width: 120px;width: 120px;"> {{element.Project_Start_Date}} </td>
+            </ng-container>
+            <ng-container matColumnDef="Project_Start_Date_h">
+                <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="max-width: 120px;width: 120px;" [ngStyle]="{'background-color' : Project_Start_DateFilter.value == '' || Project_Start_DateFilter.value == null ? '#FFFFFF' : '#F5B7B1'}" >
+                    <mat-form-field class="mat-form-wrap" appearance="outline">
+                        <mat-label>Project Start Date</mat-label>
+                        <input style="font-weight: bold" matInput [formControl]="Project_Start_DateFilter">
+                    </mat-form-field>
+                </th>
+            </ng-container>
+            <ng-container matColumnDef="Milestone_Due_Date">
+                <th mat-header-cell *matHeaderCellDef class="maintextSizes" mat-sort-header style="background-color: #FFC000;max-width: 120px;width: 120px;"> Milestone Due Date </th>
+                <td mat-cell *matCellDef="let element" class="texttd" style="max-width: 120px;width: 120px;"> {{element.Milestone_Due_Date}} </td>
+            </ng-container>
+            <ng-container matColumnDef="Milestone_Due_Date_h">
+                <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="max-width: 120px;width: 120px;" [ngStyle]="{'background-color' : Milestone_Due_DateFilter.value == '' || Milestone_Due_DateFilter.value == null ? '#FFFFFF' : '#F5B7B1'}" >
+                    <mat-form-field class="mat-form-wrap" appearance="outline">
+                        <mat-label>Milestone Due Date</mat-label>
+                        <input style="font-weight: bold" matInput [formControl]="Milestone_Due_DateFilter">
+                    </mat-form-field>
+                </th>
+            </ng-container>
+            <ng-container matColumnDef="PerCompleted">
+                <th mat-header-cell *matHeaderCellDef class="maintextSizes" mat-sort-header style="background-color: #FFC000;max-width: 100px;width: 100px;"> % Completed</th>
+                <td mat-cell *matCellDef="let element" class="texttd" style="max-width: 100px;width: 100px;"> {{element.PerCompleted}} </td>
+            </ng-container>
+            <ng-container matColumnDef="PerCompleted_h">
+                <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="max-width: 100px;width: 100px;" [ngStyle]="{'background-color' : PerCompletedFilter.value == '' || PerCompletedFilter.value == null ? '#FFFFFF' : '#F5B7B1'}" >
+                    <mat-form-field class="mat-form-wrap" appearance="outline">
+                        <mat-label>% Completed</mat-label>
+                        <input style="font-weight: bold" matInput [formControl]="PerCompletedFilter">
+                    </mat-form-field>
+                </th>
+            </ng-container>
+            <ng-container matColumnDef="FirstWeek">
+                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color: #E74C3C;"><div class="texttransform"> {{FirstWeek}}</div></th>
+                <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color': element.FirstWeek == 1 ? '#00B050' : '#C9C9C9','color' : element.FirstWeek == 1 ? '#00B050' : '#C9C9C9'}"  style="text-align: center" class="texttd"> {{element.FirstWeek}} </td>
+            </ng-container>
+            <ng-container matColumnDef="FirstWeek_h">
+                <th mat-header-cell *matHeaderCellDef colspan="24" class="formheader" style="background-color: #C9C9C9;"></th>
+            </ng-container>
+            <ng-container matColumnDef="SecondWeek">
+                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color: #333F48;"><div class="texttransform"> {{SecondWeek}}</div></th>
+                <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color': element.SecondWeek == 1 ? '#00B050' : '#C9C9C9','color' : element.SecondWeek == 1 ? '#00B050' : '#C9C9C9'}"  style="text-align: center" class="texttd"> {{element.SecondWeek}} </td>
+            </ng-container>
+            <ng-container matColumnDef="SecondWeek_h">
+                <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="background-color: #FFFFFF;"></th>
+            </ng-container>
+            <ng-container matColumnDef="ThirdWeek">
+                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color: #333F48;"><div class="texttransform"> {{ThirdWeek}}</div></th>
+                <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color': element.ThirdWeek == 1 ? '#00B050' : '#C9C9C9','color' : element.ThirdWeek == 1 ? '#00B050' : '#C9C9C9'}"  style="text-align: center" class="texttd"> {{element.ThirdWeek}} </td>
+            </ng-container>
+            <ng-container matColumnDef="ThirdWeek_h">
+                <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="background-color: #FFFFFF;"></th>
+            </ng-container>
+            <ng-container matColumnDef="FourthWeek">
+                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color: #333F48;"><div class="texttransform"> {{FourthWeek}} </div></th>
+                <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color': element.FourthWeek == 1 ? '#00B050' : '#C9C9C9','color' : element.FourthWeek == 1 ? '#00B050' : '#C9C9C9'}"  style="text-align: center" class="texttd"> {{element.FourthWeek}} </td>
+            </ng-container>
+            <ng-container matColumnDef="FourthWeek_h">
+                <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="background-color: #FFFFFF;"></th>
+            </ng-container>
+            <ng-container matColumnDef="FivthWeek">
+                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color: #333F48;"><div class="texttransform"> {{FifthWeek}}</div></th>
+                <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color': element.FivthWeek == 1 ? '#00B050' : '#C9C9C9','color' : element.FivthWeek == 1 ? '#00B050' : '#C9C9C9'}"  style="text-align: center" class="texttd"> {{element.FivthWeek}} </td>
+            </ng-container>
+            <ng-container matColumnDef="FivthWeek_h">
+                <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="background-color: #FFFFFF;"></th>
+            </ng-container>
+            <ng-container matColumnDef="SixthWeek">
+                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color: #333F48;"><div class="texttransform">{{SixthWeek}}</div></th>
+                <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color': element.SixthWeek == 1 ? '#00B050' : '#C9C9C9','color' : element.SixthWeek == 1 ? '#00B050' : '#C9C9C9'}"  style="text-align: center" class="texttd"> {{element.SixthWeek}} </td>
+            </ng-container>
+            <ng-container matColumnDef="SixthWeek_h">
+                <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="background-color: #FFFFFF;"></th>
+            </ng-container>
+            <ng-container matColumnDef="SeventhWeek">
+                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color: #333F48;"><div class="texttransform"> {{SeventhWeek}}</div></th>
+                <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color': element.SeventhWeek == 1 ? '#00B050' : '#C9C9C9','color' : element.SeventhWeek == 1 ? '#00B050' : '#C9C9C9'}"  style="text-align: center" class="texttd"> {{element.SeventhWeek}} </td>
+            </ng-container>
+            <ng-container matColumnDef="SeventhWeek_h">
+                <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="background-color: #FFFFFF;"></th>
+            </ng-container>
+            <ng-container matColumnDef="EighthWeek">
+                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color: #333F48;"><div class="texttransform"> {{EigthWeek}}</div></th>
+                <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color': element.EighthWeek == 1 ? '#00B050' : '#C9C9C9','color' : element.EighthWeek == 1 ? '#00B050' : '#C9C9C9'}"  style="text-align: center" class="texttd"> {{element.EighthWeek}} </td>
+            </ng-container>
+            <ng-container matColumnDef="EighthWeek_h">
+                <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="background-color: #FFFFFF;"></th>
+            </ng-container>
+            <ng-container matColumnDef="NinthWeek">
+                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color: #333F48;"><div class="texttransform"> {{NinthWeek}} </div></th>
+                <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color': element.NinthWeek == 1 ? '#00B050' : '#C9C9C9','color' : element.NinthWeek == 1 ? '#00B050' : '#C9C9C9'}"  style="text-align: center" class="texttd"> {{element.NinthWeek}} </td>
+            </ng-container>
+            <ng-container matColumnDef="NinthWeek_h">
+                <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="background-color: #FFFFFF;"></th>
+            </ng-container>
+            <ng-container matColumnDef="TenthWeek">
+                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color: #333F48;"><div class="texttransform"> {{TenthWeek}}</div></th>
+                <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color': element.TenthWeek == 1 ? '#00B050' : '#C9C9C9','color' : element.TenthWeek == 1 ? '#00B050' : '#C9C9C9'}"  style="text-align: center" class="texttd"> {{element.TenthWeek}} </td>
+            </ng-container>
+            <ng-container matColumnDef="TenthWeek_h">
+                <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="background-color: #FFFFFF;"></th>
+            </ng-container>
+            <ng-container matColumnDef="EleventhWeek">
+                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color: #333F48;"><div class="texttransform">{{ElevenWeek}} </div></th>
+                <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color': element.EleventhWeek == 1 ? '#00B050' : '#C9C9C9','color' : element.EleventhWeek == 1 ? '#00B050' : '#C9C9C9'}"  style="text-align: center" class="texttd"> {{element.EleventhWeek}} </td>
+            </ng-container>
+            <ng-container matColumnDef="EleventhWeek_h">
+                <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="background-color: #FFFFFF;"></th>
+            </ng-container>
+            <ng-container matColumnDef="twelvethWeek">
+                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color: #333F48;"><div class="texttransform"> {{TwelvethWeek}}</div></th>
+                <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color': element.twelvethWeek == 1 ? '#00B050' : '#C9C9C9','color' : element.twelvethWeek == 1 ? '#00B050' : '#C9C9C9'}"  style="text-align: center" class="texttd"> {{element.twelvethWeek}} </td>
+            </ng-container>
+            <ng-container matColumnDef="twelvethWeek_h">
+                <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="background-color: #FFFFFF;"></th>
+            </ng-container>
+            <ng-container matColumnDef="C13thweek">
+                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color: #333F48;"><div class="texttransform"> {{C13thweek}}</div></th>
+                <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color': element.C13thweek == 1 ? '#00B050' : '#C9C9C9','color' : element.C13thweek == 1 ? '#00B050' : '#C9C9C9'}"  style="text-align: center" class="texttd"> {{element.C13thweek}} </td>
+            </ng-container>
+            <ng-container matColumnDef="C13thweek_h">
+                <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="background-color: #FFFFFF;"></th>
+            </ng-container>
+            <ng-container matColumnDef="C14thWeek">
+                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color: #333F48;"><div class="texttransform"> {{C14thWeek}}</div></th>
+                <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color': element.C14thWeek == 1 ? '#00B050' : '#C9C9C9','color' : element.C14thWeek == 1 ? '#00B050' : '#C9C9C9'}"  style="text-align: center" class="texttd"> {{element.C14thWeek}} </td>
+            </ng-container>
+            <ng-container matColumnDef="C14thWeek_h">
+                <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="background-color: #FFFFFF;"></th>
+            </ng-container>
+            <ng-container matColumnDef="C15thWeek">
+                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color: #333F48;"><div class="texttransform"> {{C15thWeek}}</div></th>
+                <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color': element.C15thWeek == 1 ? '#00B050' : '#C9C9C9','color' : element.C15thWeek == 1 ? '#00B050' : '#C9C9C9'}"  style="text-align: center" class="texttd"> {{element.C15thWeek}} </td>
+            </ng-container>
+            <ng-container matColumnDef="C15thWeek_h">
+                <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="background-color: #FFFFFF;"></th>
+            </ng-container>
+            <ng-container matColumnDef="C16thWeek">
+                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color: #333F48;"><div class="texttransform"> {{C16thWeek}}</div></th>
+                <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color': element.C16thWeek == 1 ? '#00B050' : '#C9C9C9','color' : element.C16thWeek == 1 ? '#00B050' : '#C9C9C9'}"  style="text-align: center" class="texttd"> {{element.C16thWeek}} </td>
+            </ng-container>
+            <ng-container matColumnDef="C16thWeek_h">
+                <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="background-color: #FFFFFF;"></th>
+            </ng-container>
+            <ng-container matColumnDef="C17thWeek">
+                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color: #333F48;"><div class="texttransform"> {{C17thWeek}}</div></th>
+                <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color': element.C17thWeek == 1 ? '#00B050' : '#C9C9C9','color' : element.C17thWeek == 1 ? '#00B050' : '#C9C9C9'}"  style="text-align: center" class="texttd"> {{element.C17thWeek}} </td>
+            </ng-container>
+            <ng-container matColumnDef="C17thWeek_h">
+                <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="background-color: #FFFFFF;"></th>
+            </ng-container>
+            <ng-container matColumnDef="C18thWeek">
+                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color: #333F48;"><div class="texttransform"> {{C18thWeek}}</div></th>
+                <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color': element.C18thWeek == 1 ? '#00B050' : '#C9C9C9','color' : element.C18thWeek == 1 ? '#00B050' : '#C9C9C9'}"  style="text-align: center" class="texttd"> {{element.C18thWeek}} </td>
+            </ng-container>
+            <ng-container matColumnDef="C18thWeek_h">
+                <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="background-color: #FFFFFF;"></th>
+            </ng-container>
+            <ng-container matColumnDef="C19thWeek">
+                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color: #333F48;"><div class="texttransform"> {{C19thWeek}}</div></th>
+                <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color': element.C19thWeek == 1 ? '#00B050' : '#C9C9C9','color' : element.C19thWeek == 1 ? '#00B050' : '#C9C9C9'}"  style="text-align: center" class="texttd"> {{element.C19thWeek}} </td>
+            </ng-container>
+            <ng-container matColumnDef="C19thWeek_h">
+                <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="background-color: #FFFFFF;"></th>
+            </ng-container>
+            <ng-container matColumnDef="C20thWeek">
+                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color: #333F48;"><div class="texttransform"> {{C20thWeek}}</div></th>
+                <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color': element.C20thWeek == 1 ? '#00B050' : '#C9C9C9','color' : element.C20thWeek == 1 ? '#00B050' : '#C9C9C9'}"  style="text-align: center" class="texttd"> {{element.C20thWeek}} </td>
+            </ng-container>
+            <ng-container matColumnDef="C20thWeek_h">
+                <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="background-color: #FFFFFF;"></th>
+            </ng-container>
+            <ng-container matColumnDef="C21stWeek">
+                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color: #333F48;"><div class="texttransform"> {{C21stWeek}}</div></th>
+                <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color': element.C21stWeek == 1 ? '#00B050' : '#C9C9C9','color' : element.C21stWeek == 1 ? '#00B050' : '#C9C9C9'}"  style="text-align: center" class="texttd"> {{element.C21stWeek}} </td>
+            </ng-container>
+            <ng-container matColumnDef="C21stWeek_h">
+                <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="background-color: #FFFFFF;"></th>
+            </ng-container>
+            <ng-container matColumnDef="C22ndWeek">
+                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color: #333F48;"><div class="texttransform"> {{C22ndWeek}}</div></th>
+                <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color': element.C22ndWeek == 1 ? '#00B050' : '#C9C9C9','color' : element.C22ndWeek == 1 ? '#00B050' : '#C9C9C9'}"  style="text-align: center" class="texttd"> {{element.C22ndWeek}} </td>
+            </ng-container>
+            <ng-container matColumnDef="C22ndWeek_h">
+                <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="background-color: #FFFFFF;"></th>
+            </ng-container>
+            <ng-container matColumnDef="C23rdWeek">
+                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color: #333F48;"><div class="texttransform"> {{C23rdWeek}}</div></th>
+                <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color': element.C23rdWeek == 1 ? '#00B050' : '#C9C9C9','color' : element.C23rdWeek == 1 ? '#00B050' : '#C9C9C9'}"  style="text-align: center" class="texttd"> {{element.C23rdWeek}} </td>
+            </ng-container>
+            <ng-container matColumnDef="C23rdWeek_h">
+                <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="background-color: #FFFFFF;"></th>
+            </ng-container>
+            <ng-container matColumnDef="C24thWeek">
+                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color: #333F48;padding-right: 0px;"><div class="texttransform"> {{C24thWeek}}</div></th>
+                <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color': element.C24thWeek == 1 ? '#00B050' : '#C9C9C9','color' : element.C24thWeek == 1 ? '#00B050' : '#C9C9C9'}"  style="text-align: center;padding-left: 0px;padding-right: 0px;" class="texttd"> {{element.C24thWeek}} </td>
+            </ng-container>
+            <ng-container matColumnDef="C24thWeek_h">
+                <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="padding-right: 0px;background-color: #FFFFFF;"></th>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true" style="padding-top: 0px;margin-top: 0px;"></tr>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns_h;sticky: true" style="padding-top: 0px;margin-top: 0px;"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;" style="height: 15px;max-height: 15px;"></tr>
+        </table>
+    </div>
+    <div class="row col-12" style="padding: 0px;margin : 0px">
+        <div class="col-6">
+            <label class="legendlabels" >Column Header Sources : </label>
+            <button class="boxshape mat-elevation-z4" disabled style="background-color: #7030A0;border: 1px solid #7030A0;"></button>
+            <label class="legendlabels" >Manual Entry</label>
+            <button class="boxshape mat-elevation-z4" disabled style="background-color: #FFC000;border: 1px solid #FFC000;"></button>
+            <label class="legendlabels">iMeet-P</label>
+            <button class="boxshape mat-elevation-z4" disabled style="background-color: #00B0F0;border: 1px solid #00B0F0;"></button>
+            <label class="legendlabels">CRM / PSD</label>
+            <button class="boxshape mat-elevation-z4" disabled style="background-color: #797D7F;border: 1px solid #797D7F;"></button>
+            <label class="legendlabels">iMeet-D</label>
+            <!-- <button class="boxshape mat-elevation-z4" disabled style="background-color: #C00000;border: 1px solid #C00000;"></button>
+            <label class="legendlabels">Automated CLR</label> -->
+        </div>
+        <div class="col-6">
+            <mat-paginator  style="margin-bottom: 10px;" #paginator [pageSizeOptions]="[10, 15, 25, 50, 75, 100, 125, 150]" [pageSize]="25" showFirstLastButtons class="mat-paginator-sticky"></mat-paginator> 
+        </div>
+    </div>
+</div>

@@ -1,0 +1,344 @@
+<!-- <div class="row" style="margin: 0px;padding: 0px;overflow: auto" [ngStyle]="{'height': screenWidth > 768 ?  'auto' : '500px'}"> -->
+<div class="main_wrap">
+    <div class="header_wrap">
+        <label class="col-md-12" style="font-size: 20px;text-align: center;padding-top: 15px;color: white">Replicate with other Clients</label>
+        <div class="inside_wrap">
+            <button mat-icon-button class="Cancel_button" tabindex="-1" (click)="OnCancelClick()">
+                <mat-icon style="font-size: 30px;">close</mat-icon>
+            </button>
+        </div>
+    </div>
+    <div class="row" style="margin : 15px 0px 0px 0px">
+        <div class="col-md-12" style="margin: 0px;padding : 0px 0px 0px 25px;">
+            <mat-form-field class="col-md-3 mat-form-wrap" style="color: gray;margin:  0px;padding : 0px;">
+                <mat-label style="font-size: 15px;">Revenue ID (Parent Revenue ID)</mat-label>
+                <input style="color: gray;" [(ngModel)]="ManualRevenueID" name="ManualRevenueID" matInput>
+            </mat-form-field>
+            <button mat-raised-button (click)="OnApplyClick()" style="height: 35px;background-color: #F16950;color: white;margin-left: 20px;margin-bottom: 15px"><span class="material-icons">forward</span></button>    
+        </div>
+        <div class="col-md-8" style="margin: 0px;padding : 0px 0px 0px 25px;">
+            <ng-multiselect-dropdown class="col-md-12 mat-form-wrap" style="color: gray;margin: 0px;padding : 0px;"
+                [placeholder]="'Revenue Ids to Replicate'"
+                [settings]="dropdownSettings"
+                [data]="dropdownList"
+                [(ngModel)]="selectedItems">
+            </ng-multiselect-dropdown>
+        </div>
+    </div>
+    <div>
+        <mat-accordion multi="true" style="margin: 0px;padding: 0px;">
+            <mat-expansion-panel class="mat-elevation-z0" style="margin: 15px 0px 0px 0px;" [expanded]="true">
+                <mat-expansion-panel-header [collapsedHeight]="'35px'" [expandedHeight]="'35px'" style="background-color: rgb(182, 182, 182);margin-left: 20px;margin-right: 20px;">
+                    <mat-panel-title style="margin-left: 0px">
+                        <label style="padding-top: 10px;">Project Team</label>
+                        <!-- <div class="col-md-4"> -->
+                            <mat-checkbox [(ngModel)]="Selectallchecked" style="margin-left: 30px;margin-top: 10px;" (change)="checkUncheckSelectall()">Select all</mat-checkbox>
+                        <!-- </div> -->
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="row" style="margin : 10px 0px 0px 0px;width: 100%;">
+                    <div class="col-md-3">
+                        <mat-checkbox [(ngModel)]="ImpTypechecked" style="margin-right: 16px;"  class="checkboxFields"></mat-checkbox>
+                        <mat-form-field style="width: 85%">
+                            <mat-label style="font-size: 15px;">Select Implementation Type</mat-label>
+                            <mat-select [(value)]="Implementation_Type">
+                                <!-- <mat-option value="Add/Change Configuration">Add/Change Configuration</mat-option> -->
+                                <mat-option value="Add/Change OBT">Add/Change OBT</mat-option>
+                                <!-- <mat-option value="Add entity">Add entity</mat-option> -->
+                                <mat-option value="Add OBT">Add OBT</mat-option>
+                                <!-- <mat-option value="Cancelled">Cancelled</mat-option> -->
+                                <mat-option value="Change OBT">Change OBT</mat-option>
+                                <!-- <mat-option value="Existing Client">Existing Client</mat-option> -->
+                                <mat-option value="HRFeed">HRFeed</mat-option>
+                                <mat-option value="Lost Client (w/o notice)">Lost Client (w/o notice)</mat-option>
+                                <mat-option value="Merger">Merger</mat-option>
+                                <mat-option value="New Business">New Business</mat-option>
+                                <!-- <mat-option value="Product Up-Sell">Product Up-Sell</mat-option> -->
+                                <mat-option value="Program Update">Program Update</mat-option>
+                                <mat-option value="Re-Bid">Re-Bid</mat-option>
+                                <mat-option value="Re-Bid With Up-sell">Re-Bid With Up-sell</mat-option>
+                                <mat-option value="Renewal/Renegotiation">Renewal/Renegotiation</mat-option>
+                                <mat-option value="Split">Split</mat-option>
+                                <mat-option value="Product or Service">Product or Service</mat-option>
+                                <mat-option value="Service Model Change">Service Model Change</mat-option>
+                                <mat-option value="Single Resource Add OBT/Change OBT">Single Resource Add OBT/Change OBT</mat-option>
+                                <mat-option value="Single Resource New Business">Single Resource New Business</mat-option>
+                                <!-- <mat-option value="Up-Sell">Up-Sell</mat-option> -->
+                                <mat-option value="Up-Sell(Add Offices/Countries)">Up-Sell(Add Offices/Countries)</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
+                    <div class="col-md-3">
+                        <mat-checkbox [(ngModel)]="PStatuschecked" style="margin-right: 16px;"  class="checkboxFields"></mat-checkbox>
+                        <mat-form-field style="width: 85%">
+                            <mat-label style="font-size: 15px;">Pipeline status</mat-label>
+                            <mat-select [(value)]="Pipeline_status">
+                                <mat-option value="Not actionable">Not actionable</mat-option>
+                                <mat-option value="To be assigned">To be assigned</mat-option>
+                                <mat-option value="Assigned">Assigned</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <!-- <div class="col-md-3">
+                        <mat-checkbox [(ngModel)]="ServiceConfigchecked" style="margin-right: 16px;"  class="checkboxFields"></mat-checkbox>
+                        <mat-form-field  style="width: 85%">
+                            <mat-label style="font-size: 15px;">Service configuration</mat-label>
+                            <input style="color: gray;" [(ngModel)]="Service_configuration" name="Service_configuration" matInput>
+                        </mat-form-field>
+                    </div> -->
+                    <!-- <div class="col-md-3">
+                        <mat-checkbox [(ngModel)]="OBTResellerchecked"  style="margin-left: 16px;" style="margin-right: 16px;"  class="checkboxFields"></mat-checkbox>
+                        <mat-form-field style="width: 85%">
+                            <mat-label style="font-size: 15px;">OBT Type</mat-label>
+                            <mat-select [formControl]="OBT_Reseller___Direct">
+                                <mat-option>
+                                    <ngx-mat-select-search
+                                      [formControl]="OBTsearch"
+                                      placeholderLabel=""
+                                      noEntriesFoundLabel="'no match found'">
+                                    </ngx-mat-select-search>
+                                </mat-option>
+                                <mat-option *ngFor="let obt of OBTData | async" [value]="obt.Opportunity_Type">{{obt.Opportunity_Type}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div> -->
+                    <div class="col-md-3">
+                        <mat-checkbox [(ngModel)]="AssignmentDatechecked" style="margin-right: 16px;"  class="checkboxFields"></mat-checkbox>
+                        <mat-form-field style="width: 85%">
+                            <mat-label>Assignment date</mat-label>
+                            <input matInput [matDatepicker]="Assignment_date" [min]="todayDate" [(ngModel)]="dateAssignment">
+                            <mat-datepicker-toggle matSuffix [for]="Assignment_date"></mat-datepicker-toggle>
+                            <mat-datepicker #Assignment_date color="primary"></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-checkbox [(ngModel)]="ProjectEffortchecked" style="margin-right: 16px;"  class="checkboxFields"></mat-checkbox>
+                        <mat-form-field style="width: 85%">
+                            <mat-label style="font-size: 15px;">Project Effort</mat-label>
+                            <input style="color: gray;" [(ngModel)]="Project_Effort" type="number" name="Project_Effort" matInput>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-checkbox [(ngModel)]="Statuschecked" style="margin-right: 16px;"  class="checkboxFields"></mat-checkbox>
+                        <mat-form-field style="width: 85%">
+                            <mat-label>Select Record Status</mat-label>
+                            <mat-select [(value)]="Record_Status">
+                                <mat-option value="Active">Active</mat-option>
+                                <mat-option value="Deactivate">Deactivate</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-checkbox [(ngModel)]="GoLiveDatechecked" style="margin-right: 16px;"  class="checkboxFields"></mat-checkbox>
+                        <mat-form-field style="width: 85%">
+                            <mat-label style="font-size: 15px;">Go Live Date</mat-label>
+                            <input matInput [matDatepicker]="GoLiveDate_R" [min]="todayDate" [(ngModel)]="DateGolive_R">
+                            <mat-datepicker-toggle matSuffix [for]="GoLiveDate_R"></mat-datepicker-toggle>
+                            <mat-datepicker #GoLiveDate_R color="primary"></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-checkbox [(ngModel)]="GlobalManagerchecked" style="margin-right: 16px;"  class="checkboxFields"></mat-checkbox>
+                        <mat-form-field style="width: 85%">
+                            <mat-label style="font-size: 15px;">Global Manager</mat-label>
+                            <mat-select [formControl]="GlobalManager_R">
+                                <mat-option>
+                                    <ngx-mat-select-search
+                                    [formControl]="GPMsearch"
+                                    placeholderLabel=""
+                                    noEntriesFoundLabel="'no match found'">
+                                    </ngx-mat-select-search>
+                                </mat-option>
+                                <mat-option *ngFor="let manager of GPMData | async" [value]="manager.GlobalProjectManager">{{manager.GlobalProjectManager}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-checkbox [(ngModel)]="RegionalManagerchecked" style="margin-right: 16px;"  class="checkboxFields"></mat-checkbox>
+                        <mat-form-field style="width: 85%">
+                            <mat-label style="font-size: 15px;">Regional Manager</mat-label>
+                            <mat-select [formControl]="RegionalManager_R">
+                                <mat-option>
+                                    <ngx-mat-select-search
+                                      [formControl]="RPMsearch"
+                                      placeholderLabel=""
+                                      noEntriesFoundLabel="'no match found'">
+                                    </ngx-mat-select-search>
+                                </mat-option>
+                                <mat-option *ngFor="let manager of RPMData | async" [value]="manager.GlobalProjectManager">{{manager.GlobalProjectManager}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-checkbox [(ngModel)]="AssignePersonchecked" style="margin-right: 16px;"  class="checkboxFields"></mat-checkbox>
+                        <mat-form-field style="width: 85%">
+                            <mat-label style="font-size: 15px;">Local Manager</mat-label>
+                            <mat-select [formControl]="AssignePerson_R">
+                                <mat-option>
+                                    <ngx-mat-select-search
+                                      [formControl]="AFNsearch"
+                                      placeholderLabel=""
+                                      noEntriesFoundLabel="'no match found'">
+                                    </ngx-mat-select-search>
+                                </mat-option>
+                                <mat-option *ngFor="let manager of AFNData | async" [value]="manager.GlobalProjectManager">{{manager.GlobalProjectManager}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-checkbox [(ngModel)]="ProjectLevelchecked" style="margin-right: 16px;"  class="checkboxFields"></mat-checkbox>
+                        <mat-form-field style="width: 85%">
+                            <mat-label style="font-size: 15px;">Project Level</mat-label>
+                            <mat-select [(value)]="ProjectLevel">
+                                <mat-option value="Global">Global</mat-option>
+                                <mat-option value="Regional">Regional</mat-option>
+                                <mat-option value="Local">Local</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-checkbox [(ngModel)]="PCommentschecked" style="margin-right: 16px;"  class="checkboxFields"></mat-checkbox>
+                        <mat-form-field  style="width: 85%">
+                            <mat-label style="font-size: 15px;">Pipeline comments</mat-label>
+                            <textarea rows="3" style="color: gray;" [(ngModel)]="Pipeline_comments" name="Pipeline_comments" matInput></textarea>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </mat-expansion-panel>
+            <mat-expansion-panel class="mat-elevation-z0" style="margin: 15px 0px 0px 0px;" [expanded]="true">
+                <mat-expansion-panel-header [collapsedHeight]="'35px'" [expandedHeight]="'35px'" style="background-color: rgb(182, 182, 182);margin-left: 20px;margin-right: 20px;">
+                    <mat-panel-title style="margin-left: 0px">
+                        <label style="padding-top: 10px;">Digital Team</label>
+                        <mat-checkbox [(ngModel)]="SelectallcheckedDigital" style="margin-left: 30px;margin-top: 10px;" (change)="checkUncheckSelectallDigital()">Select all</mat-checkbox>
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="row" style="margin : 10px 0px 0px 0px;width : 100%">
+                    <div class="col-md-3">
+                        <mat-checkbox [(ngModel)]="GlobalCISOBTLeadchecked" style="margin-right: 16px;"  class="checkboxFields"></mat-checkbox>
+                        <mat-form-field  style="width: 85%">
+                            <mat-label style="font-size: 15px;">Global Digital OBT Lead</mat-label>
+                            <mat-select [formControl]="GlobalCISOBTLead">
+                                <mat-option>
+                                    <ngx-mat-select-search
+                                      [formControl]="GlobalCISOBTLeadsearch"
+                                      placeholderLabel=""
+                                      noEntriesFoundLabel="'no match found'">
+                                    </ngx-mat-select-search>
+                                </mat-option>
+                                <mat-option *ngFor="let manager of GlobalOBTDigitalTeamData  | async" [value]="manager.Manager">{{manager.Manager}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-checkbox [(ngModel)]="RegionalCISOBTLeadchecked" style="margin-right: 16px;"  class="checkboxFields"></mat-checkbox>
+                        <mat-form-field  style="width: 85%">
+                            <mat-label style="font-size: 15px;">Regional Digital OBT Lead</mat-label>
+                            <mat-select [formControl]="RegionalCISOBTLead">
+                                <mat-option>
+                                    <ngx-mat-select-search
+                                      [formControl]="RegionalCISOBTLeadsearch"
+                                      placeholderLabel=""
+                                      noEntriesFoundLabel="'no match found'">
+                                    </ngx-mat-select-search>
+                                </mat-option>
+                                <mat-option *ngFor="let manager of RegionalOBTDigitalTeamData  | async" [value]="manager.Manager">{{manager.Manager}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-checkbox [(ngModel)]="LocalDigitalOBTLeadchecked" style="margin-right: 16px;"  class="checkboxFields"></mat-checkbox>
+                        <mat-form-field style="width: 85%" >
+                            <mat-label style="font-size: 15px;">Local Digital OBT Lead</mat-label>
+                            <mat-select [formControl]="LocalDigitalOBTLead">
+                                <mat-option>
+                                    <ngx-mat-select-search
+                                      [formControl]="LocalDigitalOBTLeadsearch"
+                                      placeholderLabel=""
+                                      noEntriesFoundLabel="'no match found'">
+                                    </ngx-mat-select-search>
+                                </mat-option>
+                                <mat-option *ngFor="let manager of LocalOBTDigitalTeamData  | async" [value]="manager.Manager">{{manager.Manager}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-checkbox [(ngModel)]="GlobalCISPortraitLeadchecked" style="margin-right: 16px;"  class="checkboxFields"></mat-checkbox>
+                        <mat-form-field style="width: 85%" >
+                            <mat-label style="font-size: 15px;">Global Digital Portrait Lead</mat-label>
+                            <mat-select [formControl]="GlobalCISPortraitLead">
+                                <mat-option>
+                                    <ngx-mat-select-search
+                                      [formControl]="GlobalCISPortraitLeadsearch"
+                                      placeholderLabel=""
+                                      noEntriesFoundLabel="'no match found'">
+                                    </ngx-mat-select-search>
+                                </mat-option>
+                                <mat-option *ngFor="let manager of GlobalPortraitDigitalTeamData  | async" [value]="manager.Manager">{{manager.Manager}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-checkbox [(ngModel)]="RegionalCISPortraitLeadchecked" style="margin-right: 16px;"  class="checkboxFields"></mat-checkbox>
+                        <mat-form-field style="width: 85%" >
+                            <mat-label style="font-size: 15px;">Regional Digital Portrait Lead</mat-label>
+                            <mat-select [formControl]="RegionalCISPortraitLead">
+                                <mat-option>
+                                    <ngx-mat-select-search
+                                      [formControl]="RegionalCISPortraitLeadsearch"
+                                      placeholderLabel=""
+                                      noEntriesFoundLabel="'no match found'">
+                                    </ngx-mat-select-search>
+                                </mat-option>
+                                <mat-option *ngFor="let manager of RegionalPortraitDigitalTeamData  | async" [value]="manager.Manager">{{manager.Manager}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-checkbox [(ngModel)]="GlobalCISHRFeedSpecialistchecked" style="margin-right: 16px;"  class="checkboxFields"></mat-checkbox>
+                        <mat-form-field style="width: 85%">
+                            <mat-label style="font-size: 15px;">Global Digital HR Feed Specialist</mat-label>
+                            <mat-select [formControl]="GlobalCISHRFeedSpecialist">
+                                <mat-option>
+                                    <ngx-mat-select-search
+                                      [formControl]="GlobalCISHRFeedSpecialistsearch"
+                                      placeholderLabel=""
+                                      noEntriesFoundLabel="'no match found'">
+                                    </ngx-mat-select-search>
+                                </mat-option>
+                                <mat-option *ngFor="let manager of GlobalHRFeedDigitalTeamData | async" [value]="manager.Manager">{{manager.Manager}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-checkbox [(ngModel)]="ActivityTypechecked" style="margin-right: 16px;"  class="checkboxFields" (change)="OnActivityTypeChecked()"></mat-checkbox>
+                        <mat-form-field style="width: 85%">
+                            <mat-label style="font-size: 15px;">Activity Type</mat-label>
+                            <mat-select [formControl]="ActivityType">
+                                <mat-option *ngFor="let activitytype of ActivityType_P" [value]="activitytype">{{activitytype}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-checkbox [(ngModel)]="Complexitychecked" style="margin-right: 16px;"  class="checkboxFields" disabled></mat-checkbox>
+                        <mat-form-field style="width: 85%">
+                            <mat-label style="font-size: 15px;">Complexity Score</mat-label>
+                            <input style="color: gray;" type="number" min="0" max="10" [(ngModel)]="ComplexityScore" name="ComplexityScore" matInput>
+                        </mat-form-field>
+                    </div>
+                    <!-- <div class="col-md-3">
+                        <mat-checkbox [(ngModel)]="GDSchecked" style="margin-right: 16px;"  class="checkboxFields"></mat-checkbox>
+                        <mat-form-field style="width: 85%">
+                            <mat-label style="font-size: 15px;">GDS</mat-label>
+                            <mat-select [formControl]="GDS">
+                                <mat-option *ngFor="let gds of GDS_P" [value]="gds">{{gds}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div> -->
+                </div>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </div>
+    <div class="bottom_wrap">
+        <button mat-raised-button (click)="OnSaveClick()" style="background-color: #F16950;color: white;">Replicate</button>
+    </div>
+</div>

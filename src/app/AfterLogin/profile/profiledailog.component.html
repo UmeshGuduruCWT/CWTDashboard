@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>Hi {{data.Name}}</h1>
+<div mat-dialog-content>
+  <p>Do you want to Request Access for {{data.ReportDisplayName}}?</p>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button style="background-color: #F16950;color: white;margin-right: 15px;" (click)="onNoClick()">No Thanks</button>
+  <button mat-raised-button style="background-color: #F16950;color: white;" (click)="onYesClick()" cdkFocusInitial>Ok</button>
+</div>

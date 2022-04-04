@@ -1,0 +1,196 @@
+<mat-drawer-container>
+    <mat-drawer mode="side" #sidenav opened style="position: fixed;padding-top: 60px;width: 15%;border: 1px solid #333F48;">
+        <div class="row" style="margin: 0px;padding: 0px;">
+            <div class="col-12" style="margin: 0px;padding: 0px;">
+                <div class="sticky">
+                    <div class="row col-12" style="background-color: #333F48;color: white;height: 60px;padding: 15px 10px 5px 10px; margin : 0px;text-align: center">
+                        <label class="col-5" style="height: 35px;font-size: 20px;text-align: center;margin-top: 10px;padding-left: 25px">Filters</label>
+                        <div class="col-2" >
+                            <button mat-icon-button style="color: white;cursor: pointer;" (click)="ResetFilters()">
+                                <mat-icon>settings_backup_restore</mat-icon>
+                            </button>
+                        </div>
+                        <div class="col-5" style="margin-top: 5px;text-align: right;padding: 0px;">
+                            <button class="btn-style" (click)="GetData()" [ngStyle]="{'background-color': Apply_disable == true ?  '#DCDCDC' : '#F16950','color' :  Apply_disable == true ? '#AEAEAE' : 'white'}" [disabled]="Apply_disable">Apply</button>
+                        </div>
+                    </div>
+                </div>
+                <mat-accordion multi="true" style="margin: 0px;padding: 0px;">
+                    <!-- <mat-expansion-panel class="mat-elevation-z0" style="margin: 10px 0px 0px 0px;" [expanded]="true">
+                        <mat-expansion-panel-header [collapsedHeight]="'35px'" [expandedHeight]="'35px'">
+                            <mat-panel-title style="margin-left: 0px">
+                                <label style="padding-top: 10px;">Pipeline Status</label>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <mat-divider style="width: 100%;margin: 10px 0px 0px 0px;"></mat-divider>
+                        <mat-nav-list>
+                            <mat-list-item style="height: 35px;"><mat-checkbox class="example-margin" [(ngModel)]="masterpipelinestatus" name="masterpipelinestatus" (change)="checkUncheckPipelineStatus()">Select all</mat-checkbox></mat-list-item>
+                            <mat-list-item style="height: 35px;" *ngFor="let pipeline_status of PipelineStatusList;"><mat-checkbox class="example-margin" [(ngModel)]="pipeline_status.isSelected" (change)="PipelineStatusSelected()" name="pipeline_status.Pipeline_status">{{pipeline_status.Pipeline_status}}</mat-checkbox></mat-list-item>
+                        </mat-nav-list>
+                    </mat-expansion-panel> -->
+                    <!-- <div class="li_main" style="margin-left: 10px;">
+                        <li class="li_items" *ngFor="let Sstatus of statusListSelected;"><label>{{Sstatus.Milestone__Project_Status}}</label><label class="li_button" (click)="deselectstatus(Sstatus.Milestone__Project_Status)">X</label></li>
+                    </div> -->
+                    <mat-expansion-panel class="mat-elevation-z0" style="margin: 10px 0px 0px 0px;" [expanded]="true">
+                        <mat-expansion-panel-header [collapsedHeight]="'35px'" [expandedHeight]="'35px'">
+                            <mat-panel-title style="margin-left: 0px">
+                                <label style="padding-top: 10px;">Project Status</label>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <mat-divider style="width: 100%;margin: 10px 0px 0px 0px;"></mat-divider>
+                        <mat-nav-list>
+                            <mat-list-item style="height: 35px;"><mat-checkbox class="example-margin" [(ngModel)]="masterprojectstatus" name="masterprojectstatus" (change)="checkUncheckProjectStatus()">Select all</mat-checkbox></mat-list-item>
+                            <mat-list-item style="height: 35px;" *ngFor="let project_status of ProjectStatusList"><mat-checkbox class="example-margin" [(ngModel)]="project_status.isSelected" (change)="ProjectStatusSelected()" name="project_status.ProjectStatus">{{project_status.ProjectStatus}}</mat-checkbox></mat-list-item>
+                        </mat-nav-list>
+                    </mat-expansion-panel>
+                    <mat-expansion-panel class="mat-elevation-z0" style="margin: 10px 0px 0px 0px;" [expanded]="true">
+                        <mat-expansion-panel-header [collapsedHeight]="'35px'" [expandedHeight]="'35px'">
+                            <mat-panel-title style="margin-left: 0px">
+                                <label style="padding-top: 10px;">Project Level</label>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <mat-divider style="width: 100%;margin: 10px 0px 0px 0px;"></mat-divider>
+                        <mat-nav-list>
+                            <mat-list-item style="height: 35px;"><mat-checkbox class="example-margin" [(ngModel)]="masterlevel" name="masterlevel" (change)="checkUncheckProjectLevel()">Select all</mat-checkbox></mat-list-item>
+                            <mat-list-item style="height: 35px;" *ngFor="let level of ProjectLevelList"><mat-checkbox class="example-margin" [(ngModel)]="level.isSelected" (change)="ProjectLevelSelected()" name="level.ProjectLevel">{{level.ProjectLevel}}</mat-checkbox></mat-list-item>
+                        </mat-nav-list>
+                    </mat-expansion-panel>
+                    <!-- <mat-expansion-panel class="mat-elevation-z0" style="margin: 10px 0px 0px 0px;" [expanded]="true">
+                        <mat-expansion-panel-header [collapsedHeight]="'35px'" [expandedHeight]="'35px'">
+                            <mat-panel-title style="margin-left: 0px">
+                                <label style="padding-top: 10px;">Status</label>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <mat-divider style="width: 100%;margin: 10px 0px 0px 0px;"></mat-divider>
+                        <mat-nav-list>
+                            <mat-list-item style="height: 35px;"><mat-checkbox class="example-margin" [(ngModel)]="masterrecordstatus" name="masterrecordstatus" (change)="checkUncheckRecordStatus()">Select all</mat-checkbox></mat-list-item>
+                            <mat-list-item style="height: 35px;" *ngFor="let r_status of RecordStatusList"><mat-checkbox class="example-margin" [(ngModel)]="r_status.Status" (change)="RecordStatusSelected()" name="r_status.Status">{{r_status.Status}}</mat-checkbox></mat-list-item>
+                        </mat-nav-list>
+                    </mat-expansion-panel> -->
+                </mat-accordion>
+            </div>
+        </div>
+    </mat-drawer>
+    <mat-drawer-content>
+        <div class="row" style="margin: 0px;padding: 0px;position: relative;">
+            <div class="row col-md-12">
+                <div class="col-md-12" style="margin-top: 25px;text-align: center;">
+                    <label style="margin: 8px 0px 0px 15px;font-size: 16px;font-weight: bold;font-family: Arial, Helvetica, sans-serif;">Filtered Count  :&nbsp;&nbsp;</label>
+                    <label style="margin: 8px 25px 0px 0px;font-size: 16px;font-weight: bold;font-family: Arial, Helvetica, sans-serif;">{{FilteredCount}}</label>
+                    <mat-form-field style="width: 60%;margin-left: 10px;">
+                        <mat-label style="padding-left: 5px;font-weight: bold;">Search</mat-label>
+                        <input matInput (keyup)="applyFilter($event)" #input>
+                        <mat-icon matSuffix>search</mat-icon>
+                    </mat-form-field>
+                    <button mat-raised-button (click)="Export()" style="padding-left: 8px;background-color: #F16950;min-width: 40px;width: 40px;margin-left: 30px;"><mat-icon style="color: white;font-size: 22px;padding-top: 2px;" matTooltip="Export Data">file_download</mat-icon></button>
+                </div>
+                <div class="col-md-12">
+                    <div class="example-container" [ngStyle]="{'height' : (screenHeight-185)+'px'}" style="margin-left: 15px;border: 1px solid rgb(196, 196, 196);">
+                        <table mat-table [dataSource]="dataSource" #GMSort="matSort" matSort>
+                            <ng-container matColumnDef="Client">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="padding-left: 10px;background-color:  #3B8AD9;color: white;">Client</th>
+                                <td mat-cell *matCellDef="let element" style="padding-left: 10px;"> <label (click)="ShowComment(element.Client,element.RevenueID,element.Opportunity_Owner)" class="showlessText"> {{element.Client}}</label></td>
+                            </ng-container>
+                            <ng-container matColumnDef="Line_Win_Probability">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="max-width: 100px;width: 100px;background-color:  #3B8AD9;color: white;word-wrap: break-word !important;white-space: normal;">Line Win Probability</th>
+                                <td mat-cell *matCellDef="let element" class="manager_text" (click)="MangerProjectDetails(element.Manager,element.Leader)"> {{element.Line_Win_Probability}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Opportunity_Owner">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #3B8AD9;color: white;">Opportunity Owner</th>
+                                <td mat-cell *matCellDef="let element"> <label (click)="ShowComment(element.Client,element.RevenueID,element.Opportunity_Owner)" class="showlessText"> {{element.Opportunity_Owner}}</label></td>
+                            </ng-container>
+                            <ng-container matColumnDef="Region">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #3B8AD9;color: white;"> Region</th>
+                                <td mat-cell *matCellDef="let element"> {{element.Region}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Country">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #3B8AD9;color: white;">Country</th>
+                                <td mat-cell *matCellDef="let element" > <label (click)="ShowComment(element.Client,element.RevenueID,element.Country)" class="showlessText"> {{element.Country}}</label></td>
+                            </ng-container>
+                            <ng-container matColumnDef="ImplementationType">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #3B8AD9;color: white;">Implementation Type</th>
+                                <td mat-cell *matCellDef="let element" ><label (click)="ShowComment(element.Client,element.RevenueID,element.ImplementationType)" class="showlessText"> {{element.ImplementationType}}</label></td>
+                            </ng-container>
+                            <ng-container matColumnDef="OBTResellerDirect">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #3B8AD9;color: white;">OBT Reseller Direct</th>
+                                <td mat-cell *matCellDef="let element" ><label (click)="ShowComment(element.Client,element.RevenueID,element.OBTResellerDirect)" class="showlessText"> {{element.OBTResellerDirect}}</label></td>
+                            </ng-container>
+                            <ng-container matColumnDef="Service_Configuration">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #3B8AD9;color: white;">Service Configuration</th>
+                                <td mat-cell *matCellDef="let element" ><label (click)="ShowComment(element.Client,element.RevenueID,element.Service_Configuration)" class="showlessText"> {{element.Service_Configuration}}</label></td>
+                            </ng-container>
+                            <ng-container matColumnDef="GlobalProjectManager">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #3B8AD9;color: white;">Global Project Manager</th>
+                                <td mat-cell *matCellDef="let element" > <label (click)="ShowComment(element.Client,element.RevenueID,element.GlobalProjectManager)" class="showlessText"> {{element.GlobalProjectManager}}</label></td>
+                            </ng-container>
+                            <ng-container matColumnDef="RegionalProjectManager">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #3B8AD9;color: white;">Regional Project Manager</th>
+                                <td mat-cell *matCellDef="let element" > <label (click)="ShowComment(element.Client,element.RevenueID,element.RegionalProjectManager)" class="showlessText"> {{element.RegionalProjectManager}}</label></td>
+                            </ng-container>
+                            <ng-container matColumnDef="LocalProjectManager">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #3B8AD9;color: white;">Local Project Manager</th>
+                                <td mat-cell *matCellDef="let element" > <label (click)="ShowComment(element.Client,element.RevenueID,element.LocalProjectManager)" class="showlessText"> {{element.LocalProjectManager}}</label></td>
+                            </ng-container>
+                            <ng-container matColumnDef="GlobalCISOBTLead">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #3B8AD9;color: white;">Global Digital OBT Lead</th>
+                                <td mat-cell *matCellDef="let element" > <label (click)="ShowComment(element.Client,element.RevenueID,element.GlobalCISOBTLead)" class="showlessText"> {{element.GlobalCISOBTLead}}</label></td>
+                            </ng-container>
+                            <ng-container matColumnDef="RegionalCISOBTLead">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #3B8AD9;color: white;">Regional Digital OBT Lead</th>
+                                <td mat-cell *matCellDef="let element" > <label (click)="ShowComment(element.Client,element.RevenueID,element.RegionalCISOBTLead)" class="showlessText"> {{element.RegionalCISOBTLead}}</label></td>
+                            </ng-container>
+                            <ng-container matColumnDef="Pipeline_comments">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #3B8AD9;color: white;">Pipeline comments</th>
+                                <td mat-cell *matCellDef="let element" > <label (click)="ShowComment(element.Client,element.RevenueID,element.Pipeline_comments)" class="showlessText"> {{element.Pipeline_comments}}</label> </td>
+                            </ng-container>
+                            <ng-container matColumnDef="DataDescription">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #3B8AD9;color: white;">CRM Description</th>
+                                <td mat-cell *matCellDef="let element" ><label (click)="ShowComment(element.Client,element.RevenueID,element.DataDescription)" class="showlessText"> {{element.DataDescription}}</label></td>
+                            </ng-container>
+                            <ng-container matColumnDef="Next_Step">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #3B8AD9;color: white;">Next Step</th>
+                                <td mat-cell *matCellDef="let element"> <label (click)="ShowComment(element.Client,element.RevenueID,element.Next_Step)" class="showlessText"> {{element.Next_Step}}</label></td>
+                            </ng-container>
+                            <ng-container matColumnDef="RevenueVolumeUSD">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #3B8AD9;color: white;">Revenue Volume USD</th>
+                                <td mat-cell *matCellDef="let element" > {{element.RevenueVolume}} </td>
+                            </ng-container>
+                            <ng-container  matColumnDef="loader" sticky>
+                                <!-- [ngStyle]="{'height' : isLoading == true ? (screenHeight-365)+'px' : '0px'}" -->
+                                <th mat-header-cell *matHeaderCellDef style="text-align: center;width: 100%;border-right: none;border-bottom: none;padding-left: 0px;padding-right: 0px;" colspan="25">
+                                    <div *ngIf="isLoading" style="display: flex; justify-content: center;align-items: center;" [ngStyle]="{'height' : (screenHeight-365)+'px','width' : (screenWidth-50)+'px'}">
+                                        <div class="sk-circle">
+                                            <a style="width: 100%">
+                                                <img [src]="imageUrl" style="height: 50px;margin: 85px 0px 0px 0px;">
+                                            </a>
+                                            <div class="sk-circle1 sk-child"></div>
+                                            <div class="sk-circle2 sk-child"></div>
+                                            <div class="sk-circle3 sk-child"></div>
+                                            <div class="sk-circle4 sk-child"></div>
+                                            <div class="sk-circle5 sk-child"></div>
+                                            <div class="sk-circle6 sk-child"></div>
+                                            <div class="sk-circle7 sk-child"></div>
+                                            <div class="sk-circle8 sk-child"></div>
+                                            <div class="sk-circle9 sk-child"></div>
+                                            <div class="sk-circle10 sk-child"></div>
+                                            <div class="sk-circle11 sk-child"></div>
+                                            <div class="sk-circle12 sk-child"></div>
+                                        </div>
+                                        <!-- <mat-progress-spinner
+                                          color="primary"
+                                          mode="indeterminate">
+                                        </mat-progress-spinner> -->
+                                    </div>
+                                </th>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky : true;" ></tr>
+                            <tr mat-header-row *matHeaderRowDef="['loader']; sticky: true" style="padding-top: 0px;margin-top: 0px;" [ngStyle]="{'height' : isLoading == true ? (screenHeight-365)+'px' : '0px'}"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;" style="height: 20px;max-height: 20px;"></tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div style="position: absolute;cursor: pointer;width: 30px;height: 30px;background-color: #333F48;margin-left: 0px;margin-top: 20%;" class="mat-elevation-z2" (click)= "sidenav.toggle()"><mat-icon *ngIf="!sidenav.opened" style="color: white;font-size: 24px;margin-top: 2px;margin-left: 3px;">arrow_forward_ios</mat-icon><mat-icon *ngIf="sidenav.opened" style="color: white;font-size: 24px;margin-top: 2px;margin-left: 8px;">arrow_back_ios</mat-icon></div>
+        </div>
+    </mat-drawer-content>
+</mat-drawer-container>

@@ -1,0 +1,370 @@
+<mat-drawer-container>
+    <mat-drawer mode="side" #sidenav opened style="position: fixed;padding-top: 60px;width: 15%;border: 1px solid #333F48;">
+        <div class="row" style="margin: 0px;padding: 0px;">
+            <div class="col-12" style="margin: 0px;padding: 0px;">
+                <div class="sticky">
+                    <div class="row col-12" style="background-color: #333F48;color: white;height: 60px;padding: 15px 10px 5px 10px; margin : 0px;text-align: center">
+                        <label class="col-5" style="height: 35px;font-size: 20px;text-align: center;margin-top: 10px;padding-left: 25px">Filters</label>
+                        <div class="col-2" >
+                            <button mat-icon-button style="color: white;cursor: pointer;" (click)="ResetFilters()">
+                                <mat-icon>settings_backup_restore</mat-icon>
+                            </button>
+                        </div>
+                        <div class="col-5" style="margin-top: 5px;text-align: right;padding: 0px;">
+                            <button class="btn-style" (click)="GetData()" [ngStyle]="{'background-color': Apply_disable == true ?  '#DCDCDC' : '#F16950','color' :  Apply_disable == true ? '#AEAEAE' : 'white'}" [disabled]="Apply_disable">Apply</button>
+                        </div>
+                    </div>
+                </div>
+                <mat-accordion multi="true" style="margin: 0px;padding: 0px;">
+                    <mat-expansion-panel class="mat-elevation-z0" style="margin: 10px 0px 0px 0px;" [expanded]="true">
+                        <mat-expansion-panel-header [collapsedHeight]="'35px'" [expandedHeight]="'35px'">
+                            <mat-panel-title style="margin-left: 0px">
+                                <label style="padding-top: 10px;">Go Live year</label>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <mat-divider style="width: 100%;margin: 10px 0px 0px 0px;"></mat-divider>
+                        <mat-nav-list>
+                            <mat-list-item style="height: 35px;"><mat-checkbox class="example-margin" [(ngModel)]="masteryear" name="masteryear" (change)="checkUncheckYears()">Select all</mat-checkbox></mat-list-item>
+                            <mat-list-item style="height: 35px;" *ngFor="let year of yearList;"><mat-checkbox class="example-margin" [(ngModel)]="year.isSelected" (change)="yearsSelected()" name="year.Year">{{year.Year}}</mat-checkbox></mat-list-item>
+                        </mat-nav-list>
+                    </mat-expansion-panel>
+                    <mat-expansion-panel class="mat-elevation-z0" style="margin: 10px 0px 0px 0px;" [expanded]="true">
+                        <mat-expansion-panel-header [collapsedHeight]="'35px'" [expandedHeight]="'35px'">
+                            <mat-panel-title style="margin-left: 0px">
+                                <label style="padding-top: 10px;">Quarter</label>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <mat-divider style="width: 100%;margin: 10px 0px 0px 0px;"></mat-divider>
+                        <mat-nav-list>
+                            <mat-list-item style="height: 35px;"><mat-checkbox class="example-margin" [(ngModel)]="masterquarter" name="masterquarter" (change)="checkUncheckquarter()">Select all</mat-checkbox></mat-list-item>
+                            <mat-list-item style="height: 35px;" *ngFor="let quarter of QuarterList"><mat-checkbox class="example-margin" [(ngModel)]="quarter.isSelected" (change)="quarterSelected()" name="quarter.Quarter">{{quarter.Quarter}}</mat-checkbox></mat-list-item>
+                        </mat-nav-list>
+                    </mat-expansion-panel>
+                    <mat-expansion-panel class="mat-elevation-z0" style="margin: 10px 0px 0px 0px;" [expanded]="true">
+                        <mat-expansion-panel-header [collapsedHeight]="'35px'" [expandedHeight]="'35px'">
+                            <mat-panel-title style="margin-left: 0px">
+                                <label style="padding-top: 10px;">Region</label>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <mat-divider style="width: 100%;margin: 10px 0px 0px 0px;"></mat-divider>
+                        <mat-nav-list>
+                            <mat-list-item style="height: 35px;"><mat-checkbox class="example-margin" [(ngModel)]="masterRegion" name="masterRegion" (change)="checkUncheckRegion()">Select all</mat-checkbox></mat-list-item>
+                            <mat-list-item style="height: 35px;" *ngFor="let region of RegionList" ><mat-checkbox class="example-margin" [(ngModel)]="region.isSelected" (change)="regionSelected()" name="region.Region">{{region.Region}}</mat-checkbox></mat-list-item>
+                        </mat-nav-list>
+                    </mat-expansion-panel>
+                    <mat-expansion-panel class="mat-elevation-z0" style="margin: 0px 0px 0px 0px;" [expanded]="true">
+                        <mat-expansion-panel-header [collapsedHeight]="'35px'" [expandedHeight]="'35px'">
+                            <mat-panel-title style="margin-left: 0px">
+                                <label style="padding-top: 10px;">Project Status</label>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <mat-divider style="width: 100%;margin: 10px 0px 0px 0px;"></mat-divider>
+                        <mat-nav-list>
+                            <mat-list-item style="height: 35px;"><mat-checkbox class="example-margin" [(ngModel)]="masterStatus" name="masterStatus" (change)="checkUncheckStatus()">Select all</mat-checkbox></mat-list-item>
+                            <mat-list-item style="height: 35px;" *ngFor="let status of statusList;"><mat-checkbox class="example-margin" [(ngModel)]="status.isSelected" (change)="statusSelected()" name="status.ProjectStatus">{{status.ProjectStatus}}</mat-checkbox></mat-list-item>
+                        </mat-nav-list>
+                    </mat-expansion-panel>
+                    <mat-expansion-panel class="mat-elevation-z0" style="margin: 10px 0px 0px 0px;" [expanded]="true">
+                        <mat-expansion-panel-header [collapsedHeight]="'35px'" [expandedHeight]="'35px'">
+                            <mat-panel-title style="margin-left: 0px">
+                                <label style="padding-top: 10px;">Digital Lead</label>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <mat-divider style="width: 100%;margin: 10px 0px 0px 0px;"></mat-divider>
+                        <mat-nav-list>
+                            <mat-list-item style="height: 35px;"><mat-checkbox class="example-margin" [(ngModel)]="masterleader" name="masterleader" (change)="checkUncheckleader()">Select all</mat-checkbox></mat-list-item>
+                            <mat-list-item style="height: 35px;" *ngFor="let leader of LeaderList"><mat-checkbox class="example-margin" [(ngModel)]="leader.isSelected" (change)="leaderSelected()" name="leader.GlobalCISOBTLead">{{leader.GlobalCISOBTLead}}</mat-checkbox></mat-list-item>
+                        </mat-nav-list>
+                    </mat-expansion-panel>
+                    <mat-expansion-panel class="mat-elevation-z0" style="margin: 10px 0px 0px 0px;" [expanded]="true">
+                        <mat-expansion-panel-header [collapsedHeight]="'35px'" [expandedHeight]="'35px'">
+                            <mat-panel-title style="margin-left: 0px">
+                                <label style="padding-top: 10px;">Digital Manager</label>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <mat-divider style="width: 100%;margin: 10px 0px 0px 0px;"></mat-divider>
+                        <mat-nav-list>
+                            <mat-list-item style="height: 35px;"><mat-checkbox class="example-margin" [(ngModel)]="mastermanager" name="mastermanager" (change)="checkUncheckmanager()">Select all</mat-checkbox></mat-list-item>
+                            <mat-list-item style="height: 35px;" *ngFor="let manager of ManagerList"><mat-checkbox class="example-margin" [(ngModel)]="manager.isSelected" (change)="managerSelected()" name="manager.Manager">{{manager.Manager}}</mat-checkbox></mat-list-item>
+                        </mat-nav-list>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+        </div>
+    </mat-drawer>
+    <mat-drawer-content>
+        <div class="row col-12" style="margin-bottom: 25px">
+            <div class="col-md-12" style="text-align: right;margin: 30px 25px 10px 0px;">
+                <button mat-raised-button style="background-color: #F16950;color: white;" (click)="ExportData()">Export Raw Data<mat-icon style="color: white;font-size: 20px;margin-top: 4px;">save_alt</mat-icon></button>
+            </div>
+            <div class="col-md-6">
+                <div class="nps_graph_wrap col-md-12" style="margin-left: 15px;padding: 0px;">
+                    <p class="nps_graph_header">GDS By Region</p>
+                    <canvas id="regionGDS" style="width: 100%;height: 350px;">
+                    </canvas>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="nps_graph_wrap col-md-12" style="margin-left: 15px;padding: 0px;">
+                    <p class="nps_graph_header">Country Status By Region</p>
+                    <canvas id="regionCountrystatus" style="width: 100%;height: 350px;">
+                    </canvas>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="nps_graph_wrap col-md-12" style="margin-left: 15px;padding: 0px;">
+                    <p class="nps_graph_header">Activity Type By Region</p>
+                    <canvas id="regionActivityType" style="width: 100%;height: 350px;padding-left: 50px;padding-right: 50px;">
+                    </canvas>
+                    <table mat-table [dataSource]="a_type_datasource" style="width: 100%;border : 1px solid black">
+                        <ng-container [matColumnDef]="a_type_column" *ngFor="let a_type_column of a_type_displayColumns">
+                          <th mat-header-cell *matHeaderCellDef style="min-width: 50px;max-width: 80px;padding-left: 5px;padding-right: 5px;"><!--*ngIf="a_type_column !== '1'"--> <p  style="font-weight: bold;font-size: 11px;width: 100%;word-wrap: break-word;color: black;">{{a_type_column}}</p></th>
+                          <!-- <th mat-header-cell *matHeaderCellDef *ngIf="column !== '1'"> {{ column }} </th> -->
+                          <td mat-cell *matCellDef="let element"  style="min-width: 50px;max-width: 80px;font-size: 12px;padding-left: 5px;padding-right: 5px;" [ngClass]="{'highlight': a_type_column == 'Total'}">{{ element[a_type_column] }} </td>
+                        </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="a_type_displayColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: a_type_displayColumns;"  [ngClass]="{'highlight': row.Region == 'GrandTotal'}" style="height: 20px;max-height: 20px;"></tr>
+                    </table>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="nps_graph_wrap col-md-12" style="margin-left: 15px;padding: 0px;">
+                    <p class="nps_graph_header">Go Live Year By Region</p>
+                    <canvas id="regionYear" style="width: 100%;height: 350px;">
+                    </canvas>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="nps_graph_wrap col-md-12" style="margin-left: 15px;padding: 0px;">
+                    <p class="nps_graph_header">Implementation Type By Region</p>
+                    <canvas id="regionimpyType" style="width: 100%;height: 350px;padding-left: 50px;padding-right: 50px;">
+                    </canvas>
+                    <table mat-table [dataSource]="imp_datasource" style="width: 100%;border : 1px solid black">
+                        <ng-container [matColumnDef]="column" *ngFor="let column of imp_displayColumns">
+                          <th mat-header-cell *matHeaderCellDef style="min-width: 30px;max-width: 80px;padding-left: 5px;padding-right: 5px;"> <!--*ngIf="column !== '1'"--> <p style="font-weight: bold;font-size: 11px;width: 100%;word-wrap: break-word;color: black;">{{column}}</p></th>
+                          <!-- <th mat-header-cell *matHeaderCellDef *ngIf="column !== '1'"> {{ column }} </th> -->
+                          <td mat-cell *matCellDef="let element;" style="min-width: 50px;max-width: 80px;font-size: 12px;padding-left: 5px;padding-right: 5px;" [ngClass]="{'highlight': column == 'Total'}">{{element[column]}}</td>
+                        </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="imp_displayColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: imp_displayColumns;" [ngClass]="{'highlight': row.Region == 'GrandTotal'}" style="height: 20px;max-height: 20px;"></tr>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="example-container" [ngStyle]="{'max-height' : (screenHeight-185)+'px'}" style="min-height: 500px;margin-left: 15px;border: 1px solid rgb(196, 196, 196);">
+                    <table mat-table [dataSource]="dataSource" #DROBT_R_Sort="matSort" matSort>
+                        <ng-container matColumnDef="OBTReseller">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="padding-left: 10px;background-color:  rgb(213, 216, 220);color: black;">OBT Type</th>
+                            <td mat-cell *matCellDef="let element" style="padding-left: 10px;color: black;">{{element.OBTReseller}}</td>
+                            <td mat-footer-cell *matFooterCellDef class="row_textsize ref" style="background-color:  rgb(213, 216, 220);color: black;text-align: center;font-weight: bold;">Total</td>
+                        </ng-container>
+                        <ng-container matColumnDef="OBTReseller_h">
+                            <th mat-header-cell *matHeaderCellDef style="max-width: 160px;width: 160px;" colspan="6" class="formheader" [ngStyle]="{'background-color' : OBTResellerFilter.value == '' || OBTResellerFilter.value == null ? '#FFFFFF' : '#F5B7B1'}">
+                                <mat-form-field class="mat-form-wrap" appearance="outline">
+                                    <mat-label>OBT Type</mat-label>
+                                    <mat-select [formControl]="OBTResellerFilter" multiple (selectionChange)="onOBTResellerchange()">
+                                        <mat-select-trigger>
+                                            {{OBTResellerFilter.value ? OBTResellerFilter.value[0] : ''}}
+                                            <span *ngIf="OBTResellerFilter.value?.length > 1" class="example-additional-selection">
+                                                (+{{OBTResellerFilter.value.length - 1}} {{OBTResellerFilter.value?.length === 2 ? 'OBT Type' : 'OBT Types'}})
+                                            </span>
+                                        </mat-select-trigger>
+                                        <div style="padding-top: 15px">
+                                            <mat-checkbox style="margin-left: 15px;margin-top: 25px;" class="example-margin" [(ngModel)]="masterOBTReseller" name="masterOBTReseller" (change)="checkUncheckOBTReseller()" color="primary">Select all</mat-checkbox>
+                                        </div>
+                                        <mat-divider style="margin-left: 5px;margin-right: 5px"></mat-divider>
+                                        <mat-option *ngFor="let OBTReseller_data of OBTResellerList" [value]="OBTReseller_data">{{OBTReseller_data}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </th>
+                        </ng-container>
+                        <ng-container matColumnDef="APAC">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  rgb(213, 216, 220);color: black;">APAC</th>
+                            <td mat-cell *matCellDef="let element"> {{element.APAC}} </td>
+                            <td mat-footer-cell *matFooterCellDef class="row_textsize ref" style="background-color:  rgb(213, 216, 220);color: black;text-align: center;font-weight: bold;">{{OBT_APACTotal}}</td>
+                        </ng-container>
+                        <ng-container matColumnDef="EMEA">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  rgb(213, 216, 220);color: black;">EMEA</th>
+                            <td mat-cell *matCellDef="let element"> {{element.EMEA}} </td>
+                            <td mat-footer-cell *matFooterCellDef class="row_textsize ref" style="background-color:  rgb(213, 216, 220);color: black;text-align: center;font-weight: bold;">{{OBT_EMEATotal}}</td>
+                        </ng-container>
+                        <ng-container matColumnDef="LATAM">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  rgb(213, 216, 220);color: black;">LATAM</th>
+                            <td mat-cell *matCellDef="let element"> {{element.LATAM}} </td>
+                            <td mat-footer-cell *matFooterCellDef class="row_textsize ref" style="background-color:  rgb(213, 216, 220);color: black;text-align: center;font-weight: bold;">{{OBT_LATAMTotal}}</td>
+                        </ng-container>
+                        <ng-container matColumnDef="NORAM">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  rgb(213, 216, 220);color: black;">NORAM</th>
+                            <td mat-cell *matCellDef="let element"> {{element.NORAM}} </td>
+                            <td mat-footer-cell *matFooterCellDef class="row_textsize ref" style="background-color:  rgb(213, 216, 220);color: black;text-align: center;font-weight: bold;">{{OBT_NORAMTotal}}</td>
+                        </ng-container>
+                        <ng-container matColumnDef="GrandTotal">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="padding-right: 10px;background-color:  rgb(213, 216, 220);color: black;font-weight: bold;">Grand Total</th>
+                            <td mat-cell *matCellDef="let element" style="padding-right: 10px;font-weight: bold;"> {{element.GrandTotal}} </td>
+                            <td mat-footer-cell *matFooterCellDef class="row_textsize ref" style="background-color:  rgb(213, 216, 220);color: black;text-align: center;font-weight: bold;padding-right: 10px;border-right: none;">{{OBT_GrandTotal}}</td>
+                        </ng-container>
+                        <ng-container  matColumnDef="loader" sticky>
+                            <th mat-header-cell *matHeaderCellDef style="text-align: center;width: 100%;border-right: none;border-bottom: none;padding-left: 0px;padding-right: 0px;" colspan="25">
+                                <div *ngIf="isLoading_OR" style="display: flex; justify-content: center;align-items: center;" [ngStyle]="{'height' : (screenHeight-365)+'px','width' : (screenWidth-50)+'px'}">
+                                    <div class="sk-circle">
+                                        <a style="width: 100%">
+                                            <img [src]="imageUrl" style="height: 50px;margin: 85px 0px 0px 0px;">
+                                        </a>
+                                        <div class="sk-circle1 sk-child"></div>
+                                        <div class="sk-circle2 sk-child"></div>
+                                        <div class="sk-circle3 sk-child"></div>
+                                        <div class="sk-circle4 sk-child"></div>
+                                        <div class="sk-circle5 sk-child"></div>
+                                        <div class="sk-circle6 sk-child"></div>
+                                        <div class="sk-circle7 sk-child"></div>
+                                        <div class="sk-circle8 sk-child"></div>
+                                        <div class="sk-circle9 sk-child"></div>
+                                        <div class="sk-circle10 sk-child"></div>
+                                        <div class="sk-circle11 sk-child"></div>
+                                        <div class="sk-circle12 sk-child"></div>
+                                    </div>
+                                </div>
+                            </th>
+                        </ng-container>
+                        <ng-container matColumnDef="header">
+                            <th mat-header-cell *matHeaderCellDef class="textSizes_header" style="background-color: #3B8AD9;text-align: center" colspan="6">OBT Type By Region</th>
+                        </ng-container>
+                        <!-- <ng-container matColumnDef="header2">
+                            <th mat-header-cell *matHeaderCellDef class="textSizes_header" colspan="5"></th>
+                        </ng-container> -->
+                        <tr mat-header-row *matHeaderRowDef="['header']; sticky: true"></tr>
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky : true;" ></tr>
+                        <tr mat-header-row *matHeaderRowDef="['OBTReseller_h']; sticky: true" style="padding-top: 0px;margin-top: 0px;"></tr>
+                        <tr mat-header-row *matHeaderRowDef="['loader']; sticky: true" style="padding-top: 0px;margin-top: 0px;" [ngStyle]="{'height' : isLoading_OR == true ? (screenHeight-365)+'px' : '0px'}"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;" style="height: 20px;max-height: 20px;"></tr>
+                        <tr mat-footer-row *matFooterRowDef="displayedColumns; sticky: true" style="height: 35px;max-height: 35px;"></tr>
+                    </table>
+                </div>
+            </div>
+            <!-- <div class="col-md-12">
+                <div class="example-container" [ngStyle]="{'max-height' : (screenHeight-185)+'px'}" style="margin-left: 15px;border: 1px solid rgb(196, 196, 196);">
+                    <table mat-table [dataSource]="dataSource_data" #DRSort="matSort" matSort>
+                        <ng-container matColumnDef="Client">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="padding-left: 10px;background-color:  #3B8AD9;color: white;">Account Name</th>
+                            <td mat-cell *matCellDef="let element" style="padding-left: 10px;color: black;">{{element.Client}}</td>
+                        </ng-container>
+                        <ng-container matColumnDef="RevenueID">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #3B8AD9;color: white;">Revenue ID</th>
+                            <td mat-cell *matCellDef="let element"> {{element.RevenueID}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="Country">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #3B8AD9;color: white;">Country</th>
+                            <td mat-cell *matCellDef="let element"> {{element.Country}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="iMeet_Workspace_Title">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #3B8AD9;color: white;">iMeet Workspace Title</th>
+                            <td mat-cell *matCellDef="let element"> {{element.iMeet_Workspace_Title}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="Region">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #3B8AD9;color: white;">Region</th>
+                            <td mat-cell *matCellDef="let element"> {{element.Region}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="ProjectStatus">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #3B8AD9;color: white;">Project Status</th>
+                            <td mat-cell *matCellDef="let element"> {{element.ProjectStatus}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="CountryStatus">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #3B8AD9;color: white;">Country Status</th>
+                            <td mat-cell *matCellDef="let element"> {{element.CountryStatus}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="GlobalCISOBTLead">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #3B8AD9;color: white;">Global Digital OBT Lead</th>
+                            <td mat-cell *matCellDef="let element"> {{element.GlobalCISOBTLead}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="RegionalCISOBTLead">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #3B8AD9;color: white;">Regional Digital OBT Lead</th>
+                            <td mat-cell *matCellDef="let element"> {{element.RegionalCISOBTLead}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="LocalDigitalOBTLead">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #3B8AD9;color: white;">Local Digital OBT Lead</th>
+                            <td mat-cell *matCellDef="let element"> {{element.LocalDigitalOBTLead}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="GlobalCISPortraitLead">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #3B8AD9;color: white;">Global Digital Portrait Lead</th>
+                            <td mat-cell *matCellDef="let element"> {{element.GlobalCISPortraitLead}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="RegionalCISPortraitLead">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #3B8AD9;color: white;">Regional Digital Portrait Lead</th>
+                            <td mat-cell *matCellDef="let element"> {{element.RegionalCISPortraitLead}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="GlobalCISHRFeedSpecialist">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #3B8AD9;color: white;">Global Digital HRFeed Specialist</th>
+                            <td mat-cell *matCellDef="let element"> {{element.GlobalCISHRFeedSpecialist}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="GoLiveYear">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #3B8AD9;color: white;">Go Live Year</th>
+                            <td mat-cell *matCellDef="let element"> {{element.GoLiveYear}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="Quarter">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #3B8AD9;color: white;">Quarter</th>
+                            <td mat-cell *matCellDef="let element"> {{element.Quarter}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="ImplementationType">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #3B8AD9;color: white;">Implementation Type</th>
+                            <td mat-cell *matCellDef="let element"> {{element.ImplementationType}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="OBT_Reseller___Direct">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #3B8AD9;color: white;">OBT Reseller</th>
+                            <td mat-cell *matCellDef="let element"> {{element.OBT_Reseller___Direct}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="ActivityType">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #3B8AD9;color: white;">Activity Type</th>
+                            <td mat-cell *matCellDef="let element" > {{element.ActivityType}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="GDS">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #3B8AD9;color: white;">GDS</th>
+                            <td mat-cell *matCellDef="let element" > {{element.GDS}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="ComplexityScore">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #3B8AD9;color: white;">Complexity Score</th>
+                            <td mat-cell *matCellDef="let element" > {{element.ComplexityScore}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="RecordStatus">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #3B8AD9;color: white;">Record Status</th>
+                            <td mat-cell *matCellDef="let element"> {{element.RecordStatus}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="DataSourceType">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="padding-right: 10px;background-color:  #3B8AD9;color: white;">DataSource Type</th>
+                            <td mat-cell *matCellDef="let element" style="padding-right: 10px;"> {{element.DataSourceType}} </td>
+                        </ng-container>
+                        <ng-container  matColumnDef="loader" sticky>
+                            <th mat-header-cell *matHeaderCellDef style="text-align: center;width: 100%;border-right: none;border-bottom: none;padding-left: 0px;padding-right: 0px;" colspan="25">
+                                <div *ngIf="isLoading" style="display: flex; justify-content: center;align-items: center;" [ngStyle]="{'height' : (screenHeight-365)+'px','width' : (screenWidth-50)+'px'}">
+                                    <div class="sk-circle">
+                                        <a style="width: 100%">
+                                            <img [src]="imageUrl" style="height: 50px;margin: 85px 0px 0px 0px;">
+                                        </a>
+                                        <div class="sk-circle1 sk-child"></div>
+                                        <div class="sk-circle2 sk-child"></div>
+                                        <div class="sk-circle3 sk-child"></div>
+                                        <div class="sk-circle4 sk-child"></div>
+                                        <div class="sk-circle5 sk-child"></div>
+                                        <div class="sk-circle6 sk-child"></div>
+                                        <div class="sk-circle7 sk-child"></div>
+                                        <div class="sk-circle8 sk-child"></div>
+                                        <div class="sk-circle9 sk-child"></div>
+                                        <div class="sk-circle10 sk-child"></div>
+                                        <div class="sk-circle11 sk-child"></div>
+                                        <div class="sk-circle12 sk-child"></div>
+                                    </div>
+                                </div>
+                            </th>
+                        </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns_data; sticky : true;" ></tr>
+                        <tr mat-header-row *matHeaderRowDef="['loader']; sticky: true" style="padding-top: 0px;margin-top: 0px;" [ngStyle]="{'height' : isLoading == true ? (screenHeight-365)+'px' : '0px'}"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns_data;" style="height: 20px;max-height: 20px;"></tr>
+                    </table>
+                </div>
+            </div> -->
+            <div style="position: absolute;cursor: pointer;width: 30px;height: 30px;background-color: #333F48;margin-left: 0px;margin-top: 20%;" class="mat-elevation-z2" (click)= "sidenav.toggle()"><mat-icon *ngIf="!sidenav.opened" style="color: white;font-size: 24px;margin-top: 2px;margin-left: 3px;">arrow_forward_ios</mat-icon><mat-icon *ngIf="sidenav.opened" style="color: white;font-size: 24px;margin-top: 2px;margin-left: 8px;">arrow_back_ios</mat-icon></div>
+        </div>
+        <!-- <div class="row" style="margin: 0px;padding: 0px;position: relative;">
+            <div style="position: absolute;cursor: pointer;width: 30px;height: 30px;background-color: #333F48;margin-left: 0px;margin-top: 20%;" class="mat-elevation-z2" (click)= "sidenav.toggle()"><mat-icon *ngIf="!sidenav.opened" style="color: white;font-size: 24px;margin-top: 2px;margin-left: 3px;">arrow_forward_ios</mat-icon><mat-icon *ngIf="sidenav.opened" style="color: white;font-size: 24px;margin-top: 2px;margin-left: 8px;">arrow_back_ios</mat-icon></div>
+        </div> -->
+    </mat-drawer-content>
+</mat-drawer-container>

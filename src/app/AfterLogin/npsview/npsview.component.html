@@ -1,0 +1,446 @@
+<div style="margin: 20px;">
+    <div class="row col-md-12" style="margin: 0px;padding : 0px">
+        <div class="col-md-12">
+            <label class="main_heading">NPS</label>
+            <button mat-raised-button (click)="Export()" style="background-color: #F16950;color: white;margin-left: 30px;margin-top: 15px;">Export</button>
+            <mat-form-field style="width: 40%;margin-left: 50px;">
+                <mat-label style="padding-left: 5px;font-weight: bold;">Search</mat-label>
+                <input matInput (keyup)="applyFilter($event)" #input [(ngModel)]="searchbar" name="searchbar">
+                <mat-icon matSuffix>search</mat-icon>
+            </mat-form-field>
+            <label style="margin: 8px 0px 0px 15px;font-size: 16px;font-weight: bold;font-family: Arial, Helvetica, sans-serif;">Filtered Count  :&nbsp;&nbsp;</label>
+            <label style="margin: 8px 25px 0px 0px;font-size: 16px;font-weight: bold;font-family: Arial, Helvetica, sans-serif;">{{FilteredCount}}</label>
+            <!-- <button (click)="ExportData()">Data</button> -->
+        </div>
+    </div>
+</div>
+<div *ngIf="ShowForm" class="mat-elevation-z2" style="margin: 20px;">
+    <div class="row col-md-12" style="margin: 0px;padding : 0px">
+        <div class="col-md-12">
+            <label class="heading">{{HeadingName}}</label>
+        </div>
+        <div class="col-md-4">
+            <mat-form-field class="mat-form" appearance="outline">
+                <mat-label style="font-size: 15px;">Company Name</mat-label>
+                <input style="color: gray;" [(ngModel)]="CompanyName" type="text" name="CompanyName" required matInput>
+                <!-- <mat-select [formControl]="CompanyName">
+                    <mat-option>
+                        <ngx-mat-select-search
+                          [formControl]="CompanyNameSearch"
+                          placeholderLabel=""
+                          noEntriesFoundLabel="'no match found'">
+                        </ngx-mat-select-search>
+                    </mat-option>
+                    <mat-option *ngFor="let C_name of CompanyNameData | async" [value]="C_name.Account_Name">{{C_name.Account_Name}}</mat-option>
+                </mat-select> -->
+            </mat-form-field>
+        </div>
+        <div class="col-md-4">
+            <mat-form-field class="mat-form" appearance="outline">
+                <mat-label style="font-size: 15px;">Client Name</mat-label>
+                <input style="color: gray;" [(ngModel)]="ClientName" type="text" name="ClientName" matInput>
+            </mat-form-field>
+        </div>
+        <div class="col-md-4">
+            <mat-form-field class="mat-form" appearance="outline">
+                <mat-label style="font-size: 15px;">Client Email address</mat-label>
+                <input style="color: gray;" [(ngModel)]="Email" type="text" name="Email" matInput>
+            </mat-form-field>
+        </div>
+        <div class="col-md-4">
+            <mat-form-field class="mat-form" appearance="outline" >
+                <mat-label style="font-size: 15px;">Client Contact Number</mat-label>
+                <input style="color: gray;" [(ngModel)]="ClientContactNumber" type="number" name="ClientContactNumber" matInput>
+            </mat-form-field>
+        </div>
+        <div class="col-md-4">
+            <mat-form-field class="mat-form" appearance="outline">
+                <mat-label>Date Survey Sent</mat-label>
+                <input matInput [matDatepicker]="DateSurveySent"  [(ngModel)]="SurveySent" required>
+                <!-- [min]="todayDate" -->
+                <mat-datepicker-toggle matSuffix [for]="DateSurveySent"></mat-datepicker-toggle>
+                <mat-datepicker #DateSurveySent color="primary"></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div class="col-md-4">
+            <mat-form-field class="mat-form" appearance="outline">
+                <mat-label style="font-size: 15px;">Country/Area of Responsibility</mat-label>
+                <mat-select [formControl]="Country">
+                    <mat-option>
+                        <ngx-mat-select-search
+                          [formControl]="CountrySearch"
+                          placeholderLabel=""
+                          noEntriesFoundLabel="'no match found'">
+                        </ngx-mat-select-search>
+                    </mat-option>
+                    <mat-option *ngFor="let C_list of CountryData | async" [value]="C_list.Country">{{C_list.Country}}</mat-option>
+                </mat-select>
+                <!-- <input style="color: gray;" [(ngModel)]="Country" name="Country" matInput> -->
+            </mat-form-field>
+        </div>
+        <div class="col-md-4">
+            <mat-form-field class="mat-form" appearance="outline">
+                <mat-label style="font-size: 15px;">Region</mat-label>
+                <mat-select [(value)]="Region" required>
+                    <mat-option value="APAC">APAC</mat-option>
+                    <mat-option value="EMEA">EMEA</mat-option>
+                    <mat-option value="NORAM">NORAM</mat-option>
+                    <mat-option value="LATAM">LATAM</mat-option>
+                    <mat-option value="Global">Global</mat-option>
+                    <!-- <mat-option value="Regional">Regional</mat-option> -->
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col-md-4">
+            <mat-form-field class="mat-form" >
+                <mat-label style="font-size: 15px;">Language</mat-label>
+                <mat-select [formControl]="Language" required >
+                    <!-- [errorStateMatcher]="matcher" -->
+                    <mat-option value="English">English</mat-option>
+                    <mat-option value="French">French</mat-option>
+                    <mat-option value="Spanish">Spanish</mat-option>
+                    <mat-option value="German">German</mat-option>
+                    <mat-option value="Italian">Italian</mat-option>
+                    <mat-option value="Portuguese">Portuguese</mat-option>
+                </mat-select>
+                <!-- <mat-error *ngIf="Language.hasError('required')">
+                    Language is <strong>required</strong>
+                </mat-error> -->
+            </mat-form-field>
+        </div>
+        <div class="col-md-4">
+            <mat-form-field class="mat-form" appearance="outline" >
+                <mat-label style="font-size: 15px;">Global Manager</mat-label>
+                <mat-select [formControl]="GManager">
+                    <mat-option>
+                        <ngx-mat-select-search
+                          [formControl]="GPMsearch"
+                          placeholderLabel=""
+                          noEntriesFoundLabel="'no match found'">
+                        </ngx-mat-select-search>
+                    </mat-option>
+                    <mat-option *ngFor="let manager of GPMData | async" [value]="manager.GlobalProjectManager">{{manager.GlobalProjectManager}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col-md-4">
+            <mat-form-field class="mat-form" appearance="outline" >
+                <mat-label style="font-size: 15px;">Regional Manager</mat-label>
+                <mat-select [formControl]="RManager">
+                    <mat-option>
+                        <ngx-mat-select-search
+                          [formControl]="RPMsearch"
+                          placeholderLabel=""
+                          noEntriesFoundLabel="'no match found'">
+                        </ngx-mat-select-search>
+                    </mat-option>
+                    <mat-option *ngFor="let manager of RPMData | async" [value]="manager.GlobalProjectManager">{{manager.GlobalProjectManager}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col-md-4">
+            <mat-form-field class="mat-form" appearance="outline" >
+                <mat-label style="font-size: 15px;">Local Manager</mat-label>
+                <mat-select [formControl]="LManager">
+                    <mat-option>
+                        <ngx-mat-select-search
+                          [formControl]="AFNsearch"
+                          placeholderLabel=""
+                          noEntriesFoundLabel="'no match found'">
+                        </ngx-mat-select-search>
+                    </mat-option>
+                    <mat-option *ngFor="let manager of AFNData | async" [value]="manager.GlobalProjectManager">{{manager.GlobalProjectManager}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col-md-4">
+            <mat-form-field class="mat-form" appearance="outline" >
+                <mat-label style="font-size: 15px;">Client Scope</mat-label>
+                <mat-select [(value)]="ClientScope">
+                    <mat-option value="GCG">GCG</mat-option>
+                    <mat-option value="MCG">MCG</mat-option>
+                    <mat-option value="National">National</mat-option>
+                    <mat-option value="BTS">BTS</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col-md-4">
+            <mat-form-field class="mat-form" appearance="outline">
+                <mat-label style="font-size: 15px;">Client Type - New/Existing</mat-label>
+                <mat-select [(value)]="ClientType">
+                    <mat-option value="New">New</mat-option>
+                    <mat-option value="Existing">Existing</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <!-- <div class="col-md-4">
+            <mat-form-field class="mat-form" appearance="outline">
+                <mat-label style="font-size: 15px;">Single Resource</mat-label>
+                <mat-select [(value)]="SingleResource">
+                    <mat-option value="Yes">Yes</mat-option>
+                    <mat-option value="No">No</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div> -->
+        <!-- <div class="col-md-4">
+            <mat-form-field class="mat-form" appearance="outline">
+                <mat-label style="font-size: 15px;">DQS</mat-label>
+                <mat-select [(value)]="DQS">
+                    <mat-option value="---">---</mat-option>
+                    <mat-option value="Bhushan Bambre">Bhushan Bhambre</mat-option>
+                    <mat-option value="Izabela Hiller">Izabela Hiller</mat-option>
+                    <mat-option value="Jacek Bojakowski">Jacek Bojakowski</mat-option>
+                    <mat-option value="Izabela Hiller">JUAN GOMEZ</mat-option>
+                    <mat-option value="Izabela Hiller">Katarzyna Michalska</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div> -->
+        <!-- <div class="col-md-4">
+            <mat-form-field class="mat-form" appearance="outline" >
+                <mat-label style="font-size: 15px;">DSD</mat-label>
+                <mat-select [(value)]="DSD">
+                    <mat-option value="---">---</mat-option>
+                    <mat-option value="NICHOLAS HATHERALL">NICHOLAS HATHERALL</mat-option>
+                    <mat-option value="Stephanie Denote">Stephanie Denote</mat-option>
+                    <mat-option value="Todd Kuball">Todd Kuball</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div> -->
+        <!-- <div class="col-md-4">
+            <mat-form-field class="mat-form" appearance="outline" >
+                <mat-label style="font-size: 15px;">Online Team</mat-label>
+                <mat-select [(value)]="OnlineTeam">
+                    <mat-option value="---">---</mat-option>
+                    <mat-option value="Andrea Wysemborski">Andrea Wysemborski</mat-option>
+                    <mat-option value="Anette Brydensholt">Anette Brydensholt</mat-option>
+                    <mat-option value="Agnieszka Tatkowska">Agnieszka Tatkowska</mat-option>
+                    <mat-option value="Bartosz Maj">Bartosz Maj</mat-option>
+                    <mat-option value="CENISE ROLAND">CENISE ROLAND</mat-option>
+                    <mat-option value="Christina Fischer">Christina Fischer</mat-option>
+                    <mat-option value="Conrad Hessing">Conrad Hessing</mat-option>
+                    <mat-option value="Daniel Konwerski">Daniel Konwerski</mat-option>
+                    <mat-option value="David Morganti">David Morganti</mat-option>
+                    <mat-option value="Izabela Hiller">Izabela Hiller</mat-option>
+                    <mat-option value="Janet Stennis">Janet Stennis</mat-option>
+                    <mat-option value="Jeanette Lifvergren">Jeanette Lifvergren</mat-option>
+                    <mat-option value="Joanna Clare">Joanna Clare</mat-option>
+                    <mat-option value="Justyna Szczesniak">Justyna Szczesniak</mat-option>
+                    <mat-option value="Milosz Pawlowski">Milosz Pawlowski</mat-option>
+                    <mat-option value="Mukul Yadav">Mukul Yadav</mat-option>
+                    <mat-option value="OUARDIA HEDJEM">OUARDIA HEDJEM</mat-option>
+                    <mat-option value="Ricardo Rios">Ricardo Rios</mat-option>
+                    <mat-option value="ROBERTA ALBERGATI">ROBERTA ALBERGATI</mat-option>
+                    <mat-option value="Tenille Lockyer">Tenille Lockyer</mat-option>
+                    <mat-option value="Wolfgang Koch">Wolfgang Koch</mat-option>
+                    <mat-option value="Victor Fernandes">Victor Fernandes</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div> -->
+        <mat-divider class="col-md-12" style="border: 0.8px solid rgb(190, 190, 190);margin-top: 10px;"></mat-divider>
+        <div class="col-md-12" style="margin-top: 10px;">
+            <label class="heading" style="margin-bottom: 10px;padding-left: 10px;"> Survey Response </label>
+        </div>
+        <div class="col-md-4">
+            <mat-form-field class="mat-form" appearance="outline">
+                <mat-label style="font-size: 15px;">NPS Score</mat-label>
+                <mat-select [formControl]="NPSScore" (selectionChange)="onScorechange()">
+                    <mat-option *ngFor="let nps_score of NPSScore_data" [value]="nps_score">{{nps_score}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col-md-4">
+            <mat-form-field class="mat-form" appearance="outline">
+                <mat-label style="font-size: 15px;">NPS Indicator</mat-label>
+                <mat-select [formControl]="NPSIndicator" disabled>
+                    <mat-option *ngFor="let nps_indicator of NPSIndicator_data" [value]="nps_indicator">{{nps_indicator}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col-md-4">
+            <mat-form-field class="mat-form" appearance="outline" >
+                <mat-label>Date Survey Received</mat-label>
+                <input matInput [matDatepicker]="DateSurveyReceived"  [(ngModel)]="SurveyReceived">
+                <!-- [min]="todayDate" -->
+                <mat-datepicker-toggle matSuffix [for]="DateSurveyReceived"></mat-datepicker-toggle>
+                <mat-datepicker #DateSurveyReceived color="primary"></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div class="col-md-4">
+            <mat-form-field class="mat-form" appearance="outline" >
+                <mat-label style="font-size: 15px;">Assign Leader For Closed Loop</mat-label>
+                <mat-select [formControl]="AssignLeader">
+                    <mat-option *ngFor="let assign_leader of AssignLeader_data" [value]="assign_leader">{{assign_leader}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col-md-12">
+            <mat-form-field class="mat-form-field" appearance="outline">
+                <mat-label style="font-size: 15px;">NPS Comments - What was Positive</mat-label>
+                <textarea rows="5" style="color: gray;" [(ngModel)]="Nps_comments_positive" name="Nps_comments_positive" matInput></textarea>
+            </mat-form-field>
+        </div>
+        <div class="col-md-4">
+            <mat-form-field class="mat-form" appearance="outline">
+                <mat-label style="font-size: 15px;">What had a Positive Experience during your Implementation</mat-label>
+                <mat-select [formControl]="NpsCommentOne" (selectionChange)="oncommentonechange()">
+                    <mat-option *ngFor="let commentone of Nps_Comment_One" [value]="commentone">{{commentone}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col-md-4" *ngIf="ShowCommentOne">
+            <mat-form-field class="mat-form" appearance="outline">
+                <mat-label style="font-size: 15px;">Comment</mat-label>
+                <input style="color: gray;" [(ngModel)]="Commentoneother" type="text" name="Commentoneother" matInput>
+            </mat-form-field>
+        </div>
+        <div class="col-md-12">
+            <mat-form-field class="mat-form-field" appearance="outline">
+                <mat-label style="font-size: 15px;">NPS Comments - How could we have improved</mat-label>
+                <textarea rows="5" style="color: gray;" [(ngModel)]="Nps_comments_improve" name="Nps_comments_improve" matInput></textarea>
+            </mat-form-field>
+        </div>
+        <div class="col-md-4">
+            <mat-form-field class="mat-form" appearance="outline" >
+                <mat-label style="font-size: 15px;">What can we improve to make your experience better</mat-label>
+                <mat-select [formControl]="NpsCommentwo" (selectionChange)="oncommenttwochange()">
+                    <mat-option *ngFor="let commenttwo of Nps_COmment_Two" [value]="commenttwo">{{commenttwo}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col-md-4" *ngIf="ShowCommentTwo">
+            <mat-form-field class="mat-form" appearance="outline">
+                <mat-label style="font-size: 15px;">Comment</mat-label>
+                <input style="color: gray;" [(ngModel)]="Commenttwoother" type="text" name="Commenttwoother" matInput>
+            </mat-form-field>
+        </div>
+        <div class="col-md-12">
+            <mat-form-field class="mat-form-field" appearance="outline">
+                <mat-label style="font-size: 15px;">NPS Comments - What is the one thing we can do to make you happier</mat-label>
+                <textarea rows="5" style="color: gray;" [(ngModel)]="Nps_comments_happier" name="Nps_comments_happier" matInput></textarea>
+            </mat-form-field>
+        </div>
+        <div class="col-md-4">
+            <mat-form-field class="mat-form" appearance="outline" >
+                <mat-label style="font-size: 15px;">What can we do to go above expectations</mat-label>
+                <mat-select [formControl]="NpsCommentthree" (selectionChange)="oncommentthreechange()">
+                    <mat-option *ngFor="let commentthree of Nps_Comment_Three" [value]="commentthree">{{commentthree}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col-md-4" *ngIf="ShowCommentThree">
+            <mat-form-field class="mat-form" appearance="outline">
+                <mat-label style="font-size: 15px;">Comment</mat-label>
+                <input style="color: gray;" [(ngModel)]="Commentthreeother" type="text" name="Commentthreeother" matInput>
+            </mat-form-field>
+        </div>
+        <mat-divider class="col-md-12" style="border: 0.8px solid rgb(190, 190, 190);margin-top: 10px;"></mat-divider>
+        <div class="col-md-12"  style="margin-top: 10px;">
+            <label class="heading" style="margin-bottom: 10px;padding-left: 10px;">Action Required By Leader</label>
+        </div>
+        <div class="col-md-6">
+            <mat-form-field class="mat-form-field" appearance="outline">
+                <mat-label style="font-size: 15px;">Client Feedback</mat-label>
+                <textarea rows="5" style="color: gray;" [(ngModel)]="Client_Feedback" name="Client_Feedback" matInput [disabled]="actiondisable"></textarea>
+            </mat-form-field>
+        </div>
+        <div class="col-md-4">
+            <mat-form-field class="mat-form" appearance="outline">
+                <mat-label style="font-size: 15px;">Status</mat-label>
+                <mat-select [(value)]="Status" [disabled]="actiondisable">
+                    <mat-option value="---">---</mat-option>
+                    <mat-option value="Pending engagement">Pending engagement</mat-option>
+                    <mat-option value="LM for Client">LM for Client</mat-option>
+                    <mat-option value="Engaged Client">Engaged Client</mat-option>
+                    <mat-option value="Closed Loop">Closed Loop</mat-option>
+                    <mat-option value="Closed No-Response">Closed No-Response</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col-md-4">
+            <label style="padding-left: 10px;font-weight: bold;">Reason Type :- &nbsp;</label>
+            <label style="padding-left: 10px;height: 20px;width: 100%;" *ngFor="let reason_type of ResonTypeList" ><mat-checkbox [disabled]="actiondisable" class="example-margin" [(ngModel)]="reason_type.isSelected" (change)="ReasonTypeSelected()" name="reason_type.ReasonType">{{reason_type.ReasonType}}</mat-checkbox></label>
+        </div>
+        <div class="col-md-6">
+            <mat-form-field class="mat-form-field" appearance="outline">
+                <mat-label style="font-size: 15px;">Action</mat-label>
+                <textarea rows="5" style="color: gray;" [(ngModel)]="action" name="action" [disabled]="actiondisable" matInput></textarea>
+            </mat-form-field>
+        </div>
+        <div class="col-md-12" style="margin: 0px;padding: 0px;">
+            <button mat-raised-button (click)="OnSaveClick()" style="background-color: #F16950;color: white;margin-left: 30px;margin-bottom: 30px;margin-top: 15px;">Update</button>
+            <label style="color: #F16950;margin-top: 15px;margin-left: 30px;margin-bottom: 30px;text-decoration: underline;" (click)="OnCancelClick()">Cancel</label>
+        </div>
+    </div>
+</div>
+<div style="margin: 0px 20px 20px 20px;">
+    <div class="row col-md-12" style="margin: 0px;padding : 0px">
+        <div class="example-container mat-elevation-z2" [ngStyle]="{'height' : (screenHeight-215)+'px'}" style="border: 1px solid rgb(196, 196, 196);">
+            <table mat-table [dataSource]="dataSource" matSort>
+                <ng-container matColumnDef="Company">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef class="maintextSizes" style="padding-left: 10px;"> Company Name </th>
+                    <td mat-cell *matCellDef="let element" class="texttd" style="padding-left: 0px;"> {{element.Company}} </td>
+                </ng-container>
+                <ng-container matColumnDef="ClientName">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef class="maintextSizes">Client First and Last Name</th>
+                    <td mat-cell *matCellDef="let element" class="texttd"> {{element.ClientName}} </td>
+                </ng-container>
+                <ng-container matColumnDef="Updated_On">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef class="maintextSizes">Updated On</th>
+                    <td mat-cell *matCellDef="let element" class="texttd"> {{element.Updated_On}} </td>
+                </ng-container>
+                <ng-container matColumnDef="Country">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef class="maintextSizes">Country</th>
+                    <td mat-cell *matCellDef="let element" class="texttd"> {{element.Country}} </td>
+                </ng-container>
+                <ng-container matColumnDef="DateServey_Sent">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef class="maintextSizes">Date Survey Sent</th>
+                    <td mat-cell *matCellDef="let element" class="texttd"> {{element.DateServey_Sent}} </td>
+                </ng-container>
+                <ng-container matColumnDef="Language">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef class="maintextSizes">Language</th>
+                    <td mat-cell *matCellDef="let element" class="texttd"> {{element.Language}} </td>
+                </ng-container>
+                <ng-container matColumnDef="NPSScore">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef class="maintextSizes">NPS Score</th>
+                    <td mat-cell *matCellDef="let element" class="texttd"> {{element.NPSScore}} </td>
+                </ng-container>
+                <ng-container matColumnDef="NPSIndicator">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef class="maintextSizes">NPS Indicator</th>
+                    <td mat-cell *matCellDef="let element" class="texttd"> {{element.NPSIndicator}} </td>
+                </ng-container>
+                <ng-container matColumnDef="DateSurvey_Received">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef class="maintextSizes">Date Survey Received</th>
+                    <td mat-cell *matCellDef="let element" class="texttd"> {{element.DateSurvey_Received}} </td>
+                </ng-container>
+                <ng-container matColumnDef="ClientType">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef class="maintextSizes">Client Type</th>
+                    <td mat-cell *matCellDef="let element" class="texttd"> {{element.ClientType}} </td>
+                </ng-container>
+                <ng-container matColumnDef="AssignLeaderForClosedLoop">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef class="maintextSizes">Assign Leader</th>
+                    <td mat-cell *matCellDef="let element" class="texttd"> {{element.AssignLeaderForClosedLoop}} </td>
+                </ng-container>
+                <ng-container matColumnDef="Region">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef class="maintextSizes">Region</th>
+                    <td mat-cell *matCellDef="let element" class="texttd"> {{element.Region}} </td>
+                </ng-container>
+                <ng-container matColumnDef="RecordStatus">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef class="maintextSizes">Record Status</th>
+                    <td mat-cell *matCellDef="let element" class="texttd"> {{element.RecordStatus}} </td>
+                </ng-container>
+                <ng-container matColumnDef="actions" stickyEnd>
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef class="maintextSizes" style="max-width: 150px;padding-right: 10px;border-left: 1px solid rgb(196, 196, 196)">Edit</th>
+                    <td mat-cell *matCellDef="let element;let j=index;" style="max-width: 150px;padding-right: 10px;border-right: none;border-left: 1px solid rgb(196, 196, 196);">
+                        <!-- <button mat-icon-button style="color:gray;"> -->
+                            <mat-icon style="display: inline;margin-left: 8px;margin-right: 6px;cursor: pointer;" aria-label="Edit" (click)="RowSelected(element.NpsId)">edit</mat-icon>
+                            <p style="display: inline;margin-right: 6px;font-size: 26px;">|</p>
+                            <mat-icon style="display: inline;margin-right: 8px;cursor: pointer;" aria-label="Delete" (click)="Deleterow(element.NpsId,element.ClientName)">delete</mat-icon>
+                        <!-- </button> -->
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;" style="height: 23px;"></tr>
+            </table>
+        </div>
+    </div>
+</div>

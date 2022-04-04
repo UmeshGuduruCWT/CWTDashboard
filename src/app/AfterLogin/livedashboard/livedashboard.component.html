@@ -1,0 +1,128 @@
+<div class="main_wrap">
+    <mat-toolbar style="background-color: #333F48;position: fixed;" class="mat-elevation-z5">
+        <mat-toolbar-row>
+            <button mat-icon-button (click)= "sidenav.toggle()" matTooltip="Reports Menu">
+                <mat-icon style="color:#FEFEFF;" aria-label="Side nav toggle icon">menu</mat-icon>
+            </button>
+            <div style="width: 150px;">
+                <div style="width: 150px;color: #FEFEFF;margin-left:15px;font-family: Montserrat, sans-serif;font-size: 18px;height: 20px;margin-top: -15px;"><strong>{{ReportSelected}}</strong></div>            
+                <div style="width: 150px;margin-left:15px;font-size: 12px;color:#ff0000;font-weight: bold;height: 10px;">{{LastUpdatedText}}</div>
+            </div>
+            <!-- <label style="color: #FEFEFF;margin-top : 8px;margin-left:15px;font-family: Montserrat, sans-serif;font-size: 20px"><strong>{{ReportSelected}}</strong>&nbsp;<label style="font-size: 12px;margin-top: 10px;color:#ff0000;font-weight: bold;">{{LastUpdatedText}}</label></label>
+            <label style="width: 100%;text-align: center;font-weight: bold;color: #ff0000;margin-top : 8px;margin-right:15px;font-family: Montserrat, sans-serif;font-size: 16px;">{{Time}}</label> -->
+            <div style="width: 100%;">
+                <div style="width: 100%;text-align: center;font-weight: bold;color: white;font-family: Montserrat, sans-serif;margin-top: -15px;font-size: 12px;height: 10px;">Session Logs Off In</div>
+                <div style="width: 100%;text-align: center;font-weight: bold;color: #ff0000;height: 20px;font-family: Montserrat, sans-serif;margin-top: 10px;font-size: 18px;">{{Time}}</div>
+            </div>
+            <span class="spacer"></span>
+            <!-- <div style="height: 100%;width: 100px;text-align: center">
+                <li style="list-style-type: none;margin-top: 8px;">
+                    <label style="color: #FEFEFF;font-size: 15px;font-family: Montserrat, sans-serif;"><strong>{{TodayDate}}</strong></label>
+                </li>
+                <li style="list-style-type: none;margin-top: -25px;text-align: center">
+                    <label style="color: #FEFEFF;font-size: 13px;font-family: Montserrat, sans-serif;"><strong>{{TodayTime}}</strong></label>
+                </li>
+            </div> -->
+            <label style="color: white;font-size: 15px;font-weight: bold;font-family: Arial, Helvetica, sans-serif;padding-top: 10px;padding-right: 10px;">{{LoginUserName}}</label>
+            <button mat-icon-button (click)= "[sidenav.close(), Archive()]" matTooltip="Archives">
+                <mat-icon style="color:#5DADE2;" aria-label="Side nav toggle icon">archive</mat-icon>
+            </button>
+            <button mat-icon-button (click)= "[sidenav.close(), Help()]" matTooltip="Help">
+                <mat-icon style="color:#AF7AC5;" aria-label="Side nav toggle icon">help_outline</mat-icon>
+            </button>
+            <button mat-icon-button (click)= "[sidenav.close(), Profile()]" [routerLink]="['Profile']" matTooltip="Profile">
+                <mat-icon style="color:#2ECC71;" matBadgeColor="warn" aria-label="Side nav toggle icon">person_pin</mat-icon>
+            </button>
+            <button mat-icon-button *ngIf="ShowAdminPanel" (click)= "[sidenav.close(), AdminPanel()]" [routerLink]="['AdminPanel']" matTooltip="Admin Panel">
+                <mat-icon style="color:#F5B041;" [matBadge]="NotificationsCount" matBadgeSize="small" [matBadgeHidden]="hidden"  matBadgeColor="warn" aria-label="Side nav toggle icon">admin_panel_settings</mat-icon>
+            </button>
+            <button mat-icon-button *ngIf="ShowAdminPanel" (click)= "[sidenav.close(), Stats()]" [routerLink]="['Stats']" matTooltip="Stats"> <!--  -->
+                <mat-icon style="color:#99A3A4;" aria-label="Side nav toggle icon">equalizer</mat-icon>
+            </button>
+            <button mat-icon-button (click)="Logout()" matTooltip="Log Out" style="margin-right: 8px;">
+                <mat-icon style="color:#CB4335;" aria-label="Side nav toggle icon">power_settings_new</mat-icon>
+            </button>
+            <a (click)= "[sidenav.close(), SelectedReport(0)]" [routerLink]="['HomePage']" matTooltip="Home"><!-- <a [matMenuTriggerFor]="menu" >-->
+                <img class="mat-elevation-z2" [src]="Userimage" style="width: 45px; height: 45px; border-radius: 50%;">
+            </a>
+            <!-- <mat-menu #menu="matMenu">
+                <button mat-menu-item>Profile</button>
+                <button mat-menu-item >Log off</button>
+            </mat-menu> -->
+            <!-- <mat-menu #menu="matMenu">
+                <button mat-menu-item><mat-icon style="color:#333F48;">account_circle</mat-icon>Profile</button>
+                <button mat-menu-item (click)= "logoutClick()"><mat-icon style="color:#333F48;">power_settings_new</mat-icon>Log Out</button>
+            </mat-menu> -->
+        </mat-toolbar-row>
+    </mat-toolbar>
+    <mat-sidenav-container class="sidenav-container">
+        <mat-sidenav style="background-color: #D5DBDB;padding-top: 60px; overflow-x: hidden;position: fixed;" #sidenav [opened]="screenWidth < 840" mode = "over" class="sidenav mat-elevation-z3">
+            <div style="text-align: center;" (click)= "[sidenav.close(), SelectedReport(0)]" [routerLink]="['HomePage']" matTooltip="Home">
+                <div style="text-align: center;padding-top :10px;">
+                    <a><img [src]="imageUrl"  style="width: 70px; height: 45px;cursor: pointer;"></a>
+                    <a style="vertical-align: bottom;"><label style="cursor: pointer;color:#F16950;margin-left: 7px;font-weight: bold;font-family: Playtoy;src : url(assets/font/Playtoy.ttf) format('opentype');font-size: 22px;">DashBoard</label></a>
+                </div>
+                <div style="margin : 10px;background-color: #333F48;height: 1px;">
+                </div>
+            </div>
+            <mat-nav-list>
+                <mat-list-item *ngIf="ShowAutomatedCLR" (click)= "[sidenav.close(), SelectedReport(5)]" routerLinkActive="active-list-item" [routerLink]="['AutomatedCLR']">Country Level Report (CLR)</mat-list-item>
+                <mat-expansion-panel *ngIf="ShowTrackerReports"  class="mat-elevation-z0" style="background-color: #D5DBDB;" #tracker (opened)="tracker.expanded = true" (closed)="tracker.expanded = false">
+                    <mat-expansion-panel-header style="padding: 0px 15px 0px 15px;">
+                        <mat-panel-title style="font-size: 15px;">
+                            <label>Capacity Tracker</label>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <mat-nav-list>
+                        <mat-list-item *ngIf="ShowCapacityTracker" (click)= "[sidenav.close(), SelectedReport(9)]" routerLinkActive="active-list-item" [routerLink]="['Tracker']"><li>Tracker</li></mat-list-item>
+                        <mat-list-item *ngIf="ShowResourceUtilization" (click)= "[sidenav.close(), SelectedReport(10)]" routerLinkActive="active-list-item" [routerLink]="['ResUtil']"><li>Resource Utilization</li></mat-list-item>
+                        <mat-list-item *ngIf="ShowHierarchy" (click)= "[sidenav.close(), SelectedReport(11)]" routerLinkActive="active-list-item" [routerLink]="['CapacityHierarchy']"><li>Hierarchy</li></mat-list-item>
+                        <!-- <mat-list-item (click)= "[sidenav.close(), SelectedReport(12)]" routerLinkActive="active-list-item" [routerLink]="['Prospect']">Prospect</mat-list-item> -->
+                    </mat-nav-list>
+                </mat-expansion-panel>
+                <mat-list-item *ngIf="ShowCycleTime" (click)= "[sidenav.close(), SelectedReport(8)]" routerLinkActive="active-list-item" [routerLink]="['CycleTime']">Cycle Time</mat-list-item>
+                <mat-list-item (click)= "[sidenav.close(), SelectedReport(18)]" routerLinkActive="active-list-item" [routerLink]="['DigitalReport']">Digital Team Dashboard</mat-list-item>
+                <mat-list-item *ngIf="ShowELT" (click)= "[sidenav.close(), SelectedReport(7)]" routerLinkActive="active-list-item" [routerLink]="['EltReport']">ELT Report</mat-list-item>
+                <mat-list-item *ngIf="ShowMarketReport" (click)= "[sidenav.close(), SelectedReport(6)]" routerLinkActive="active-list-item" [routerLink]="['ImplementationMarket']">Implementation Market Report</mat-list-item>
+                <mat-list-item *ngIf="ShowIMPS" (click)= "[sidenav.close(), SelectedReport(1)]" routerLinkActive="active-list-item" [routerLink]="['ImplementationProjectStatus']">Implementation Project Status</mat-list-item>
+                <mat-expansion-panel *ngIf="ShowPerformanceAnalysis" class="mat-elevation-z0" style="background-color: #D5DBDB;" #p_analysis (opened)="p_analysis.expanded = true" (closed)="p_analysis.expanded = false">
+                    <mat-expansion-panel-header style="padding: 0px 15px 0px 15px;">
+                        <mat-panel-title style="font-size: 15px;">
+                            <label>Performance Analysis</label>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <mat-nav-list>
+                        <mat-list-item (click)="[sidenav.close(), SelectedReport(13)]" routerLinkActive="active-list-item" [routerLink]="['ProjectTeam']"><li>Project Team</li></mat-list-item>
+                        <mat-list-item (click)="[sidenav.close(), SelectedReport(14)]" routerLinkActive="active-list-item" [routerLink]="['DigitalTeam']"><li>Digital Team</li></mat-list-item>
+                        <!-- [routerLink]="['DigitalTeam']" -->
+                        <!-- <mat-list-item (click)= "[sidenav.close(), SelectedReport(12)]" routerLinkActive="active-list-item" [routerLink]="['Prospect']">Prospect</mat-list-item> -->
+                    </mat-nav-list>
+                </mat-expansion-panel>
+                <mat-expansion-panel *ngIf="ShowNpsReports"  class="mat-elevation-z0" [ngStyle]="{'background-color': npshidden == true ?  '#D5DBDB' : '#EC7063'}" #npsdara (opened)="npsdara.expanded = true" (closed)="npsdara.expanded = false">
+                    <mat-expansion-panel-header style="padding: 0px 15px 0px 15px;">
+                        <mat-panel-title style="font-size: 15px;">
+                            <label>NPS</label>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <mat-nav-list>
+                        <mat-list-item *ngIf="ShowNpsSurvey" (click)= "[sidenav.close(), SelectedReport(16)]" routerLinkActive="active-list-item" [routerLink]="['NpsCreateSurvey']"><li>NPS Survey (For PM's)</li></mat-list-item>
+                        <mat-list-item *ngIf="ShowNpsAdmin" (click)= "[sidenav.close(), SelectedReport(17)]" routerLinkActive="active-list-item" [routerLink]="['NpsView']"><li [matBadge]="NpsCount" matBadgeSize="medium" [matBadgeHidden]="npshidden"  matBadgeColor="warn">NPS View (For Admin)</li></mat-list-item>
+                        <mat-list-item *ngIf="ShowNPS" (click)= "[sidenav.close(), SelectedReport(12)]" routerLinkActive="active-list-item" [routerLink]="['NpsDashboard']"><li>NPS Dashboard</li></mat-list-item>
+                        <mat-list-item *ngIf="ShowNpsAdmin" (click)= "[sidenav.close(), SelectedReport(19)]" routerLinkActive="active-list-item" [routerLink]="['RollingNps']"><li>Rolling  NPS</li></mat-list-item>
+                        <!-- <mat-list-item (click)= "[sidenav.close(), SelectedReport(12)]" routerLinkActive="active-list-item" [routerLink]="['Prospect']">Prospect</mat-list-item> -->
+                    </mat-nav-list>
+                </mat-expansion-panel>
+                <mat-list-item *ngIf="ShowCTO" (click)= "[sidenav.close(), SelectedReport(2)]" routerLinkActive="active-list-item" [routerLink]="['CriticalTaskOverdue']">Critical Tasks Overdue</mat-list-item>
+                <mat-list-item *ngIf="ShowAutomatedCLR" (click)="[sidenav.close(), SelectedReport(15)]" routerLinkActive="active-list-item" [routerLink]="['ResourceAssignment']">Resource Assignment</mat-list-item>
+                <mat-list-item *ngIf="ShowLL" (click)= "[sidenav.close(), SelectedReport(3)]" routerLinkActive="active-list-item" [routerLink]="['LessonsLearnt']">Lessons Learnt</mat-list-item>
+                <!-- <mat-list-item *ngIf="ShowSGT" (click)= "[sidenav.close(), SelectedReport(4)]" routerLinkActive="active-list-item" [routerLink]="['StageGateTesting']">Stage Gate Testing</mat-list-item> -->
+                <!-- <mat-list-item (click)= "[sidenav.close(), SelectedReport(15)]" routerLinkActive="active-list-item" [routerLink]="['PerformanceLeader']">performanceleader</mat-list-item> -->
+                <!-- <mat-list-item (click)= "[sidenav.close(), SelectedReport(4)]" routerLinkActive="active-list-item" [routerLink]="['Adhoc']">Adhoc</mat-list-item> -->
+            </mat-nav-list>
+        </mat-sidenav>
+        <mat-sidenav-content style="background-color: #FEFEFF;padding-top: 60px">
+            <router-outlet></router-outlet>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+    <app-loading-spinner *ngIf="showSpinner" class="loader_wrap"></app-loading-spinner>
+</div>
