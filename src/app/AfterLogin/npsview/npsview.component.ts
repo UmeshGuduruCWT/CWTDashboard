@@ -8,7 +8,7 @@ import { ReplaySubject, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { DashboardServiceService } from 'src/app/dashboard-service.service';
 import { ExcelService } from 'src/app/excel.service';
-import { FilterAccountName, FilterCountry, FilterGlobalProjectManager, FilterReasonTypeList } from 'src/app/Models/AutomatedCLRFilters';
+import { FilterAccountName, FilterCountry, FilterGlobalProjectManager, FilterReasonTypeList, NPSComment } from 'src/app/Models/AutomatedCLRFilters';
 import { NPSViewData } from 'src/app/Models/NPSData';
 import { DashboardComponent } from '../dashboard/dashboard.component';
 import { LivedashboardComponent } from '../livedashboard/livedashboard.component';
@@ -43,7 +43,6 @@ export class NPSViewComponent implements OnInit {
   // CompanyName = new FormControl();
   ClientType;ClientContactNumber;ClientScope: string = "";DSD;DQS;OnlineTeam;
   SurveyReceived;Nps_comments_positive;Nps_comments_improve;Nps_comments_happier;Status;
-  Nps_Comment_One;Nps_COmment_Two;Nps_Comment_Three;
   NpsCommentOne = new FormControl();NpsCommentwo = new FormControl();NpsCommentthree = new FormControl();
   AssignLeader_data;NPSScore_data;NPSIndicator_data;Client_Feedback;action;
   ReasonType;
@@ -57,21 +56,28 @@ export class NPSViewComponent implements OnInit {
   GManagerList : FilterGlobalProjectManager[];
   RManagerList : FilterGlobalProjectManager[];
   LManagerList : FilterGlobalProjectManager[];
+  
+  Nps_Comment_One : NPSComment[];
+  Nps_COmment_Two : NPSComment[];
+  Nps_Comment_Three : NPSComment[];
   CountryList : FilterCountry[];
   CompanyNameList : FilterAccountName[];
   public GPMData: ReplaySubject<FilterGlobalProjectManager[]> = new ReplaySubject<FilterGlobalProjectManager[]>(1);
   public RPMData: ReplaySubject<FilterGlobalProjectManager[]> = new ReplaySubject<FilterGlobalProjectManager[]>(1);
   public AFNData: ReplaySubject<FilterGlobalProjectManager[]> = new ReplaySubject<FilterGlobalProjectManager[]>(1);
   public CountryData: ReplaySubject<FilterCountry[]> = new ReplaySubject<FilterCountry[]>(1);
+  public CommentOneNPS: ReplaySubject<NPSComment[]> = new ReplaySubject<NPSComment[]>(1);
+  public CommentTwoNPS: ReplaySubject<NPSComment[]> = new ReplaySubject<NPSComment[]>(1);
+  public CommentThreeNPS: ReplaySubject<NPSComment[]> = new ReplaySubject<NPSComment[]>(1);
   public CompanyNameData : ReplaySubject<FilterAccountName[]> = new ReplaySubject<FilterAccountName[]>(1);
   Commentoneother;Commenttwoother;Commentthreeother;searchbar;
   ngOnInit(): void {
-    this.AssignLeader_data = ["Anette Brydensholt","Anurag Chopra","Cenise Roland","Dalles Weldon","Deb Hegan","Heber Calcic","Izabela Hiller","Jill Summerville","Joanna Clare","Peter Bot","Simon Owen","Tenille Lockyer","Vincent vanReenen"];
+    this.AssignLeader_data = ["Anette Brydensholt","Anurag Chopra","Cenise Roland","Dalles Weldon","Deb Westerlund","Heber Calcic","Izabela Hiller","Jill Summerville","Joanna Clare","Peter Bot","Simon Owen","Tenille Lockyer","Vincent vanReenen"];
     this.NPSScore_data = [0,1,2,3,4,5,6,7,8,9,10];
     this.NPSIndicator_data = ["Promoter","Passive","Detractor"];
-    this.Nps_Comment_One = ["Quick responses/Co-ordination","Good Project Management","Great Ownership/Very Helpful","Good Service / Support/Organized","Great Team/Focused","Reactive CWT team","Short weekly meetings","Imps was quick/Very Approachable","Very Helpful / Clear explanation","Good Service / Good Performance","Professional Team / Approach","Smooth Transition / Organised","Professionalism","Excellent Communication","Efficiency/Responses","Great Project Team/Team work","Very experienced CWT Imps team","Excellent Stakeholder","Dedicated","Client Management Capability","Knowledgeable","Excellent Project Management","Flexible Team","Others"];
-    this.Nps_COmment_Two = ["Part time resource","lacked local briefing","Unclear welcome letter","Less weekly meetings","Post Implementation Issues","Co-ordination with local teams","Detailed Project Plan","Good Feedback management","Miscommunication","Training was confusing","Improve connection and audio","Better Planning","Others"];
-    this.Nps_Comment_Three = ["Must have a full time resource","Better communcation from Sales","Implementation Speed","Change the welcome letter","Online portal or dashboard","Training course needs improvement","Clear understanding within the team","Improve the training method","Connection problems and audio issues","More proactive","Quicker Responses","Others"];
+    // this.Nps_Comment_One = ["Quick responses/Co-ordination","Good Project Management","Great Ownership/Very Helpful","Good Service / Support/Organized","Great Team/Focused","Reactive CWT team","Short weekly meetings","Imps was quick/Very Approachable","Very Helpful / Clear explanation","Good Service / Good Performance","Professional Team / Approach","Smooth Transition / Organised","Professionalism","Excellent Communication","Efficiency/Responses","Great Project Team/Team work","Very experienced CWT Imps team","Excellent Stakeholder","Dedicated","Client Management Capability","Knowledgeable","Excellent Project Management","Flexible Team","Others"];
+    // this.Nps_COmment_Two = ["Part time resource","lacked local briefing","Unclear welcome letter","Less weekly meetings","Post Implementation Issues","Co-ordination with local teams","Detailed Project Plan","Good Feedback management","Miscommunication","Training was confusing","Improve connection and audio","Better Planning","Others"];
+    // this.Nps_Comment_Three = ["Must have a full time resource","Better communcation from Sales","Implementation Speed","Change the welcome letter","Online portal or dashboard","Training course needs improvement","Clear understanding within the team","Improve the training method","Connection problems and audio issues","More proactive","Quicker Responses","Others"];
     this.ResonTypeList = [{ReasonType :'Sales Expectations',isSelected : false},{ReasonType :'Project Manager Resource',isSelected : false},{ReasonType :'Online Resource',isSelected : false},{ReasonType :'Online Booking Tool',isSelected : false},{ReasonType :'CWT internal Products (SSO HR Feed Analytics myCWT iMeet etc.)',isSelected : false},{ReasonType :'Project Management process',isSelected : false},{ReasonType :'Non-Implementation CWT Resources',isSelected : false},{ReasonType :'GPN/JV',isSelected : false},{ReasonType :'Testing',isSelected : false}];
     this.ShowForm = false;
     this.dashboard.ShowSpinnerHandler(true);
@@ -95,6 +101,12 @@ export class NPSViewComponent implements OnInit {
         this.RPMData.next(this.RManagerList.slice());
         this.LManagerList = data.FilterGlobalProjectManager;
         this.AFNData.next(this.LManagerList.slice());
+        this.Nps_Comment_One = data.NPSCommentOne;
+        this.CommentOneNPS.next(this.Nps_Comment_One.slice());
+        this.Nps_COmment_Two = data.NPSCommentTwo;
+        this.CommentTwoNPS.next(this.Nps_COmment_Two.slice());
+        this.Nps_Comment_Three = data.NPSCommentThree;
+        this.CommentThreeNPS.next(this.Nps_Comment_Three.slice());
         this.CountryList = data.FilterCountry;
         this.CountryData.next(this.CountryList.slice());
         this.CompanyNameList = data.FilterAccountName;
@@ -144,6 +156,21 @@ export class NPSViewComponent implements OnInit {
       .subscribe(() => {
         this.CompanyNamefilter();
       });
+    this.commentonesearch.valueChanges
+      .pipe(takeUntil(this._onDestroy))
+      .subscribe(() => {
+        this.CommentOnefilter();
+      });
+    this.commenttwosearch.valueChanges
+      .pipe(takeUntil(this._onDestroy))
+      .subscribe(() => {
+        this.CommentTwofilter();
+      });
+    this.commentthreesearch.valueChanges
+      .pipe(takeUntil(this._onDestroy))
+      .subscribe(() => {
+        this.CommentThreefilter();
+      });
   }
   ShowCommentOne : boolean = false;
   ShowCommentTwo : boolean = false;
@@ -178,6 +205,9 @@ export class NPSViewComponent implements OnInit {
   GPMsearch = new FormControl();
   RPMsearch = new FormControl();
   AFNsearch = new FormControl();
+  commentonesearch = new FormControl();
+  commenttwosearch = new FormControl();
+  commentthreesearch = new FormControl();
   CountrySearch = new FormControl();
   CompanyNameSearch = new FormControl();
   protected AFNfilter() {
@@ -263,6 +293,57 @@ export class NPSViewComponent implements OnInit {
     // filter the manager
     this.CompanyNameData.next(
       this.CompanyNameList.filter(Account_Name => Account_Name.Account_Name.toLowerCase().indexOf(search) > -1)
+    );
+  }
+  protected CommentOnefilter() {
+    if (!this.Nps_Comment_One) {
+      return;
+    }
+    // get the search keyword
+    let search = this.commentonesearch.value;
+    if (!search) {
+      this.CommentOneNPS.next(this.Nps_Comment_One.slice());
+      return;
+    } else {
+      search = search.toLowerCase();
+    }
+    // filter the manager
+    this.CommentOneNPS.next(
+      this.Nps_Comment_One.filter(comment => comment.NPSComment.toLowerCase().indexOf(search) > -1)
+    );
+  }
+  protected CommentTwofilter() {
+    if (!this.Nps_COmment_Two) {
+      return;
+    }
+    // get the search keyword
+    let search = this.commenttwosearch.value;
+    if (!search) {
+      this.CommentTwoNPS.next(this.Nps_COmment_Two.slice());
+      return;
+    } else {
+      search = search.toLowerCase();
+    }
+    // filter the manager
+    this.CommentTwoNPS.next(
+      this.Nps_COmment_Two.filter(comment => comment.NPSComment.toLowerCase().indexOf(search) > -1)
+    );
+  }
+  protected CommentThreefilter() {
+    if (!this.Nps_Comment_Three) {
+      return;
+    }
+    // get the search keyword
+    let search = this.commentthreesearch.value;
+    if (!search) {
+      this.CommentThreeNPS.next(this.Nps_Comment_Three.slice());
+      return;
+    } else {
+      search = search.toLowerCase();
+    }
+    // filter the manager
+    this.CommentThreeNPS.next(
+      this.Nps_Comment_Three.filter(comment => comment.NPSComment.toLowerCase().indexOf(search) > -1)
     );
   }
   FilteredCount;

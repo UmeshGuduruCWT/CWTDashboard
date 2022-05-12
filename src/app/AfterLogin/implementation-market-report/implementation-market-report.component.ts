@@ -15,6 +15,7 @@ import { DatePipe } from '@angular/common';
 import { ClrData } from '../../Models/ClrResponse';
 import { MatPaginator } from '@angular/material/paginator';
 import { LivedashboardComponent } from '../livedashboard/livedashboard.component';
+import { CursorError } from '@angular/compiler/src/ml_parser/lexer';
 //import { ChartModule } from 'angular2-chartjs';
 //import 'chartjs-plugin-labels';
 export interface ImeetMilestoneProjectStatus {
@@ -58,13 +59,6 @@ export interface MonthlyTotalRevenue {
   styleUrls: ['./implementation-market-report.component.css']
 })
 export class ImplementationMarketReportComponent implements OnInit {
-  // years = new FormControl();
-  // months = new FormControl();
-  // quarters = new FormControl();
-  // levels = new FormControl();
-  // regions = new FormControl();
-  // statuss = new FormControl();
-  // marketleaders = new FormControl();
   implementationtypes = new FormControl();
   projectstatuses = new FormControl();
   dataSource;
@@ -147,27 +141,6 @@ export class ImplementationMarketReportComponent implements OnInit {
   Jul_Comments : string;Aug_Comments : string;Sep_Comments : string;Oct_Comments : string;Nov_Comments : string;Dec_Comments : string;
   SelectedProjectCount;
   @ViewChild(MatSort) sort: MatSort;
-  // @ViewChild(MatPaginator) paginator: MatPaginator;
-  // private paginator: MatPaginator;
-  // private sort: MatSort;
-  // @ViewChild(MatSort) sort: MatSort;
-
-  // @ViewChild(MatSort) set matSort(ms: MatSort) {
-  //   this.sort = ms;
-  //   this.setDataSourceAttributes();
-  // }
-
-  // @ViewChild(MatPaginator) set matPaginator(mp: MatPaginator) {
-  //   this.paginator = mp;
-  //   this.setDataSourceAttributes();
-  // }
-
-  // setDataSourceAttributes() {
-  //   this.dataSource_VCtPc.paginator = this.paginator;
-  //   //this.dataSource_VCtPc.sort = this.sort;
-  // }
-  // Apply_disable2 : boolean;
-  // Apply_disable1 : boolean;
   Apply_disable : boolean;
   ChartRevenueTotalVolume : any;
   ChartProjectCount : any;
@@ -346,7 +319,7 @@ export class ImplementationMarketReportComponent implements OnInit {
       'rgba(39, 174, 96 ,0.5)','rgba(93, 173, 226,0.5)','rgba(14, 61, 89,0.5)', 'rgb(255, 219, 105)', 'rgb(217,37,38)', 'rgb(75, 192, 192)', 'rgb(255, 99, 132)'
     ]
     var bocolor = [
-      'rgba(229, 231, 233 ,1)','rgba(229, 231, 233 ,1)','rgba(229, 231, 233,1)', 'rgb(255, 219, 105)', 'rgb(217,37,38)', 'rgb(75, 192, 192)', 'rgb(255, 99, 132)'
+      'rgba(229, 231, 233 ,1)','rgba(229, 231, 233 ,1)','rgba(229, 231, 233,1)', 'rgba(229, 231, 233,1)', 'rgba(229, 231, 233,1)', 'rgba(229, 231, 233,1)', 'rgba(229, 231, 233,1)'
     ]
     var hoverbgcolor = [
       'rgba(39, 174, 96 ,1)','rgb(93, 173, 226,1)','rgba(14, 61, 89,1)'
@@ -859,6 +832,36 @@ export class ImplementationMarketReportComponent implements OnInit {
       alert("Please select year and Try Again");
     }else{
       years = str.split(',');
+      var CurrentYear = (new Date()).getFullYear();
+      bgColor = [];
+      hoverbgcolor = [];
+      years.map(x => {
+        if(x == CurrentYear){
+          bgColor.push('rgba(39, 174, 96, 0.5)');
+          hoverbgcolor.push('rgb(39, 174, 96)');
+        }else if(x == CurrentYear-1){
+          bgColor.push('rgba(255, 219, 105,0.5)');
+          hoverbgcolor.push('rgb(255, 219, 105)');
+        }else if(x == CurrentYear-2){
+          bgColor.push('rgba(217,37,38,0.5)');
+          hoverbgcolor.push('rgb(217,37,38)');
+        }else if(x == CurrentYear+1){
+          bgColor.push('rgba(93, 173, 226 ,0.5)');
+          hoverbgcolor.push('93, 173, 226)');
+        }else if(x == CurrentYear+2){
+          bgColor.push('rgba(14, 61, 89,0.5)');
+          hoverbgcolor.push('rgb(14, 61, 89)');
+        }else if(x == CurrentYear+3){
+          bgColor.push('rgba(255, 99, 132,0.5)');
+          hoverbgcolor.push('rgb(255, 99, 132)');
+        }else if(x == 2050){
+          bgColor.push('rgba(203, 202, 202 ,0.5)');
+          hoverbgcolor.push('rgb(203, 202, 202)');
+        }else{
+          bgColor.push('rgba(203, 202, 202 ,0.5)');
+          hoverbgcolor.push('rgb(203, 202, 202)');
+        }
+      });
       for(let i=0;i<years.length;i++){
         if(years[i] == null || years[i] == ""){
           alert("Please select year and Try Again");
@@ -901,10 +904,10 @@ export class ImplementationMarketReportComponent implements OnInit {
               mydatasets[j] = {
                 label : years[i]+" ("+Math.round(data.Data[0].January+data.Data[0].February+data.Data[0].March+data.Data[0].April+data.Data[0].May+data.Data[0].June+data.Data[0].July+data.Data[0].August+data.Data[0].September+data.Data[0].October+data.Data[0].November+data.Data[0].December).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3)+")",
                 data : [data.Data[0].January,data.Data[0].February,data.Data[0].March,data.Data[0].April,data.Data[0].May,data.Data[0].June,data.Data[0].July,data.Data[0].August,data.Data[0].September,data.Data[0].October,data.Data[0].November,data.Data[0].December],
-                backgroundColor : bgColor[j],
-                borderColor : bocolor[j],
+                backgroundColor : bgColor[i],
+                borderColor : bocolor[i],
                 borderWidth: 2,
-                hoverBackgroundColor : hoverbgcolor[j],
+                hoverBackgroundColor : hoverbgcolor[i],
                 // type: 'line',
                 // fill : false,
               }

@@ -90,7 +90,8 @@ export class MyFilter {
   Region : string[];
   Country : string;
   OwnerShip : string[];
-  GoLiveDate_c : string;
+  GoLiveDate_c? : Date;
+  GoLiveDate_cE? : Date;
   ProjectStart_ForCycleTime_c : string;
   CycleTime : string;
   ProjectStatus : string[];
@@ -216,7 +217,7 @@ export class AutomatedCLRComponent implements OnInit {
   filteredValues : MyFilter = { Client: '', RevenueID: '', iMeet_Workspace_Title: '', CreatedDate_c: '',
     Implementation_Type : [],Pipeline_status : [],Pipeline_comments : '',Service_configuration : '',
     OBT_Reseller___Direct : [],Assignment_date_c : '',UpdateOn_c : '',OppVolume : '',
-    RevenueVolumeUSD : '',Region : [],Country : '', OwnerShip : [], GoLiveDate_c : '',
+    RevenueVolumeUSD : '',Region : [],Country : '', OwnerShip : [], GoLiveDate_c : null,GoLiveDate_cE : null,
     ProjectStart_ForCycleTime_c : '',CycleTime : '',
     ProjectStatus : [],Milestone__Reason_Code : '', PerCompleted : '',CountryStatus : [],
     ProjectLevel : [],CompletedDate_c : '',GlobalProjectManager : '',
@@ -272,7 +273,9 @@ export class AutomatedCLRComponent implements OnInit {
   RegionFilter = new FormControl();
   CountryFilter = new FormControl();
   OwnerShipFilter = new FormControl();
-  GoLiveDate_cFilter = new FormControl();
+  // GoLiveDate_cFilter = new FormControl();
+  GoLiveDate_cSFilter = new FormControl();
+  GoLiveDate_cEFilter = new FormControl();
   ProjectStartDate_cFilter = new FormControl();
   CycleTimeFilter = new FormControl();
   ProjectStatusFilter = new FormControl();
@@ -606,6 +609,7 @@ export class AutomatedCLRComponent implements OnInit {
       let isRevenue_Opportunity_TypeAvailable = false;
       let isOpportunity_CategoryAvailable = false;
       let isLine_Win_ProbabilityAvailable = false;
+      let isGoliveDate_Available = false;
       if (searchString.Implementation_Type.length) {
         for (const d of searchString.Implementation_Type) {
           if (data.Implementation_Type.toString().trim() == d) {
@@ -787,6 +791,17 @@ export class AutomatedCLRComponent implements OnInit {
       } else {
         isDataSourceTypeAvailable = true;
       }
+      if(searchString.GoLiveDate_c != null && searchString.GoLiveDate_cE != null){
+        if(data.GoLiveDate_c >= new Date(Number(this.datepipe.transform(searchString.GoLiveDate_c, 'yyyy')), Number(this.datepipe.transform(searchString.GoLiveDate_c, 'MM'))-1, Number(this.datepipe.transform(searchString.GoLiveDate_c, 'dd'))) && data.GoLiveDate_c <= new Date(Number(this.datepipe.transform(searchString.GoLiveDate_cE, 'yyyy')), Number(this.datepipe.transform(searchString.GoLiveDate_cE, 'MM'))-1, Number(this.datepipe.transform(searchString.GoLiveDate_cE, 'dd')))){
+          isGoliveDate_Available = true;
+        }
+      }else if(searchString.GoLiveDate_c != null && searchString.GoLiveDate_cE == null){
+        if(data.GoLiveDate_c >= new Date(Number(this.datepipe.transform(searchString.GoLiveDate_c, 'yyyy')), Number(this.datepipe.transform(searchString.GoLiveDate_c, 'MM'))-1, Number(this.datepipe.transform(searchString.GoLiveDate_c, 'dd')))){
+          isGoliveDate_Available = true;
+        }
+      }else{
+        isGoliveDate_Available = true;
+      }
       return (
         isImplementationTypeAvailable &&
         isRecordStatusAvailable &&
@@ -808,6 +823,7 @@ export class AutomatedCLRComponent implements OnInit {
         isRevenue_Opportunity_TypeAvailable &&
         isOpportunity_CategoryAvailable &&
         isLine_Win_ProbabilityAvailable &&
+        isGoliveDate_Available && 
         data.Client.toString().trim().toLowerCase().indexOf(searchString.Client.toLowerCase()) !== -1 &&
         data.RevenueID.toString().trim().toLowerCase().indexOf(searchString.RevenueID.toLowerCase()) !== -1 &&
         data.iMeet_Workspace_Title.toString().trim().toLowerCase().indexOf(searchString.iMeet_Workspace_Title.toLowerCase()) !== -1 &&
@@ -820,7 +836,6 @@ export class AutomatedCLRComponent implements OnInit {
         data.OppVolume.toString().trim().toLowerCase().indexOf(searchString.OppVolume.toLowerCase()) !== -1 &&
         data.RevenueVolumeUSD.toString().trim().toLowerCase().indexOf(searchString.RevenueVolumeUSD.toLowerCase()) !== -1 &&
         data.Country.toString().trim().toLowerCase().indexOf(searchString.Country.toLowerCase()) !== -1 &&
-        data.GoLiveDate_c.toString().trim().toLowerCase().indexOf(searchString.GoLiveDate_c.toLowerCase()) !== -1 &&
         data.ProjectStart_ForCycleTime_c.toString().trim().toLowerCase().indexOf(searchString.ProjectStart_ForCycleTime_c.toLowerCase()) !== -1 &&
         data.CycleTime.toString().trim().toLowerCase().indexOf(searchString.CycleTime.toLowerCase()) !== -1 &&
         data.Milestone__Reason_Code.toString().trim().toLowerCase().indexOf(searchString.Milestone__Reason_Code.toLowerCase()) !== -1 &&
@@ -960,11 +975,37 @@ export class AutomatedCLRComponent implements OnInit {
       this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
       this.FilteredCount = this.dataSource.filteredData.length;
     });
-    this.GoLiveDate_cFilter.valueChanges.subscribe(value => {
-      this.filteredValues["GoLiveDate_c"] = value;
-      this.dataSource.filter = JSON.stringify(this.filteredValues);
-      this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
-      this.FilteredCount = this.dataSource.filteredData.length;
+    // this.GoLiveDate_cFilter.valueChanges.subscribe(value => {
+    //   this.filteredValues["GoLiveDate_c"] = value;
+    //   this.dataSource.filter = JSON.stringify(this.filteredValues);
+    //   this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
+    //   this.FilteredCount = this.dataSource.filteredData.length;
+    // });
+    this.GoLiveDate_cSFilter.valueChanges.subscribe(value => {
+      if(value != null){
+        this.filteredValues["GoLiveDate_c"] = new Date(Number(this.datepipe.transform(value, 'yyyy')), Number(this.datepipe.transform(value, 'MM'))-1, Number(this.datepipe.transform(value, 'dd')));
+        this.dataSource.filter = JSON.stringify(this.filteredValues);
+        this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
+        this.FilteredCount = this.dataSource.filteredData.length;
+      }else{
+        this.filteredValues["GoLiveDate_c"] = null;
+        this.dataSource.filter = JSON.stringify(this.filteredValues);
+        this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
+        this.FilteredCount = this.dataSource.filteredData.length;
+      }
+    });
+    this.GoLiveDate_cEFilter.valueChanges.subscribe(value => {
+      if(value != null){
+        this.filteredValues["GoLiveDate_cE"] = new Date(Number(this.datepipe.transform(value, 'yyyy')), Number(this.datepipe.transform(value, 'MM'))-1, Number(this.datepipe.transform(value, 'dd')));
+        this.dataSource.filter = JSON.stringify(this.filteredValues);
+        this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
+        this.FilteredCount = this.dataSource.filteredData.length;
+      }else{
+        this.filteredValues["GoLiveDate_cE"] = null;
+        this.dataSource.filter = JSON.stringify(this.filteredValues);
+        this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
+        this.FilteredCount = this.dataSource.filteredData.length;
+      }
     });
     this.ProjectStartDate_cFilter.valueChanges.subscribe(value => {
       this.filteredValues["ProjectStart_ForCycleTime_c"] = value;
@@ -1272,7 +1313,9 @@ export class AutomatedCLRComponent implements OnInit {
       this.RegionFilter.setValue("");
       this.CountryFilter.setValue("");
       this.OwnerShipFilter.setValue("");
-      this.GoLiveDate_cFilter.setValue("");
+      // this.GoLiveDate_cFilter.setValue("");
+      this.GoLiveDate_cSFilter.setValue("");
+      this.GoLiveDate_cEFilter.setValue("");
       this.ProjectStartDate_cFilter.setValue("");
       this.CycleTimeFilter.setValue("");
       this.ProjectStatusFilter.setValue("");
@@ -1455,11 +1498,12 @@ export class AutomatedCLRComponent implements OnInit {
             this.DataCLR[i].RevenueVolumeUSD_c = this.DataCLR[i].RevenueVolumeUSD.toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
             //this.DataCLR[i].RevenueVolumeUSD_c = "$"+Math.round(this.DataCLR[i].RevenueVolumeUSD).toLocaleString().replace(/,/g, '');
           }
-          if(this.DataCLR[i].GoLiveDate == null){
-            this.DataCLR[i].GoLiveDate_c = "---";
-          }else{
-            this.DataCLR[i].GoLiveDate_c = this.datepipe.transform(this.DataCLR[i].GoLiveDate, "yyyy-MM-dd");
-          }
+          // if(this.DataCLR[i].GoLiveDate == null){
+          //   this.DataCLR[i].GoLiveDate_c = "---";
+          // }else{
+          //   this.DataCLR[i].GoLiveDate_c = this.datepipe.transform(this.DataCLR[i].GoLiveDate, "yyyy-MM-dd");
+          // }
+          this.DataCLR[i].GoLiveDate_c = new Date(Number(this.datepipe.transform(this.DataCLR[i].GoLiveDate, 'yyyy')), Number(this.datepipe.transform(this.DataCLR[i].GoLiveDate, 'MM'))-1, Number(this.datepipe.transform(this.DataCLR[i].GoLiveDate, 'dd')));
           if(this.DataCLR[i].ProjectStart_ForCycleTime == null){
             this.DataCLR[i].ProjectStart_ForCycleTime_c = "---";
           }else{
@@ -1509,7 +1553,9 @@ export class AutomatedCLRComponent implements OnInit {
           this.RegionFilter.setValue(this.SavedFilters.Region);
           this.CountryFilter.setValue(this.SavedFilters.Country);
           this.OwnerShipFilter.setValue(this.SavedFilters.OwnerShip);
-          this.GoLiveDate_cFilter.setValue(this.SavedFilters.GoLiveDate_c);
+          // this.GoLiveDate_cFilter.setValue(this.SavedFilters.GoLiveDate_c);
+          this.GoLiveDate_cSFilter.setValue(this.SavedFilters.GoLiveDate_c);
+          this.GoLiveDate_cEFilter.setValue(this.SavedFilters.GoLiveDate_cE);
           this.ProjectStartDate_cFilter.setValue(this.SavedFilters.ProjectStart_ForCycleTime_c);
           this.CycleTimeFilter.setValue(this.SavedFilters.CycleTime);
           this.ProjectStatusFilter.setValue(this.SavedFilters.ProjectStatus);
@@ -1593,7 +1639,9 @@ export class AutomatedCLRComponent implements OnInit {
       this.RegionFilter.setValue("");
       this.CountryFilter.setValue("");
       this.OwnerShipFilter.setValue("");
-      this.GoLiveDate_cFilter.setValue("");
+      // this.GoLiveDate_cFilter.setValue("");
+      this.GoLiveDate_cSFilter.setValue("");
+      this.GoLiveDate_cEFilter.setValue("");
       this.ProjectStartDate_cFilter.setValue("");
       this.CycleTimeFilter.setValue("");
       this.ProjectStatusFilter.setValue("");
@@ -3946,7 +3994,7 @@ export class RecordLevelAuditLogdailog {
   constructor(
     public datepipe : DatePipe,
     public service : DashboardServiceService,
-    public dialogRef: MatDialogRef<AuditLogdailog>,
+    public dialogRef: MatDialogRef<RecordLevelAuditLogdailog>,
     @Optional() @Inject(MAT_DIALOG_DATA) public data: CLRDialogData) {
       this.screenWidth = window.innerWidth;
       this.screenHeight = window.innerHeight;

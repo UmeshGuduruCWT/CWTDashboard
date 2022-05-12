@@ -59,6 +59,18 @@
                             <mat-list-item style="height: 35px" *ngFor="let region of regionList" ><mat-checkbox class="example-margin" [(ngModel)]="region.isSelected" (change)="regionSelected()" name="region.Milestone__Region">{{region.Milestone__Region}}</mat-checkbox></mat-list-item>
                         </mat-nav-list>
                     </mat-expansion-panel>
+                    <mat-expansion-panel class="mat-elevation-z0" style="margin: 10px 0px 0px 0px;padding: 0px;;" [expanded]="true">
+                        <mat-expansion-panel-header [collapsedHeight]="'30px'" [expandedHeight]="'30px'">
+                            <mat-panel-title style="margin-left: 0px">
+                                <label style="padding-top: 10px;">Milestone Assigne</label>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <mat-divider style="width: 100%;margin: 10px 0px 0px 0px;padding: 0px;"></mat-divider>
+                        <mat-nav-list>
+                            <mat-list-item style="height: 35px"><mat-checkbox class="example-margin" [(ngModel)]="masterassigne" name="masterassigne" (change)="checkUncheckAssigne()">Select all</mat-checkbox></mat-list-item>
+                            <mat-list-item style="height: 35px" *ngFor="let assigne of AssigneFullNameList" ><mat-checkbox class="example-margin" [(ngModel)]="assigne.isSelected" (change)="AssigneSelected()" name="assigne.AssigneFullName">{{assigne.AssigneFullName}}</mat-checkbox></mat-list-item>
+                        </mat-nav-list>
+                    </mat-expansion-panel>
                     <!-- <div class="li_main" style="margin-left: 10px;">
                         <li class="li_items" *ngFor="let Sregion of regionListSelected;"><label>{{Sregion.Milestone__Region}}</label><label class="li_button" (click)="deselectRegion(Sregion.Milestone__Region)">X</label></li>
                     </div> -->
@@ -95,6 +107,8 @@
                     <button mat-raised-button style="height: 33px;background-color: #F16950;color: white;" (click)="exportData()">Export
                         <mat-icon style="font-size: 18px;color: white;">save_alt</mat-icon>
                     </button>
+                    <label style="margin: 8px 0px 0px 15px;font-size: 16px;font-weight: bold;font-family: Arial, Helvetica, sans-serif;">Data Count  :&nbsp;&nbsp;</label>
+                    <label style="margin: 8px 25px 0px 0px;font-size: 16px;font-weight: bold;font-family: Arial, Helvetica, sans-serif;">{{FilteredCount}}</label>   
                 </div>
                 <div class="col-md-12">
                     <div class="example-container" [ngStyle]="{'height' : (screenHeight-115)+'px'}" style="margin-left: 15px;border: 1px solid rgb(196, 196, 196);">

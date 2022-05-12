@@ -52,6 +52,7 @@ export class Data {
     ID : string;
     Candidate_Name : string;
     Comments : any;
+    HierarchyID : number;
     iMeet_Milestone___Project_Status: string;
     isSelected : boolean;
     iMeet_Project_Level: string;

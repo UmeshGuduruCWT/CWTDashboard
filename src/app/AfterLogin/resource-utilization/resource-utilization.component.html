@@ -3,13 +3,30 @@
     </mat-sidenav>
 <mat-sidenav-content> -->
 <div class="row" style="margin: 25px 0px 0px 0px;">
-    <div class="col-md-6">
+    <div class="col-md-9">
         <!-- <label style="margin: 8px 0px 0px 15px;font-size: 16px;font-weight: bold;font-family: Arial, Helvetica, sans-serif;">Filtered Volume  :&nbsp;&nbsp;</label>
         <label style="margin: 8px 0px 0px 0px;font-size: 16px;font-weight: bold;font-family: Arial, Helvetica, sans-serif;">{{FilteredVolume}}</label> -->
         <label style="margin: 8px 0px 0px 15px;font-size: 16px;font-weight: bold;font-family: Arial, Helvetica, sans-serif;">Filtered Count  :&nbsp;&nbsp;</label>
-        <label style="margin: 8px 0px 0px 0px;font-size: 16px;font-weight: bold;font-family: Arial, Helvetica, sans-serif;">{{FilteredCount}}</label>
+        <label style="margin: 8px 15px 0px 0px;font-size: 16px;font-weight: bold;font-family: Arial, Helvetica, sans-serif;">{{FilteredCount}}</label>
+        <mat-form-field class="col-md-3 mat-form-wrap" appearance="outline">
+            <mat-label>Project Status</mat-label>
+            <mat-select [formControl]="ProjectStatusFilter" multiple (selectionChange)="onProjectStatuschange()">
+                <mat-select-trigger>
+                    {{ProjectStatusFilter.value ? ProjectStatusFilter.value[0] : ''}}
+                    <span *ngIf="ProjectStatusFilter.value?.length > 1" class="example-additional-selection">
+                      (+{{ProjectStatusFilter.value.length - 1}} {{ProjectStatusFilter.value?.length === 2 ? 'Project Status' : 'Project Status'}})
+                    </span>
+                </mat-select-trigger>
+                <div style="padding-top: 15px">
+                    <mat-checkbox style="margin-left: 15px;margin-top: 25px;" class="example-margin" [(ngModel)]="masterProjectStatus" name="masterProjectStatus" (change)="checkUncheckProjectStatus()" color="primary">Select all</mat-checkbox>
+                </div>
+                <mat-divider style="margin-left: 5px;margin-right: 5px"></mat-divider>
+                <mat-option *ngFor="let Project_Status of ProjectStatusList" [value]="Project_Status">{{Project_Status}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <button mat-raised-button style="margin-left: 15px;" [ngStyle]="{'background-color' : DisableButton == true ? '#DBDBDB' : '#F16950','color' : DisableButton == true ? '#C8C8C8' : '#FFFFFF'}" [disabled]="DisableButton" (click)="applyFilter()">Apply</button>
     </div>
-    <div class="col-md-6" style="text-align: right">
+    <div class="col-md-3" style="text-align: right">
         <a style="height: 35px;margin: 0px;padding: 0px;">
             <!-- <button mat-raised-button style="padding-left: 8px;background-color: #F16950;min-width: 40px;width: 40px;" (click)= "sidenav.toggle()"><mat-icon style="color: white;font-size: 22px;padding-top: 2px;">filter_list</mat-icon></button> -->
             <button mat-raised-button style="background-color: #F16950;color: white;margin-left: 15px;" (click)="exportResUtil()">Export <mat-icon style="color: white;font-size: 20px;margin-top: 4px;">save_alt</mat-icon></button>
@@ -17,7 +34,7 @@
     </div>
 </div>
 <div class="col-12">
-    <div class="example-container" [ngStyle]="{'height' : (screenHeight-165)+'px'}" style="border: 1px solid black;">
+    <div class="example-container" [ngStyle]="{'height' : (screenHeight-210)+'px'}" style="border: 1px solid black;">
         <table mat-table [dataSource]="dataSource" matSort style="text-align: left;">
             <ng-container matColumnDef="Region">
                 <th mat-header-cell *matHeaderCellDef class="maintextSizes" mat-sort-header style="max-width: 100px;width: 100px;padding-left: 0px;"> Region </th>
@@ -100,6 +117,18 @@
                     <mat-form-field class="mat-form-wrap" style="text-align: center;" appearance="outline">
                         <mat-label style="text-align: center;">Working Days</mat-label>
                         <input style="font-weight: bold" matInput [formControl]="WorkingDaysFilter">
+                    </mat-form-field>
+                </th>
+            </ng-container>
+            <ng-container matColumnDef="Comments">
+                <th mat-header-cell *matHeaderCellDef class="maintextSizes" mat-sort-header style="max-width: 90px;width: 90px;"> Comments </th>
+                <td mat-cell *matCellDef="let element" class="texttd" style="max-width: 90px;width: 90px;"><div (click)="OpenComment(element.HierarchyID,element.Comments)" class="showlessText"> {{element.Comments}}</div></td>
+            </ng-container>
+            <ng-container matColumnDef="Comments_h">
+                <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="max-width: 90px;width: 90px;" [ngStyle]="{'background-color' : CommentsFilter.value == '' || CommentsFilter.value == null ? '#FFFFFF' : '#F5B7B1'}" >
+                    <mat-form-field class="mat-form-wrap" style="text-align: center;" appearance="outline">
+                        <mat-label style="text-align: center;">Comments</mat-label>
+                        <input style="font-weight: bold" matInput [formControl]="CommentsFilter">
                     </mat-form-field>
                 </th>
             </ng-container>

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit, Optional, ViewChild, ViewEncapsulation } from '@angular/core';
 import { DashboardServiceService } from 'src/app/dashboard-service.service';
 import { DashboardComponent } from '../dashboard/dashboard.component';
 import { Data } from 'src/app/Models/Responce';
@@ -10,7 +10,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { TrackerCommentdailog } from '../tracker/tracker.component';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { LivedashboardComponent } from '../livedashboard/livedashboard.component';
 export class MyFilter {
   Region : string;
@@ -20,6 +20,11 @@ export class MyFilter {
   Manager : string;
   WorkShedule : string;
   WorkingDays : string;
+  Comments : string;
+}
+export interface ResourceDialogData {
+  Dailog_ID : number;
+  Dailog_Comment : string;
 }
 @Component({
   selector: 'app-resource-utilization',
@@ -36,13 +41,16 @@ export class ResourceUtilizationComponent implements OnInit {
   Leaders = new FormControl();
   Workshedules = new FormControl();
   WorkingDays = new FormControl();
+  ProjectStatusFilter = new FormControl();
   LevelList : Level[];
   RegionList : Region[];
   LeaderList : Leader[];
   WorkSheduleList : WorkShedule[];
   WorkingDaysList : WorkingDay[];
-  masterregion : boolean;masterlevel : boolean;masterleader : boolean;mastershedule : boolean;masterdays : boolean;
-  SelectedLevel;SelectedRegion;SelectedLeader;SelectedShedule;Selecteddays;
+  masterProjectStatus : boolean;
+  ProjectStatusList : any = [];
+  // masterregion : boolean;masterlevel : boolean;masterleader : boolean;mastershedule : boolean;masterdays : boolean;
+  // SelectedLevel;SelectedRegion;SelectedLeader;SelectedShedule;Selecteddays;
   filterData : CHFilter[];
   GLOBAL_Rc;LOCAL_RC;APACR_RC;NORAMR_RC;LATAMR_RC;EMEAR_RC;
   GLOBAL_Rc_D;LOCAL_RC_D;APACR_RC_D;NORAMR_RC_D;LATAMR_RC_D;EMEAR_RC_D;
@@ -50,8 +58,8 @@ export class ResourceUtilizationComponent implements OnInit {
   Global_Count_D;Local_Count_D;APACR_Count_D;NORAMR_Count_D;LATAMR_Count_D;EMEAR_Count_D;
   C1stweek;C2ndweek;C3rdweek;C4thweek;C5thweek;C6thweek;C7thweek;C8thweek;C9thweek;C10thweek;C11thweek;C12thweek;
   c13thweek;c14thweek;c15thweek;c16thweek;c17thweek;c18thweek;c19thweek;c20thweek;c21thweek;c22thweek;c23thweek;c24thweek;
-  displayedColumns: string[] = ['Region','ProjectLevel','Level','Leader','Manager','WorkingDays','RelativeCapacity','TargetedUtilization','CapacityAvailable','TUWorkingDays','CapacityAvailableTUWorkingDays','AvgUtil','C1stweek','C2ndweek','C3rdweek','C4thweek','C5thweek','C6thweek','C7thweek','C8thweek','C9thweek','C10thweek','C11thweek','C12thweek','c13thweek','c14thweek','c15thweek','c16thweek','c17thweek','c18thweek','c19thweek','c20thweek','c21thweek','c22thweek','c23thweek','c24thweek'];
-  displayedColumns_h : string[] = ['Region_h','ProjectLevel_h','Level_h','Leader_h','Manager_h','WorkingDays_h','RelativeCapacity_h','TargetedUtilization_h','CapacityAvailable_h','TUWorkingDays_h','CapacityAvailableTUWorkingDays_h','AvgUtil_h','C1stweek_h'];
+  displayedColumns: string[] = ['Region','ProjectLevel','Level','Leader','Manager','WorkingDays','Comments','RelativeCapacity','TargetedUtilization','CapacityAvailable','TUWorkingDays','CapacityAvailableTUWorkingDays','AvgUtil','C1stweek','C2ndweek','C3rdweek','C4thweek','C5thweek','C6thweek','C7thweek','C8thweek','C9thweek','C10thweek','C11thweek','C12thweek','c13thweek','c14thweek','c15thweek','c16thweek','c17thweek','c18thweek','c19thweek','c20thweek','c21thweek','c22thweek','c23thweek','c24thweek'];
+  displayedColumns_h : string[] = ['Region_h','ProjectLevel_h','Level_h','Leader_h','Manager_h','WorkingDays_h','Comments_h','RelativeCapacity_h','TargetedUtilization_h','CapacityAvailable_h','TUWorkingDays_h','CapacityAvailableTUWorkingDays_h','AvgUtil_h','C1stweek_h'];
   //PdisplayedColumns: string[] = ['Region','Leader','Manager','Client_Name','PAvgUtil','C1stweek','C2ndweek','C3rdweek','C4thweek','C5thweek','C6thweek','C7thweek','C8thweek','C9thweek','C10thweek','C11thweek','C12thweek'];
   constructor(public service : DashboardServiceService,public dialog: MatDialog,public dashboard : LivedashboardComponent,public datepipe : DatePipe,public excelservice : ExcelService) {
     // set screenWidth on page load
@@ -70,7 +78,7 @@ export class ResourceUtilizationComponent implements OnInit {
     Leader : '',
     Manager : '',
     WorkShedule : '',
-    WorkingDays : '',};
+    WorkingDays : '',Comments : ''};
   RegionFilter = new FormControl();
   LevelFilter = new FormControl();
   ProjectLevelFilter = new FormControl();
@@ -78,6 +86,7 @@ export class ResourceUtilizationComponent implements OnInit {
   ManagerFilter = new FormControl();
   WorkSheduleFilter = new FormControl();
   WorkingDaysFilter = new FormControl();
+  CommentsFilter = new FormControl();
 
   @ViewChild(MatSort) sort: MatSort;
   // @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -95,7 +104,8 @@ export class ResourceUtilizationComponent implements OnInit {
         data.Leader.toString().trim().toLowerCase().indexOf(searchString.Leader.toLowerCase()) !== -1 &&
         data.Manager.toString().trim().toLowerCase().indexOf(searchString.Manager.toLowerCase()) !== -1 &&
         data.WorkShedule.toString().trim().toLowerCase().indexOf(searchString.WorkShedule.toLowerCase()) !== -1 &&
-        data.WorkingDays.toString().trim().toLowerCase().indexOf(searchString.WorkingDays.toLowerCase()) !== -1
+        data.WorkingDays.toString().trim().toLowerCase().indexOf(searchString.WorkingDays.toLowerCase()) !== -1 &&
+        data.Comments.toString().trim().toLowerCase().indexOf(searchString.Comments.toLowerCase()) !== -1
       )
     }
   }
@@ -143,6 +153,12 @@ export class ResourceUtilizationComponent implements OnInit {
       // this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolume).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
       this.FilteredCount = this.dataSource.filteredData.length;
     });
+    this.CommentsFilter.valueChanges.subscribe(value => {
+      this.filteredValues["Comments"] = value;
+      this.dataSource.filter = JSON.stringify(this.filteredValues);
+      // this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolume).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
+      this.FilteredCount = this.dataSource.filteredData.length;
+    });
     this.dataSource.filterPredicate = this.customFilterPredicate();
     // this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
@@ -175,34 +191,51 @@ export class ResourceUtilizationComponent implements OnInit {
     this.c23thweek = this.datepipe.transform(this.date.setDate(this.date.getDate()+7), "dd-MMM-yyyy");
     this.c24thweek = this.datepipe.transform(this.date.setDate(this.date.getDate()+7), "dd-MMM-yyyy");
     
-    this.service.CapacityHierarchyFilters().subscribe(data =>{
-      this.LevelList = data.Level;
-      this.SelectedLevel = this.LevelList.map(
-        data => data.Level
-      );
-      this.masterlevel = true;
-      this.RegionList = data.Region;
-      this.SelectedRegion = this.RegionList.map(
-        data => data.Region
-      );
-      this.masterregion = true;
-      this.LeaderList = data.Leader;
-      this.SelectedLeader = this.LeaderList.map(
-        data => data.Leader
-      );
-      this.masterleader = true;
-      this.WorkingDaysList = data.WorkingDays;
-      this.Selecteddays = this.WorkingDaysList.map(
-        data => data.WorkingDays
-      );
-      this.masterdays = true;
-      this.GetResUtil();
-      //this.WorkSheduleList = data.WorkShedule;
-    })
+    // this.service.CapacityHierarchyFilters().subscribe(data =>{
+    //   this.LevelList = data.Level;
+    //   this.SelectedLevel = this.LevelList.map(
+    //     data => data.Level
+    //   );
+    //   this.masterlevel = true;
+    //   this.RegionList = data.Region;
+    //   this.SelectedRegion = this.RegionList.map(
+    //     data => data.Region
+    //   );
+    //   this.masterregion = true;
+    //   this.LeaderList = data.Leader;
+    //   this.SelectedLeader = this.LeaderList.map(
+    //     data => data.Leader
+    //   );
+    //   this.masterleader = true;
+    //   this.WorkingDaysList = data.WorkingDays;
+    //   this.Selecteddays = this.WorkingDaysList.map(
+    //     data => data.WorkingDays
+    //   );
+    //   this.masterdays = true;
+    //   this.GetResUtil();
+    //   //this.WorkSheduleList = data.WorkShedule;
+    // })
+    this.ProjectStatusList = ["A-Active/Date Confirmed","HP-High Potential","N-Active/No Date Confirmed","P-Pipeline"];
+    this.ProjectStatusFilter.setValue(["A-Active/Date Confirmed","HP-High Potential","N-Active/No Date Confirmed","P-Pipeline"]);
+    this.masterProjectStatus = true;
+    this.P_statuslists = this.ProjectStatusList;
+    this.DisableButton = true;
+    this.getSelectedProjectStatus();
+    // data.FilterProjectStatus.forEach(item =>{
+    //   this.ProjectStatusList.push(item.ProjectStatus);
+    // })
+    this.GetResUtil();
+  }
+  P_statuslists : any;
+  DisableButton : boolean = true;
+  applyFilter(){
+    this.GetResUtil();
+    this.P_statuslists = this.ProjectStatusFilter.value;
+    this.DisableButton = true;
   }
   GetResUtil(){
     this.dashboard.ShowSpinnerHandler(true);
-    this.service.ResourceUtilization().subscribe(data =>{
+    this.service.ResourceUtilization(this.SelectedStatus).subscribe(data =>{
       if(data.code == 200){
         this.ResUtilData = data.Data;
         this.Global_Count = this.ResUtilData.filter(item => item.ProjectLevel === 'Global' && item.Level != 'Digital').length;
@@ -317,6 +350,53 @@ export class ResourceUtilizationComponent implements OnInit {
       }
     });
   }
+  checkUncheckProjectStatus(){
+    if(this.masterProjectStatus == true){
+      this.ProjectStatusFilter.setValue(this.ProjectStatusList);
+    }else{
+      this.ProjectStatusFilter.setValue("");
+    }
+    this.getSelectedProjectStatus();
+  }
+  onProjectStatuschange(){
+    if(this.ProjectStatusList.length == this.ProjectStatusFilter.value.length){
+      this.masterProjectStatus = true;
+    }else{
+      this.masterProjectStatus = false;
+    }
+    
+    this.getSelectedProjectStatus();
+  }
+  SelectedStatus : string = "";
+  getSelectedProjectStatus(){
+    var count = 0;
+    if(this.P_statuslists.length == this.ProjectStatusFilter.value.length){
+      for(let i = 0;i< this.P_statuslists.length;i++){
+        if(this.ProjectStatusFilter.value.includes(this.P_statuslists[i])){
+          count++;
+        }
+      }
+      if(this.P_statuslists.length == count){
+        this.DisableButton = true;
+      }else{
+        this.DisableButton = false;
+      }
+    }else{
+      this.DisableButton = false;
+    }
+    this.SelectedStatus = null;
+    for(let i=0;i<this.ProjectStatusFilter.value.length;i++){
+      if(this.SelectedStatus == null){
+        if(this.ProjectStatusFilter.value[i] == null || this.ProjectStatusFilter.value[i] == ""){
+          this.SelectedStatus = "";
+        }else{
+          this.SelectedStatus = this.ProjectStatusFilter.value[i];
+        }
+      }else{
+        this.SelectedStatus += ","+this.ProjectStatusFilter.value[i];
+      }
+    }
+  }
   openDialog(): void {
     const dialogRef = this.dialog.open(TrackerCommentdailog, {
       // width: '400px',
@@ -334,6 +414,29 @@ export class ResourceUtilizationComponent implements OnInit {
   Dailog_Comment : string;
   Dailog_RevenueID : string;
   Dailog_Client : string;
+  OpenComment(HierarchyID : number,comment : string){
+    let data: ResourceDialogData ={
+      Dailog_ID: HierarchyID,
+      Dailog_Comment : comment
+    }
+    const dialogRef = this.dialog.open(ResourceComment, {
+      // width: '400px',
+      data : data
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if(result.SelectionType == "Update"){
+        for(let i = 0;i<this.dataSource.data.length;i++){
+          if(this.dataSource.data[i].HierarchyID == result.HierarchyID){
+            if(result.Comments == null || result.Comments == undefined){
+            }else{
+              this.dataSource.data[i].Comments = result.Comments;
+            }
+            break;
+          }
+        }
+      }
+    });
+  }
   ShowComment(Dailog_Client : string,Dailog_RevenueID : string,Dailog_Comment : string){
     this.Dailog_Client = Dailog_Client;
     this.Dailog_RevenueID = Dailog_RevenueID;
@@ -379,6 +482,7 @@ export class ResourceUtilizationComponent implements OnInit {
         'Manager' : o.Manager,
         'Manager Level' : o.Level,
         'Working Days' : o.WorkingDays,
+        'Comments' : o.Comments,
         'Relative Capacity' : o.RelativeCapacity,
         'Targeted Utilization' : o.TargetedUtilization,
         'Capacity Available' : o.CapacityAvailable,
@@ -413,54 +517,109 @@ export class ResourceUtilizationComponent implements OnInit {
     });
     this.excelservice.exportAsExcelFile(CustomizedData, 'ResourceUtilization');
   }
-  checkUncheckLevel(){
-    if(this.masterlevel == true){
-      this.SelectedLevel = null;
-      this.SelectedLevel = this.LevelList.map(
-        data => data.Level
-      );
+  // checkUncheckLevel(){
+  //   if(this.masterlevel == true){
+  //     this.SelectedLevel = null;
+  //     this.SelectedLevel = this.LevelList.map(
+  //       data => data.Level
+  //     );
+  //   }else{
+  //     this.SelectedLevel = null;
+  //   }
+  // }
+  // checkUncheckRegion(){
+  //   if(this.masterregion == true){
+  //     this.SelectedRegion = null;
+  //     this.SelectedRegion = this.RegionList.map(
+  //       data => data.Region
+  //     );
+  //   }else{
+  //     this.SelectedRegion = null;
+  //   }
+  // }
+  // checkUncheckLeader(){
+  //   if(this.masterleader == true){
+  //     this.SelectedLeader = null;
+  //     this.SelectedLeader = this.LeaderList.map(
+  //       data => data.Leader
+  //     );
+  //   }else{
+  //     this.SelectedLeader = null;
+  //   }
+  // }
+  // checkUncheckshedule(){
+  //   if(this.mastershedule == true){
+  //     this.SelectedShedule = null;
+  //     this.SelectedShedule = this.WorkSheduleList.map(
+  //       data => data.WorkShedule
+  //     );
+  //   }else{
+  //     this.SelectedShedule = null;
+  //   }
+  // }
+  // checkUncheckworkdays(){
+  //   if(this.masterdays == true){
+  //     this.Selecteddays = null;
+  //     this.Selecteddays = this.WorkingDaysList.map(
+  //       data => data.WorkingDays
+  //     );
+  //   }else{
+  //     this.Selecteddays = null;
+  //   }
+  // }
+}
+
+@Component({
+  selector: 'app-resource-comment',
+  templateUrl: './resource-comment.component.html',
+  styleUrls: ['./resource-comment.component.css'],
+  encapsulation: ViewEncapsulation.None
+})
+export class ResourceComment {
+  constructor(
+    public datepipe : DatePipe,
+    public service : DashboardServiceService,
+    public dialogRef: MatDialogRef<ResourceComment>,
+    @Inject(MAT_DIALOG_DATA) public data: ResourceDialogData) {
+      this.screenWidth = window.innerWidth;
+      this.screenHeight = window.innerHeight;
+      window.onresize = () => {
+        // set screenWidth on screen size change
+        this.screenWidth = window.innerWidth;
+        this.screenHeight = window.innerHeight;
+      };
+      this.HierarchyID = data.Dailog_ID;
+      this.Comments = data.Dailog_Comment;
+    }
+    screenWidth
+    screenHeight
+    HierarchyID;
+    Comments;
+    Comment;
+    DisableButton : boolean = true;
+  @ViewChild(MatSort) sort: MatSort;
+  OnCloseClick(): void {
+    this.dialogRef.close({SelectionType : 'Cancel'});
+  }
+  ngOnInit(){
+    this.Comment = this.Comments;
+  }
+  onCommentChanged(){
+    if(this.Comments == this.Comment){
+      this.DisableButton = true;
     }else{
-      this.SelectedLevel = null;
+      this.DisableButton = false;
     }
   }
-  checkUncheckRegion(){
-    if(this.masterregion == true){
-      this.SelectedRegion = null;
-      this.SelectedRegion = this.RegionList.map(
-        data => data.Region
-      );
-    }else{
-      this.SelectedRegion = null;
-    }
-  }
-  checkUncheckLeader(){
-    if(this.masterleader == true){
-      this.SelectedLeader = null;
-      this.SelectedLeader = this.LeaderList.map(
-        data => data.Leader
-      );
-    }else{
-      this.SelectedLeader = null;
-    }
-  }
-  checkUncheckshedule(){
-    if(this.mastershedule == true){
-      this.SelectedShedule = null;
-      this.SelectedShedule = this.WorkSheduleList.map(
-        data => data.WorkShedule
-      );
-    }else{
-      this.SelectedShedule = null;
-    }
-  }
-  checkUncheckworkdays(){
-    if(this.masterdays == true){
-      this.Selecteddays = null;
-      this.Selecteddays = this.WorkingDaysList.map(
-        data => data.WorkingDays
-      );
-    }else{
-      this.Selecteddays = null;
+  UpdateComment(){
+    if(this.DisableButton == false){
+      this.service.UpdateHierarchyComment(this.HierarchyID,this.Comments).subscribe(data =>{
+        if(data.code == 200){
+          this.dialogRef.close({SelectionType : 'Update',HierarchyID : this.HierarchyID,Comments : this.Comments});
+        }else{
+          alert(data.message)
+        }
+      })
     }
   }
 }

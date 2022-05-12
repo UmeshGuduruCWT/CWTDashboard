@@ -30,10 +30,9 @@ import { PerformanceLeaderComponent } from './AfterLogin/performance-leader/perf
 //import { SelectAutocompleteModule } from 'mat-select-autocomplete';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { TrackerComponent,TrackerCommentdailog } from './AfterLogin/tracker/tracker.component';
-import { ResourceUtilizationComponent } from './AfterLogin/resource-utilization/resource-utilization.component';
+import { ResourceComment, ResourceUtilizationComponent } from './AfterLogin/resource-utilization/resource-utilization.component';
 import { CapacityHierarchyComponent, CapacityHierarchyDailog, DeleteUserDailog } from './AfterLogin/capacity-hierarchy/capacity-hierarchy.component';
 import { ProspectComponent } from './AfterLogin/prospect/prospect.component';
-import { CLRReportComponent} from './AfterLogin/clrreport/clrreport.component';
 import { CLRExportComponent } from './clrexport/clrexport.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { LivedashboardComponent } from './AfterLogin/livedashboard/livedashboard.component';
@@ -72,7 +71,7 @@ import { RollingNPSComponent } from './AfterLogin/rolling-nps/rolling-nps.compon
     CapacityManagementComponent,
     ESowReportComponent,
     CommentDialogComponent,
-    StageGateTestingComponent,ImplementationProjectStatusdailog,TrackerCommentdailog,
+    StageGateTestingComponent,ImplementationProjectStatusdailog,TrackerCommentdailog,ResourceComment,
     ConfigDeleteDialog,ManagerPojectDetails,DigitalManagerDetails,
     LessonsLearntComponent,EltDailog, CLRCommentdailog,LessonsLearntdailog, 
     PriorMonthData,DigitalTeamdailog,AuditLogdailog,RecordLevelAuditLogdailog,
@@ -83,8 +82,8 @@ import { RollingNPSComponent } from './AfterLogin/rolling-nps/rolling-nps.compon
     TrackerComponent,ResourceUtilizationComponent,
     CapacityHierarchyComponent,CapacityHierarchyDailog,ProfileDialog,
     EditUserAccess,GrantAccessDialog,DeleteUserDailog,DeleteNPSClient,
-    ProspectComponent,AdminDeleteDialog,ProjectTeamDailog,
-    CLRReportComponent,ReplicateDailog,
+    ProspectComponent,AdminDeleteDialog,
+    ProjectTeamDailog,ReplicateDailog,
     CLRExportComponent,
     LiveHomePageComponent,
     ProfileComponent,
@@ -113,7 +112,7 @@ import { RollingNPSComponent } from './AfterLogin/rolling-nps/rolling-nps.compon
     BrowserAnimationsModule, HttpClientModule,NgMultiSelectDropDownModule.forRoot()
     //,SelectAutocompleteModule
   ],
-  entryComponents: [ELTReportComponent, EltDailog,PriorMonthData,CLRCommentdailog,ManagerPojectDetails,DigitalManagerDetails,AuditLogdailog,RecordLevelAuditLogdailog,ConfigDeleteDialog,DigitalTeamdailog,MatTableFilterModule,TrackerCommentdailog,LessonsLearntdailog,ImplementationProjectStatusdailog, CommentsDialog, DataDialog, AddingUser, DeleteUser, CapacityHierarchyDailog,ProfileDialog,EditUserAccess,GrantAccessDialog,DeleteUserDailog,DeleteNPSClient,AdminDeleteDialog,ProjectTeamDailog,ReplicateDailog],
+  entryComponents: [ELTReportComponent, EltDailog,PriorMonthData,CLRCommentdailog,ResourceComment,ManagerPojectDetails,DigitalManagerDetails,AuditLogdailog,RecordLevelAuditLogdailog,ConfigDeleteDialog,DigitalTeamdailog,MatTableFilterModule,TrackerCommentdailog,LessonsLearntdailog,ImplementationProjectStatusdailog, CommentsDialog, DataDialog, AddingUser, DeleteUser, CapacityHierarchyDailog,ProfileDialog,EditUserAccess,GrantAccessDialog,DeleteUserDailog,DeleteNPSClient,AdminDeleteDialog,ProjectTeamDailog,ReplicateDailog],
   providers: [DatePipe, ExcelService],
   bootstrap: [AppComponent]
 })

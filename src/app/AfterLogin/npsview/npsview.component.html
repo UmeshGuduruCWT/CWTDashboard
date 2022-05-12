@@ -173,69 +173,6 @@
                 </mat-select>
             </mat-form-field>
         </div>
-        <!-- <div class="col-md-4">
-            <mat-form-field class="mat-form" appearance="outline">
-                <mat-label style="font-size: 15px;">Single Resource</mat-label>
-                <mat-select [(value)]="SingleResource">
-                    <mat-option value="Yes">Yes</mat-option>
-                    <mat-option value="No">No</mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div> -->
-        <!-- <div class="col-md-4">
-            <mat-form-field class="mat-form" appearance="outline">
-                <mat-label style="font-size: 15px;">DQS</mat-label>
-                <mat-select [(value)]="DQS">
-                    <mat-option value="---">---</mat-option>
-                    <mat-option value="Bhushan Bambre">Bhushan Bhambre</mat-option>
-                    <mat-option value="Izabela Hiller">Izabela Hiller</mat-option>
-                    <mat-option value="Jacek Bojakowski">Jacek Bojakowski</mat-option>
-                    <mat-option value="Izabela Hiller">JUAN GOMEZ</mat-option>
-                    <mat-option value="Izabela Hiller">Katarzyna Michalska</mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div> -->
-        <!-- <div class="col-md-4">
-            <mat-form-field class="mat-form" appearance="outline" >
-                <mat-label style="font-size: 15px;">DSD</mat-label>
-                <mat-select [(value)]="DSD">
-                    <mat-option value="---">---</mat-option>
-                    <mat-option value="NICHOLAS HATHERALL">NICHOLAS HATHERALL</mat-option>
-                    <mat-option value="Stephanie Denote">Stephanie Denote</mat-option>
-                    <mat-option value="Todd Kuball">Todd Kuball</mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div> -->
-        <!-- <div class="col-md-4">
-            <mat-form-field class="mat-form" appearance="outline" >
-                <mat-label style="font-size: 15px;">Online Team</mat-label>
-                <mat-select [(value)]="OnlineTeam">
-                    <mat-option value="---">---</mat-option>
-                    <mat-option value="Andrea Wysemborski">Andrea Wysemborski</mat-option>
-                    <mat-option value="Anette Brydensholt">Anette Brydensholt</mat-option>
-                    <mat-option value="Agnieszka Tatkowska">Agnieszka Tatkowska</mat-option>
-                    <mat-option value="Bartosz Maj">Bartosz Maj</mat-option>
-                    <mat-option value="CENISE ROLAND">CENISE ROLAND</mat-option>
-                    <mat-option value="Christina Fischer">Christina Fischer</mat-option>
-                    <mat-option value="Conrad Hessing">Conrad Hessing</mat-option>
-                    <mat-option value="Daniel Konwerski">Daniel Konwerski</mat-option>
-                    <mat-option value="David Morganti">David Morganti</mat-option>
-                    <mat-option value="Izabela Hiller">Izabela Hiller</mat-option>
-                    <mat-option value="Janet Stennis">Janet Stennis</mat-option>
-                    <mat-option value="Jeanette Lifvergren">Jeanette Lifvergren</mat-option>
-                    <mat-option value="Joanna Clare">Joanna Clare</mat-option>
-                    <mat-option value="Justyna Szczesniak">Justyna Szczesniak</mat-option>
-                    <mat-option value="Milosz Pawlowski">Milosz Pawlowski</mat-option>
-                    <mat-option value="Mukul Yadav">Mukul Yadav</mat-option>
-                    <mat-option value="OUARDIA HEDJEM">OUARDIA HEDJEM</mat-option>
-                    <mat-option value="Ricardo Rios">Ricardo Rios</mat-option>
-                    <mat-option value="ROBERTA ALBERGATI">ROBERTA ALBERGATI</mat-option>
-                    <mat-option value="Tenille Lockyer">Tenille Lockyer</mat-option>
-                    <mat-option value="Wolfgang Koch">Wolfgang Koch</mat-option>
-                    <mat-option value="Victor Fernandes">Victor Fernandes</mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div> -->
         <mat-divider class="col-md-12" style="border: 0.8px solid rgb(190, 190, 190);margin-top: 10px;"></mat-divider>
         <div class="col-md-12" style="margin-top: 10px;">
             <label class="heading" style="margin-bottom: 10px;padding-left: 10px;"> Survey Response </label>
@@ -283,8 +220,18 @@
             <mat-form-field class="mat-form" appearance="outline">
                 <mat-label style="font-size: 15px;">What had a Positive Experience during your Implementation</mat-label>
                 <mat-select [formControl]="NpsCommentOne" (selectionChange)="oncommentonechange()">
-                    <mat-option *ngFor="let commentone of Nps_Comment_One" [value]="commentone">{{commentone}}</mat-option>
+                    <mat-option>
+                        <ngx-mat-select-search
+                          [formControl]="commentonesearch"
+                          placeholderLabel=""
+                          noEntriesFoundLabel="'no match found'">
+                        </ngx-mat-select-search>
+                    </mat-option>
+                    <mat-option *ngFor="let commentone of CommentOneNPS | async" [value]="commentone.NPSComment">{{commentone.NPSComment}}</mat-option>
                 </mat-select>
+                <!-- <mat-select [formControl]="NpsCommentOne" (selectionChange)="oncommentonechange()">
+                    <mat-option *ngFor="let commentone of Nps_Comment_One" [value]="commentone">{{commentone}}</mat-option>
+                </mat-select> -->
             </mat-form-field>
         </div>
         <div class="col-md-4" *ngIf="ShowCommentOne">
@@ -303,8 +250,18 @@
             <mat-form-field class="mat-form" appearance="outline" >
                 <mat-label style="font-size: 15px;">What can we improve to make your experience better</mat-label>
                 <mat-select [formControl]="NpsCommentwo" (selectionChange)="oncommenttwochange()">
-                    <mat-option *ngFor="let commenttwo of Nps_COmment_Two" [value]="commenttwo">{{commenttwo}}</mat-option>
+                    <mat-option>
+                        <ngx-mat-select-search
+                          [formControl]="commenttwosearch"
+                          placeholderLabel=""
+                          noEntriesFoundLabel="'no match found'">
+                        </ngx-mat-select-search>
+                    </mat-option>
+                    <mat-option *ngFor="let commenttwo of CommentTwoNPS | async" [value]="commenttwo.NPSComment">{{commenttwo.NPSComment}}</mat-option>
                 </mat-select>
+                <!-- <mat-select [formControl]="NpsCommentwo" (selectionChange)="oncommenttwochange()">
+                    <mat-option *ngFor="let commenttwo of Nps_COmment_Two" [value]="commenttwo">{{commenttwo}}</mat-option>
+                </mat-select> -->
             </mat-form-field>
         </div>
         <div class="col-md-4" *ngIf="ShowCommentTwo">
@@ -323,8 +280,18 @@
             <mat-form-field class="mat-form" appearance="outline" >
                 <mat-label style="font-size: 15px;">What can we do to go above expectations</mat-label>
                 <mat-select [formControl]="NpsCommentthree" (selectionChange)="oncommentthreechange()">
-                    <mat-option *ngFor="let commentthree of Nps_Comment_Three" [value]="commentthree">{{commentthree}}</mat-option>
+                    <mat-option>
+                        <ngx-mat-select-search
+                          [formControl]="commentthreesearch"
+                          placeholderLabel=""
+                          noEntriesFoundLabel="'no match found'">
+                        </ngx-mat-select-search>
+                    </mat-option>
+                    <mat-option *ngFor="let commentthree of CommentThreeNPS | async" [value]="commentthree.NPSComment">{{commentthree.NPSComment}}</mat-option>
                 </mat-select>
+                <!-- <mat-select [formControl]="NpsCommentthree" (selectionChange)="oncommentthreechange()">
+                    <mat-option *ngFor="let commentthree of Nps_Comment_Three" [value]="commentthree">{{commentthree}}</mat-option>
+                </mat-select> -->
             </mat-form-field>
         </div>
         <div class="col-md-4" *ngIf="ShowCommentThree">

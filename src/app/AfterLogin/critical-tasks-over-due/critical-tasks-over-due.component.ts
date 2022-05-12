@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { DashboardServiceService } from '../../dashboard-service.service';
 import { Chart } from 'chart.js';
-import { ProjectStatus, CriticalOverDue, GroupName, ProjectLevel, Region, Country } from '../../Models/CtoFilters';
+import { ProjectStatus, CriticalOverDue, GroupName, ProjectLevel, Region, Country, AssigneFullName } from '../../Models/CtoFilters';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort} from '@angular/material/sort';
 import { ExcelService } from '../../excel.service';
@@ -17,9 +17,9 @@ import { DashboardComponent } from '../dashboard/dashboard.component';
 
 export class CriticalTasksOverDueComponent implements OnInit {
   //SelectedStatus : any; SelectedOverDue : any; 
-  SelectedGroupName : any; SelectedLevel : any; SelectedRegions : any;
+  SelectedGroupName : any; SelectedLevel : any; SelectedRegions : any; SelectedAssigne : any;
   //masterstatus : boolean; masteroverdue : boolean;
-  mastergname : boolean; masterlevel  :boolean; masterregion : boolean; 
+  mastergname : boolean; masterlevel  :boolean; masterregion : boolean; masterassigne : boolean; 
   //mastercountry : boolean; SelectedCountry : any;
   // statusList : ProjectStatus[];
   // statusListSelected : ProjectStatus[];
@@ -31,6 +31,8 @@ export class CriticalTasksOverDueComponent implements OnInit {
   levelListSelected : ProjectLevel[];
   regionList : Region[];
   regionListSelected : Region[];
+  AssigneFullNameList : AssigneFullName[];
+  AssigneFullNameListSelected : AssigneFullName[];
   //countryList : Country[];
   Apply_disable : boolean;
   dataSource;
@@ -43,6 +45,7 @@ export class CriticalTasksOverDueComponent implements OnInit {
   screenWidth : number;
   screenHeight : number;
   LoginUID : string;
+  FilteredCount;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   displayedColumns: string[] = ['Workspace_Title', 'Milestone_Title_Country___Est_Go_Live_Date','Task_Title','Milestone__Project_Status','Milestone__Region','Workspace__Project_Level','Group_Name','Milestone_Due_Date','Task_Overdue'];
   constructor(public datepipe : DatePipe,public service : DashboardServiceService, public dashboard : LivedashboardComponent, private excelService:ExcelService) {
@@ -72,13 +75,16 @@ export class CriticalTasksOverDueComponent implements OnInit {
         this.regionList = data.Region;
         this.masterregion = true;
         this.getSelectedRegion();
+        this.AssigneFullNameList = data.AssigneFullName;
+        this.masterassigne = true;
+        this.getSelectedAssigne();
         this.SetGraph();
       }
     });
     this.Apply_disable = true;
   }
   SetGraph(){
-    if(this.SelectedGroupName == null || this.SelectedLevel == null || this.SelectedRegions == null){
+    if(this.SelectedGroupName == null || this.SelectedLevel == null || this.SelectedRegions == null || this.SelectedAssigne == null){
       alert("Please Select all Filters");
     }else{
       this.dashboard.ShowSpinnerHandler(true);
@@ -86,10 +92,11 @@ export class CriticalTasksOverDueComponent implements OnInit {
       this.ProjectCount = [];
       this.GroupNameCount = [];
       this.GroupNames = [];
-      this.service.CriticalTaskOverDue(this.SelectedGroupName,this.SelectedLevel,this.SelectedRegions).subscribe(data =>{
+      this.service.CriticalTaskOverDue(this.SelectedGroupName,this.SelectedLevel,this.SelectedRegions,this.SelectedAssigne).subscribe(data =>{
         this.Apply_disable = true;
         if(data.code == 200){
           this.dataSource = new MatTableDataSource(data.Data);
+          this.FilteredCount = this.dataSource.data.length;
           this.dataSource.sort = this.sort;
         }else{
           this.dataSource = null;
@@ -97,7 +104,7 @@ export class CriticalTasksOverDueComponent implements OnInit {
         this.dashboard.ShowSpinnerHandler(false);
       })
       this.dashboard.ShowSpinnerHandler(true);
-      this.service.RegionWiseCount(this.SelectedGroupName,this.SelectedLevel,this.SelectedRegions).subscribe(data =>{
+      this.service.RegionWiseCount(this.SelectedGroupName,this.SelectedLevel,this.SelectedRegions,this.SelectedAssigne).subscribe(data =>{
         this.Apply_disable = true;
         var Options = {
           legend: {
@@ -202,7 +209,7 @@ export class CriticalTasksOverDueComponent implements OnInit {
         }
         this.dashboard.ShowSpinnerHandler(false);
       });
-      this.service.GroupNameCountCTO(this.SelectedGroupName,this.SelectedLevel,this.SelectedRegions).subscribe(data =>{
+      this.service.GroupNameCountCTO(this.SelectedGroupName,this.SelectedLevel,this.SelectedRegions,this.SelectedAssigne).subscribe(data =>{
         this.Apply_disable = true;
         var Options = {
           legend: {
@@ -322,7 +329,7 @@ export class CriticalTasksOverDueComponent implements OnInit {
   }
   exportData(){
     this.dashboard.ShowSpinnerHandler(true);
-    this.service.CriticalTaskOverDue(this.SelectedGroupName,this.SelectedLevel,this.SelectedRegions).subscribe(data =>{
+    this.service.CriticalTaskOverDue(this.SelectedGroupName,this.SelectedLevel,this.SelectedRegions,this.SelectedAssigne).subscribe(data =>{
       if(data.code == 200){
         for(let i=0;i < data.Data.length;i++){
           if(data.Data[i].Estimated_Go_Live == null){
@@ -474,7 +481,11 @@ export class CriticalTasksOverDueComponent implements OnInit {
     for(let i=0;i<this.groupnameList.length;i++){
       if(this.groupnameList[i].isSelected == true){
         if(this.SelectedGroupName == null){
-          this.SelectedGroupName = this.groupnameList[i].Group_Name;
+          if(this.groupnameList[i].Group_Name == null){
+            this.SelectedGroupName = ""
+          }else{
+            this.SelectedGroupName = this.groupnameList[i].Group_Name;
+          }
         }else{
           this.SelectedGroupName += ","+this.groupnameList[i].Group_Name;
         }
@@ -512,7 +523,11 @@ export class CriticalTasksOverDueComponent implements OnInit {
     for(let i=0;i<this.levelList.length;i++){
       if(this.levelList[i].isSelected == true){
         if(this.SelectedLevel == null){
-          this.SelectedLevel = this.levelList[i].Workspace__Project_Level;
+          if(this.levelList[i].Workspace__Project_Level == null){
+            this.SelectedLevel = ""
+          }else{
+            this.SelectedLevel = this.levelList[i].Workspace__Project_Level;
+          }
         }else{
           this.SelectedLevel += ","+this.levelList[i].Workspace__Project_Level;
         }
@@ -550,7 +565,11 @@ export class CriticalTasksOverDueComponent implements OnInit {
     for(let i=0;i<this.regionList.length;i++){
       if(this.regionList[i].isSelected == true){
         if(this.SelectedRegions == null){
-          this.SelectedRegions = this.regionList[i].Milestone__Region;
+          if(this.regionList[i].Milestone__Region == null){
+            this.SelectedRegions = ""
+          }else{
+            this.SelectedRegions = this.regionList[i].Milestone__Region;
+          }
         }else{
           this.SelectedRegions += ","+this.regionList[i].Milestone__Region;
         }
@@ -567,6 +586,37 @@ export class CriticalTasksOverDueComponent implements OnInit {
       }
     }
     this.regionSelected();
+  }
+  checkUncheckAssigne() {
+    for (var i = 0; i < this.AssigneFullNameList.length; i++) {
+      this.AssigneFullNameList[i].isSelected = this.masterassigne;
+    }
+    this.getSelectedAssigne();
+  }
+  AssigneSelected() {
+    this.masterassigne = this.AssigneFullNameList.every(function(item:any) {
+        return item.isSelected == true;
+    })
+    this.getSelectedAssigne();
+  }
+  getSelectedAssigne(){
+    this.Apply_disable = false;
+    this.SelectedAssigne = null;
+    for(let i=0;i<this.AssigneFullNameList.length;i++){
+      if(this.AssigneFullNameList[i].isSelected == true){
+        if(this.SelectedAssigne == null){
+          if(this.AssigneFullNameList[i].AssigneFullName == null){
+            this.SelectedAssigne = ""
+          }else{
+            this.SelectedAssigne = this.AssigneFullNameList[i].AssigneFullName;
+          }
+        }else{
+          this.SelectedAssigne += ","+this.AssigneFullNameList[i].AssigneFullName;
+        }
+      }else{
+      }
+    }
+    this.AssigneFullNameListSelected = this.AssigneFullNameList.filter(s => s.isSelected == true);
   }
   //End of Region Methods
   //Start of Quarter Methods

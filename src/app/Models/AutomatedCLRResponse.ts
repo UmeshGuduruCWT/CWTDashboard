@@ -96,6 +96,7 @@ export class DataCLR {
     PerCompleted : string;
     CountryStatus: string;
     ProjectLevel: string;
+    Project_Level : string;
     CompletedDate?: Date;
     MilestoneDueDate : Date;
     MilestoneDueDate_c : string;
@@ -163,7 +164,7 @@ export class DataCLR {
     OppVolume_c : string;
     New_Business_volume__US___c : string;
     RevenueVolumeUSD_c : string;
-    GoLiveDate_c: string;
+    GoLiveDate_c: Date;
     CompletedDate_c : string;
     EMEA_Accrual_date_c : string;
     Implementation_Fee__PSD_c :string;

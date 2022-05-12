@@ -291,14 +291,23 @@
                 </th>
             </ng-container>
             <ng-container matColumnDef="GoLiveDate_c">
-                <th mat-header-cell *matHeaderCellDef class="maintextSizes" mat-sort-header style="background-color: #FFC000;max-width: 120px;width: 120px;"> Go Live Date </th>
-                <td mat-cell *matCellDef="let element" style="max-width: 120px;width: 120px;" [ngStyle]="{'background-color' : GoLiveDate_cFilter.value == '' || GoLiveDate_cFilter.value == null ? '#FFFFFF' : '#F3F189','color' : element.CheckComments.indexOf('Go-Live') > 0 ? '#EC7063' : '#000000','font-weight' : element.CheckComments.indexOf('Go-Live') > 0 ? 'bold' : 'normal'}" class="texttd"> {{element.GoLiveDate_c}} </td>
+                <th mat-header-cell *matHeaderCellDef class="maintextSizes" mat-sort-header style="background-color: #FFC000;max-width: 200px;width: 200px;"> Go Live Date </th>
+                <td mat-cell *matCellDef="let element" class="texttd" style="max-width: 200px;width: 200px;"  [ngStyle]="{'background-color' : GoLiveDate_cSFilter.value == '' || GoLiveDate_cSFilter.value == null ? '#FFFFFF' : '#F3F189','color' : element.CheckComments.indexOf('Go-Live') > 0 ? '#EC7063' : '#000000','font-weight' : element.CheckComments.indexOf('Go-Live') > 0 ? 'bold' : 'normal'}" > {{element.GoLiveDate_c | date: 'yyyy-MM-dd'}} </td>
             </ng-container>
             <ng-container matColumnDef="GoLiveDate_c_h">
-                <th mat-header-cell *matHeaderCellDef colspan="1" style="max-width: 120px;width: 120px;" class="formheader"  [ngStyle]="{'background-color' : GoLiveDate_cFilter.value == '' || GoLiveDate_cFilter.value == null ? '#FFFFFF' : '#F5B7B1'}" >
-                    <mat-form-field class="mat-form-wrap" appearance="outline">
-                        <mat-label>YYYY-MMM-DD</mat-label>
+                <th mat-header-cell *matHeaderCellDef colspan="1" style="max-width: 200px;width: 200px;" class="formheader"  [ngStyle]="{'background-color' : GoLiveDate_cSFilter.value == '' || GoLiveDate_cSFilter.value == null ? '#FFFFFF' : '#F5B7B1'}" >
+                    <!-- <mat-form-field class="mat-form-wrap" appearance="outline">
+                        <mat-label>YYYY-MM-DD</mat-label>
                         <input style="font-weight: bold" matInput [formControl]="GoLiveDate_cFilter">
+                    </mat-form-field> -->
+                    <mat-form-field class="mat-form-wrap" appearance="outline">
+                        <mat-label>Go-Live Date Range</mat-label>
+                        <mat-date-range-input [rangePicker]="picker">
+                            <input matStartDate [formControl]="GoLiveDate_cSFilter" placeholder="Start" disabled>
+                            <input matEndDate [formControl]="GoLiveDate_cEFilter" placeholder="End" disabled>
+                        </mat-date-range-input>
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-date-range-picker #picker color="primary" disabled="false"></mat-date-range-picker>
                     </mat-form-field>
                 </th>
             </ng-container>

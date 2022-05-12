@@ -132,6 +132,10 @@ export interface DigitalOBTManager {
     Manager : string;
     isSelected: boolean;
 }
+export interface NPSComment {
+    NPSComment : string;
+    isSelected: boolean;
+}
 export interface AutomatedCLRFilters {
     message: string;
     code: number;
@@ -165,4 +169,7 @@ export interface AutomatedCLRFilters {
     FilterDigitalTeam: FilterDigitalTeam[];
     FilterRegionWiseCountries: FilterRegionWiseCountry[];
     FilterGlobalDigitalOBTLead: FilterGlobalDigitalOBTLead[];
+    NPSCommentOne: NPSComment[];
+    NPSCommentTwo: NPSComment[];
+    NPSCommentThree: NPSComment[];
 }

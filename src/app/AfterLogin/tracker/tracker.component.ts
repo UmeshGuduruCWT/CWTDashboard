@@ -17,7 +17,7 @@ export interface TrackerDialogData {
 }
 export class MyFilter {
   RevenueID : string;
-  Region : string;
+  Region : string[];
   Country : string;
   GManager : string;
   RManager : string;
@@ -25,9 +25,9 @@ export class MyFilter {
   Client : string;
   iMeetWorkspaceTitle : string;
   RevenueVolume : string;
-  Project_Level : string;
+  Project_Level : string[];
   ImplementationType : string;
-  ProjectStatus : string;
+  ProjectStatus : string[];
   GlobalDigitalOBTLead : string;
   RegionalDigitalOBTLead : string;
   LocalDigitalOBTLead : string;
@@ -71,7 +71,7 @@ export class TrackerComponent implements OnInit {
   // displayedColumns: string[] = ['Region', 'Country','GManager','RManager','LManager','Client','iMeetWorkspaceTitle','RevenueVolume','Project_Level','ImplementationType','ProjectStatus','Proposed_Start_Date','Proposed_End_Date','Go_Live_Date','ProjectEffort','CompleteDuration','PerCompleted'];
   // displayedColumns_h: string[] = ['Region_h', 'Country_h','GManager_h','RManager_h','LManager_h','Client_h','iMeetWorkspaceTitle_h','RevenueVolume_h','Project_Level_h','ImplementationType_h','ProjectStatus_h','Proposed_Start_Date_h','Proposed_End_Date_h','Go_Live_Date_h','ProjectEffort_h','CompleteDuration_h','PerCompleted_h'];
   filteredValues : MyFilter = { RevenueID : '',
-    Region : '',
+    Region : [],
     Country : '',
     GManager : '',
     RManager : '',
@@ -79,9 +79,9 @@ export class TrackerComponent implements OnInit {
     Client : '',
     iMeetWorkspaceTitle : '',
     RevenueVolume : '',
-    Project_Level : '',
+    Project_Level : [],
     ImplementationType : '',
-    ProjectStatus : '',
+    ProjectStatus : [],
     GlobalDigitalOBTLead : '',
     RegionalDigitalOBTLead : '',
     LocalDigitalOBTLead : '',
@@ -133,6 +133,13 @@ export class TrackerComponent implements OnInit {
   Milestone_Due_DateFilter = new FormControl();
   OwnershipTypeFilter = new FormControl();
   TrackerData : Data[];
+  RegionList : any = [];
+  ProjectLevelList : any = [];
+  ProjectStatusList : any = [];
+  masterRegion : boolean;
+  // masterRegion : boolean;
+  masterProjectStatus : boolean;
+  masterProjectLevel : boolean;
   dataSource;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -141,9 +148,42 @@ export class TrackerComponent implements OnInit {
   customFilterPredicate() {
     return (data: Data, filter: string): boolean => {
       let searchString = JSON.parse(filter) as MyFilter;
+      let isRegionAvailable = false;
+      let isProjectLevelAvailable = false;
+      let isProjectStatusAvailable = false;
+      if (searchString.Region.length) {
+        for (const d of searchString.Region) {
+          if (data.Region.toString().trim() == d) {
+            isRegionAvailable = true;
+          }
+        }
+      } else {
+        isRegionAvailable = true;
+      }
+      if (searchString.ProjectStatus.length) {
+        for (const d of searchString.ProjectStatus) {
+          if (data.ProjectStatus.toString().trim() == d) {
+            isProjectStatusAvailable = true;
+          }
+        }
+      } else {
+        isProjectStatusAvailable = true;
+      }
+      if (searchString.Project_Level.length) {
+        for (const d of searchString.Project_Level) {
+          if (data.Project_Level.toString().trim() == d) {
+            isProjectLevelAvailable = true;
+          }
+        }
+      } else {
+        isProjectLevelAvailable = true;
+      }
       return (
+        isRegionAvailable &&
+        isProjectStatusAvailable &&
+        isProjectLevelAvailable &&
         data.RevenueID.toString().trim().toLowerCase().indexOf(searchString.RevenueID.toLowerCase()) !== -1 &&
-        data.Region.toString().trim().toLowerCase().indexOf(searchString.Region.toLowerCase()) !== -1 &&
+        // data.Region.toString().trim().toLowerCase().indexOf(searchString.Region.toLowerCase()) !== -1 &&
         data.Country.toString().trim().toLowerCase().indexOf(searchString.Country.toLowerCase()) !== -1 &&
         data.GManager.toString().trim().toLowerCase().indexOf(searchString.GManager.toLowerCase()) !== -1 &&
         data.RManager.toString().trim().toLowerCase().indexOf(searchString.RManager.toLowerCase()) !== -1 &&
@@ -151,9 +191,9 @@ export class TrackerComponent implements OnInit {
         data.Client.toString().trim().toLowerCase().indexOf(searchString.Client.toLowerCase()) !== -1 &&
         data.iMeetWorkspaceTitle.toString().trim().toLowerCase().indexOf(searchString.iMeetWorkspaceTitle.toLowerCase()) !== -1 &&
         data.RevenueVolume.toString().trim().toLowerCase().indexOf(searchString.RevenueVolume.toLowerCase()) !== -1 &&
-        data.Project_Level.toString().trim().toLowerCase().indexOf(searchString.Project_Level.toLowerCase()) !== -1 &&
+        // data.Project_Level.toString().trim().toLowerCase().indexOf(searchString.Project_Level.toLowerCase()) !== -1 &&
         data.ImplementationType.toString().trim().toLowerCase().indexOf(searchString.ImplementationType.toLowerCase()) !== -1 &&
-        data.ProjectStatus.toString().trim().toLowerCase().indexOf(searchString.ProjectStatus.toLowerCase()) !== -1 &&
+        // data.ProjectStatus.toString().trim().toLowerCase().indexOf(searchString.ProjectStatus.toLowerCase()) !== -1 &&
         data.GlobalDigitalOBTLead.toString().trim().toLowerCase().indexOf(searchString.GlobalDigitalOBTLead.toLowerCase()) !== -1 &&
         data.RegionalDigitalOBTLead.toString().trim().toLowerCase().indexOf(searchString.RegionalDigitalOBTLead.toLowerCase()) !== -1 &&
         data.LocalDigitalOBTLead.toString().trim().toLowerCase().indexOf(searchString.LocalDigitalOBTLead.toLowerCase()) !== -1 &&
@@ -392,6 +432,11 @@ export class TrackerComponent implements OnInit {
     this.service.Tracker().subscribe(data =>{
       if(data.code == 200){
         this.TrackerData = data.Data;
+        data.Data.forEach(item =>{
+          this.ProjectLevelList.push(item.Project_Level);
+          this.ProjectStatusList.push(item.ProjectStatus);
+          this.RegionList.push(item.Region);
+        })
         for(let i = 0;i<data.Data.length;i++){
           if(this.TrackerData[i].Proposed_End_Date__Formula_ == null){
             this.TrackerData[i].Proposed_End_Date = "---";
@@ -450,6 +495,9 @@ export class TrackerComponent implements OnInit {
           this.TrackerData[i].C24thWeek = this.TrackerData[i].C24thWeek ?? 0;
           this.TrackerData[i].AvgUtil = (this.TrackerData[i].FirstWeek+this.TrackerData[i].SecondWeek+this.TrackerData[i].ThirdWeek+this.TrackerData[i].FourthWeek)/4
         }
+        this.RegionList = this.RegionList.filter((item,index) => this.RegionList.indexOf(item) === index);
+        this.ProjectStatusList = this.ProjectStatusList.filter((item,index) => this.ProjectStatusList.indexOf(item) === index);
+        this.ProjectLevelList = this.ProjectLevelList.filter((item,index) => this.ProjectLevelList.indexOf(item) === index);
         this.dataSource = null;
         this.dataSource = new MatTableDataSource(this.TrackerData);
         this.onFilterValueChange();
@@ -517,6 +565,48 @@ export class TrackerComponent implements OnInit {
   }
   ngOnInit(): void {
     this.GetData();
+  }
+  onRegionchange(){
+    if(this.RegionList.length == this.RegionFilter.value.length){
+      this.masterRegion = true;
+    }else{
+      this.masterRegion = false;
+    }
+  }
+  checkUncheckRegion(){
+    if(this.masterRegion == true){
+      this.RegionFilter.setValue(this.RegionList);
+    }else{
+      this.RegionFilter.setValue("");
+    }
+  }
+  onProjectStatuschange(){
+    if(this.ProjectStatusList.length == this.ProjectStatusFilter.value.length){
+      this.masterProjectStatus = true;
+    }else{
+      this.masterProjectStatus = false;
+    }
+  }
+  checkUncheckProjectStatus(){
+    if(this.masterProjectStatus == true){
+      this.ProjectStatusFilter.setValue(this.ProjectStatusList);
+    }else{
+      this.ProjectStatusFilter.setValue("");
+    }
+  }
+  checkUncheckProjectLevel(){
+    if(this.masterProjectLevel == true){
+      this.Project_LevelFilter.setValue(this.ProjectLevelList);
+    }else{
+      this.Project_LevelFilter.setValue("");
+    }
+  }
+  onProjectLevelchange(){
+    if(this.ProjectLevelList.length == this.Project_LevelFilter.value.length){
+      this.masterProjectLevel = true;
+    }else{
+      this.masterProjectLevel = false;
+    }
   }
   exportTracker(){
     this.dashboard.ShowSpinnerHandler(true);

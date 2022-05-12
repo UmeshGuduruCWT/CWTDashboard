@@ -21,7 +21,6 @@ import { TrackerComponent } from './AfterLogin/tracker/tracker.component';
 import { ResourceUtilizationComponent } from './AfterLogin/resource-utilization/resource-utilization.component';
 import { CapacityHierarchyComponent } from './AfterLogin/capacity-hierarchy/capacity-hierarchy.component';
 import { ProspectComponent } from './AfterLogin/prospect/prospect.component';
-import { CLRReportComponent } from './AfterLogin/clrreport/clrreport.component';
 import { CLRExportComponent } from './clrexport/clrexport.component';
 import { LivedashboardComponent } from './AfterLogin/livedashboard/livedashboard.component';
 import { LiveHomePageComponent } from './AfterLogin/live-home-page/live-home-page.component';

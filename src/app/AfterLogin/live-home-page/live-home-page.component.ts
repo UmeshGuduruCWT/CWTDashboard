@@ -4,6 +4,7 @@ import { Countries } from 'src/app/Models/HomeData';
 import { DashboardServiceService } from 'src/app/dashboard-service.service';
 import { LivedashboardComponent } from '../livedashboard/livedashboard.component';
 import { FormControl } from '@angular/forms';
+import { DashboardComponent } from '../dashboard/dashboard.component';
 
 @Component({
   selector: 'app-live-home-page',

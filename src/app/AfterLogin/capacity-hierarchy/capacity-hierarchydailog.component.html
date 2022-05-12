@@ -35,7 +35,13 @@
     </mat-form-field>
     <mat-form-field class="col-md-3" style="margin-top: 10px;">
         <mat-label>Role</mat-label>
-        <input matInput [(ngModel)]="ImplementationLevel" name="ImplementationLevel" required>
+        <mat-select [(ngModel)]="ImplementationLevel" required>
+            <mat-option value="Digital">Digital</mat-option>
+            <mat-option value="PM 1">PM 1</mat-option>
+            <mat-option value="PM 2">PM 2</mat-option>
+            <mat-option value="PM 3">PM 3</mat-option>
+        </mat-select>
+        <!-- <input matInput [(ngModel)]="ImplementationLevel" name="ImplementationLevel" required> -->
     </mat-form-field>
     <mat-form-field class="col-md-3" style="margin-top: 10px;">
         <mat-label>Work Schedule</mat-label>

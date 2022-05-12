@@ -22,6 +22,10 @@ export interface Country {
     Milestone__Country: string;
     isSelected: boolean;
 }
+export interface AssigneFullName {
+    AssigneFullName: string;
+    isSelected: boolean;
+}
 export interface CtoFilters {
     message: string;
     code: number;
@@ -31,4 +35,5 @@ export interface CtoFilters {
     ProjectLevel: ProjectLevel[];
     Region: Region[];
     Country: Country[];
+    AssigneFullName : AssigneFullName[];
 }

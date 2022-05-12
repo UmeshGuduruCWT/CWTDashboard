@@ -204,11 +204,12 @@ export class DashboardServiceService {
     let params = new HttpParams();
     return this.http.post<CtoFilters>(`${this.Baseurl+"CriticalTaskFiltersList"}`,params);
   }
-  public CriticalTaskOverDue(Group_Name : string,Workspace__Project_Level : string,Milestone__Region : string){
+  public CriticalTaskOverDue(Group_Name : string,Workspace__Project_Level : string,Milestone__Region : string,Milestone__Assignee__Full_Name : string){
     let params = new HttpParams();
     params = params.append('Group_Name',Group_Name);
     params = params.append('Workspace__Project_Level',Workspace__Project_Level);
     params = params.append('Milestone__Region',Milestone__Region);
+    params = params.append('Milestone__Assignee__Full_Name',Milestone__Assignee__Full_Name);
     // params = params.append('Milestone__Country',Milestone__Country);
     return this.http.post<CTOResponce>(`${this.Baseurl+"CriticalTaskOverDue"}`,params);
   }
@@ -221,23 +222,22 @@ export class DashboardServiceService {
     params = params.append('Group_Name',Group_Name);
     params = params.append('Workspace__Project_Level',Workspace__Project_Level);
     params = params.append('Milestone__Region',Milestone__Region);
-    // params = params.append('Milestone__Country',Milestone__Country);
     return this.http.post<CTOResponce>(`${this.Baseurl+"StatusWiseCount"}`,params);
   }
-  public RegionWiseCount(Group_Name : string,Workspace__Project_Level : string,Milestone__Region : string){
+  public RegionWiseCount(Group_Name : string,Workspace__Project_Level : string,Milestone__Region : string,Milestone__Assignee__Full_Name : string){
     let params = new HttpParams();
     params = params.append('Group_Name',Group_Name);
     params = params.append('Workspace__Project_Level',Workspace__Project_Level);
     params = params.append('Milestone__Region',Milestone__Region);
-    // params = params.append('Milestone__Country',Milestone__Country);
+    params = params.append('Milestone__Assignee__Full_Name',Milestone__Assignee__Full_Name);
     return this.http.post<CTOResponce>(`${this.Baseurl+"RegionWiseCount"}`,params);
   }
-  public GroupNameCountCTO(Group_Name : string,Workspace__Project_Level : string,Milestone__Region : string){
+  public GroupNameCountCTO(Group_Name : string,Workspace__Project_Level : string,Milestone__Region : string,Milestone__Assignee__Full_Name : string){
     let params = new HttpParams();
     params = params.append('Group_Name',Group_Name);
     params = params.append('Workspace__Project_Level',Workspace__Project_Level);
     params = params.append('Milestone__Region',Milestone__Region);
-    // params = params.append('Milestone__Country',Milestone__Country);
+    params = params.append('Milestone__Assignee__Full_Name',Milestone__Assignee__Full_Name);
     return this.http.post<CTOResponce>(`${this.Baseurl+"GroupNameCountCTO"}`,params);
   }
   // public ImeetTableNameResponce(){
@@ -661,8 +661,9 @@ export class DashboardServiceService {
   }
   //End Of Hierarchy Api's
 
-  public ResourceUtilization(){
+  public ResourceUtilization(Comments : string){
     let params = new HttpParams();
+    params = params.append('Comments',Comments);
     return this.http.post<Responce>(`${this.Baseurl+"ResourceUtilization"}`,params);
   }
   public Tracker(){
@@ -722,6 +723,12 @@ export class DashboardServiceService {
     params = params.append('InsertedBy',InsertedBy);
     params = params.append('TargetedUtilization',TargetedUtilization+"");
     return this.http.post<Responce>(`${this.Baseurl+"UpdateCapacityHierarchy"}`,params);
+  }
+  public UpdateHierarchyComment(HID : number,Comments : string){
+    let params = new HttpParams();
+    params = params.append('HID',HID+"")
+    params = params.append('Comments',Comments);
+    return this.http.post<Responce>(`${this.Baseurl+"UpdateHierarchyComment"}`,params);
   }
   public GetProspect(){
     let params = new HttpParams();
