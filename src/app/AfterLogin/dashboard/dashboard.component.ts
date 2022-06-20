@@ -49,7 +49,6 @@ export class DashboardComponent implements OnInit{
     this.service.UserReportAccess(localStorage.getItem("UID")).subscribe(data=>{
       if(data.code == 200){
         this.NpsCount = data.RevenueID;
-        console.log(this.NpsCount);
         if(this.NpsCount > 0){
           this.npshidden = false;
         }else{

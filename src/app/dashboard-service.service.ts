@@ -42,9 +42,9 @@ import { PerformanceResponce } from './Models/PerformanceResponce';
   providedIn: 'root'
 })
 export class DashboardServiceService {
-  // Baseurl = 'http://localhost:50421/';
+  Baseurl = 'http://localhost:50421/';
   // Baseurl = 'http://10.180.27.32/';
-  Baseurl = 'http://www.cwtdashboard.com/';
+  // Baseurl = 'http://www.cwtdashboard.com/';
   // ImeetURl = 'https://edge.imeetcentral.com/v1/reports/WzM1LDE1MzYxXQ?contextId=647';
   httpOptions = {
     headers: new HttpHeaders({

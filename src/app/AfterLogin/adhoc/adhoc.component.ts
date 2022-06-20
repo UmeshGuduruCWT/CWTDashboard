@@ -423,9 +423,9 @@ export class AdhocComponent implements OnChanges, OnInit {
       if(this.GlobalCISHRFeedSpecialist.value == null){
         this.GlobalCISHRFeedSpecialist.setValue("");
       }
-      if(this.ProjectStatus.value == "C-Closed" && GoLiveDate > date){
-        alert("Project Should not be Closed in future Dates");
-      }else{
+      // if(this.ProjectStatus.value == "C-Closed" && GoLiveDate > date){
+      //   alert("Project Should not be Closed in future Dates");
+      // }else{
         if(this.ButtonName == "Save"){
           this.service.AdhocInsert(this.RevenueID+"",this.Client,StartDate,GoLiveDate,this.Country.value,this.Region.value,this.Comments,this.ProjectStatus.value,this.GlobalCISOBTLead.value,this.RegionalCISOBTLead.value,this.LocalDigitalOBTLead.value,this.GlobalCISPortraitLead.value,this.RegionalCISPortraitLead.value,this.GlobalCISHRFeedSpecialist.value,this.GDS.value,this.ComplexityScore+"",this.ActivityType,"Active",this.LoginUID).subscribe(data =>{
             if(data.code == 200){
@@ -453,7 +453,7 @@ export class AdhocComponent implements OnChanges, OnInit {
           this.service.UsersUsageofReports(localStorage.getItem("UID"),"Adhoc","Update").subscribe(data =>{
           })
         }
-      }
+      // }
     }else{
       alert(this.ErrorMessage);
     }

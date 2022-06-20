@@ -1,24 +1,13 @@
-<!-- <div class="center" [ngStyle]="{'height' : (screenHeight-60)+'px','line-height' : (screenHeight-60)+'px'}">
-    <a>
-        <img [src]="imageUrl" style="height: 135px;">
-    </a>
-</div> -->
-
-<!-- <div class="main_wrap">
-    <div class="inner" style="text-align: center">
-        <a class="loader_wrap"><img [src]="imageUrl"  style="cursor: pointer;"></a>
-    </div>
-</div> -->
 <div class="row" style="margin: 0px;padding: 0px;">
     <div class="row col-md-12" style="margin: 0px;padding: 0px;text-align: center;">
-        <div class="col-md-3">
-        </div>
-        <div class="col-md-6" style="margin-top: 25px;margin-bottom: 25px;">
+        <!-- <div class="col-md-3">
+        </div> -->
+        <!-- <div class="col-md-6" style="margin-top: 25px;margin-bottom: 25px;">
             <a style="margin : 0 auto;"><img [src]="imageUrl" style="cursor: pointer;width: 150px;"></a>
-        </div>
-        <div class="col-md-3">
-        </div>
-        <div class="col-md-12" style="margin-bottom: 15px;">
+        </div> -->
+        <!-- <div class="col-md-3">
+        </div> -->
+        <div class="col-md-12" style="margin-top: 25px;margin-bottom: 15px;">
             <button mat-raised-button [ngStyle]="{'background-color' : GlobalData == true ? 'white' : '#F16950','color' : GlobalData == true ? '#F16950' : 'white'}" style="border : 1px solid #F16950;width: 100px;" (click)="GlobalClick()">Global</button>
             <button mat-raised-button [ngStyle]="{'background-color' : APACData == true ? 'white' : '#F16950','color' : APACData == true ? '#F16950' : 'white'}" style="margin-left: 25px;border : 1px solid #F16950;width: 100px" (click)="APACClick()">APAC</button>
             <button mat-raised-button [ngStyle]="{'background-color' : LATAMData == true ? 'white' : '#F16950','color' : LATAMData == true ? '#F16950' : 'white'}" style="margin-left: 25px;border : 1px solid #F16950;width: 100px" (click)="LATAMClick()">LATAM</button>
@@ -45,12 +34,38 @@
         </div>
         <div class="col-md-12">
             <label style="color: red;font-weight:  bold;"> *Does Not Include Partner Markets</label>
-            <!-- <label> *</label> -->
         </div>
-    <!-- </div>
-    <div class="row col-md-12" style="margin-left: 15px;"> -->
-        <!-- <div class="col-md-1">
-        </div> -->
+        <div class="col-md-10" style="margin-left: 7.9%;background-color: #3498DB;text-align: center;border-top : 2px solid white;border-bottom : 2px solid white;height : 50px">
+            <p style="color: white;font-size : 18px;padding-top:12px;letter-spacing: 1px;">NPS</p>
+        </div>
+        <div class="col-md-2" style="margin-left: 7%;margin-bottom: 25px;">
+            <mat-card class=" example-card mat-elevation-z6" style="background-color: #212F3D;height: 170px;margin-top: 50px;">
+                <div style="position :absolute;top : 20px; right : 25px;">
+                    <mat-icon *ngIf="NPSScoreReached" style="color:#FEFEFF;" aria-label="Side nav toggle icon" style="font-size: 35px;font-weight: bold;color: green;">arrow_upward</mat-icon>
+                    <mat-icon *ngIf="!NPSScoreReached" style="color:#FEFEFF;" aria-label="Side nav toggle icon" style="font-size: 35px;font-weight: bold;color: red;">arrow_downward</mat-icon>
+                </div>
+                <label class="main_heading" style="color: #F7DC6F;">Net Promoter Score</label><br>
+                <label class="sub_heading" style="color: #F7DC6F;">Year Till date</label><br>
+                <mat-divider style="width: 90%;align-items: center;margin-left: 15px;text-align: center;"></mat-divider>
+                <div class="row col-md-12" style="margin: 15px 0px 0px 0px;padding : 0px;">
+                    <div class="col-md-6" style="margin: 0px;padding : 0px;">
+                        <label class="number_style" >{{NPSScore}}</label>
+                        <label class="des_style" style="color: #58D68D;">NPS Score</label>
+                    </div>
+                    <div class="col-md-6" style="margin: 0px;padding : 0px;">
+                        <label class="number_style" >{{ResponseReceived}}</label>
+                        <label class="des_style" style="color: #5DADE2;">Response Received</label>
+                    </div>
+                </div>
+            </mat-card>
+        </div>
+        <div class="col-md-8">
+            <canvas id="rollling_nps_chart" height="70px">
+            </canvas>
+        </div>
+        <div class="col-md-10" style="margin-left: 7.9%;background-color: #3498DB;text-align: center;border-top : 2px solid white;border-bottom : 2px solid white;height : 50px;margin-top: 20px;">
+            <p style="color: white;font-size : 18px;padding-top:12px;letter-spacing: 1px;">Projects & Volumes</p>
+        </div>
         <div class="col-md-2" style="margin-left: 7%;">
             <mat-card class=" example-card mat-elevation-z6" style="background-color: #212F3D;">
                 <label class="main_heading" style="color: #F7DC6F;">Year through last month</label><br>
@@ -123,8 +138,6 @@
             </mat-card>
         </div>
         <label style="margin-top: 85px;font-weight: bold;">=</label>
-        <!-- <div class="col-md-3">
-        </div> -->
         <div class="col-md-2">
             <mat-card class="example-card mat-elevation-z6" style="background-color: #212F3D;">
                 <label class="main_heading" style="color: #7DCEA0;">Expected Current Year </label><br>
@@ -144,13 +157,11 @@
         </div>
         <div class="col-md-1">
         </div>
-        <div class="col-10" style="margin-top: 15px;margin-bottom: 15px;">
+        <div class="col-md-10" style="margin-top: 15px;margin-bottom: 15px;">
             <mat-divider></mat-divider>
         </div>
         <div class="col-md-1">
         </div>
-    <!-- </div>
-    <div class="row col-md-12" style="margin-left: 15px;"> -->
         <div class="col-md-2" style="margin-left: 7%;">
             <mat-card class="example-card mat-elevation-z6" style="background-color: #212F3D;">
                 <label class="main_heading" style="color: #DC7633;">Future Years </label><br>
@@ -223,8 +234,6 @@
             </mat-card>
         </div>
         <label style="margin-top: 85px;font-weight: bold;">=</label>
-        <!-- <div class="col-md-3">
-        </div> -->
         <div class="col-md-2">
             <mat-card class="example-card mat-elevation-z6" style="background-color: #212F3D;">
                 <label class="main_heading" style="color: #7DCEA0;">Potential</label><br>
@@ -244,60 +253,3 @@
         </div>
     </div>
 </div>
-<!-- <div class="main_wrap">
-    <div class="inner" style="text-align: center">
-        <div class="loader_wrap">
-            <div class=" row" style="margin: 0px;padding: 0px;text-align: center;">
-                <a style="margin : 0 auto;"><img [src]="imageUrl" style="cursor: pointer;width: 150px;"></a>
-            </div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-4">
-                        <mat-card class="example-card mat-elevation-z6" style="float: right;height: 130px;text-align: center;background-color: #212F3D">
-                            <label class="heading_text">YTD Volume</label><br>
-                            <label class="heading_text">(Closed)</label><br>
-                            <label class="text_color" style="color : #229954">{{ClosedRevenue}}</label>
-                        </mat-card>
-                    </div>
-                    <div class="col-md-4">
-                        <mat-card class="example-card mat-elevation-z6" style="margin: 20px auto;height: 130px;text-align: center;color: white;background-color: #212F3D">
-                            <label class="heading_text">YTD Volume</label><br>
-                            <label class="heading_text">(Active)</label><br>
-                            <label class="text_color" style="color: #2E86C1">{{ActiveRevenue}}</label>
-                        </mat-card>
-                    </div>
-                    <div class="col-md-4">
-                        <mat-card class="example-card mat-elevation-z6" style="float: left;height: 130px;text-align: center;background-color: #212F3D">
-                            <label class="heading_text">Volume</label><br>
-                            <label class="heading_text">(Pipeline, Hold, No Date Confirmed)</label><br>
-                            <label class="text_color" style="color : #229954">{{otherRevenue}}</label>
-                        </mat-card>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <mat-card class="example-card mat-elevation-z6" style="float: right;height: 130px;text-align: center;color: white;background-color: #212F3D">
-                            <label class="heading_text">Volume for Current Month Top 25 Clients</label>
-                            <label class="heading_text">(Active / Closed)</label><br>
-                            <label class="text_color" style="color: #2E86C1;padding-top: 0px;">{{CurrentMonth}}</label>
-                        </mat-card>
-                    </div>
-                    <div class="col-md-4">
-                        <mat-card class="example-card mat-elevation-z6" style="margin: 20px auto;height: 130px;text-align: center;background-color: #212F3D">
-                            <label class="heading_text">Volume for Next Month Top 25 Clients</label>
-                            <label class="heading_text">(Active / Closed)</label><br>
-                            <label class="text_color" style="color : #229954;padding-top: 0px;">{{NextMonth}}</label>
-                        </mat-card>
-                    </div>
-                    <div class="col-md-4">
-                        <mat-card class="example-card mat-elevation-z6" style="float: left;height: 130px;text-align: center;color: white;background-color: #212F3D">
-                            <label class="heading_text">Volume for Rest of the Year Top 25 Clients</label>
-                            <label class="heading_text">(Active / Closed/ N-Active)</label><br>
-                            <label class="text_color" style="color: #2E86C1;padding-top: 0px;">$270M</label>
-                        </mat-card>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div> -->

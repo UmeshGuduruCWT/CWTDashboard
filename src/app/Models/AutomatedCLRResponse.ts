@@ -78,6 +78,8 @@ export class DataCLR {
     Pipeline_status: string;
     Pipeline_comments : string;
     Service_configuration : string;
+    Service_location : string;
+    GlobalCISDQSLead : string;
     OBT_Reseller___Direct : string;
     CreatedDate : Date;
     CreatedDate_c : string;

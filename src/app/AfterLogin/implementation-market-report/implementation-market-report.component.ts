@@ -1419,7 +1419,6 @@ export class ImplementationMarketReportComponent implements OnInit {
           this.NovTotal = Math.round(this.MonthlyTotalRevenueData[0].CWNovember).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
           this.DecTotal = Math.round(this.MonthlyTotalRevenueData[0].CWDecember).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
           this.MonthsTotal = Math.round(this.MonthlyTotalRevenueData[0].CWTotal).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
-          
           this.JanTotal_f = Math.round(this.MonthlyTotalRevenueData[0].CWJanuary-this.MonthlyTotalRevenueData[0].LWJanuary).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3),
           this.FebTotal_f = Math.round(this.MonthlyTotalRevenueData[0].CWFebruary-this.MonthlyTotalRevenueData[0].LWFebruary).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3), 
           this.MarTotal_f = Math.round(this.MonthlyTotalRevenueData[0].CWMarch-this.MonthlyTotalRevenueData[0].LWMarch).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3),

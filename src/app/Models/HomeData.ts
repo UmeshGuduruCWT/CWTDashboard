@@ -30,6 +30,8 @@ export interface HomeData{
     PotentialRecords: number;
     data? : any;
     Countries : Countries[];
+    NpsData : any;
+    RollingNpsData : any;
 }
 export interface Countries{
     Country : string;

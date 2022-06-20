@@ -139,6 +139,18 @@
                     </mat-form-field>
                 </th>
             </ng-container>
+            <ng-container matColumnDef="Service_location">
+                <th mat-header-cell *matHeaderCellDef class="maintextSizes" mat-sort-header  style="background-color: #16A085;color: white;max-width: 140px;width: 140px;" > Service Location </th>
+                <td mat-cell *matCellDef="let element" style="max-width: 140px;width: 140px;" [ngStyle]="{'background-color' : Service_locationFilter.value == '' || Service_locationFilter.value == null ? '#FFFFFF' : '#F3F189'}" class="texttd"><label (click)="ShowComment(element.Client,element.RevenueID,element.Service_location)" class="showlessText" style="width: 120px;"> {{element.Service_location}}</label> </td>
+            </ng-container>
+            <ng-container matColumnDef="Service_location_h">
+                <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="max-width: 140px;width: 140px;" [ngStyle]="{'background-color' : Service_locationFilter.value == '' || Service_locationFilter.value == null ? '#FFFFFF' : '#F5B7B1'}">
+                    <mat-form-field class="mat-form-wrap" appearance="outline">
+                        <mat-label>Service Location</mat-label>
+                        <input style="font-weight: bold" matInput [formControl]="Service_locationFilter">
+                    </mat-form-field>
+                </th>
+            </ng-container>
             <ng-container matColumnDef="Service_configuration">
                 <th mat-header-cell *matHeaderCellDef class="maintextSizes" mat-sort-header  style="background-color: #16A085;color: white;max-width: 140px;width: 140px;" > Service Configuration </th>
                 <td mat-cell *matCellDef="let element" style="max-width: 140px;width: 140px;" [ngStyle]="{'background-color' : Service_configurationFilter.value == '' || Service_configurationFilter.value == null ? '#FFFFFF' : '#F3F189'}" class="texttd"><label (click)="ShowComment(element.Client,element.RevenueID,element.Service_configuration)" class="showlessText" style="width: 120px;"> {{element.Service_configuration}}</label> </td>
@@ -312,7 +324,7 @@
                 </th>
             </ng-container>
             <ng-container matColumnDef="ProjectStart_ForCycleTime_c">
-                <th mat-header-cell *matHeaderCellDef class="maintextSizes" mat-sort-header style="background-color: #FFC000;max-width: 120px;width: 120px;"> Project Start Date </th>
+                <th mat-header-cell *matHeaderCellDef class="maintextSizes" mat-sort-header style="background-color: #FFC000;max-width: 120px;width: 120px;" matTooltip="Task Type: Project start, if the task status is 'Completed' then the start date is the task completed date, if the status is 'To Do' then the start date is the task due date"> Project Start Date </th>
                 <td mat-cell *matCellDef="let element" style="max-width: 120px;width: 120px;" [ngStyle]="{'background-color' : ProjectStartDate_cFilter.value == '' || ProjectStartDate_cFilter.value == null ? '#FFFFFF' : '#F3F189','color' : element.CheckComments.indexOf('Project Start') > 0 ? '#EC7063' : '#000000','font-weight' : element.CheckComments.indexOf('Project Start') > 0 ? 'bold' : 'normal'}" class="texttd"> {{element.ProjectStart_ForCycleTime_c}} </td>
             </ng-container>
             <ng-container matColumnDef="ProjectStartDate_c_h">
@@ -482,6 +494,18 @@
                     <mat-form-field class="mat-form-wrap" appearance="outline">
                         <mat-label>Local Project Manager</mat-label>
                         <input style="font-weight: bold" matInput [formControl]="AssigneeFullNameFilter">
+                    </mat-form-field>
+                </th>
+            </ng-container>
+            <ng-container matColumnDef="GlobalCISDQSLead">
+                <th mat-header-cell *matHeaderCellDef class="maintextSizes" mat-sort-header  style="background-color: #FFC000;max-width: 140px;width: 140px;" > Global DQS Lead</th>
+                <td mat-cell *matCellDef="let element" style="max-width: 140px;width: 140px;" [ngStyle]="{'background-color' : GlobalCISDQSLeadFilter.value == '' || GlobalCISDQSLeadFilter.value == null ? '#FFFFFF' : '#F3F189'}" class="texttd"><label (click)="ShowComment(element.Client,element.RevenueID,element.GlobalCISDQSLead)" class="showlessText" style="width: 120px;"> {{element.GlobalCISDQSLead}}</label> </td>
+            </ng-container>
+            <ng-container matColumnDef="GlobalCISDQSLead_h">
+                <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="max-width: 140px;width: 140px;" [ngStyle]="{'background-color' : GlobalCISDQSLeadFilter.value == '' || GlobalCISDQSLeadFilter.value == null ? '#FFFFFF' : '#F5B7B1'}">
+                    <mat-form-field class="mat-form-wrap" appearance="outline">
+                        <mat-label>Global DQS Lead</mat-label>
+                        <input style="font-weight: bold" matInput [formControl]="GlobalCISDQSLeadFilter">
                     </mat-form-field>
                 </th>
             </ng-container>
@@ -764,7 +788,7 @@
                         <mat-select [formControl]="Sales_Stage_NameFilter" multiple (selectionChange)="onSalesStageNamechange()">
                             <mat-select-trigger>
                                 {{Sales_Stage_NameFilter.value ? Sales_Stage_NameFilter.value[0] : ''}}
-                                <span *ngIf="Implementation_TypeFilter.value?.length > 1" class="example-additional-selection">
+                                <span *ngIf="Sales_Stage_NameFilter.value?.length > 1" class="example-additional-selection">
                                   (+{{Sales_Stage_NameFilter.value.length - 1}} {{Sales_Stage_NameFilter.value?.length === 2 ? 'Sales stage Name' : 'Sales stage Names'}})
                                 </span>
                             </mat-select-trigger>
@@ -1058,7 +1082,7 @@
                         <mat-select [formControl]="DataSourceTypeFilter" multiple (selectionChange)="onDatasourceTypechange()">
                             <mat-select-trigger>
                                 {{DataSourceTypeFilter.value ? DataSourceTypeFilter.value[0] : ''}}
-                                <span *ngIf="Implementation_TypeFilter.value?.length > 1" class="example-additional-selection">
+                                <span *ngIf="DataSourceTypeFilter.value?.length > 1" class="example-additional-selection">
                                   (+{{DataSourceTypeFilter.value.length - 1}} {{DataSourceTypeFilter.value?.length === 2 ? 'Datasource Type' : 'Datasource Types'}})
                                 </span>
                             </mat-select-trigger>

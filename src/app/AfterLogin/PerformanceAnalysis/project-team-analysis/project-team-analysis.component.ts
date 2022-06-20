@@ -6,7 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { DashboardServiceService } from 'src/app/dashboard-service.service';
 import { ExcelService } from 'src/app/excel.service';
 import { Chart } from 'chart.js';
-import 'chartjs-plugin-labels';
+// import 'chartjs-plugin-labels';
 import { FilterGlobalProjectManager, FilterLocalProjectManager, FilterProjectLevel, FilterQuarter, FilterRegion, FilterRegionalProjectManager, FilterYears } from 'src/app/Models/AutomatedCLRFilters';
 import { DashboardComponent } from '../../dashboard/dashboard.component';
 import { LivedashboardComponent } from '../../livedashboard/livedashboard.component';

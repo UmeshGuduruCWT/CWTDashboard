@@ -28,7 +28,7 @@ export class ELTReportComponent implements OnInit {
   Dailog_Client : string;
   Dailog_Year : string;
   Dailog_Month : string;
-  displayedColumns_c : string[] = ['Client','APAC_volume','EMEA_volume','LATAM_volume','NORAM_volume','CurrentMonth_s','PriorMonthElt_s','Delta_s','TotalAcountVolume_s','Comments'];//'PreviousYear_s','Status'
+  displayedColumns_c : string[] = ['Client','APAC_volume','EMEA_volume','LATAM_volume','NORAM_volume','CurrentMonth_s','PriorMonthElt_s','Delta_s','TotalAcountVolume_s','EltStatus','Comments'];//'PreviousYear_s','Status'
   displayedColumns_n : string[] = ['Client','APAC_volume','EMEA_volume','LATAM_volume','NORAM_volume','CurrentMonth_s','EltStatus','TotalAcountVolume_s','Comments'];//'PreviousYear_s',
   displayedColumns_Ry : string[] = ['Client', 'Month1_s','Month2_s','RemainingMonths','TotalMonths','EltStatus','TotalAcountVolume_s','Comments'];//'PreviousYear_s',
   dataSource_c;
@@ -206,6 +206,18 @@ export class ELTReportComponent implements OnInit {
         if(this.CurrentMonthData[i].Comments == null || this.CurrentMonthData[i].Comments == ""){
           this.CurrentMonthData[i].Comments = this.CurrentMonthData[i].RegionComment + " " + Math.round(this.CurrentMonthData[i].RevenueComment).toLocaleString("en-US",{style : "currency",currency:"USD"}).slice(0,-3);
         }else{
+        }
+        if(this.CurrentMonthData[i].EltStatus.includes("On Track")){
+          this.CurrentMonthData[i].EltStatusColor = "green";
+        }else if(this.CurrentMonthData[i].EltStatus.includes("Possible Risk")){
+          this.CurrentMonthData[i].EltStatusColor = "orange";
+          //this.NextMonthData[i].TotalAcountVolume_s = this.NextMonthData[i].TotalAcountVolume.toLocaleString("en-US",{style : "currency",currency:"USD"}).slice(0,-3);
+        }else if(this.CurrentMonthData[i].EltStatus.includes("Risk")){
+          this.CurrentMonthData[i].EltStatusColor = "red";
+        }else if(this.CurrentMonthData[i].EltStatus == null || this.CurrentMonthData[i].EltStatus == "")
+        {
+          this.CurrentMonthData[i].EltStatus = "On Track";
+          this.CurrentMonthData[i].EltStatusColor = "green";
         }
       }
       this.Forecast = Math.round(data.GrandTotal).toLocaleString("en-US",{style : "currency",currency:"USD"}).slice(0,-3);

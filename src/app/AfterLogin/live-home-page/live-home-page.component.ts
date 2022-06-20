@@ -4,7 +4,8 @@ import { Countries } from 'src/app/Models/HomeData';
 import { DashboardServiceService } from 'src/app/dashboard-service.service';
 import { LivedashboardComponent } from '../livedashboard/livedashboard.component';
 import { FormControl } from '@angular/forms';
-import { DashboardComponent } from '../dashboard/dashboard.component';
+import { Chart } from 'chart.js';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-live-home-page',
@@ -45,7 +46,7 @@ export class LiveHomePageComponent implements OnInit {
   PotentialRecords: string;
   DisableCountry : boolean = true;
   CountryList : Countries[];mastercountry : boolean;CountryNG = [];SelectedCountry;
-  constructor(private router : Router,public service : DashboardServiceService,public dashboard : LivedashboardComponent,) { }
+  constructor(private router : Router,public service : DashboardServiceService,public datepipe : DatePipe,public dashboard : LivedashboardComponent,) { }
   // constructor(private router : Router) {
   //   this.screenWidth = window.innerWidth;
   //   this.screenHeight = window.innerHeight;
@@ -56,24 +57,23 @@ export class LiveHomePageComponent implements OnInit {
   //   };
   //  }
   GlobalData : boolean;APACData : boolean;EMEAData : boolean;LATAMData : boolean;NORAMData : boolean;
+  NPSScoreReached : boolean = true;
   ngOnInit() {
     this.GlobalData = true;
     this.imageUrl = "assets/images/cwt.png";
-    this.GetData("APAC,EMEA,LATAM,NORAM");
+    this.GetData("APAC,EMEA,LATAM,NORAM,Global");
   }
-  SelectedRegion;
+  SelectedRegion;NPSScore;ResponseReceived;
+  rollling_nps_chart : any;
+  YearMonths : any[] = [];
+  NpsScores : any[] = [];
+  ReceivedResponses : any[] = [];
   GetData(Region : string){
     this.SelectedRegion = Region;
     this.dashboard.ShowSpinnerHandler(true);
     this.service.HomeDetailsData(Region).subscribe(data =>{
       this.ProjectsCount = data.Projects;
-      // this.TotalRevenue = this.NumberConverter(data.TotalVolume);
-      // this.ActiveRevenue = this.NumberConverter(data.ActiveVolume);
-      // this.ClosedRevenue = this.NumberConverter(data.ClosedVolume);
-      // this.otherRevenue = this.NumberConverter(data.P_NDC_H_Volume);
       this.PipelineVolume = this.NumberConverter(data.PipelineVolume);
-      // this.CurrentMonth = this.NumberConverter(data.CurrentMonth);
-      // this.NextMonth = this.NumberConverter(data.NextMonth);
       this.CurrentMonthVolume = this.NumberConverter(data.CurrentMonthVolume);
       this.CurrentMonthRecords = data.CurrentMonthRecords+"";
       this.NextMonthVolume = this.NumberConverter(data.NextMonthVolume);
@@ -100,8 +100,164 @@ export class LiveHomePageComponent implements OnInit {
       this.CountryList.forEach( item =>{
         this.CountryNG.push(item.Country);
       })
-      if(Region == "APAC,EMEA,LATAM,NORAM"){
-
+      this.ResponseReceived = data.NpsData[0].NESurveyReceived;
+      this.NPSScore = data.NpsData[0].NESurveyReceived == 0 ? 0 : (Math.round(((data.NpsData[0].NEPromoter/data.NpsData[0].NESurveyReceived)-(data.NpsData[0].NEDetractor/data.NpsData[0].NESurveyReceived))*100*100)/100).toFixed(1);
+      if(this.NPSScore > 70){
+        this.NPSScoreReached = true;
+      }else{
+        this.NPSScoreReached = false;
+      }
+      data.RollingNpsData.map((datas,index) => {
+        datas.NPSScore = datas.NESurveyReceived == 0 ? 0 : (Math.round(((datas.NEPromoter/datas.NESurveyReceived)-(datas.NEDetractor/datas.NESurveyReceived))*100*100)/100).toFixed(1);
+      })
+      if(this.rollling_nps_chart != undefined){
+        this.rollling_nps_chart.destroy();
+      }
+      this.YearMonths = [];
+      this.NpsScores = [];
+      this.ReceivedResponses = [];
+      data.RollingNpsData.forEach(element => {
+        this.YearMonths.push(this.datepipe.transform(element.YearMonth, "MMM-yy"));
+        this.NpsScores.push(element.NPSScore);
+        this.ReceivedResponses.push(element.NESurveyReceived)
+      });
+      var options3 = {
+        responsive : true,
+        bezierCurve: false,
+        hover: {
+          mode: 'index' as 'index',
+          intersect: false
+        },
+        legend: {
+          display: true,
+          position : 'bottom' as 'bottom',
+          fullWidth : true,
+          labels: {
+              fontColor: '#000000',
+              fontSize :  13,
+              padding : 10,
+              fontStyle : 'bold',
+              fontFamily : 'Arial',
+          }
+        },
+        plugins :{
+          labels: {
+            render: function (args) {
+              return args.dataset.type == "line" ? "            "+args.value : args.value ;
+            },
+            fontColor: (c) => {
+              return c.dataset.type == "line" ? '#000000' : '#1F8A4C'
+            },
+            // fontColor : '#3B3B3B',
+            textMargin: 6,
+            overlap: false,
+            fontSize: 14,
+            fontStyle : 'bold',
+            fontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
+          }
+        },
+        title: {
+          display: true,
+          text: ' '
+        },
+        tooltips: {
+          mode: 'index' as 'index',
+          intersect: false,
+          callbacks: {
+            label: function(tooltipItems, data) {
+              return data.datasets[tooltipItems.datasetIndex].label + " : " + Math.round(data.datasets[tooltipItems.datasetIndex].data[tooltipItems.index])
+            }
+          }
+        },
+        scales: {
+          yAxes: [{
+            id: 'A',
+            type: 'linear',
+            position: 'left',
+            ticks: {
+              fontSize : 12,
+              fontStyle : 'bold',
+              fontColor : '#000000',
+              fontFamily : 'Arial',
+              beginAtZero: true,
+            },
+            gridLines: {
+              color: "rgba(0, 0, 0, 0)",
+            },
+            scaleLabel: {
+              display: true,
+              labelString: 'Response Received',
+              fontSize : 13,
+              fontStyle : 'bold',
+              fontColor : '#000000',
+              fontFamily : 'Arial',
+            }
+          },{
+            id: 'B',
+            type: 'linear',
+            position: 'right',
+            ticks: {
+              fontSize : 12,
+              fontStyle : 'bold',
+              fontColor : '#000000',
+              fontFamily : 'Arial',
+            },
+            gridLines: {
+              color: "rgba(0, 0, 0, 0)",
+            },
+            scaleLabel: {
+              display: true,
+              labelString: 'NPS Score',
+              fontSize : 13,
+              fontStyle : 'bold',
+              fontColor : '#000000',
+              fontFamily : 'Arial',
+            }
+          }],
+          xAxes: [{
+            ticks: {
+              fontSize : 12,
+              fontStyle : 'bold',
+              fontColor : '#000000',
+              fontFamily : 'Arial',
+            },
+            gridLines: {
+              color: "rgba(0, 0, 0, 0)",
+            }
+          }]
+        },
+      }
+      this.rollling_nps_chart = new Chart('rollling_nps_chart', {
+        type : 'bar',
+        data : {
+          labels: this.YearMonths,
+          datasets : [
+            {
+              label: 'NPS Score',
+              data: this.NpsScores,
+              backgroundColor : 'rgba(93, 173,226 ,1)',
+              borderColor : 'rgba(93, 173,226 ,1)',
+              type : 'line',
+              fill: false,
+              lineTension: 0,
+              yAxisID: 'B',
+            },
+            {
+              label: 'Response Received',
+              data: this.ReceivedResponses,
+              backgroundColor : 'rgba(88, 214, 141,1)',
+              borderColor : 'rgba(255, 255,255 ,1)',
+              hoverBackgroundColor : 'rgba(88, 214, 141,1)',
+              borderWidth: 2,
+              type : 'bar',
+              fill: false,
+              yAxisID: 'A',
+            }
+          ]
+        },
+        options : options3,
+      })
+      if(Region == "APAC,EMEA,LATAM,NORAM,Global"){
       }else{
         this.onCountrychange();
       }
@@ -115,7 +271,7 @@ export class LiveHomePageComponent implements OnInit {
     this.LATAMData = false;
     this.NORAMData = false;
     this.DisableCountry = true;
-    this.GetData("APAC,EMEA,LATAM,NORAM");
+    this.GetData("APAC,EMEA,LATAM,NORAM,Global");
   }
   APACClick(){
     this.GlobalData = false;
@@ -182,13 +338,7 @@ export class LiveHomePageComponent implements OnInit {
     }else{
       this.service.HomeDetailsDataWithCountry(this.SelectedRegion,this.SelectedCountry).subscribe(data =>{
         this.ProjectsCount = data.Projects;
-        // this.TotalRevenue = this.NumberConverter(data.TotalVolume);
-        // this.ActiveRevenue = this.NumberConverter(data.ActiveVolume);
-        // this.ClosedRevenue = this.NumberConverter(data.ClosedVolume);
-        // this.otherRevenue = this.NumberConverter(data.P_NDC_H_Volume);
         this.PipelineVolume = this.NumberConverter(data.PipelineVolume);
-        // this.CurrentMonth = this.NumberConverter(data.CurrentMonth);
-        // this.NextMonth = this.NumberConverter(data.NextMonth);
         this.CurrentMonthVolume = this.NumberConverter(data.CurrentMonthVolume);
         this.CurrentMonthRecords = data.CurrentMonthRecords+"";
         this.NextMonthVolume = this.NumberConverter(data.NextMonthVolume);
@@ -209,6 +359,57 @@ export class LiveHomePageComponent implements OnInit {
         this.HighPotentialRecords = data.HighPotentialRecords+"";
         this.PotentialVolume = this.NumberConverter(data.PotentialVolume);
         this.PotentialRecords = data.PotentialRecords+"";
+        // this.ResponseReceived = data.NpsData[0].NESurveyReceived;
+        // this.NPSScore = data.NpsData[0].NESurveyReceived == 0 ? 0 : (Math.round(((data.NpsData[0].NEPromoter/data.NpsData[0].NESurveyReceived)-(data.NpsData[0].NEDetractor/data.NpsData[0].NESurveyReceived))*100*100)/100).toFixed(1);
+        // if(this.NPSScore > 70){
+        //   this.NPSScoreReached = true;
+        // }else{
+        //   this.NPSScoreReached = false;
+        // }
+        // data.RollingNpsData.map((datas,index) => {
+        //   datas.NPSScore = datas.NESurveyReceived == 0 ? 0 : (Math.round(((datas.NEPromoter/datas.NESurveyReceived)-(datas.NEDetractor/datas.NESurveyReceived))*100*100)/100).toFixed(1);
+        // })
+        // if(this.rollling_nps_chart != undefined){
+        //   this.rollling_nps_chart.destroy();
+        // }
+        // this.YearMonths = [];
+        // this.NpsScores = [];
+        // this.ReceivedResponses = [];
+        // data.RollingNpsData.forEach(element => {
+        //   this.YearMonths.push(this.datepipe.transform(element.YearMonth, "MMM-yy"));
+        //   this.NpsScores.push(element.NPSScore);
+        //   this.ReceivedResponses.push(element.NESurveyReceived)
+        // });
+        // this.rollling_nps_chart = new Chart('rollling_nps_chart', {
+        //   type : 'bar',
+        //   data : {
+        //     labels: this.YearMonths,
+        //     datasets : [
+        //       {
+        //         label: 'Nps Score',
+        //         data: this.NpsScores,
+        //         backgroundColor : 'rgba(93, 173,226 ,1)',
+        //         borderColor : 'rgba(93, 173,226 ,1)',
+        //         type : 'line',
+        //         fill: false,
+        //         lineTension: 0,
+        //         yAxisID: 'B',
+        //       },
+        //       {
+        //         label: 'Response Received',
+        //         data: this.ReceivedResponses,
+        //         backgroundColor : 'rgba(88, 214, 141,1)',
+        //         borderColor : 'rgba(255, 255,255 ,1)',
+        //         hoverBackgroundColor : 'rgba(88, 214, 141,1)',
+        //         borderWidth: 2,
+        //         type : 'bar',
+        //         fill: false,
+        //         yAxisID: 'A',
+        //       }
+        //     ]
+        //   },
+        //   options : options3,
+        // })
         this.dashboard.ShowSpinnerHandler(false);
       })
     }
