@@ -191,5 +191,6 @@ export class DataCLR {
     AccountOwner : string;
     AccountCategory : string;
     SOWStatus : string;
+    OBTAdoptionRate : string;
     ImplementationReady : string;
 }

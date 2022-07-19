@@ -62,6 +62,9 @@ export class LiveHomePageComponent implements OnInit {
     this.GlobalData = true;
     this.imageUrl = "assets/images/cwt.png";
     this.GetData("APAC,EMEA,LATAM,NORAM,Global");
+    // this.service.GeteSOWData().subscribe(data => {
+    //   console.log(data)
+    // })
   }
   SelectedRegion;NPSScore;ResponseReceived;
   rollling_nps_chart : any;

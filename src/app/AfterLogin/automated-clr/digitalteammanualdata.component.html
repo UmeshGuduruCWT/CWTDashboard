@@ -107,6 +107,12 @@
                     <mat-option *ngFor="let score of ComplexityScoreList_P" [value]="score">{{score}}</mat-option>
                 </mat-select> -->
             </mat-form-field>
+            <mat-form-field class="col-md-3" style="width : 100%" *ngIf="ProjectStatusNgIf">
+                <mat-label style="font-size: 15px;">Global DQS Lead</mat-label>
+                <mat-select [formControl]="GlobalDQSLead">
+                    <mat-option *ngFor="let dqslead of GLobalDQSLeadList" [value]="dqslead">{{dqslead}}</mat-option>
+                </mat-select>
+            </mat-form-field>
             <!-- <mat-form-field class="col-md-3" style="width : 100%">
                 <mat-label style="font-size: 15px;">GDS</mat-label>
                 <mat-select [formControl]="GDS">

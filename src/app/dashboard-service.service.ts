@@ -42,20 +42,45 @@ import { PerformanceResponce } from './Models/PerformanceResponce';
   providedIn: 'root'
 })
 export class DashboardServiceService {
-  Baseurl = 'http://localhost:50421/';
+  // Baseurl = 'http://localhost:50421/';
   // Baseurl = 'http://10.180.27.32/';
-  // Baseurl = 'http://www.cwtdashboard.com/';
+  Baseurl = 'http://www.cwtdashboard.com/';
   // ImeetURl = 'https://edge.imeetcentral.com/v1/reports/WzM1LDE1MzYxXQ?contextId=647';
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type':  'application/json'
     })
   };
+  // body = {
+  //   "MessageObject": {
+  //       "queryName": "eSoW Countries",
+  //       "startDate": "2018-01-01",
+  //       "endDate": null,
+  //       "modifiedDate": "2022-06-01",
+  //       "onlyWonOrSubmitted": false,
+  //       "debug": false,
+  //       "id": null,
+  //       "limit": null,
+  //       "includeTest": false
+  //   }
+  // }
+  // esowHeaders = {
+  //   headers: new HttpHeaders({
+  //     'Content-Type' :  'application/json',
+  //     'apiKey' : 'XVdjcIpDXDI7R6v9yE2ZxAGDMztLwdocZmh0jUUihjQ',
+  //     // 'Access-Control-Allow-Origin' : '*'
+  //   })
+  // }
+  // esowURL = "https://uat.gpsc.cwtwebpem.com/pat/esow/query";
   constructor(private http : HttpClient,public route : ActivatedRoute){
     // this.route.queryParams.subscribe(params => {
     //   this.restaurent_id = params["resid"];
     // });
   }
+  // public GeteSOWData(){
+  //   let params = new HttpParams();
+  //   return this.http.post(`${this.esowURL+""}`,this.body,this.esowHeaders);
+  // }
   public LastUpdatedOn(){
     let params = new HttpParams();
     return this.http.post<LastUpdateOn>(`${this.Baseurl+"LastUpdatedOn"}`,params);
@@ -869,7 +894,7 @@ export class DashboardServiceService {
     params = params.append('UpdateBy',UpdateBy+"");
     return this.http.post<Responce>(`${this.Baseurl+"UpdateManualColumns"}`,params);
   }
-  public UpdateDigitalColumns(CLRID : string,DTID : string,RevenueID : string,GlobalCISOBTLead : string,RegionalCISOBTLead : string,LocalDigitalOBTLead : string,GlobalCISPortraitLead : string,RegionalCISPortraitLead : string,GlobalCISHRFeedSpecialist : string,ActivityType : string,ComplexityScore : string,UpdatedBy : string){
+  public UpdateDigitalColumns(CLRID : string,DTID : string,RevenueID : string,GlobalCISOBTLead : string,RegionalCISOBTLead : string,LocalDigitalOBTLead : string,GlobalCISPortraitLead : string,RegionalCISPortraitLead : string,GlobalCISHRFeedSpecialist : string,ActivityType : string,ComplexityScore : string,GlobalCISDQSLead : string,UpdatedBy : string){
     let params = new HttpParams();
     params = params.append('CLRID',CLRID);
     params = params.append('DTID',DTID);
@@ -884,6 +909,7 @@ export class DashboardServiceService {
     params = params.append('ActivityType',ActivityType);
     // params = params.append('GDS',GDS);
     params = params.append('ComplexityScore',ComplexityScore);
+    params = params.append('GlobalCISDQSLead',GlobalCISDQSLead);
     params = params.append('UpdatedBy',UpdatedBy);
     return this.http.post<Responce>(`${this.Baseurl+"UpdateDigitalColumns"}`,params);
   }
@@ -926,6 +952,7 @@ export class DashboardServiceService {
     GlobalProjectManager : string,
     RegionalProjectManager : string,
     AssigneeFullName : string,
+    // GlobalCISDQSLead : string,
     Status : string,
     UpdateBy : string){
     let params = new HttpParams();
@@ -939,12 +966,12 @@ export class DashboardServiceService {
     params = params.append('Assignment_date',Assignment_date+"");
     params = params.append('RevenueID',RevenueID+"");
     params = params.append('Project_Effort',Project_Effort+"");
-    // params = params.append('ProjectStatus',ProjectStatus+"");
     params = params.append('GoLiveDate',GoLiveDate+"");
     params = params.append('ProjectLevel',ProjectLevel+"");
     params = params.append('GlobalProjectManager',GlobalProjectManager+"");
     params = params.append('RegionalProjectManager',RegionalProjectManager+"");
     params = params.append('AssigneeFullName',AssigneeFullName+"");
+    // params = params.append('GlobalCISDQSLead',GlobalCISDQSLead+"");
     params = params.append('Status',Status+"");
     params = params.append('UpdateBy',UpdateBy+"");
     return this.http.post<Responce>(`${this.Baseurl+"UpdateManualPipelineColumns"}`,params);
@@ -1175,7 +1202,7 @@ export class DashboardServiceService {
   }
   // public
   // Start of Ad-hoc Api's
-  public AdhocInsert(RevenueID : string,Client : string,StartDate : string,GoLiveDate : string,Country : string,Region : string,Comments : string,ProjectStatus : string,GlobalCISOBTLead : string,RegionalCISOBTLead : string,LocalDigitalOBTLead : string,GlobalCISPortraitLead : string,RegionalCISPortraitLead : string,GlobalCISHRFeedSpecialist : string,GDS : string,ComplexityScore : string,ActivityType : string,Status : string,InsertedBy : string){
+  public AdhocInsert(RevenueID : string,Client : string,StartDate : string,GoLiveDate : string,Country : string,Region : string,Comments : string,ProjectStatus : string,GlobalDQSLead : string,GlobalCISOBTLead : string,RegionalCISOBTLead : string,LocalDigitalOBTLead : string,GlobalCISPortraitLead : string,RegionalCISPortraitLead : string,GlobalCISHRFeedSpecialist : string,GDS : string,ComplexityScore : string,ActivityType : string,Status : string,InsertedBy : string){
     let params = new HttpParams();
     params = params.append('RevenueID',RevenueID);
     params = params.append('Client',Client);
@@ -1185,6 +1212,7 @@ export class DashboardServiceService {
     params = params.append('Region',Region);
     params = params.append('Comments',Comments);
     params = params.append('ProjectStatus',ProjectStatus);
+    params = params.append('GlobalDQSLead',GlobalDQSLead);
     params = params.append('GlobalCISOBTLead',GlobalCISOBTLead);
     params = params.append('RegionalCISOBTLead',RegionalCISOBTLead);
     params = params.append('LocalDigitalOBTLead',LocalDigitalOBTLead);
@@ -1198,7 +1226,7 @@ export class DashboardServiceService {
     params = params.append('InsertedBy',InsertedBy);
     return this.http.post<Responce>(`${this.Baseurl+"AdhocInsert"}`,params);
   }
-  public AdhocUpdate(RevenueID : string,Client : string,StartDate : string,GoLiveDate : string,Country : string,Region : string,Comments : string,ProjectStatus : string,GlobalCISOBTLead : string,RegionalCISOBTLead : string,LocalDigitalOBTLead : string,GlobalCISPortraitLead : string,RegionalCISPortraitLead : string,GlobalCISHRFeedSpecialist : string,GDS : string,ComplexityScore : string,ActivityType : string,Status : string,UpdatedBy : string){
+  public AdhocUpdate(RevenueID : string,Client : string,StartDate : string,GoLiveDate : string,Country : string,Region : string,Comments : string,ProjectStatus : string,GlobalDQSLead : string,GlobalCISOBTLead : string,RegionalCISOBTLead : string,LocalDigitalOBTLead : string,GlobalCISPortraitLead : string,RegionalCISPortraitLead : string,GlobalCISHRFeedSpecialist : string,GDS : string,ComplexityScore : string,ActivityType : string,Status : string,UpdatedBy : string){
     let params = new HttpParams();
     params = params.append('RevenueID',RevenueID);
     params = params.append('Client',Client);
@@ -1208,6 +1236,7 @@ export class DashboardServiceService {
     params = params.append('Region',Region);
     params = params.append('Comments',Comments);
     params = params.append('ProjectStatus',ProjectStatus);
+    params = params.append('GlobalDQSLead',GlobalDQSLead);
     params = params.append('GlobalCISOBTLead',GlobalCISOBTLead);
     params = params.append('RegionalCISOBTLead',RegionalCISOBTLead);
     params = params.append('LocalDigitalOBTLead',LocalDigitalOBTLead);

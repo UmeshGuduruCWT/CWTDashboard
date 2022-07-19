@@ -15,6 +15,7 @@ export class AdhocData {
   Country : string;
   Region : string;
   Comments : string;
+  GlobalDQSLead : string;
   GlobalCISOBTLead : string;
   RegionalCISOBTLead : string;
   LocalDigitalOBTLead : string;
@@ -46,6 +47,7 @@ export class AdhocComponent implements OnChanges, OnInit {
   CountrySearch = new FormControl();
   Region = new FormControl();
   ProjectStatus = new FormControl();
+  GlobalDQSLead = new FormControl();
   Comments : string;
   GlobalCISOBTLead = new FormControl();
   GlobalCISOBTLeadsearch = new FormControl();
@@ -70,6 +72,7 @@ export class AdhocComponent implements OnChanges, OnInit {
   CountryList : RegionCountry[];
   DisableCountry : boolean = true;
   ProjectStatusList;
+  GLobalDQSLeadList;
   DigitalTeamList: any = [];
   GlobalDigitalOBTLeadList : FilterDigitalTeam[];RegionalDigitalOBTLeadList : FilterDigitalTeam[];LocalDigitalOBTLeadList : FilterDigitalTeam[];GDSList;
   GlobalDigitalPortraitLeadList : FilterDigitalTeam[];RegionalDigitalPortraitLeadList : FilterDigitalTeam[];GlobalDigitalHRFeedSpeciaListData : FilterDigitalTeam[];
@@ -245,8 +248,8 @@ export class AdhocComponent implements OnChanges, OnInit {
   }
   ngOnChanges(changes : SimpleChanges) {
     this.LoginUID = localStorage.getItem("UID");
-    // this.RegionList = ["APAC","EMEA","LATAM","NORAM"];
     this.ProjectStatusList = ["N-Active/No Date Confirmed","C-Closed","A-Active/Date Confirmed","P-Pipeline","X-Cancelled","H-Hold"];
+    this.GLobalDQSLeadList = ["---","Dhimant Dave","Mandy Brouwer-Dekker","Sandra Ladd","SHANNON CARPENTER","ANGIE SANCHEZ","Angela Hernandez","Eileen O'Gorman","Melissa Norris","Tomasz Karolak","Alberto Castro"];
     this.GDSList = ["---","Amadeus","Sabre","TravelPort","Not Applicable"];
     const ParsedAdhocData = changes['AdhocData'].currentValue;
     this.ButtonName = ParsedAdhocData.Action;
@@ -294,6 +297,7 @@ export class AdhocComponent implements OnChanges, OnInit {
       this.DateGolive = null;
       this.Comments = "";
       this.ProjectStatus.setValue("");
+      this.GlobalDQSLead.setValue("");
       this.GlobalCISOBTLead.setValue("");
       this.RegionalCISOBTLead.setValue("");
       this.LocalDigitalOBTLead.setValue("");
@@ -311,6 +315,7 @@ export class AdhocComponent implements OnChanges, OnInit {
       this.DateGolive = ParsedAdhocData.GoLiveDate;
       this.Comments = ParsedAdhocData.Comments;
       this.ProjectStatus.setValue(ParsedAdhocData.ProjectStatus);
+      this.GlobalDQSLead.setValue(ParsedAdhocData.GlobalDQSLead);
       this.GlobalCISOBTLead.setValue(ParsedAdhocData.GlobalCISOBTLead);
       this.RegionalCISOBTLead.setValue(ParsedAdhocData.RegionalCISOBTLead);
       this.LocalDigitalOBTLead.setValue(ParsedAdhocData.LocalDigitalOBTLead);
@@ -384,6 +389,10 @@ export class AdhocComponent implements OnChanges, OnInit {
       this.ErrorMessage += "Project Status should not be empty" + '\n';
       this.Errors = this.Errors+1;
     }
+    if(this.GlobalDQSLead.value == "" || this.GlobalDQSLead.value == null){
+      this.ErrorMessage += "DQS Lead should not be empty" + '\n';
+      this.Errors = this.Errors+1;
+    }
     if(this.DateGolive < this.DateStart){
       this.ErrorMessage += "Go live Date Should not be Greater than Start Date";
       this.Errors = this.Errors+1;
@@ -423,11 +432,8 @@ export class AdhocComponent implements OnChanges, OnInit {
       if(this.GlobalCISHRFeedSpecialist.value == null){
         this.GlobalCISHRFeedSpecialist.setValue("");
       }
-      // if(this.ProjectStatus.value == "C-Closed" && GoLiveDate > date){
-      //   alert("Project Should not be Closed in future Dates");
-      // }else{
         if(this.ButtonName == "Save"){
-          this.service.AdhocInsert(this.RevenueID+"",this.Client,StartDate,GoLiveDate,this.Country.value,this.Region.value,this.Comments,this.ProjectStatus.value,this.GlobalCISOBTLead.value,this.RegionalCISOBTLead.value,this.LocalDigitalOBTLead.value,this.GlobalCISPortraitLead.value,this.RegionalCISPortraitLead.value,this.GlobalCISHRFeedSpecialist.value,this.GDS.value,this.ComplexityScore+"",this.ActivityType,"Active",this.LoginUID).subscribe(data =>{
+          this.service.AdhocInsert(this.RevenueID+"",this.Client,StartDate,GoLiveDate,this.Country.value,this.Region.value,this.Comments,this.ProjectStatus.value,this.GlobalDQSLead.value,this.GlobalCISOBTLead.value,this.RegionalCISOBTLead.value,this.LocalDigitalOBTLead.value,this.GlobalCISPortraitLead.value,this.RegionalCISPortraitLead.value,this.GlobalCISHRFeedSpecialist.value,this.GDS.value,this.ComplexityScore+"",this.ActivityType,"Active",this.LoginUID).subscribe(data =>{
             if(data.code == 200){
               alert(data.message);
               this.SendOutput.emit([{SelectionType : "Inserted"}]);
@@ -438,12 +444,12 @@ export class AdhocComponent implements OnChanges, OnInit {
           this.service.UsersUsageofReports(localStorage.getItem("UID"),"Adhoc","Insert").subscribe(data =>{
           })
         }else if(this.ButtonName == "Update"){
-          this.service.AdhocUpdate(this.RevenueID+"",this.Client,StartDate,GoLiveDate,this.Country.value,this.Region.value,this.Comments,this.ProjectStatus.value,this.GlobalCISOBTLead.value,this.RegionalCISOBTLead.value,this.LocalDigitalOBTLead.value,this.GlobalCISPortraitLead.value,this.RegionalCISPortraitLead.value,this.GlobalCISHRFeedSpecialist.value,this.GDS.value,this.ComplexityScore+"",this.ActivityType,this.Record_Status,this.LoginUID).subscribe(data =>{
+          this.service.AdhocUpdate(this.RevenueID+"",this.Client,StartDate,GoLiveDate,this.Country.value,this.Region.value,this.Comments,this.ProjectStatus.value,this.GlobalDQSLead.value,this.GlobalCISOBTLead.value,this.RegionalCISOBTLead.value,this.LocalDigitalOBTLead.value,this.GlobalCISPortraitLead.value,this.RegionalCISPortraitLead.value,this.GlobalCISHRFeedSpecialist.value,this.GDS.value,this.ComplexityScore+"",this.ActivityType,this.Record_Status,this.LoginUID).subscribe(data =>{
             if(data.code == 200){
               alert(data.message);
               this.SendOutput.emit([{SelectionType : 'Updated',RevenueID : this.RevenueID,GlobalCISOBTLead : this.GlobalCISOBTLead.value,
               RegionalCISOBTLead : this.RegionalCISOBTLead.value,LocalDigitalOBTLead : this.LocalDigitalOBTLead.value,GlobalCISPortraitLead : this.GlobalCISPortraitLead.value,
-              RegionalCISPortraitLead : this.RegionalCISPortraitLead.value,GlobalCISHRFeedSpecialist : this.GlobalCISHRFeedSpecialist.value,ActivityType : this.ActivityType,
+              RegionalCISPortraitLead : this.RegionalCISPortraitLead.value,GlobalCISHRFeedSpecialist : this.GlobalCISHRFeedSpecialist.value, GlobalDQSLead : this.GlobalDQSLead.value,ActivityType : this.ActivityType,
               GDS : this.GDS.value,ComplexityScore : this.ComplexityScore,Client : this.Client,StartDate : StartDate,GoLiveDate : GoLiveDate,Country : this.Country.value,
               Region : this.Region.value,Comments : this.Comments,ProjectStatus : this.ProjectStatus.value,Record_Status : this.Record_Status}]);
             }else{
@@ -453,7 +459,6 @@ export class AdhocComponent implements OnChanges, OnInit {
           this.service.UsersUsageofReports(localStorage.getItem("UID"),"Adhoc","Update").subscribe(data =>{
           })
         }
-      // }
     }else{
       alert(this.ErrorMessage);
     }

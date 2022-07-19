@@ -47,7 +47,7 @@ export class CriticalTasksOverDueComponent implements OnInit {
   LoginUID : string;
   FilteredCount;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
-  displayedColumns: string[] = ['Workspace_Title', 'Milestone_Title_Country___Est_Go_Live_Date','Task_Title','Milestone__Project_Status','Milestone__Region','Workspace__Project_Level','Group_Name','Milestone_Due_Date','Task_Overdue'];
+  displayedColumns: string[] = ['Workspace_Title', 'Milestone_Title_Country___Est_Go_Live_Date','Task_Title','Milestone__Project_Status','Milestone__Region','Workspace__Project_Level','Group_Name','Task_Due_Date_c','Task_Overdue'];
   constructor(public datepipe : DatePipe,public service : DashboardServiceService, public dashboard : LivedashboardComponent, private excelService:ExcelService) {
     //set screenWidth on page load
     this.screenWidth = window.innerWidth;
@@ -95,6 +95,13 @@ export class CriticalTasksOverDueComponent implements OnInit {
       this.service.CriticalTaskOverDue(this.SelectedGroupName,this.SelectedLevel,this.SelectedRegions,this.SelectedAssigne).subscribe(data =>{
         this.Apply_disable = true;
         if(data.code == 200){
+          for(let i=0;i < data.Data.length;i++){
+            if(data.Data[i].Task_Due_Date == null){
+              data.Data[i].Task_Due_Date_c = null;
+            }else{
+              data.Data[i].Task_Due_Date_c = this.datepipe.transform(data.Data[i].Task_Due_Date,"MM-dd-yyyy");
+            }
+          }
           this.dataSource = new MatTableDataSource(data.Data);
           this.FilteredCount = this.dataSource.data.length;
           this.dataSource.sort = this.sort;
@@ -386,82 +393,6 @@ export class CriticalTasksOverDueComponent implements OnInit {
       this.dashboard.ShowSpinnerHandler(false);
     });
   }
-  //Start of Status methods
-  // checkUncheckStatus() {
-  //   for (var i = 0; i < this.statusList.length; i++) {
-  //     this.statusList[i].isSelected = this.masterstatus;
-  //   }
-  //   this.getSelectedstatus();
-  // }
-  // statusSelected() {
-  //   this.masterstatus = this.statusList.every(function(item:any) {
-  //       return item.isSelected == true;
-  //   })
-  //   this.getSelectedstatus();
-  // }
-  // getSelectedstatus(){
-  //   this.Apply_disable = false;
-  //   this.SelectedStatus = null;
-  //   for(let i=0;i<this.statusList.length;i++){
-  //     if(this.statusList[i].isSelected == true){
-  //       if(this.SelectedStatus == null){
-  //         this.SelectedStatus = this.statusList[i].Milestone__Project_Status;
-  //       }else{
-  //         this.SelectedStatus += ","+this.statusList[i].Milestone__Project_Status;
-  //       }
-  //     }else{
-  //     }
-  //   }
-  //   this.statusListSelected = this.statusList.filter(s => s.isSelected == true);
-  // }
-  // deselectStatus(val : string){
-  //   for(let i=0;i<this.statusList.length;i++){
-  //     if(this.statusList[i].Milestone__Project_Status == val){
-  //       this.statusList[i].isSelected = false;
-  //     }else{
-  //     }
-  //   }
-  //   this.statusSelected();
-  // }
-  // //End of Status Methods
-  // //Start of overdue Methods
-  // checkUncheckOverDue() {
-  //   for (var i = 0; i < this.overdueList.length; i++) {
-  //     this.overdueList[i].isSelected = this.masteroverdue;
-  //   }
-  //   this.getSelectedOverDue();
-  // }
-  // overdueSelected() {
-  //   this.masteroverdue = this.overdueList.every(function(item:any) {
-  //       return item.isSelected == true;
-  //   })
-  //   this.getSelectedOverDue();
-  // }
-  // getSelectedOverDue(){
-  //   this.Apply_disable = false;
-  //   this.SelectedOverDue = null;
-  //   for(let i=0;i<this.overdueList.length;i++){
-  //     if(this.overdueList[i].isSelected == true){
-  //       if(this.SelectedOverDue == null){
-  //         this.SelectedOverDue = this.overdueList[i].Critical_Overdue;
-  //       }else{
-  //         this.SelectedOverDue += ","+this.overdueList[i].Critical_Overdue;
-  //       }
-  //     }else{
-  //     }
-  //   }
-  //   this.overdueListSelected = this.overdueList.filter(s => s.isSelected == true);
-  // }
-  // deselectOverDue(val : number){
-  //   for(let i=0;i<this.overdueList.length;i++){
-  //     if(this.overdueList[i].Critical_Overdue == val){
-  //       this.overdueList[i].isSelected = false;
-  //     }else{
-  //     }
-  //   }
-  //   this.overdueSelected();
-  // }
-  //End of overdue Methods
   //Start of GroupName Methods
   checkUncheckGName() {
     for (var i = 0; i < this.groupnameList.length; i++) {

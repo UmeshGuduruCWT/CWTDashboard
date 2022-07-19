@@ -136,6 +136,18 @@ export interface NPSComment {
     NPSComment : string;
     isSelected: boolean;
 }
+export interface FilterAccountCategory {
+    AccountCategory : string;
+    isSelected: boolean;
+}
+export interface FiltereSowStatus {
+    SOWStatus : string;
+    isSelected: boolean;
+}
+export interface FilterServiceConfiguration {
+    Service_Configuration : string;
+    isSelected: boolean;
+}
 export interface AutomatedCLRFilters {
     message: string;
     code: number;
@@ -172,4 +184,7 @@ export interface AutomatedCLRFilters {
     NPSCommentOne: NPSComment[];
     NPSCommentTwo: NPSComment[];
     NPSCommentThree: NPSComment[];
+    FilterAccountCategory : FilterAccountCategory[];
+    FiltereSowStatus : FiltereSowStatus[];
+    FilterServiceConfiguration : FilterServiceConfiguration[];
 }
