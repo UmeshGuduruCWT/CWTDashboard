@@ -16,14 +16,17 @@
             </mat-form-field>
             <button mat-raised-button (click)="OnApplyClick()" style="height: 35px;background-color: #F16950;color: white;margin-left: 20px;margin-bottom: 15px"><span class="material-icons">forward</span></button>    
         </div>
-        <div class="col-md-8" style="margin: 0px;padding : 0px 0px 0px 25px;">
+        <div class="col-md-12" style="margin: 0px;padding : 0px 0px 0px 25px;">
+            <label style="font-size : 15px; font-weight:bold;letter-spacing : 1px;color : rgb(54, 54, 54)">{{SelectedIdsText}}</label>
+        </div>
+        <!-- <div class="col-md-8" style="margin: 0px;padding : 0px 0px 0px 25px;">
             <ng-multiselect-dropdown class="col-md-12 mat-form-wrap" style="color: gray;margin: 0px;padding : 0px;"
                 [placeholder]="'Revenue Ids to Replicate'"
                 [settings]="dropdownSettings"
                 [data]="dropdownList"
                 [(ngModel)]="selectedItems">
             </ng-multiselect-dropdown>
-        </div>
+        </div> -->
     </div>
     <div>
         <mat-accordion multi="true" style="margin: 0px;padding: 0px;">
@@ -56,7 +59,7 @@
                                 <!-- <mat-option value="Product Up-Sell">Product Up-Sell</mat-option> -->
                                 <mat-option value="Program Update">Program Update</mat-option>
                                 <mat-option value="Re-Bid">Re-Bid</mat-option>
-                                <mat-option value="Re-Bid With Up-sell">Re-Bid With Up-sell</mat-option>
+                                <mat-option value="Re-Bid With Up-sell">Re-Bid With Up-Sell</mat-option>
                                 <mat-option value="Renewal/Renegotiation">Renewal/Renegotiation</mat-option>
                                 <mat-option value="Split">Split</mat-option>
                                 <mat-option value="Product or Service">Product or Service</mat-option>
@@ -128,7 +131,7 @@
                             </mat-select>
                         </mat-form-field>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-3" *ngIf="DisablePipelineColumns">
                         <mat-checkbox [(ngModel)]="GoLiveDatechecked" style="margin-right: 16px;"  class="checkboxFields"></mat-checkbox>
                         <mat-form-field style="width: 85%">
                             <mat-label style="font-size: 15px;">Go Live Date</mat-label>
@@ -137,7 +140,7 @@
                             <mat-datepicker #GoLiveDate_R color="primary"></mat-datepicker>
                         </mat-form-field>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-3" *ngIf="DisablePipelineColumns">
                         <mat-checkbox [(ngModel)]="GlobalManagerchecked" style="margin-right: 16px;"  class="checkboxFields"></mat-checkbox>
                         <mat-form-field style="width: 85%">
                             <mat-label style="font-size: 15px;">Global Manager</mat-label>
@@ -153,7 +156,7 @@
                             </mat-select>
                         </mat-form-field>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-3" *ngIf="DisablePipelineColumns">
                         <mat-checkbox [(ngModel)]="RegionalManagerchecked" style="margin-right: 16px;"  class="checkboxFields"></mat-checkbox>
                         <mat-form-field style="width: 85%">
                             <mat-label style="font-size: 15px;">Regional Manager</mat-label>
@@ -169,7 +172,7 @@
                             </mat-select>
                         </mat-form-field>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-3" *ngIf="DisablePipelineColumns">
                         <mat-checkbox [(ngModel)]="AssignePersonchecked" style="margin-right: 16px;"  class="checkboxFields"></mat-checkbox>
                         <mat-form-field style="width: 85%">
                             <mat-label style="font-size: 15px;">Local Manager</mat-label>
@@ -185,7 +188,7 @@
                             </mat-select>
                         </mat-form-field>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-3" *ngIf="DisablePipelineColumns">
                         <mat-checkbox [(ngModel)]="ProjectLevelchecked" style="margin-right: 16px;"  class="checkboxFields"></mat-checkbox>
                         <mat-form-field style="width: 85%">
                             <mat-label style="font-size: 15px;">Project Level</mat-label>
@@ -213,7 +216,7 @@
                     </mat-panel-title>
                 </mat-expansion-panel-header>
                 <div class="row" style="margin : 10px 0px 0px 0px;width : 100%">
-                    <div class="col-md-3">
+                    <div class="col-md-3" *ngIf="DisablePipelineColumns">
                         <mat-checkbox [(ngModel)]="GlobalCISOBTLeadchecked" style="margin-right: 16px;"  class="checkboxFields"></mat-checkbox>
                         <mat-form-field  style="width: 85%">
                             <mat-label style="font-size: 15px;">Global Digital OBT Lead</mat-label>
@@ -229,7 +232,7 @@
                             </mat-select>
                         </mat-form-field>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-3" *ngIf="DisablePipelineColumns">
                         <mat-checkbox [(ngModel)]="RegionalCISOBTLeadchecked" style="margin-right: 16px;"  class="checkboxFields"></mat-checkbox>
                         <mat-form-field  style="width: 85%">
                             <mat-label style="font-size: 15px;">Regional Digital OBT Lead</mat-label>
@@ -245,7 +248,7 @@
                             </mat-select>
                         </mat-form-field>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-3" *ngIf="DisablePipelineColumns">
                         <mat-checkbox [(ngModel)]="LocalDigitalOBTLeadchecked" style="margin-right: 16px;"  class="checkboxFields"></mat-checkbox>
                         <mat-form-field style="width: 85%" >
                             <mat-label style="font-size: 15px;">Local Digital OBT Lead</mat-label>
@@ -261,7 +264,7 @@
                             </mat-select>
                         </mat-form-field>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-3" *ngIf="DisablePipelineColumns">
                         <mat-checkbox [(ngModel)]="GlobalCISPortraitLeadchecked" style="margin-right: 16px;"  class="checkboxFields"></mat-checkbox>
                         <mat-form-field style="width: 85%" >
                             <mat-label style="font-size: 15px;">Global Digital Portrait Lead</mat-label>
@@ -277,7 +280,7 @@
                             </mat-select>
                         </mat-form-field>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-3" *ngIf="DisablePipelineColumns">
                         <mat-checkbox [(ngModel)]="RegionalCISPortraitLeadchecked" style="margin-right: 16px;"  class="checkboxFields"></mat-checkbox>
                         <mat-form-field style="width: 85%" >
                             <mat-label style="font-size: 15px;">Regional Digital Portrait Lead</mat-label>
@@ -293,7 +296,7 @@
                             </mat-select>
                         </mat-form-field>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-3" *ngIf="DisablePipelineColumns">
                         <mat-checkbox [(ngModel)]="GlobalCISHRFeedSpecialistchecked" style="margin-right: 16px;"  class="checkboxFields"></mat-checkbox>
                         <mat-form-field style="width: 85%">
                             <mat-label style="font-size: 15px;">Global Digital HR Feed Specialist</mat-label>

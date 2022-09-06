@@ -25,6 +25,7 @@
     "@handsontable/angular": "^6.0.1",
     "@types/chart.js": "^2.9.35",
     "chart.js": "^2.9.4",
+    "chartjs-plugin-datalabels": "^1.0.0",
     "chartjs-plugin-labels": "^1.1.0",
     "file-saver": "^2.0.2",
     "handsontable": "^8.0.0",

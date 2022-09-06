@@ -177,7 +177,8 @@
                             <!-- <label style="width: 100%;font-size: 10px;margin: 0px;height: 18px;text-align: center;">Distinct count of Workspace Title</label> -->
                         </div>
                         <div class="col-md-12" style="margin-top: 20px;margin-bottom: 10px;">
-                            <canvas id="MRcanvas" [ngStyle]="{'min-height' : ((screenHeight)-180)+'px'}">
+                            <canvas id="MRcanvas" height="80">
+                                <!-- [ngStyle]="{'min-height' : ((screenHeight)-180)+'px'}" -->
                             </canvas>
                         </div>
                     </mat-card>
@@ -358,7 +359,7 @@
                             <!-- <label style="width: 100%;font-size: 10px;margin: 0px;height: 18px;text-align: center;">Distinct count of Workspace Title</label> -->
                         </div>
                         <div class="col-md-12" style="margin-top: 10px;margin-bottom: 10px;">
-                            <canvas id="RWcanvas" height="220px">
+                            <canvas id="RWcanvas" height="150px">
                             </canvas>
                             <div class="example-container">
                                 <table mat-table [dataSource]="rw_dataSource" style="border: 1px solid rgb(196, 196, 196);">
@@ -388,7 +389,7 @@
                             <!-- <label style="width: 100%;font-size: 10px;margin: 0px;height: 18px;text-align: center;">Distinct count of Workspace Title</label> -->
                         </div>
                         <div class="col-md-12" style="margin-top: 10px;margin-bottom: 10px;">
-                            <canvas id="PLWcanvas" height="220px">
+                            <canvas id="PLWcanvas" height="150px">
                             </canvas>
                             <div class="example-container">
                                 <table mat-table [dataSource]="plw_dataSource" style="border: 1px solid rgb(196, 196, 196);">
@@ -418,23 +419,22 @@
                             <!-- <label style="width: 100%;font-size: 10px;margin: 0px;height: 18px;text-align: center;">Distinct count of Workspace Title</label> -->
                         </div>
                         <div class="col-md-12" style="margin-top: 20px;margin-bottom: 10px;">
-                            <canvas id="CVcanvas" [ngStyle]="{'min-height' : ((screenHeight)-180)+'px'}">
+                            <canvas id="CVcanvas" height="100">
                             </canvas>
                         </div>
                     </mat-card>
                 </div>
-                <div class="col-md-12">
+                <!-- <div class="col-md-12">
                     <mat-card class="example-card mat-elevation-z2" style="margin-left: 15px;height: auto;overflow: auto;padding: 0px;">
                         <div class="col-12" style="height: 40px;background-color: #34495E ;color:white;padding: 5px 0px 0px 0px; margin : 0px;text-align: center">
                             <label style="width: 100%;font-size: 16px;margin-top: 8px;text-align: center;font-family: Montserrat, sans-serif">Average Cycle Time (Days)</label>
-                            <!-- <label style="width: 100%;font-size: 10px;margin: 0px;height: 18px;text-align: center;">Distinct count of Workspace Title</label> -->
                         </div>
                         <div class="col-md-12" style="margin-top: 20px;margin-bottom: 10px;">
-                            <canvas id="CTcanvas" [ngStyle]="{'min-height' : ((screenHeight)-180)+'px'}">
+                            <canvas id="CTcanvas" height="100">
                             </canvas>
                         </div>
                     </mat-card>
-                </div>
+                </div> -->
                 <!-- <div class="col-md-6">
                     <mat-card class="example-card mat-elevation-z2" style="margin-left: 15px;height: auto;overflow: auto;padding: 0px;">
                         <div class="col-12" style="height: 40px;background-color: #34495E ;color:white;padding: 5px 0px 0px 0px; margin : 0px;text-align: center">

@@ -96,7 +96,10 @@ export class ImplementationMarketReportComponent implements OnInit {
   implementationtypeListSelected : ImplementationType[];
   MilestonestatusList : MilestoneStatus[];
   MilestonestatusListSelected : MilestoneStatus[];
-  masteryear : boolean;masterownerShip : boolean;mastermonth : boolean;masterlevel : boolean;masterregion : boolean;masterstatus : boolean;masterleader : boolean;masterCountry : boolean;masterMilestonestatus : boolean;masterimplementation : boolean;
+  masteryear : boolean;masterownerShip : boolean;mastermonth : boolean;
+  masterlevel : boolean;masterregion : boolean;masterstatus : boolean;
+  masterleader : boolean;masterCountry : boolean;
+  masterMilestonestatus : boolean;masterimplementation : boolean;
   // c_masteryear : boolean;c_mastermonth : boolean;c_masterlevel : boolean;c_masterMilestonestatus : boolean;c_masterregion : boolean;c_masterimplementation : boolean;
   Months : any = [];
   Volume : any = [];
@@ -125,7 +128,7 @@ export class ImplementationMarketReportComponent implements OnInit {
   ypcchart : any;
   rwchart : any;
   CVchart : any;
-  CTchart : any;
+  // CTchart : any;
   plwcanvas : any;
   CurrentYear : number;
   CurrentYears : number;
@@ -330,6 +333,9 @@ export class ImplementationMarketReportComponent implements OnInit {
     var anotherbordercolor = [
       'rgb(241, 130, 38)','rgb(59, 138, 217)','rgb(14, 61, 89)', 'rgb(255, 219, 105)', 'rgb(217,37,38)', 'rgb(75, 192, 192)', 'rgb(255, 99, 132)'
     ]
+    var anotherbgColor = [
+      'rgb(52, 73, 94)','rgb(241, 130, 38)','rgb(255, 219, 105)','rgb(14, 61, 89)',  'rgb(217,37,38)', 'rgb(75, 192, 192)', 'rgb(255, 99, 132)'
+    ]
     var str = this.SelectedYears+"";
     var mydatasets = [];
     years = null;
@@ -340,8 +346,10 @@ export class ImplementationMarketReportComponent implements OnInit {
     var VolumeDataset = [];
     var CountDataset = [];
     var VolumeCountDataset = [];
+    var VolumeCycleCountDataset = [];
     var CycleCountDataset = [];
     var CycleTimeDataset = [];
+    var CycleTimeLineDataset = [];
     var Options = {
       legend: {
         display: true,
@@ -581,7 +589,11 @@ export class ImplementationMarketReportComponent implements OnInit {
         labels: {
           render: function (args) {
             if(args.dataset.yAxisID == "B"){
-              return args.value
+              if(args.dataset.order == 1){
+                return "             "+Math.round(args.value)
+              }else{
+                return "                       "+Math.round(args.value)
+              }
             }else{
               if(args.value == 0) {
                 return '$'+0;
@@ -609,10 +621,12 @@ export class ImplementationMarketReportComponent implements OnInit {
               }
             }
           },
-          fontColor: '#3B3B3B',
-          // position: 'border',
+          fontColor: (c) => {
+            return c.dataset.type == "line" ? c.dataset.order == 1 ? '#34495E' : '#F18226' : '#1F8A4C'
+          },
           textMargin: 6,
-          fontSize: 13,
+          overlap: false,
+          fontSize: 14,
           fontStyle : 'bold',
           fontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
         }
@@ -623,6 +637,8 @@ export class ImplementationMarketReportComponent implements OnInit {
         text: ' '
       },
       tooltips: {
+        mode: 'index' as 'index',
+        intersect: false,
         callbacks: {
           label: function(tooltipItems, data) {
             if(tooltipItems.datasetIndex === 0){
@@ -631,6 +647,9 @@ export class ImplementationMarketReportComponent implements OnInit {
             }else if(tooltipItems.datasetIndex === 1){
               return " Revenue Volume : " + 
               Math.round(data.datasets[tooltipItems.datasetIndex].data[tooltipItems.index]).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
+            }else if(tooltipItems.datasetIndex === 2){
+              return " Cycle Time : " + 
+              Math.round(data.datasets[tooltipItems.datasetIndex].data[tooltipItems.index]);
             }
           }
         }
@@ -699,7 +718,7 @@ export class ImplementationMarketReportComponent implements OnInit {
           },
           scaleLabel: {
             display: true,
-            labelString: 'Projects Count',
+            labelString: 'Projects Count & Average Cycle Time (Days)',
             fontSize : 13,
             fontStyle : 'bold',
             fontColor : '#000000',
@@ -718,116 +737,116 @@ export class ImplementationMarketReportComponent implements OnInit {
         }]
       },
     }
-    var Options3 = {
-      responsive : true,
-      bezierCurve: false,
-      hover: {
-        mode: 'index' as 'index',
-        intersect: false
-      },
-      legend: {
-        display: true,
-        position : 'bottom' as 'bottom',
-        fullWidth : true,
-        labels: {
-            fontColor: '#000000',
-            fontSize :  13,
-            padding : 10,
-            fontStyle : 'bold',
-            fontFamily : 'Arial',
-        }
-      },
-      title: {
-        display: true,
-        text: ' '
-      },
-      plugins :{
-        labels: {
-          render : function(args){
-            return Math.round(args.value);
-          },
-          fontColor: '#3B3B3B',
-          position: 'outside',
-          textMargin: 6,
-          fontSize: 13,
-          fontStyle : 'bold',
-          fontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
-        }
-        // labels : false,
-      },
-      tooltips: {
-        callbacks: {
-          label: function(tooltipItems, data) {
-            if(tooltipItems.datasetIndex === 0){
-              // return data.labels[tooltipItems.index] +
-              return " Project Count : " + 
-              Math.round(data.datasets[tooltipItems.datasetIndex].data[tooltipItems.index]);
-            }else if(tooltipItems.datasetIndex === 1){
-              // return data.labels[tooltipItems.index] +
-              return " Cycle Time : " + 
-              Math.round(data.datasets[tooltipItems.datasetIndex].data[tooltipItems.index]);
-            }
-          }
-        }
-      },
-      scales: {
-        yAxes: [{
-          id: 'A',
-          type: 'linear',
-          position: 'left',
-          // stacked: true,
-          ticks: {
-            fontSize : 11,
-            fontStyle : 'bold',
-            fontColor : '#000000',
-            fontFamily : 'Arial',
-          },
-          gridLines: {
-            color: "rgba(0, 0, 0, 0)",
-          },
-          scaleLabel: {
-            display: true,
-            labelString: 'Cycle Time',
-            fontSize : 13,
-            fontStyle : 'bold',
-            fontColor : '#000000',
-            fontFamily : 'Arial',
-          }
-        },{
-          id: 'B',
-          type: 'linear',
-          position: 'right',
-          ticks: {
-            fontSize : 11,
-            fontStyle : 'bold',
-            fontColor : '#000000',
-            fontFamily : 'Arial',
-          },
-          gridLines: {
-            color: "rgba(0, 0, 0, 0)",
-          },
-          scaleLabel: {
-            display: true,
-            labelString: 'Projects Count',
-            fontSize : 13,
-            fontStyle : 'bold',
-            fontColor : '#000000',
-            fontFamily : 'Arial',
-          }
-        }],
-        xAxes: [{
-          ticks: {
-            fontSize : 11,
-            fontStyle : 'bold',
-            fontColor : '#000000',
-            fontFamily : 'Arial',
-          },
-          gridLines: {
-            color: "rgba(0, 0, 0, 0)",
-          }
-        }]
-      },
-    }
+    // var Options3 = {
+    //   responsive : true,
+    //   bezierCurve: false,
+    //   hover: {
+    //     mode: 'index' as 'index',
+    //     intersect: false
+    //   },
+    //   legend: {
+    //     display: true,
+    //     position : 'bottom' as 'bottom',
+    //     fullWidth : true,
+    //     labels: {
+    //         fontColor: '#000000',
+    //         fontSize :  13,
+    //         padding : 10,
+    //         fontStyle : 'bold',
+    //         fontFamily : 'Arial',
+    //     }
+    //   },
+    //   title: {
+    //     display: true,
+    //     text: ' '
+    //   },
+    //   plugins :{
+    //     labels: {
+    //       render : function(args){
+    //         return Math.round(args.value);
+    //       },
+    //       fontColor: '#3B3B3B',
+    //       position: 'outside',
+    //       textMargin: 6,
+    //       fontSize: 13,
+    //       fontStyle : 'bold',
+    //       fontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
+    //     }
+    //     // labels : false,
+    //   },
+    //   tooltips: {
+    //     callbacks: {
+    //       label: function(tooltipItems, data) {
+    //         if(tooltipItems.datasetIndex === 0){
+    //           // return data.labels[tooltipItems.index] +
+    //           return " Project Count : " + 
+    //           Math.round(data.datasets[tooltipItems.datasetIndex].data[tooltipItems.index]);
+    //         }else if(tooltipItems.datasetIndex === 1){
+    //           // return data.labels[tooltipItems.index] +
+    //           return " Cycle Time : " + 
+    //           Math.round(data.datasets[tooltipItems.datasetIndex].data[tooltipItems.index]);
+    //         }
+    //       }
+    //     }
+    //   },
+    //   scales: {
+    //     yAxes: [{
+    //       id: 'A',
+    //       type: 'linear',
+    //       position: 'left',
+    //       // stacked: true,
+    //       ticks: {
+    //         fontSize : 11,
+    //         fontStyle : 'bold',
+    //         fontColor : '#000000',
+    //         fontFamily : 'Arial',
+    //       },
+    //       gridLines: {
+    //         color: "rgba(0, 0, 0, 0)",
+    //       },
+    //       scaleLabel: {
+    //         display: true,
+    //         labelString: 'Cycle Time',
+    //         fontSize : 13,
+    //         fontStyle : 'bold',
+    //         fontColor : '#000000',
+    //         fontFamily : 'Arial',
+    //       }
+    //     },{
+    //       id: 'B',
+    //       type: 'linear',
+    //       position: 'right',
+    //       ticks: {
+    //         fontSize : 11,
+    //         fontStyle : 'bold',
+    //         fontColor : '#000000',
+    //         fontFamily : 'Arial',
+    //       },
+    //       gridLines: {
+    //         color: "rgba(0, 0, 0, 0)",
+    //       },
+    //       scaleLabel: {
+    //         display: true,
+    //         labelString: 'Projects Count',
+    //         fontSize : 13,
+    //         fontStyle : 'bold',
+    //         fontColor : '#000000',
+    //         fontFamily : 'Arial',
+    //       }
+    //     }],
+    //     xAxes: [{
+    //       ticks: {
+    //         fontSize : 11,
+    //         fontStyle : 'bold',
+    //         fontColor : '#000000',
+    //         fontFamily : 'Arial',
+    //       },
+    //       gridLines: {
+    //         color: "rgba(0, 0, 0, 0)",
+    //       }
+    //     }]
+    //   },
+    // }
     if(str == null || str == ''){
       alert("Please select year and Try Again");
     }else{
@@ -945,6 +964,7 @@ export class ImplementationMarketReportComponent implements OnInit {
                   fill : false,lineTension: 0,
                   type : 'line',
                   yAxisID: 'B',
+                  order : 2
                 }
                 VolumeDataset[k] = {
                   label : years[i]+" Revenue Total Volume USD",
@@ -956,20 +976,32 @@ export class ImplementationMarketReportComponent implements OnInit {
                   fill : false,
                   type : 'bar',
                   yAxisID: 'A',
+                  order : 3
                 }
-                VolumeCountDataset = CountDataset.concat(VolumeDataset);
-                CycleTimeDataset[k] = {
+                // VolumeCountDataset = CountDataset.concat(VolumeDataset);
+                // CycleTimeDataset[k] = {
+                //   label : years[i]+" Cycle Time",
+                //   data: [data.Data[0].January_A,data.Data[0].February_A,data.Data[0].March_A,data.Data[0].April_A,data.Data[0].May_A,data.Data[0].June_A,data.Data[0].July_A,data.Data[0].August_A,data.Data[0].September_A,data.Data[0].October_A,data.Data[0].November_A,data.Data[0].December_A],
+                //   backgroundColor : bgColor[k],
+                //   borderColor : bocolor[k],
+                //   borderWidth : 2,
+                //   hoverBackgroundColor : hoverbgcolor[k],
+                //   fill : false,
+                //   type : 'bar',
+                //   yAxisID: 'A',
+                // }
+                CycleTimeLineDataset[k] = {
                   label : years[i]+" Cycle Time",
                   data: [data.Data[0].January_A,data.Data[0].February_A,data.Data[0].March_A,data.Data[0].April_A,data.Data[0].May_A,data.Data[0].June_A,data.Data[0].July_A,data.Data[0].August_A,data.Data[0].September_A,data.Data[0].October_A,data.Data[0].November_A,data.Data[0].December_A],
-                  backgroundColor : bgColor[k],
-                  borderColor : bocolor[k],
-                  borderWidth : 2,
-                  hoverBackgroundColor : hoverbgcolor[k],
-                  fill : false,
-                  type : 'bar',
-                  yAxisID: 'A',
+                  backgroundColor : anotherbgColor[k],
+                  borderColor : anotherbgColor[k],
+                  fill : false,lineTension: 0,
+                  type : 'line',
+                  yAxisID: 'B',
+                  order : 1
                 }
-                CycleCountDataset = CountDataset.concat(CycleTimeDataset);
+                // CycleCountDataset = CountDataset.concat(CycleTimeDataset);
+                VolumeCycleCountDataset = CountDataset.concat(VolumeDataset).concat(CycleTimeLineDataset);//.concat(VolumeDataset)
                 if(i == 0){
                   if(this.CVchart != undefined){
                     this.CVchart.destroy();
@@ -977,26 +1009,25 @@ export class ImplementationMarketReportComponent implements OnInit {
                   this.CVchart = new Chart('CVcanvas', {
                     type : 'bar',
                     data : {
-                      //labels : this.Months,
                       labels : ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
-                      datasets: VolumeCountDataset
+                      datasets: VolumeCycleCountDataset
                     },
                     options: Options2,
                   })
-                  if(this.CTchart != undefined){
-                    this.CTchart.destroy();
-                  }
-                  this.CTchart = new Chart('CTcanvas', {
-                    type : 'bar',
-                    data : {
-                      labels : ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
-                      datasets: CycleCountDataset
-                    },
-                    options: Options3,
-                  })
+                  // if(this.CTchart != undefined){
+                  //   this.CTchart.destroy();
+                  // }
+                  // this.CTchart = new Chart('CTcanvas', {
+                  //   type : 'bar',
+                  //   data : {
+                  //     labels : ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+                  //     datasets: CycleCountDataset
+                  //   },
+                  //   options: Options3,
+                  // })
                 }else{
                   this.CVchart.update();
-                  this.CTchart.update();
+                  // this.CTchart.update();
                 }
                 k++;
                 // j++;

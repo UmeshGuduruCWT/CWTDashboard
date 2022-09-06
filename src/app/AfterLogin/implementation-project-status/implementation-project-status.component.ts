@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 import { LivedashboardComponent } from '../livedashboard/livedashboard.component';
 import { GroupName } from 'src/app/Models/CtoFilters';
 import { DashboardComponent } from '../dashboard/dashboard.component';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 export interface IMPSDailog {
   Dailog_WTitle : string;
   Dailog_PStatus : string;
@@ -156,9 +157,9 @@ export class ImplementationProjectStatusComponent implements OnInit {
               fullWidth : true,
               labels: {
                 fontColor: '#000000',
-                fontSize :  10,
+                fontSize :  11,
                 padding : 10,
-                fontStyle : '400',
+                fontStyle : 'bold',
                 fontFamily : 'Arial',
               }
             },
@@ -198,7 +199,6 @@ export class ImplementationProjectStatusComponent implements OnInit {
               datasets : [
                 {
                   label : "Total Count By Project Level ("+Math.round(this.LevelsCount[0].Global+this.LevelsCount[0].Local+this.LevelsCount[0].Regional)+")",
-                  //data : [this.LevelsCount[0].Blanks,this.LevelsCount[0].Global,this.LevelsCount[0].Local,this.LevelsCount[0].Regional],
                   data : [this.LevelsCount[0].Global,this.LevelsCount[0].Local,this.LevelsCount[0].Regional],
                   backgroundColor: [
                     'rgba(83, 188, 155,0.4)', 'rgba(245, 141, 54,0.4)', 'rgba(134, 98, 164,0.4)'
@@ -209,10 +209,6 @@ export class ImplementationProjectStatusComponent implements OnInit {
                   hoverBackgroundColor: [
                     'rgba(83, 188, 155,1)', 'rgba(245, 141, 54,1)', 'rgba(134, 98, 164,1)'
                   ],
-                  // hoverBackgroundColor: [
-                  //   'rgba(226, 207, 86,0.4)', 'rgba(86,174,226,0.4)', 'rgba(220, 220, 220,0.4)'
-                  // ],
-                  //           fill : false,
                 }
               ]
             },
@@ -230,10 +226,7 @@ export class ImplementationProjectStatusComponent implements OnInit {
           datasets : [
             {
               label : "Total Count By Project Status ("+Math.round(this.StatusCounts[0].C_Closed+this.StatusCounts[0].H_OnHold+this.StatusCounts[0].A_Active_Date+this.StatusCounts[0].N_Active_NoDate)+")",
-              //data : [this.StatusCounts[0].Blanks,this.StatusCounts[0].A_Active_Date,this.StatusCounts[0].C_Closed,this.StatusCounts[0].H_OnHold,this.StatusCounts[0].N_Active_NoDate],
               data : [this.StatusCounts[0].C_Closed,this.StatusCounts[0].H_OnHold,this.StatusCounts[0].A_Active_Date,this.StatusCounts[0].N_Active_NoDate],
-              // hoverBackgroundColor: 'rgb(255, 152, 0,0.7)',
-              // backgroundColor: 'rgb(255, 152, 0,0.7)',
               backgroundColor: [
                 'rgba(245, 176, 65,0.4)', 'rgba(93, 173, 226,0.4)','rgba(244, 208, 63 ,0.4)','rgba(93, 109, 126,0.4)'
               ],
@@ -243,22 +236,21 @@ export class ImplementationProjectStatusComponent implements OnInit {
               hoverBackgroundColor: [
                 'rgba(245, 176, 65,1)', 'rgba(93, 173, 226,1)','rgba(244, 208, 63 ,1)', 'rgba(93, 109, 126,1)'
               ],
-              borderWidth: 2,
-              fill: false,
+              // borderWidth: 2,
+              // fill: false,
             }
           ]
         };
         var options = {
-          // events: false,
           legend: {
             display: true,
             position : 'bottom' as 'bottom',
             fullWidth : true,
             labels: {
                 fontColor: '#000000',
-                fontSize :  10,
+                fontSize :  13,
                 padding : 10,
-                fontStyle : 'normal',
+                fontStyle : 'bold',
                 fontFamily : 'Arial',
             }
           },
@@ -274,18 +266,10 @@ export class ImplementationProjectStatusComponent implements OnInit {
             xAxes: [{
               ticks: {
                 fontSize : 10,
-                fontStyle : 'normal',
+                fontStyle : 'bold',
                 fontColor : '#000000',
                 fontFamily : 'Arial',
               },
-              // scaleLabel: {
-              //   display: true,
-              //   labelString: "Total Count By Project Status ("+Math.round(this.StatusCounts[0].C_Closed+this.StatusCounts[0].H_OnHold+this.StatusCounts[0].A_Active_Date+this.StatusCounts[0].N_Active_NoDate)+")",
-              //   fontSize : 10,
-              //   fontStyle : 'normal',
-              //   fontColor : '#000000',
-              //   fontFamily : 'Arial',
-              // },
               gridLines: {
                 color: "rgba(0, 0, 0, 0)",
               }
@@ -294,7 +278,7 @@ export class ImplementationProjectStatusComponent implements OnInit {
               ticks: {
                 beginAtZero: true,
                 fontSize : 10,
-                fontStyle : 'normal',
+                fontStyle : 'bold',
                 fontColor : '#000000',
                 fontFamily : 'Arial',
               },
@@ -326,13 +310,53 @@ export class ImplementationProjectStatusComponent implements OnInit {
         };
         var canvas : any = document.getElementById("PScanvas");
         var ctx = canvas.getContext("2d");
+        var pieOptions = {
+          //events: false,
+          legend: {
+            display: true,
+            position : 'bottom' as 'bottom',
+            fullWidth : true,
+            labels: {
+              fontColor: '#000000',
+              fontSize :  11,
+              padding : 10,
+              fontStyle : 'bold',
+              fontFamily : 'Arial',
+            }
+          },
+          title: {
+            display: true,
+            text: ' '
+          },
+          plugins: {
+            labels: {
+              render: 'value',
+              fontColor: '#3B3B3B',
+              textMargin: 6,
+              arc: false,
+              fontSize: 12,
+              fontStyle: 'bold',
+              fontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
+            }
+          },
+          showAllTooltips: true,
+          tooltips: {
+            callbacks: {
+              label: function(tooltipItems, data) {
+                return data.labels[tooltipItems.index] + " : "+ data.datasets[tooltipItems.datasetIndex].data[tooltipItems.index];
+              }
+            }
+          },
+          events: ['mousemove'],
+        };
         if(this.PSchart != undefined){
           this.PSchart.destroy();
         }
         this.PSchart = new Chart(ctx, {
-          type: 'bar',
+          // plugins: [ChartDataLabels],
+          type: 'pie',
           data: data,
-          options: options
+          options: pieOptions
         });
         this.dashboard.ShowSpinnerHandler(false);
       });
@@ -361,8 +385,6 @@ export class ImplementationProjectStatusComponent implements OnInit {
               hoverBackgroundColor : 'rgb(46, 204, 113 ,1)',
               borderWidth: 2,
               fill: false,
-              //backgroundColor: 'rgb(70, 191, 189,0.7)',//rgb(59, 138, 217,0.9)',
-              //           fill : false,
             }
           ]
         };
@@ -373,9 +395,9 @@ export class ImplementationProjectStatusComponent implements OnInit {
             fullWidth : true,
             labels: {
                 fontColor: '#000000',
-                fontSize :  10,
+                fontSize :  12,
                 padding : 10,
-                fontStyle : 'normal',
+                fontStyle : 'bold',
                 fontFamily : 'Arial',
             }
           },
@@ -390,17 +412,12 @@ export class ImplementationProjectStatusComponent implements OnInit {
           scales: {
             xAxes: [{
               ticks: {
+                beginAtZero: true,
                 fontSize : 10,
-                fontStyle : 'normal',
+                fontStyle : 'bold',
                 fontColor : '#000000',
                 fontFamily : 'Arial',
-                // autoSkip: false,
-                // maxRotation: 0,
-                // minRotation: 0
               },
-              gridLines: {
-                color: "rgba(0, 0, 0, 0)",
-              }
             }],
             yAxes: [{
               ticks: {
@@ -417,14 +434,17 @@ export class ImplementationProjectStatusComponent implements OnInit {
             }]
           },
           plugins: {
-            labels: {
-              render: 'value',
-              fontColor: '#3B3B3B',
-              position: 'outside',
-              textMargin: 6,
-              fontSize: 10,
-              // fontStyle: 'bold',
-              fontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
+            datalabels: {
+              anchor : 'end' as 'end',
+              align : 'end' as 'end',
+              color : 'black',
+              backgroundColor : 'rgb(46, 204, 113 ,0.4)',
+              padding : 3,
+              borderRadius : 6,
+              font: {
+                size: 11,
+                weight: 'bold' as 'bold'
+              }
             }
           },
           tooltips: {
@@ -436,27 +456,6 @@ export class ImplementationProjectStatusComponent implements OnInit {
               }
             }
           },
-          // hover: {
-          //   animationDuration: 0
-          // },
-          // animation: {
-          //   duration: 1,
-          //   onComplete: function () {
-          //     var chartInstance = this.chart,
-          //         ctx = chartInstance.ctx;
-          //     ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
-          //     ctx.textAlign = 'center';
-          //     ctx.textBaseline = 'bottom';
-          //     this.data.datasets.forEach(function (dataset, i) {
-          //         var meta = chartInstance.controller.getDatasetMeta(i);
-          //         meta.data.forEach(function (bar, index) {
-          //             var data = dataset.data[index]; 
-          //             ctx.font = "550 12px Arial";                    
-          //             ctx.fillText(data, bar._model.x, bar._model.y - 5);
-          //         });
-          //     });
-          //   }
-          // }
         };
         var canvas : any = document.getElementById("LPcanvas");
         var ctx = canvas.getContext("2d");
@@ -464,7 +463,8 @@ export class ImplementationProjectStatusComponent implements OnInit {
           this.PLchart.destroy();
         }
         this.PLchart = new Chart(ctx, {
-          type: 'bar',
+          plugins: [ChartDataLabels],
+          type: 'horizontalBar',
           data: data,
           options: options
         });
@@ -506,11 +506,11 @@ export class ImplementationProjectStatusComponent implements OnInit {
               position : 'bottom' as 'bottom',
               fullWidth : true,
               labels: {
-                  fontColor: '#000000',
-                  fontSize :  10,
-                  padding : 10,
-                  fontStyle : 'normal',
-                  fontFamily : 'Arial',
+                fontColor: '#000000',
+                fontSize :  12,
+                padding : 10,
+                fontStyle : 'bold',
+                fontFamily : 'Arial',
               }
             },
             title: {
@@ -520,22 +520,16 @@ export class ImplementationProjectStatusComponent implements OnInit {
             scales: {
               xAxes: [{
                 ticks: {
+                  beginAtZero: true,
                   fontSize : 10,
-                  fontStyle : 'normal',
+                  fontStyle : 'bold',
                   fontColor : '#000000',
                   fontFamily : 'Arial',
-                  // autoSkip: false,
-                  // maxRotation: 0,
-                  // minRotation: 0
                 },
-                gridLines: {
-                  color: "rgba(0, 0, 0, 0)",
-                }
               }],
               yAxes: [{
                 ticks: {
                   beginAtZero:true,
-                  // max:700,
                   fontSize : 10,
                   fontStyle : 'bold',
                   fontColor : '#000000',
@@ -547,14 +541,17 @@ export class ImplementationProjectStatusComponent implements OnInit {
               }]
             },
             plugins: {
-              labels: {
-                render: 'value',
-                fontColor: '#3B3B3B',
-                position: 'outside',
-                textMargin: 6,
-                fontSize: 10,
-                //fontStyle: 'bold',
-                fontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
+              datalabels: {
+                anchor : 'end' as 'end',
+                align : 'end' as 'end',
+                color : 'black',
+                backgroundColor : 'rgb(52, 152, 219 ,0.4)',
+                padding : 3,
+                borderRadius : 6,
+                font: {
+                  size: 11,
+                  weight: 'bold' as 'bold'
+                }
               }
             },
             tooltips: {
@@ -573,7 +570,8 @@ export class ImplementationProjectStatusComponent implements OnInit {
             this.GNchart.destroy();
           }
           this.GNchart = new Chart(ctx, {
-            type: 'bar',
+            plugins: [ChartDataLabels],
+            type: 'horizontalBar',
             data: data,
             options: options
           });
@@ -904,7 +902,10 @@ export class ImplementationProjectStatusComponent implements OnInit {
     this.Group_NameSelected();
   }
   //End of Assign & Report To Methods
-
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
 }
 @Component({
   selector: 'app-implementation-project-statusdailog',

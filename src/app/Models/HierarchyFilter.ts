@@ -23,7 +23,7 @@ export interface LeaderTwo_H {
     isSelected: boolean;
 }
 export interface RevenueId_H {
-    item_id : number;
+    item_id : string;
     item_text : string;
     Region : string;
     Workspace_Title : string;
@@ -33,7 +33,7 @@ export interface RevenueId_H {
     CountryCode : string;
 }
 export interface DropDownList{
-    item_id : number;
+    item_id : string;
     item_text : string;
 }
 export interface HierarchyFilter {

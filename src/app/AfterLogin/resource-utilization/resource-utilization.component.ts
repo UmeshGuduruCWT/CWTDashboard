@@ -474,7 +474,7 @@ export class ResourceUtilizationComponent implements OnInit {
     this.openDialog();
   }
   exportResUtil(){
-    const CustomizedData = this.dataSource.data.map(o => {
+    const CustomizedData = this.dataSource.filteredData.map(o => {
       return {
         'Region' : o.Region,
         'Project Level' : o.ProjectLevel,

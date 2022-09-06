@@ -24,13 +24,13 @@ export class LoginComponent implements OnInit {
     };
   }
   ngOnInit() {
-    var Loggintime = new Date();
+    var CurrentTime = new Date();
     let LoggedinTime = new Date(localStorage.getItem("LastLoggedIn"));
-    if(localStorage.getItem("LastLoggedIn") == null){
+    if(localStorage.getItem("LastLoggedIn")){
       localStorage.clear();
     }else{
-      let SecondLoggedInTime = new Date(new Date(localStorage.getItem("LastLoggedIn")).setSeconds(LoggedinTime.getSeconds()+10));
-      if(Loggintime > LoggedinTime && Loggintime < SecondLoggedInTime){
+      let SecondLoggedInTime = new Date(new Date(localStorage.getItem("LastLoggedIn")).setMinutes(LoggedinTime.getMinutes()+30));
+      if(CurrentTime > LoggedinTime && CurrentTime < SecondLoggedInTime){
         if(localStorage.getItem("LoggedIn") == "true"){
           if(localStorage.getItem("UID") != null){
             this.router.navigate(["/Dashboard",localStorage.getItem("UID")]);
@@ -44,15 +44,6 @@ export class LoginComponent implements OnInit {
         localStorage.clear();
       }
     }
-    // if(localStorage.getItem("LoggedIn") == "true"){
-    //   if(localStorage.getItem("UID") != null){
-    //     this.router.navigate(["/Dashboard",localStorage.getItem("UID")]);
-    //   }else{
-    //     localStorage.clear();
-    //   }
-    // }else{
-    //   localStorage.clear();
-    // }
   }
   OnRegisterClick(){
     this.router.navigate(["/Register"]);

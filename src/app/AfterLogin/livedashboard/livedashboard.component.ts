@@ -50,7 +50,6 @@ export class LivedashboardComponent implements OnInit, OnDestroy {
   CLREditOption : string;
   hidden : boolean;
   ShowAdminPanel : boolean = false;
-  
   ShowPerformanceAnalysis : boolean = false;
   ShowNPS : boolean = false;
   ShowNpsReports : boolean = false
@@ -73,7 +72,7 @@ export class LivedashboardComponent implements OnInit, OnDestroy {
         event.id === 1 &&
         event.url === event.urlAfterRedirects 
       ) {
-        localStorage.setItem("LastLoggedIn",this.date);
+        // localStorage.setItem("LastLoggedIn",this.date);
       }else{
       }
     })
@@ -82,38 +81,48 @@ export class LivedashboardComponent implements OnInit, OnDestroy {
     if(event) {
       this.timeLeft = 1800;
       this.SecondsLeft = 60;
+      this.date = new Date();
+      localStorage.setItem("LastLoggedIn",this.date);
     }
   }
   @HostListener('document:mouseenter', ['$event'])onMouseEnter(event: any) {     
     if(event) {
       this.timeLeft = 1800;
       this.SecondsLeft = 60;
+      this.date = new Date();
+      localStorage.setItem("LastLoggedIn",this.date);
     }
   }
   @HostListener('document:click', ['$event'])onClick(event: string) {
     if(event) {
       this.timeLeft = 1800;
       this.SecondsLeft = 60;
+      this.date = new Date();
+      localStorage.setItem("LastLoggedIn",this.date);
     }
   }
   @HostListener('document:keydown', ['$event']) onKeydownHandler(event: KeyboardEvent) {
     if(event) {
       this.timeLeft = 1800;
       this.SecondsLeft = 60;
+      this.date = new Date();
+      localStorage.setItem("LastLoggedIn",this.date);
     }
   }
   @HostListener('document:scroll', ['$event']) onScroll(event: Event): void {
     if(event) {
       this.timeLeft = 1800;
       this.SecondsLeft = 60;
+      this.date = new Date();
+      localStorage.setItem("LastLoggedIn",this.date);
     }
   }
   date;
   @HostListener('window:beforeunload', ['$event']) onWindowClose(event: any): void {
-     event.preventDefault();
-     event.returnValue = false;
-     this.date = new Date();
-     localStorage.setItem("LastLoggedIn",this.date);
+    if(event) {
+      event.preventDefault();
+      event.returnValue = false;
+    }
   }
   interval;timeLeft: number = 1800;
   SecondsLeft :number = 60;
@@ -122,16 +131,37 @@ export class LivedashboardComponent implements OnInit, OnDestroy {
     this.interval = setInterval(() => {
       if(this.timeLeft > 0) {
         this.timeLeft--;
-        if(this.SecondsLeft > 0 && this.SecondsLeft >= 30){
+        if(this.SecondsLeft > 0 && this.timeLeft >= 60){
           this.SecondsLeft--;
-          this.Time = Math.round((this.timeLeft/60)-1)+" : "+ this.SecondsLeft;
-        }else if(this.SecondsLeft > 0 && this.SecondsLeft < 30){
+          if(this.SecondsLeft >= 30){
+            this.Time = Math.round((this.timeLeft/60)-1)+" : "+ this.SecondsLeft;
+          }else{
+            this.Time = Math.round((this.timeLeft/60))+" : "+ this.SecondsLeft;
+          }
+        }else if(this.SecondsLeft > 0 && this.timeLeft < 60){
           this.SecondsLeft--;
-          this.Time = Math.round(this.timeLeft/60)+" : "+ this.SecondsLeft;
+          this.Time = "00 : "+ this.SecondsLeft;
         }else{
           this.SecondsLeft = 59;
-          this.Time = Math.round(this.timeLeft/60)+" : "+ this.SecondsLeft;
+          this.Time = Math.round((this.timeLeft/60)-1)+" : "+ this.SecondsLeft;
         }
+        // if(this.timeLeft > 60){
+          // if(this.SecondsLeft > 0 && this.SecondsLeft >= 30){
+          //   this.SecondsLeft--;
+          //   this.Time = Math.round((this.timeLeft/60)-1)+" : "+ this.SecondsLeft;
+          // }else if(this.SecondsLeft > 0 && this.SecondsLeft < 30){
+          //   this.SecondsLeft--;
+          //   this.Time = Math.round(this.timeLeft/60)+" : "+ this.SecondsLeft;
+          // }else{
+          //   this.SecondsLeft = 59;
+          //   this.Time = Math.round(this.timeLeft/60)+" : "+ this.SecondsLeft;
+          // }
+        // }else{
+        //   if(this.SecondsLeft > 0 && this.SecondsLeft >= 30){
+        //     this.SecondsLeft--;
+        //     this.Time = Math.round((this.timeLeft/60)-1)+" : "+ this.SecondsLeft;
+        //   }
+        // }
       }else {
         clearInterval(this.interval);
         localStorage.clear();

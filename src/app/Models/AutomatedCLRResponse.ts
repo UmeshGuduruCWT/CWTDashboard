@@ -64,6 +64,7 @@ export interface ManualCLRDataResponse {
 export class DataCLR {
     CLRID : number;
     CheckComments : string;
+    Select_Row : boolean;
     ManualID : number;
     Revenue_ID : number;
     RevenueID: string;

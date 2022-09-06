@@ -62,7 +62,7 @@ export interface ParsingData {
   // Service_configuration : string,
   // OBT_Reseller___Direct : string;
   Assignment_date : Date,
-  RevenueID : number,
+  RevenueID : any,
   Project_Effort : number,
   GoLiveDate :Date,
   ProjectStatus : string,
@@ -73,6 +73,7 @@ export interface ParsingData {
   RecordStatus : string,
   SelectionType : string,
   DigitalTeam : FilterDigitalTeam[],
+  CLRData : any
 }
 export class MyFilter {
   Client: string;
@@ -197,15 +198,14 @@ export class AutomatedCLRComponent implements OnInit {
   screenHeight  : number;
   Region_F;SelectedRegion;
   //OwnerShip_F;ProjectStatus_F;ProjectLevel_F;Opportunity_Type_F;Revenue_Status_F;Revenue_Opportunity_Type_F;Opportunity_Category_F;RecordStatus_F;DataSourceType_F;
-  displayedColumns : string[] = ['Client','RevenueID','Country','iMeet_Workspace_Title','Implementation_Type','Pipeline_status','Pipeline_comments','Service_location','Service_configuration','OBT_Reseller___Direct','OBTAdoptionRate','Assignment_date_c','UpdateOn_c','OppVolume','RevenueVolumeUSD','Region','OwnerShip','ProjectStart_ForCycleTime_c','GoLiveDate_c','CycleTime','ProjectStatus','Milestone__Reason_Code','PerCompleted','CountryStatus','ProjectLevel','CompletedDate_c','GlobalProjectManager','RegionalProjectManager','AssigneeFullName','GlobalCISDQSLead','GlobalCISOBTLead','RegionalCISOBTLead','LocalDigitalOBTLead','GlobalCISPortraitLead','RegionalCISPortraitLead','LocalDigitalAdHocSupport','GlobalCISHRFeedSpecialist','GDS','ActivityType','ComplexityScore','MilestoneTitle','Group_Name','Milestone__Project_Notes','Milestone__Closed_Loop_Owner','Workspace__ELT_Overall_Status','Workspace__ELT_Overall_Comments','Customer_Row_ID','Opportunity_ID','AccountOwner','Opportunity_Type','Revenue_Status','Revenue_Opportunity_Type','Opportunity_Owner','Opportunity_Category','Revenue_Total_Transactions','Line_Win_Probability','Implementation_Fee__PSD_','DataDescription','Date_added_to_the_CLR_c','CreatedDate_c','Project_Effort','Sales_Stage_Name','AccountCategory','SOWStatus','ImplementationReady','RecordStatus','DataSourceType','CheckComments','actions'];
-  displayedColumns_h : string[] = ['Client_h','RevenueID_h','Country_h','iMeet_Workspace_Title_h','Implementation_Type_h','Pipeline_status_h','Pipeline_comments_h','Service_location_h','Service_configuration_h','OBT_Reseller___Direct_h','OBTAdoptionRate_h','Assignment_date_c_h','UpdateOn_c_h','OppVolume_c_h','RevenueVolumeUSD_c_h','Region_h','OwnerShip_h','ProjectStartDate_c_h','GoLiveDate_c_h','CycleTime_h','ProjectStatus_h','Milestone__Reason_Code_h','PerCompleted_h','CountryStatus_h','ProjectLevel_h','CompletedDate_c_h','GlobalProjectManager_h','RegionalProjectManager_h','AssigneeFullName_h','GlobalCISDQSLead_h','GlobalCISOBTLead_h','RegionalCISOBTLead_h','LocalDigitalOBTLead_h','GlobalCISPortraitLead_h','RegionalCISPortraitLead_h','LocalDigitalAdHocSupport_h','GlobalCISHRFeedSpecialist_h','GDS_h','ActivityType_h','ComplexityScore_h','MilestoneTitle_h','Group_Name_h','Milestone__Project_Notes_h','Milestone__Closed_Loop_Owner_h','Workspace__ELT_Overall_Status_h','Workspace__ELT_Overall_Comments_h','Customer_Row_ID_h','Opportunity_ID_h','AccountOwner_h','Opportunity_Type_h','Revenue_Status_h','Revenue_Opportunity_Type_h','Opportunity_Owner_h','Opportunity_Category_h','Revenue_Total_Transactions_h','Line_Win_Probability_h','Implementation_Fee__PSD_c_h','DataDescription_h','Date_added_to_the_CLR_c_h','CreatedDate_c_h','Project_Effort_h','Sales_Stage_Name_h','AccountCategory_h','SOWStatus_h','ImplementationReady_h','RecordStatus_h','DataSourceType_h','CheckComments_h','actions_h'];
-  // displayedColumns : string[] = ['Client','RevenueID','iMeet_Workspace_Title','CreatedDate_c','Implementation_Type','actions'];
-  // displayedColumns_h : string[] = ['Client_h','RevenueID_h','iMeet_Workspace_Title_h','CreatedDate_c_h','Implementation_Type_h','actions_h']
+  displayedColumns : string[] = ['Select_Row','Client','RevenueID','Country','iMeet_Workspace_Title','Implementation_Type','Pipeline_status','Pipeline_comments','Service_location','Service_configuration','OBT_Reseller___Direct','OBTAdoptionRate','Assignment_date_c','UpdateOn_c','OppVolume','RevenueVolumeUSD','Region','OwnerShip','ProjectStart_ForCycleTime_c','GoLiveDate_c','CycleTime','ProjectStatus','Milestone__Reason_Code','PerCompleted','CountryStatus','ProjectLevel','CompletedDate_c','GlobalProjectManager','RegionalProjectManager','AssigneeFullName','GlobalCISDQSLead','GlobalCISOBTLead','RegionalCISOBTLead','LocalDigitalOBTLead','GlobalCISPortraitLead','RegionalCISPortraitLead','LocalDigitalAdHocSupport','GlobalCISHRFeedSpecialist','GDS','ActivityType','ComplexityScore','MilestoneTitle','Group_Name','Milestone__Project_Notes','Milestone__Closed_Loop_Owner','Workspace__ELT_Overall_Status','Workspace__ELT_Overall_Comments','Customer_Row_ID','Opportunity_ID','AccountOwner','Opportunity_Type','Revenue_Status','Revenue_Opportunity_Type','Opportunity_Owner','Opportunity_Category','Revenue_Total_Transactions','Line_Win_Probability','Implementation_Fee__PSD_','DataDescription','Date_added_to_the_CLR_c','CreatedDate_c','Project_Effort','Sales_Stage_Name','AccountCategory','SOWStatus','ImplementationReady','RecordStatus','DataSourceType','CheckComments','actions'];
+  displayedColumns_h : string[] = ['Select_Row_h','Client_h','RevenueID_h','Country_h','iMeet_Workspace_Title_h','Implementation_Type_h','Pipeline_status_h','Pipeline_comments_h','Service_location_h','Service_configuration_h','OBT_Reseller___Direct_h','OBTAdoptionRate_h','Assignment_date_c_h','UpdateOn_c_h','OppVolume_c_h','RevenueVolumeUSD_c_h','Region_h','OwnerShip_h','ProjectStartDate_c_h','GoLiveDate_c_h','CycleTime_h','ProjectStatus_h','Milestone__Reason_Code_h','PerCompleted_h','CountryStatus_h','ProjectLevel_h','CompletedDate_c_h','GlobalProjectManager_h','RegionalProjectManager_h','AssigneeFullName_h','GlobalCISDQSLead_h','GlobalCISOBTLead_h','RegionalCISOBTLead_h','LocalDigitalOBTLead_h','GlobalCISPortraitLead_h','RegionalCISPortraitLead_h','LocalDigitalAdHocSupport_h','GlobalCISHRFeedSpecialist_h','GDS_h','ActivityType_h','ComplexityScore_h','MilestoneTitle_h','Group_Name_h','Milestone__Project_Notes_h','Milestone__Closed_Loop_Owner_h','Workspace__ELT_Overall_Status_h','Workspace__ELT_Overall_Comments_h','Customer_Row_ID_h','Opportunity_ID_h','AccountOwner_h','Opportunity_Type_h','Revenue_Status_h','Revenue_Opportunity_Type_h','Opportunity_Owner_h','Opportunity_Category_h','Revenue_Total_Transactions_h','Line_Win_Probability_h','Implementation_Fee__PSD_c_h','DataDescription_h','Date_added_to_the_CLR_c_h','CreatedDate_c_h','Project_Effort_h','Sales_Stage_Name_h','AccountCategory_h','SOWStatus_h','ImplementationReady_h','RecordStatus_h','DataSourceType_h','CheckComments_h','actions_h'];
+  // displayedColumns : string[] = ['Select_Row','Client','RevenueID','iMeet_Workspace_Title','CreatedDate_c','Implementation_Type','actions'];
+  // displayedColumns_h : string[] = ['Select_Row_h','Client_h','RevenueID_h','iMeet_Workspace_Title_h','CreatedDate_c_h','Implementation_Type_h','actions_h']
 
   columnsToDisplay: string[] = this.displayedColumns.slice();
   columnsToDisplay_h: string[] = this.displayedColumns_h.slice();
   displayReplicateButton : string;
-  //displayedColumns : string[] = ['RevenueID','Client','iMeet_Workspace_Title','Date_added_to_the_CLR_c','Implementation_Type','CLR_Country','Pipeline_status','Pipeline_comments','Service_location','Service_configuration','OBT_Reseller___Direct','OBTAdoptionRate','Servicing_location','Assignment_date_c','New_Business_volume__US___c','RevenueVolumeUSD_c','Region','Country','OwnerShip','GoLiveDate_c','ProjectStatus','Milestone__Reason_Code','CountryStatus','ProjectLevel','CompletedDate_c','ProjectOwner','GlobalProjectManager','ProjectConsultant','RegionalProjectManager','AssigneeFullName','GlobalCISDQSLead','GlobalCISOBTLead','GlobalCISPortraitLead','GlobalCISHRFeedSpecialist','MilestoneTitle','Milestone__Record_ID_Key','Group_Name','Milestone__Project_Notes','Milestone__Closed_Loop_Owner','Workspace__ELT_Overall_Status','Workspace__ELT_Overall_Comments','Customer_Row_ID','Opportunity_ID','Account_Name','Sales_Stage_Name','Opportunity_Type','Revenue_Status','Revenue_Opportunity_Type','Opportunity_Owner','Opportunity_Category','MarketLeader','Revenue_Total_Transactions','Implementation_Fee__PSD_c','EMEA_Country_to_charge','EMEA_Client','EMEA_OBT_standard_fee_c','EMEA_Included_for_accrual','EMEA_Accrual_date_c','EMEA_Scope_description','EMEA_Billing_notes','Manual_Entry__Wave_2__Wave_3__etc_','Project_Effort','Priority','Resource_Status','Global_Project_Manager_replacement','Regional_Project_Manager_replacement','Milestone__Assignee__Full_Name_replacement','Global_CIS_OBT_Lead_replacement','Global_CIS_HR_Feed_Specialist_replacement','Global_CIS_Portrait_Lead_replacement','Global_CIS_RoomIT_Integration_Lead_replacement','actions'];
   // filterEntity: DataCLR;
   SavedFilters
   // filterType: MatTableFilter;
@@ -213,7 +213,8 @@ export class AutomatedCLRComponent implements OnInit {
   LoginUID : string;
   FilteredVolume;
   FilteredCount;
-
+  selectAllIds : boolean = false;
+  displayReplicate : boolean = false;
   masterImplementationType : boolean;masterPipelineStatus : boolean;masterOBTType : boolean;
   masterGDS : boolean;masterActivityType : boolean;masterRegion : boolean;masterOwnership : boolean;masterCountryStatus : boolean;
   masterProjectStatus : boolean;masterProjectLevel : boolean;masterGroupName : boolean;masterWorkspaceEltOverallStatus : boolean;
@@ -590,22 +591,49 @@ export class AutomatedCLRComponent implements OnInit {
     })
   }
   HideColumnsButtonName : string = "D";
+  onSelectAllIds(){
+    this.dataSource.data.filter(function(item) {
+      return item.Select_Row = false;
+    });
+    if(this.selectAllIds){
+      this.displayReplicate = true;
+      this.dataSource.filteredData.filter(function(item) {
+        if(item.RevenueID == 400000000000000){
+          return item.Select_Row = false;
+        }else{
+          return item.Select_Row = true;
+        }
+      });
+    }else{
+      this.displayReplicate = false;
+      // this.dataSource.filteredData.filter(function(item) {
+      //   return item.Select_Row = false;
+      // });
+    }
+  }
+  onRowSelected(CLRID : any){
+    if(this.dataSource.data.filter(x => x.Select_Row == true).length > 1){
+      this.displayReplicate = true;
+    }else{
+      this.displayReplicate = false;
+    }
+  }
   HideColumns(){
     if(this.displayReplicateButton == "true"){
       if(this.HideColumnsButtonName == "P"){
-        this.columnsToDisplay = ['Client','RevenueID','Country','iMeet_Workspace_Title','Implementation_Type','Pipeline_status','Pipeline_comments','Service_location','Service_configuration','OBT_Reseller___Direct','OBTAdoptionRate','Assignment_date_c','UpdateOn_c','OppVolume','RevenueVolumeUSD','Region','OwnerShip','ProjectStart_ForCycleTime_c','GoLiveDate_c','CycleTime','ProjectStatus','Milestone__Reason_Code','PerCompleted','CountryStatus','ProjectLevel','CompletedDate_c','GlobalProjectManager','RegionalProjectManager','AssigneeFullName','GlobalCISDQSLead','GlobalCISOBTLead','RegionalCISOBTLead','LocalDigitalOBTLead','GlobalCISPortraitLead','RegionalCISPortraitLead','LocalDigitalOBTLead','GlobalCISHRFeedSpecialist','GDS','ActivityType','ComplexityScore','MilestoneTitle','Group_Name','Milestone__Project_Notes','Milestone__Closed_Loop_Owner','Workspace__ELT_Overall_Status','Workspace__ELT_Overall_Comments','Customer_Row_ID','Opportunity_ID','AccountOwner','Opportunity_Type','Revenue_Status','Revenue_Opportunity_Type','Opportunity_Owner','Opportunity_Category','Revenue_Total_Transactions','Line_Win_Probability','Implementation_Fee__PSD_','DataDescription','Date_added_to_the_CLR_c','CreatedDate_c','Project_Effort','Sales_Stage_Name','AccountCategory','SOWStatus','ImplementationReady','RecordStatus','DataSourceType','CheckComments','actions'];
-        this.columnsToDisplay_h = ['Client_h','RevenueID_h','Country_h','iMeet_Workspace_Title_h','Implementation_Type_h','Pipeline_status_h','Pipeline_comments_h','Service_location_h','Service_configuration_h','OBT_Reseller___Direct_h','OBTAdoptionRate_h','Assignment_date_c_h','UpdateOn_c_h','OppVolume_c_h','RevenueVolumeUSD_c_h','Region_h','OwnerShip_h','ProjectStartDate_c_h','GoLiveDate_c_h','CycleTime_h','ProjectStatus_h','Milestone__Reason_Code_h','PerCompleted_h','CountryStatus_h','ProjectLevel_h','CompletedDate_c_h','GlobalProjectManager_h','RegionalProjectManager_h','AssigneeFullName_h','GlobalCISDQSLead_h','GlobalCISOBTLead_h','RegionalCISOBTLead_h','LocalDigitalOBTLead_h','GlobalCISPortraitLead_h','RegionalCISPortraitLead_h','LocalDigitalOBTLead_h','GlobalCISHRFeedSpecialist_h','GDS_h','ActivityType_h','ComplexityScore_h','MilestoneTitle_h','Group_Name_h','Milestone__Project_Notes_h','Milestone__Closed_Loop_Owner_h','Workspace__ELT_Overall_Status_h','Workspace__ELT_Overall_Comments_h','Customer_Row_ID_h','Opportunity_ID_h','AccountOwner_h','Opportunity_Type_h','Revenue_Status_h','Revenue_Opportunity_Type_h','Opportunity_Owner_h','Opportunity_Category_h','Revenue_Total_Transactions_h','Line_Win_Probability_h','Implementation_Fee__PSD_c_h','DataDescription_h','Date_added_to_the_CLR_c_h','CreatedDate_c_h','Project_Effort_h','Sales_Stage_Name_h','AccountCategory_h','SOWStatus_h','ImplementationReady_h','RecordStatus_h','DataSourceType_h','CheckComments_h','actions_h'];
+        this.columnsToDisplay = ['Select_Row','Client','RevenueID','Country','iMeet_Workspace_Title','Implementation_Type','Pipeline_status','Pipeline_comments','Service_location','Service_configuration','OBT_Reseller___Direct','OBTAdoptionRate','Assignment_date_c','UpdateOn_c','OppVolume','RevenueVolumeUSD','Region','OwnerShip','ProjectStart_ForCycleTime_c','GoLiveDate_c','CycleTime','ProjectStatus','Milestone__Reason_Code','PerCompleted','CountryStatus','ProjectLevel','CompletedDate_c','GlobalProjectManager','RegionalProjectManager','AssigneeFullName','GlobalCISDQSLead','GlobalCISOBTLead','RegionalCISOBTLead','LocalDigitalOBTLead','GlobalCISPortraitLead','RegionalCISPortraitLead','LocalDigitalOBTLead','GlobalCISHRFeedSpecialist','GDS','ActivityType','ComplexityScore','MilestoneTitle','Group_Name','Milestone__Project_Notes','Milestone__Closed_Loop_Owner','Workspace__ELT_Overall_Status','Workspace__ELT_Overall_Comments','Customer_Row_ID','Opportunity_ID','AccountOwner','Opportunity_Type','Revenue_Status','Revenue_Opportunity_Type','Opportunity_Owner','Opportunity_Category','Revenue_Total_Transactions','Line_Win_Probability','Implementation_Fee__PSD_','DataDescription','Date_added_to_the_CLR_c','CreatedDate_c','Project_Effort','Sales_Stage_Name','AccountCategory','SOWStatus','ImplementationReady','RecordStatus','DataSourceType','CheckComments','actions'];
+        this.columnsToDisplay_h = ['Select_Row_h','Client_h','RevenueID_h','Country_h','iMeet_Workspace_Title_h','Implementation_Type_h','Pipeline_status_h','Pipeline_comments_h','Service_location_h','Service_configuration_h','OBT_Reseller___Direct_h','OBTAdoptionRate_h','Assignment_date_c_h','UpdateOn_c_h','OppVolume_c_h','RevenueVolumeUSD_c_h','Region_h','OwnerShip_h','ProjectStartDate_c_h','GoLiveDate_c_h','CycleTime_h','ProjectStatus_h','Milestone__Reason_Code_h','PerCompleted_h','CountryStatus_h','ProjectLevel_h','CompletedDate_c_h','GlobalProjectManager_h','RegionalProjectManager_h','AssigneeFullName_h','GlobalCISDQSLead_h','GlobalCISOBTLead_h','RegionalCISOBTLead_h','LocalDigitalOBTLead_h','GlobalCISPortraitLead_h','RegionalCISPortraitLead_h','LocalDigitalOBTLead_h','GlobalCISHRFeedSpecialist_h','GDS_h','ActivityType_h','ComplexityScore_h','MilestoneTitle_h','Group_Name_h','Milestone__Project_Notes_h','Milestone__Closed_Loop_Owner_h','Workspace__ELT_Overall_Status_h','Workspace__ELT_Overall_Comments_h','Customer_Row_ID_h','Opportunity_ID_h','AccountOwner_h','Opportunity_Type_h','Revenue_Status_h','Revenue_Opportunity_Type_h','Opportunity_Owner_h','Opportunity_Category_h','Revenue_Total_Transactions_h','Line_Win_Probability_h','Implementation_Fee__PSD_c_h','DataDescription_h','Date_added_to_the_CLR_c_h','CreatedDate_c_h','Project_Effort_h','Sales_Stage_Name_h','AccountCategory_h','SOWStatus_h','ImplementationReady_h','RecordStatus_h','DataSourceType_h','CheckComments_h','actions_h'];
       }else{
-        this.columnsToDisplay = ['Client','RevenueID','Country','iMeet_Workspace_Title','Region','ProjectStatus','GlobalCISOBTLead','RegionalCISOBTLead','LocalDigitalOBTLead','GlobalCISPortraitLead','RegionalCISPortraitLead','LocalDigitalOBTLead','GlobalCISHRFeedSpecialist','GDS','ActivityType','ComplexityScore','RecordStatus','DataSourceType','actions'];
-        this.columnsToDisplay_h = ['Client_h','RevenueID_h','Country_h','iMeet_Workspace_Title_h','Region_h','ProjectStatus_h','GlobalCISOBTLead_h','RegionalCISOBTLead_h','LocalDigitalOBTLead_h','GlobalCISPortraitLead_h','RegionalCISPortraitLead_h','LocalDigitalOBTLead_h','GlobalCISHRFeedSpecialist_h','GDS_h','ActivityType_h','ComplexityScore_h','RecordStatus_h','DataSourceType_h','actions_h'];
+        this.columnsToDisplay = ['Select_Row','Client','RevenueID','Country','iMeet_Workspace_Title','Region','ProjectStatus','GlobalCISOBTLead','RegionalCISOBTLead','LocalDigitalOBTLead','GlobalCISPortraitLead','RegionalCISPortraitLead','LocalDigitalOBTLead','GlobalCISHRFeedSpecialist','GDS','ActivityType','ComplexityScore','RecordStatus','DataSourceType','actions'];
+        this.columnsToDisplay_h = ['Select_Row_h','Client_h','RevenueID_h','Country_h','iMeet_Workspace_Title_h','Region_h','ProjectStatus_h','GlobalCISOBTLead_h','RegionalCISOBTLead_h','LocalDigitalOBTLead_h','GlobalCISPortraitLead_h','RegionalCISPortraitLead_h','LocalDigitalOBTLead_h','GlobalCISHRFeedSpecialist_h','GDS_h','ActivityType_h','ComplexityScore_h','RecordStatus_h','DataSourceType_h','actions_h'];
       }
     }else{
       if(this.HideColumnsButtonName == "P"){
-        this.columnsToDisplay = ['Client','RevenueID','Country','iMeet_Workspace_Title','Implementation_Type','Pipeline_status','Pipeline_comments','Service_location','Service_configuration','OBT_Reseller___Direct','OBTAdoptionRate','Assignment_date_c','UpdateOn_c','OppVolume','RevenueVolumeUSD','Region','OwnerShip','ProjectStart_ForCycleTime_c','GoLiveDate_c','CycleTime','ProjectStatus','Milestone__Reason_Code','PerCompleted','CountryStatus','ProjectLevel','CompletedDate_c','GlobalProjectManager','RegionalProjectManager','AssigneeFullName','GlobalCISDQSLead','GlobalCISOBTLead','RegionalCISOBTLead','LocalDigitalOBTLead','GlobalCISPortraitLead','RegionalCISPortraitLead','LocalDigitalOBTLead','GlobalCISHRFeedSpecialist','GDS','ActivityType','ComplexityScore','MilestoneTitle','Group_Name','Milestone__Project_Notes','Milestone__Closed_Loop_Owner','Workspace__ELT_Overall_Status','Workspace__ELT_Overall_Comments','Customer_Row_ID','Opportunity_ID','AccountOwner','Opportunity_Type','Revenue_Status','Revenue_Opportunity_Type','Opportunity_Owner','Opportunity_Category','Revenue_Total_Transactions','Line_Win_Probability','Implementation_Fee__PSD_','DataDescription','Date_added_to_the_CLR_c','CreatedDate_c','Project_Effort','Sales_Stage_Name','AccountCategory','SOWStatus','ImplementationReady','RecordStatus','DataSourceType','CheckComments'];
-        this.columnsToDisplay_h = ['Client_h','RevenueID_h','Country_h','iMeet_Workspace_Title_h','Implementation_Type_h','Pipeline_status_h','Pipeline_comments_h','Service_location_h','Service_configuration_h','OBT_Reseller___Direct_h','OBTAdoptionRate_h','Assignment_date_c_h','UpdateOn_c_h','OppVolume_c_h','RevenueVolumeUSD_c_h','Region_h','OwnerShip_h','ProjectStartDate_c_h','GoLiveDate_c_h','CycleTime_h','ProjectStatus_h','Milestone__Reason_Code_h','PerCompleted_h','CountryStatus_h','ProjectLevel_h','CompletedDate_c_h','GlobalProjectManager_h','RegionalProjectManager_h','AssigneeFullName_h','GlobalCISDQSLead_h','GlobalCISOBTLead_h','RegionalCISOBTLead_h','LocalDigitalOBTLead_h','GlobalCISPortraitLead_h','RegionalCISPortraitLead_h','LocalDigitalOBTLead_h','GlobalCISHRFeedSpecialist_h','GDS_h','ActivityType_h','ComplexityScore_h','MilestoneTitle_h','Group_Name_h','Milestone__Project_Notes_h','Milestone__Closed_Loop_Owner_h','Workspace__ELT_Overall_Status_h','Workspace__ELT_Overall_Comments_h','Customer_Row_ID_h','Opportunity_ID_h','AccountOwner_h','Opportunity_Type_h','Revenue_Status_h','Revenue_Opportunity_Type_h','Opportunity_Owner_h','Opportunity_Category_h','Revenue_Total_Transactions_h','Line_Win_Probability_h','Implementation_Fee__PSD_c_h','DataDescription_h','Date_added_to_the_CLR_c_h','CreatedDate_c_h','Project_Effort_h','Sales_Stage_Name_h','AccountCategory_h','SOWStatus_h','ImplementationReady_h','RecordStatus_h','DataSourceType_h','CheckComments_h'];
+        this.columnsToDisplay = ['Select_Row','Client','RevenueID','Country','iMeet_Workspace_Title','Implementation_Type','Pipeline_status','Pipeline_comments','Service_location','Service_configuration','OBT_Reseller___Direct','OBTAdoptionRate','Assignment_date_c','UpdateOn_c','OppVolume','RevenueVolumeUSD','Region','OwnerShip','ProjectStart_ForCycleTime_c','GoLiveDate_c','CycleTime','ProjectStatus','Milestone__Reason_Code','PerCompleted','CountryStatus','ProjectLevel','CompletedDate_c','GlobalProjectManager','RegionalProjectManager','AssigneeFullName','GlobalCISDQSLead','GlobalCISOBTLead','RegionalCISOBTLead','LocalDigitalOBTLead','GlobalCISPortraitLead','RegionalCISPortraitLead','LocalDigitalOBTLead','GlobalCISHRFeedSpecialist','GDS','ActivityType','ComplexityScore','MilestoneTitle','Group_Name','Milestone__Project_Notes','Milestone__Closed_Loop_Owner','Workspace__ELT_Overall_Status','Workspace__ELT_Overall_Comments','Customer_Row_ID','Opportunity_ID','AccountOwner','Opportunity_Type','Revenue_Status','Revenue_Opportunity_Type','Opportunity_Owner','Opportunity_Category','Revenue_Total_Transactions','Line_Win_Probability','Implementation_Fee__PSD_','DataDescription','Date_added_to_the_CLR_c','CreatedDate_c','Project_Effort','Sales_Stage_Name','AccountCategory','SOWStatus','ImplementationReady','RecordStatus','DataSourceType','CheckComments'];
+        this.columnsToDisplay_h = ['Select_Row_h','Client_h','RevenueID_h','Country_h','iMeet_Workspace_Title_h','Implementation_Type_h','Pipeline_status_h','Pipeline_comments_h','Service_location_h','Service_configuration_h','OBT_Reseller___Direct_h','OBTAdoptionRate_h','Assignment_date_c_h','UpdateOn_c_h','OppVolume_c_h','RevenueVolumeUSD_c_h','Region_h','OwnerShip_h','ProjectStartDate_c_h','GoLiveDate_c_h','CycleTime_h','ProjectStatus_h','Milestone__Reason_Code_h','PerCompleted_h','CountryStatus_h','ProjectLevel_h','CompletedDate_c_h','GlobalProjectManager_h','RegionalProjectManager_h','AssigneeFullName_h','GlobalCISDQSLead_h','GlobalCISOBTLead_h','RegionalCISOBTLead_h','LocalDigitalOBTLead_h','GlobalCISPortraitLead_h','RegionalCISPortraitLead_h','LocalDigitalOBTLead_h','GlobalCISHRFeedSpecialist_h','GDS_h','ActivityType_h','ComplexityScore_h','MilestoneTitle_h','Group_Name_h','Milestone__Project_Notes_h','Milestone__Closed_Loop_Owner_h','Workspace__ELT_Overall_Status_h','Workspace__ELT_Overall_Comments_h','Customer_Row_ID_h','Opportunity_ID_h','AccountOwner_h','Opportunity_Type_h','Revenue_Status_h','Revenue_Opportunity_Type_h','Opportunity_Owner_h','Opportunity_Category_h','Revenue_Total_Transactions_h','Line_Win_Probability_h','Implementation_Fee__PSD_c_h','DataDescription_h','Date_added_to_the_CLR_c_h','CreatedDate_c_h','Project_Effort_h','Sales_Stage_Name_h','AccountCategory_h','SOWStatus_h','ImplementationReady_h','RecordStatus_h','DataSourceType_h','CheckComments_h'];
       }else{
-        this.columnsToDisplay = ['Client','RevenueID','Country','iMeet_Workspace_Title','Region','ProjectStatus','GlobalCISOBTLead','RegionalCISOBTLead','LocalDigitalOBTLead','GlobalCISPortraitLead','RegionalCISPortraitLead','LocalDigitalOBTLead','GlobalCISHRFeedSpecialist','GDS','ActivityType','ComplexityScore','RecordStatus','DataSourceType'];
-        this.columnsToDisplay_h = ['Client_h','RevenueID_h','Country_h','iMeet_Workspace_Title_h','Region_h','ProjectStatus_h','GlobalCISOBTLead_h','RegionalCISOBTLead_h','LocalDigitalOBTLead_h','GlobalCISPortraitLead_h','RegionalCISPortraitLead_h','LocalDigitalOBTLead_h','GlobalCISHRFeedSpecialist_h','GDS_h','ActivityType_h','ComplexityScore_h','RecordStatus_h','DataSourceType_h'];
+        this.columnsToDisplay = ['Select_Row','Client','RevenueID','Country','iMeet_Workspace_Title','Region','ProjectStatus','GlobalCISOBTLead','RegionalCISOBTLead','LocalDigitalOBTLead','GlobalCISPortraitLead','RegionalCISPortraitLead','LocalDigitalOBTLead','GlobalCISHRFeedSpecialist','GDS','ActivityType','ComplexityScore','RecordStatus','DataSourceType'];
+        this.columnsToDisplay_h = ['Select_Row_h','Client_h','RevenueID_h','Country_h','iMeet_Workspace_Title_h','Region_h','ProjectStatus_h','GlobalCISOBTLead_h','RegionalCISOBTLead_h','LocalDigitalOBTLead_h','GlobalCISPortraitLead_h','RegionalCISPortraitLead_h','LocalDigitalOBTLead_h','GlobalCISHRFeedSpecialist_h','GDS_h','ActivityType_h','ComplexityScore_h','RecordStatus_h','DataSourceType_h'];
       }
     }
     if(this.HideColumnsButtonName == "P"){
@@ -937,134 +965,156 @@ export class AutomatedCLRComponent implements OnInit {
       )
     }
   }
+  UnselectallIDS(){
+    this.dataSource.data.filter(function(item) {
+      return item.Select_Row = false;
+    });
+    this.selectAllIds = false;
+    this.displayReplicate = false;
+  }
   onFilterValueChange(){
     this.ClientFilter.valueChanges.subscribe(value => {
+      this.UnselectallIDS();
       this.filteredValues["Client"] = value;
       this.dataSource.filter = JSON.stringify(this.filteredValues);
       this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
       this.FilteredCount = this.dataSource.filteredData.length;
     });
     this.RevenueIDFilter.valueChanges.subscribe(value => {
+      this.UnselectallIDS();
       this.filteredValues["RevenueID"] = value;
       this.dataSource.filter = JSON.stringify(this.filteredValues);
       this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
       this.FilteredCount = this.dataSource.filteredData.length;
     });
     this.iMeet_Workspace_TitleFilter.valueChanges.subscribe(value => {
+      this.UnselectallIDS();
       this.filteredValues["iMeet_Workspace_Title"] = value;
       this.dataSource.filter = JSON.stringify(this.filteredValues);
       this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
       this.FilteredCount = this.dataSource.filteredData.length;
     });
     this.CreatedDate_cFilter.valueChanges.subscribe(value => {
+      this.UnselectallIDS();
       this.filteredValues["CreatedDate_c"] = value;
       this.dataSource.filter = JSON.stringify(this.filteredValues);
       this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
       this.FilteredCount = this.dataSource.filteredData.length;
     });
     this.Implementation_TypeFilter.valueChanges.subscribe(value => {
+      this.UnselectallIDS();
       this.filteredValues["Implementation_Type"] = value;
       this.dataSource.filter = JSON.stringify(this.filteredValues);
       this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
       this.FilteredCount = this.dataSource.filteredData.length;
     });
     this.Pipeline_statusFilter.valueChanges.subscribe(value => {
+      this.UnselectallIDS();
       this.filteredValues["Pipeline_status"] = value;
       this.dataSource.filter = JSON.stringify(this.filteredValues);
       this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
       this.FilteredCount = this.dataSource.filteredData.length;
     });
     this.Pipeline_commentsFilter.valueChanges.subscribe(value => {
+      this.UnselectallIDS();
       this.filteredValues["Pipeline_comments"] = value;
       this.dataSource.filter = JSON.stringify(this.filteredValues);
       this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
       this.FilteredCount = this.dataSource.filteredData.length;
     });
     this.Service_configurationFilter.valueChanges.subscribe(value => {
+      this.UnselectallIDS();
       this.filteredValues["Service_configuration"] = value;
       this.dataSource.filter = JSON.stringify(this.filteredValues);
       this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
       this.FilteredCount = this.dataSource.filteredData.length;
     });
     this.Service_locationFilter.valueChanges.subscribe(value => {
+      this.UnselectallIDS();
       this.filteredValues["Service_location"] = value;
       this.dataSource.filter = JSON.stringify(this.filteredValues);
       this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
       this.FilteredCount = this.dataSource.filteredData.length;
     });
     this.GlobalCISDQSLeadFilter.valueChanges.subscribe(value => {
+      this.UnselectallIDS();
       this.filteredValues["GlobalCISDQSLead"] = value;
       this.dataSource.filter = JSON.stringify(this.filteredValues);
       this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
       this.FilteredCount = this.dataSource.filteredData.length;
     });
     this.OBT_Reseller___DirectFilter.valueChanges.subscribe(value => {
+      this.UnselectallIDS();
       this.filteredValues["OBT_Reseller___Direct"] = value;
       this.dataSource.filter = JSON.stringify(this.filteredValues);
       this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
       this.FilteredCount = this.dataSource.filteredData.length;
     });
     this.Assignment_date_cFilter.valueChanges.subscribe(value => {
+      this.UnselectallIDS();
       this.filteredValues["Assignment_date_c"] = value;
       this.dataSource.filter = JSON.stringify(this.filteredValues);
       this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
       this.FilteredCount = this.dataSource.filteredData.length;
     });
     this.UpdateOn_cFilter.valueChanges.subscribe(value => {
+      this.UnselectallIDS();
       this.filteredValues["UpdateOn_c"] = value;
       this.dataSource.filter = JSON.stringify(this.filteredValues);
       this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
       this.FilteredCount = this.dataSource.filteredData.length;
     });
     this.OppVolume_cFilter.valueChanges.subscribe(value => {
+      this.UnselectallIDS();
       this.filteredValues["OppVolume"] = value;
       this.dataSource.filter = JSON.stringify(this.filteredValues);
       this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
       this.FilteredCount = this.dataSource.filteredData.length;
     });
     this.RevenueVolumeUSDFilter.valueChanges.subscribe(value => {
+      this.UnselectallIDS();
       this.filteredValues["RevenueVolumeUSD"] = value;
       this.dataSource.filter = JSON.stringify(this.filteredValues);
       this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
       this.FilteredCount = this.dataSource.filteredData.length;
     });
     this.RegionFilter.valueChanges.subscribe(value => {
+      this.UnselectallIDS();
       this.filteredValues["Region"] = value;
       this.dataSource.filter = JSON.stringify(this.filteredValues);
       this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
       this.FilteredCount = this.dataSource.filteredData.length;
     });
     this.ActivityTypeFilter.valueChanges.subscribe(value => {
+      this.UnselectallIDS();
       this.filteredValues["ActivityType"] = value;
       this.dataSource.filter = JSON.stringify(this.filteredValues);
       this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
       this.FilteredCount = this.dataSource.filteredData.length;
     });
     this.CountryFilter.valueChanges.subscribe(value => {
+      this.UnselectallIDS();
       this.filteredValues["Country"] = value;
       this.dataSource.filter = JSON.stringify(this.filteredValues);
       this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
       this.FilteredCount = this.dataSource.filteredData.length;
     });
     this.OwnerShipFilter.valueChanges.subscribe(value => {
+      this.UnselectallIDS();
       this.filteredValues["OwnerShip"] = value;
       this.dataSource.filter = JSON.stringify(this.filteredValues);
       this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
       this.FilteredCount = this.dataSource.filteredData.length;
     });
-    // this.GoLiveDate_cFilter.valueChanges.subscribe(value => {
-    //   this.filteredValues["GoLiveDate_c"] = value;
-    //   this.dataSource.filter = JSON.stringify(this.filteredValues);
-    //   this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
-    //   this.FilteredCount = this.dataSource.filteredData.length;
-    // });
     this.GoLiveDate_cSFilter.valueChanges.subscribe(value => {
       if(value != null){
+        this.UnselectallIDS();
         this.filteredValues["GoLiveDate_c"] = new Date(Number(this.datepipe.transform(value, 'yyyy')), Number(this.datepipe.transform(value, 'MM'))-1, Number(this.datepipe.transform(value, 'dd')));
         this.dataSource.filter = JSON.stringify(this.filteredValues);
         this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
         this.FilteredCount = this.dataSource.filteredData.length;
       }else{
+        this.UnselectallIDS();
         this.filteredValues["GoLiveDate_c"] = null;
         this.dataSource.filter = JSON.stringify(this.filteredValues);
         this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
@@ -1073,11 +1123,13 @@ export class AutomatedCLRComponent implements OnInit {
     });
     this.GoLiveDate_cEFilter.valueChanges.subscribe(value => {
       if(value != null){
+        this.UnselectallIDS();
         this.filteredValues["GoLiveDate_cE"] = new Date(Number(this.datepipe.transform(value, 'yyyy')), Number(this.datepipe.transform(value, 'MM'))-1, Number(this.datepipe.transform(value, 'dd')));
         this.dataSource.filter = JSON.stringify(this.filteredValues);
         this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
         this.FilteredCount = this.dataSource.filteredData.length;
       }else{
+        this.UnselectallIDS();
         this.filteredValues["GoLiveDate_cE"] = null;
         this.dataSource.filter = JSON.stringify(this.filteredValues);
         this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
@@ -1085,288 +1137,336 @@ export class AutomatedCLRComponent implements OnInit {
       }
     });
     this.ProjectStartDate_cFilter.valueChanges.subscribe(value => {
+      this.UnselectallIDS();
       this.filteredValues["ProjectStart_ForCycleTime_c"] = value;
       this.dataSource.filter = JSON.stringify(this.filteredValues);
       this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
       this.FilteredCount = this.dataSource.filteredData.length;
     });
     this.CycleTimeFilter.valueChanges.subscribe(value => {
+      this.UnselectallIDS();
       this.filteredValues["CycleTime"] = value;
       this.dataSource.filter = JSON.stringify(this.filteredValues);
       this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
       this.FilteredCount = this.dataSource.filteredData.length;
     });
     this.ProjectStatusFilter.valueChanges.subscribe(value => {
+      this.UnselectallIDS();
       this.filteredValues["ProjectStatus"] = value;
       this.dataSource.filter = JSON.stringify(this.filteredValues);
       this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
       this.FilteredCount = this.dataSource.filteredData.length;
     });
     this.Milestone__Reason_CodeFilter.valueChanges.subscribe(value => {
+      this.UnselectallIDS();
       this.filteredValues["Milestone__Reason_Code"] = value;
       this.dataSource.filter = JSON.stringify(this.filteredValues);
       this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
       this.FilteredCount = this.dataSource.filteredData.length;
     });
     this.PerCompletedFilter.valueChanges.subscribe(value => {
+      this.UnselectallIDS();
       this.filteredValues["PerCompleted"] = value;
       this.dataSource.filter = JSON.stringify(this.filteredValues);
       this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
       this.FilteredCount = this.dataSource.filteredData.length;
     });
     this.CountryStatusFilter.valueChanges.subscribe(value => {
+      this.UnselectallIDS();
       this.filteredValues["CountryStatus"] = value;
       this.dataSource.filter = JSON.stringify(this.filteredValues);
       this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
       this.FilteredCount = this.dataSource.filteredData.length;
     });
     this.ProjectLevelFilter.valueChanges.subscribe(value => {
+      this.UnselectallIDS();
       this.filteredValues["ProjectLevel"] = value;
       this.dataSource.filter = JSON.stringify(this.filteredValues);
       this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
       this.FilteredCount = this.dataSource.filteredData.length;
     });
     this.CompletedDate_cFilter.valueChanges.subscribe(value => {
+      this.UnselectallIDS();
       this.filteredValues["CompletedDate_c"] = value;
       this.dataSource.filter = JSON.stringify(this.filteredValues);
       this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
       this.FilteredCount = this.dataSource.filteredData.length;
     });
     this.GlobalProjectManagerFilter.valueChanges.subscribe(value => {
+      this.UnselectallIDS();
       this.filteredValues["GlobalProjectManager"] = value;
       this.dataSource.filter = JSON.stringify(this.filteredValues);
       this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
       this.FilteredCount = this.dataSource.filteredData.length;
     });
     this.RegionalProjectManagerFilter.valueChanges.subscribe(value => {
+      this.UnselectallIDS();
       this.filteredValues["RegionalProjectManager"] = value;
       this.dataSource.filter = JSON.stringify(this.filteredValues);
       this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
       this.FilteredCount = this.dataSource.filteredData.length;
     });
     this.AssigneeFullNameFilter.valueChanges.subscribe(value => {
+      this.UnselectallIDS();
       this.filteredValues["AssigneeFullName"] = value;
       this.dataSource.filter = JSON.stringify(this.filteredValues);
       this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
       this.FilteredCount = this.dataSource.filteredData.length;
     });
     this.GlobalCISOBTLeadFilter.valueChanges.subscribe(value => {
+      this.UnselectallIDS();
       this.filteredValues["GlobalCISOBTLead"] = value;
       this.dataSource.filter = JSON.stringify(this.filteredValues);
       this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
       this.FilteredCount = this.dataSource.filteredData.length;
     });
     this.RegionalCISOBTLeadFilter.valueChanges.subscribe(value => {
+      this.UnselectallIDS();
       this.filteredValues["RegionalCISOBTLead"] = value;
       this.dataSource.filter = JSON.stringify(this.filteredValues);
       this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
       this.FilteredCount = this.dataSource.filteredData.length;
     });
     this.LocalDigitalOBTLeadFilter.valueChanges.subscribe(value => {
+      this.UnselectallIDS();
       this.filteredValues["LocalDigitalOBTLead"] = value;
       this.dataSource.filter = JSON.stringify(this.filteredValues);
       this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
       this.FilteredCount = this.dataSource.filteredData.length;
     });
     this.LocalDigitalAdHocSupportFilter.valueChanges.subscribe(value => {
+      this.UnselectallIDS();
       this.filteredValues["LocalDigitalAdHocSupport"] = value;
       this.dataSource.filter = JSON.stringify(this.filteredValues);
       this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
       this.FilteredCount = this.dataSource.filteredData.length;
     });
     this.GlobalCISPortraitLeadFilter.valueChanges.subscribe(value => {
+      this.UnselectallIDS();
       this.filteredValues["GlobalCISPortraitLead"] = value;
       this.dataSource.filter = JSON.stringify(this.filteredValues);
       this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
       this.FilteredCount = this.dataSource.filteredData.length;
     });
     this.RegionalCISPortraitLeadFilter.valueChanges.subscribe(value => {
+      this.UnselectallIDS();
       this.filteredValues["RegionalCISPortraitLead"] = value;
       this.dataSource.filter = JSON.stringify(this.filteredValues);
       this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
       this.FilteredCount = this.dataSource.filteredData.length;
     });
     this.GDSFilter.valueChanges.subscribe(value => {
+      this.UnselectallIDS();
       this.filteredValues["GDS"] = value;
       this.dataSource.filter = JSON.stringify(this.filteredValues);
       this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
       this.FilteredCount = this.dataSource.filteredData.length;
     });
     this.GlobalCISHRFeedSpecialistFilter.valueChanges.subscribe(value => {
+      this.UnselectallIDS();
       this.filteredValues["GlobalCISHRFeedSpecialist"] = value;
       this.dataSource.filter = JSON.stringify(this.filteredValues);
       this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
       this.FilteredCount = this.dataSource.filteredData.length;
     });
     this.MilestoneTitleFilter.valueChanges.subscribe(value => {
+      this.UnselectallIDS();
       this.filteredValues["MilestoneTitle"] = value;
       this.dataSource.filter = JSON.stringify(this.filteredValues);
       this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
       this.FilteredCount = this.dataSource.filteredData.length;
     });
     this.Group_NameFilter.valueChanges.subscribe(value => {
+      this.UnselectallIDS();
       this.filteredValues["Group_Name"] = value;
       this.dataSource.filter = JSON.stringify(this.filteredValues);
       this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
       this.FilteredCount = this.dataSource.filteredData.length;
     });
     this.Milestone__Project_NotesFilter.valueChanges.subscribe(value => {
+      this.UnselectallIDS();
       this.filteredValues["Milestone__Project_Notes"] = value;
       this.dataSource.filter = JSON.stringify(this.filteredValues);
       this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
       this.FilteredCount = this.dataSource.filteredData.length;
     });
     this.Milestone__Closed_Loop_OwnerFilter.valueChanges.subscribe(value => {
+      this.UnselectallIDS();
       this.filteredValues["Milestone__Closed_Loop_Owner"] = value;
       this.dataSource.filter = JSON.stringify(this.filteredValues);
       this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
       this.FilteredCount = this.dataSource.filteredData.length;
     });
     this.Workspace__ELT_Overall_StatusFilter.valueChanges.subscribe(value => {
+      this.UnselectallIDS();
       this.filteredValues["Workspace__ELT_Overall_Status"] = value;
       this.dataSource.filter = JSON.stringify(this.filteredValues);
       this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
       this.FilteredCount = this.dataSource.filteredData.length;
     });
     this.Workspace__ELT_Overall_CommentsFilter.valueChanges.subscribe(value => {
+      this.UnselectallIDS();
       this.filteredValues["Workspace__ELT_Overall_Comments"] = value;
       this.dataSource.filter = JSON.stringify(this.filteredValues);
       this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
       this.FilteredCount = this.dataSource.filteredData.length;
     });
     this.Customer_Row_IDFilter.valueChanges.subscribe(value => {
+      this.UnselectallIDS();
       this.filteredValues["Customer_Row_ID"] = value;
       this.dataSource.filter = JSON.stringify(this.filteredValues);
       this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
       this.FilteredCount = this.dataSource.filteredData.length;
     });
     this.Opportunity_IDFilter.valueChanges.subscribe(value => {
+      this.UnselectallIDS();
       this.filteredValues["Opportunity_ID"] = value;
       this.dataSource.filter = JSON.stringify(this.filteredValues);
       this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
       this.FilteredCount = this.dataSource.filteredData.length;
     });
     this.AccountOwnerFilter.valueChanges.subscribe(value => {
+      this.UnselectallIDS();
       this.filteredValues["AccountOwner"] = value;
       this.dataSource.filter = JSON.stringify(this.filteredValues);
       this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
       this.FilteredCount = this.dataSource.filteredData.length;
     });
     this.Sales_Stage_NameFilter.valueChanges.subscribe(value => {
+      this.UnselectallIDS();
       this.filteredValues["Sales_Stage_Name"] = value;
       this.dataSource.filter = JSON.stringify(this.filteredValues);
       this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
       this.FilteredCount = this.dataSource.filteredData.length;
     });
     this.Opportunity_TypeFilter.valueChanges.subscribe(value => {
+      this.UnselectallIDS();
       this.filteredValues["Opportunity_Type"] = value;
       this.dataSource.filter = JSON.stringify(this.filteredValues);
       this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
       this.FilteredCount = this.dataSource.filteredData.length;
     });
     this.Revenue_StatusFilter.valueChanges.subscribe(value => {
+      this.UnselectallIDS();
       this.filteredValues["Revenue_Status"] = value;
       this.dataSource.filter = JSON.stringify(this.filteredValues);
       this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
       this.FilteredCount = this.dataSource.filteredData.length;
     });
     this.Revenue_Opportunity_TypeFilter.valueChanges.subscribe(value => {
+      this.UnselectallIDS();
       this.filteredValues["Revenue_Opportunity_Type"] = value;
       this.dataSource.filter = JSON.stringify(this.filteredValues);
       this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
       this.FilteredCount = this.dataSource.filteredData.length;
     });
     this.Opportunity_OwnerFilter.valueChanges.subscribe(value => {
+      this.UnselectallIDS();
       this.filteredValues["Opportunity_Owner"] = value;
       this.dataSource.filter = JSON.stringify(this.filteredValues);
       this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
       this.FilteredCount = this.dataSource.filteredData.length;
     });
     this.Opportunity_CategoryFilter.valueChanges.subscribe(value => {
+      this.UnselectallIDS();
       this.filteredValues["Opportunity_Category"] = value;
       this.dataSource.filter = JSON.stringify(this.filteredValues);
       this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
       this.FilteredCount = this.dataSource.filteredData.length;
     });
     this.Revenue_Total_TransactionsFilter.valueChanges.subscribe(value => {
+      this.UnselectallIDS();
       this.filteredValues["Revenue_Total_Transactions"] = value;
       this.dataSource.filter = JSON.stringify(this.filteredValues);
       this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
       this.FilteredCount = this.dataSource.filteredData.length;
     });
     this.Line_Win_ProbabilityFilter.valueChanges.subscribe(value => {
+      this.UnselectallIDS();
       this.filteredValues["Line_Win_Probability"] = value;
       this.dataSource.filter = JSON.stringify(this.filteredValues);
       this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
       this.FilteredCount = this.dataSource.filteredData.length;
     });
     this.Implementation_Fee__PSD_Filter.valueChanges.subscribe(value => {
+      this.UnselectallIDS();
       this.filteredValues["Implementation_Fee__PSD_"] = value;
       this.dataSource.filter = JSON.stringify(this.filteredValues);
       this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
       this.FilteredCount = this.dataSource.filteredData.length;
     });
     this.DataDescriptionFilter.valueChanges.subscribe(value => {
+      this.UnselectallIDS();
       this.filteredValues["DataDescription"] = value;
       this.dataSource.filter = JSON.stringify(this.filteredValues);
       this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
       this.FilteredCount = this.dataSource.filteredData.length;
     });
     this.Project_EffortFilter.valueChanges.subscribe(value => {
+      this.UnselectallIDS();
       this.filteredValues["Project_Effort"] = value;
       this.dataSource.filter = JSON.stringify(this.filteredValues);
       this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
       this.FilteredCount = this.dataSource.filteredData.length;
     });
     this.AccountCategoryFilter.valueChanges.subscribe(value => {
+      this.UnselectallIDS();
       this.filteredValues["AccountCategory"] = value;
       this.dataSource.filter = JSON.stringify(this.filteredValues);
       this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
       this.FilteredCount = this.dataSource.filteredData.length;
     });
     this.SOWStatusFilter.valueChanges.subscribe(value => {
+      this.UnselectallIDS();
       this.filteredValues["SOWStatus"] = value;
       this.dataSource.filter = JSON.stringify(this.filteredValues);
       this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
       this.FilteredCount = this.dataSource.filteredData.length;
     });
     this.OBTAdoptionRateFilter.valueChanges.subscribe(value => {
+      this.UnselectallIDS();
       this.filteredValues["OBTAdoptionRate"] = value;
       this.dataSource.filter = JSON.stringify(this.filteredValues);
       this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
       this.FilteredCount = this.dataSource.filteredData.length;
     });
     this.ImplementationReadyFilter.valueChanges.subscribe(value => {
+      this.UnselectallIDS();
       this.filteredValues["ImplementationReady"] = value;
       this.dataSource.filter = JSON.stringify(this.filteredValues);
       this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
       this.FilteredCount = this.dataSource.filteredData.length;
     });
     this.ComplexityScoreFilter.valueChanges.subscribe(value => {
+      this.UnselectallIDS();
       this.filteredValues["ComplexityScore"] = value;
       this.dataSource.filter = JSON.stringify(this.filteredValues);
       this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
       this.FilteredCount = this.dataSource.filteredData.length;
     });
     this.RecordStatusFilter.valueChanges.subscribe(value => {
+      this.UnselectallIDS();
       this.filteredValues["RecordStatus"] = value;
       this.dataSource.filter = JSON.stringify(this.filteredValues);
       this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
       this.FilteredCount = this.dataSource.filteredData.length;
     });
     this.DataSourceTypeFilter.valueChanges.subscribe(value => {
+      this.UnselectallIDS();
       this.filteredValues["DataSourceType"] = value;
       this.dataSource.filter = JSON.stringify(this.filteredValues);
       this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
       this.FilteredCount = this.dataSource.filteredData.length;
     });
     this.Date_added_to_the_CLR_cFilter.valueChanges.subscribe(value => {
+      this.UnselectallIDS();
       this.filteredValues["Date_added_to_the_CLR_c"] = value;
       this.dataSource.filter = JSON.stringify(this.filteredValues);
       this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
       this.FilteredCount = this.dataSource.filteredData.length;
     });
     this.CheckCommentsFilter.valueChanges.subscribe(value => {
+      this.UnselectallIDS();
       this.filteredValues["CheckComments"] = value;
       this.dataSource.filter = JSON.stringify(this.filteredValues);
       this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolumeUSD).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
@@ -1467,6 +1567,7 @@ export class AutomatedCLRComponent implements OnInit {
         var check6Date = new Date(datecheck6.setDate(datecheck6.getDate()-50));
         var check10Date = new Date(datecheck10.setDate(datecheck10.getDate()+10));
         for(let i = 0;i<data.Data.length;i++){
+          this.DataCLR[i].Select_Row = false;
           if(this.DataCLR[i].DataSourceType != "OldData" && (this.DataCLR[i].GlobalProjectManager.includes('@') || this.DataCLR[i].RegionalProjectManager.includes('@') || this.DataCLR[i].AssigneeFullName.includes('@'))){
             this.DataCLR[i].CheckComments = "Data Quality :-"+ '\n'+ '\n';
             if(this.DataCLR[i].GlobalProjectManager.includes('@')){
@@ -1947,165 +2048,98 @@ export class AutomatedCLRComponent implements OnInit {
   }
   exportCLR(){
     this.dashboard.ShowSpinnerHandler(true);
-    this.service.GetCLRManualData().subscribe(data =>{
-      if(data.code == 200){
-        this.DataCLR = data.Data;
-        for(let i = 0;i<data.Data.length;i++){
-          if(this.DataCLR[i].Date_added_to_the_CLR == null){
-            this.DataCLR[i].Date_added_to_the_CLR = null;
-          }else{
-            this.DataCLR[i].Date_added_to_the_CLR = new Date(this.DataCLR[i].Date_added_to_the_CLR);
-          }
-          if(this.DataCLR[i].Assignment_date == null){
-            this.DataCLR[i].Assignment_date = null;
-          }else{
-            this.DataCLR[i].Assignment_date = new Date(this.DataCLR[i].Assignment_date);
-          }
-          if(this.DataCLR[i].UpdateOn == null){
-            this.DataCLR[i].UpdateOn = null;
-          }else{
-            this.DataCLR[i].UpdateOn = new Date(this.DataCLR[i].UpdateOn);
-          }
-          if(this.DataCLR[i].GoLiveDate == null){
-            this.DataCLR[i].GoLiveDate = null;
-          }else{
-            this.DataCLR[i].GoLiveDate = new Date(this.DataCLR[i].GoLiveDate);
-          }
-          if(this.DataCLR[i].CompletedDate == null){
-            this.DataCLR[i].CompletedDate = null;
-          }else{
-            this.DataCLR[i].CompletedDate = new Date(this.DataCLR[i].CompletedDate);
-          }
-          if(this.DataCLR[i].CreatedDate == null){
-            this.DataCLR[i].CreatedDate = null;
-          }else{
-            this.DataCLR[i].CreatedDate = new Date(this.DataCLR[i].CreatedDate);
-          }
-          if(this.DataCLR[i].ExternalKickoffDuedate == null){
-            this.DataCLR[i].ExternalKickoffDuedate = null;
-          }else{
-            this.DataCLR[i].ExternalKickoffDuedate = new Date(this.DataCLR[i].ExternalKickoffDuedate);
-          }
-          if(this.DataCLR[i].ProjectStart_ForCycleTime == null){
-            this.DataCLR[i].ProjectStart_ForCycleTime = null;
-          }else{
-            this.DataCLR[i].ProjectStart_ForCycleTime = new Date(this.DataCLR[i].ProjectStart_ForCycleTime);
-          }
-          if(this.DataCLR[i].MilestoneDueDate == null){
-            this.DataCLR[i].MilestoneDueDate = null;
-          }else{
-            this.DataCLR[i].MilestoneDueDate = new Date(this.DataCLR[i].MilestoneDueDate);
-          }
-          if(this.DataCLR[i].AwardedDate == null){
-            this.DataCLR[i].AwardedDate = null;
-          }else{
-            this.DataCLR[i].AwardedDate = new Date(this.DataCLR[i].AwardedDate);
-          }
-          if(this.DataCLR[i].ClosedDate == null){
-            this.DataCLR[i].ClosedDate = null;
-          }else{
-            this.DataCLR[i].ClosedDate = new Date(this.DataCLR[i].ClosedDate);
-          }
-        }
-        const CustomizedData = this.DataCLR.map(o => {
-          return {
-            'CLRID' : o.CLRID,
-            'Client': o.Client == "---" ? "" : o.Client,
-            'Revenue ID' : o.RevenueID == "---" ? "" : o.RevenueID,
-            'Month-Year' : o.YearMonth,
-            'Country' : o.Country == "---" ? "" : o.Country,
-            'Created Date' : o.CreatedDate,
-            'iMeet Workspace Title' : o.iMeet_Workspace_Title == "---" ? "" : o.iMeet_Workspace_Title,
-            'Implementation Type' : o.Implementation_Type == "---" ? "" : o.Implementation_Type,
-            'CountryCode' : o.CountryCode == "---" ? "" : o.CountryCode,
-            'Pipeline status' : o.Pipeline_status == "---" ? "" : o.Pipeline_status,
-            'Pipeline comments' : o.Pipeline_comments == "---" ? "" : o.Pipeline_comments,
-            'Service location' : o.Service_configuration == "---" ? "" : o.Service_location,
-            'Service configuration' : o.Service_configuration == "---" ? "" : o.Service_configuration,
-            'OBT Type' : o.OBT_Reseller___Direct == "---" ? "" : o.OBT_Reseller___Direct,
-            //Servicing_location : o.Servicing_location,
-            'Assignment date' : o.Assignment_date,
-            'Last Updated On' : o.UpdateOn,
-            'Opportunity Total Volume USD' : o.OppVolume,
-            //New_Business_volume__US___c : o.New_Business_volume__US___c,
-            'Revenue Volume USD' : o.RevenueVolumeUSD,
-            'Region Opportunity'  : o.Region,
-            'OwnerShip Revenue' : o.OwnerShip == "---" ? "" : o.OwnerShip,
-            'Project Start Date' : o.ProjectStart_ForCycleTime,
-            'Task Go Live Date' : o.GoLiveDate,
-            'Cycle Time' : o.CycleTime,
-            'iMeet Milestone Project Status' : o.ProjectStatus == "---" ? "" : o.ProjectStatus,
-            'Milestone Reason Code' : o.Milestone__Reason_Code == "---" ? "" : o.Milestone__Reason_Code,
-            '% Completed' : o.PerCompleted == "---" ? "" : o.PerCompleted,
-            'iMeet Milestone Country Status' : o.CountryStatus == "---" ? "" : o.CountryStatus,
-            'iMeet Project Level' : o.ProjectLevel == "---" ? "" : o.ProjectLevel,
-            'Completed Date' : o.CompletedDate,
-            'Milestone Due Date' : o.MilestoneDueDate,
-            'Workspace Project Owner' : o.ProjectOwner == "---" ? "" : o.ProjectOwner,
-            'Global Project Manager' : o.GlobalProjectManager == "---" ? "" : o.GlobalProjectManager,
-            'Regional Project Manager' : o.RegionalProjectManager == "---" ? "" : o.RegionalProjectManager,
-            'Assignee Full Name' : o.AssigneeFullName == "---" ? "" : o.AssigneeFullName,
-            'Global CIS DQS Lead' : o.AssigneeFullName == "---" ? "" : o.GlobalCISDQSLead,
-            'Global Digital OBT Lead' : o.GlobalCISOBTLead == "---" ? "" : o.GlobalCISOBTLead,
-            'Regional Digital OBT Lead' : o.RegionalCISOBTLead == "---" ? "" : o.RegionalCISOBTLead,
-            'Local Digital OBT Lead' : o.LocalDigitalOBTLead == "---" ? "" : o.LocalDigitalOBTLead,
-            'Local Digital AdHoc Support' : o.LocalDigitalAdHocSupport == "---" ? "" : o.LocalDigitalAdHocSupport,
-            'Global Digital Portrait Lead' : o.GlobalCISPortraitLead == "---" ? "" : o.GlobalCISPortraitLead,
-            'Regional Digital Portrait Lead' : o.RegionalCISPortraitLead == "---" ? "" : o.RegionalCISPortraitLead,
-            'Global Digital HR Feed Special list' : o.GlobalCISHRFeedSpecialist == "---" ? "" : o.GlobalCISHRFeedSpecialist,
-            'GDS' : o.GDS == "---" ? "" : o.GDS,
-            'Digital Team Activity Type' : o.ActivityType == "---" ? "" : o.ActivityType,
-            'Complexity Score' : o.ComplexityScore,
-            'Milestone Title' : o.MilestoneTitle == "---" ? "" : o.MilestoneTitle,
-            'Milestone Record ID Key' : o.Milestone__Record_ID_Key == "---" ? "" : o.Milestone__Record_ID_Key,
-            'Group Name' : o.Group_Name == "---" ? "" : o.Group_Name,
-            'Milestone Project Notes' : o.Milestone__Project_Notes == "---" ? "" : o.Milestone__Project_Notes,
-            'Milestone Closed Loop Owner' : o.Milestone__Closed_Loop_Owner == "---" ? "" : o.Milestone__Closed_Loop_Owner,
-            'Workspace ELT Overall Status' : o.Workspace__ELT_Overall_Status == "---" ? "" : o.Workspace__ELT_Overall_Status,
-            'Workspace ELT Overall Comments' : o.Workspace__ELT_Overall_Comments == "---" ? "" : o.Workspace__ELT_Overall_Comments,
-            'Customer Row ID' : o.Customer_Row_ID,
-            'Opportunity ID' : o.Opportunity_ID,
-            // 'Account Name' : o.Account_Name == "---" ? "" : o.Account_Name,
-            'Account Owner' : o.Account_Name == "---" ? "" : o.AccountOwner,
-            'Sales Stage Name' : o.Sales_Stage_Name == "---" ? "" : o.Sales_Stage_Name,
-            'Opportunity Type' : o.Opportunity_Type == "---" ? "" : o.Opportunity_Type,
-            'Revenue Status' : o.Revenue_Status == "---" ? "" : o.Revenue_Status,
-            'Revenue Opportunity Type' : o.Revenue_Opportunity_Type == "---" ? "" : o.Revenue_Opportunity_Type,
-            'Opportunity Owner' : o.Opportunity_Owner == "---" ? "" : o.Opportunity_Owner,
-            'Opportunity Category' : o.Opportunity_Category == "---" ? "" : o.Opportunity_Category,
-            'Market Leader' : o.MarketLeader == "---" ? "" : o.MarketLeader,
-            'Revenue Total Transactions' : o.Revenue_Total_Transactions,
-            'Line Win Probability' : o.Line_Win_Probability,
-            'Next Step' : o.Next_Step == "---" ? "" : o.Next_Step,
-            'Implementation Fee PSD' : o.Implementation_Fee__PSD_,
-            'Awarded Date' : o.AwardedDate,
-            //'ExternalKickoffDuedate' : o.ExternalKickoffDuedate_c,
-            'Milestone Type' : o.MilestoneType == "---" ? "" : o.MilestoneType,
-            'Project Effort' : o.Project_Effort,
-            'Description' : o.DataDescription == "---" ? "" : o.DataDescription,
-            'Last Updated Date' : o.Date_added_to_the_CLR,
-            'Go-Live Month' : o.GoLiveMonth == "---" ? "" : o.GoLiveMonth,
-            'Go-Live Year' : o.GoLiveYear == "---" ? "" : o.GoLiveYear,
-            'Quarter' : o.Quarter == "---" ? "" : o.Quarter,
-            'Cycle Time Categories' : o.CycleTimeCategories,
-            'Account Category' : o.AccountCategory,
-            'SOW Status' : o.SOWStatus,
-            'OBT Adoption Rate' : o.OBTAdoptionRate,
-            'Implementation Ready' : o.ImplementationReady,
-            'Record Status' : o.RecordStatus,
-            'Data Source Type' : o.DataSourceType == "---" ? "" : o.DataSourceType,
-          };
-        });
-        //this.dataSource = this.CLRData;
-        // this.excelService.exportAsExcelFile(CustomizedData, 'CLRData');
-        this.excelService.exportAsExcelFile(CustomizedData,'CLRData');
-      }else{
-        alert("Something went wrong,Please try again later");
-      }
-      this.service.UsersUsageofReports(this.LoginUID,"Automated CLR","CLR Export").subscribe(data =>{
-      })
-      this.dashboard.ShowSpinnerHandler(false);
-    })
+    const CustomizedData = this.dataSource.filteredData.map(o => {
+      return {
+        'CLRID' : o.CLRID,
+        'Client': o.Client == "---" ? "" : o.Client,
+        'Revenue ID' : o.RevenueID == "---" ? "" : o.RevenueID,
+        'Month-Year' : o.YearMonth,
+        'Country' : o.Country == "---" ? "" : o.Country,
+        'Created Date' : o.CreatedDate == null ? null : new Date(o.CreatedDate),
+        'iMeet Workspace Title' : o.iMeet_Workspace_Title == "---" ? "" : o.iMeet_Workspace_Title,
+        'Implementation Type' : o.Implementation_Type == "---" ? "" : o.Implementation_Type,
+        'CountryCode' : o.CountryCode == "---" ? "" : o.CountryCode,
+        'Pipeline status' : o.Pipeline_status == "---" ? "" : o.Pipeline_status,
+        'Pipeline comments' : o.Pipeline_comments == "---" ? "" : o.Pipeline_comments,
+        'Service location' : o.Service_location == "---" ? "" : o.Service_location,
+        'Service configuration' : o.Service_configuration == "---" ? "" : o.Service_configuration,
+        'OBT Type' : o.OBT_Reseller___Direct == "---" ? "" : o.OBT_Reseller___Direct,
+        //Servicing_location : o.Servicing_location,
+        'Assignment date' : o.Assignment_date == null ? null : new Date(o.Assignment_date),
+        'Last Updated On' : o.UpdateOn == null ? null : new Date(o.UpdateOn),
+        'Opportunity Total Volume USD' : o.OppVolume,
+        //New_Business_volume__US___c : o.New_Business_volume__US___c,
+        'Revenue Volume USD' : o.RevenueVolumeUSD,
+        'Region Opportunity'  : o.Region,
+        'OwnerShip Revenue' : o.OwnerShip == "---" ? "" : o.OwnerShip,
+        'Project Start Date' : o.ProjectStart_ForCycleTime == null ? null : new Date(o.ProjectStart_ForCycleTime),
+        'Task Go Live Date' : o.GoLiveDate == null ? null : new Date(o.GoLiveDate),
+        'Cycle Time' : o.CycleTime,
+        'iMeet Milestone Project Status' : o.ProjectStatus == "---" ? "" : o.ProjectStatus,
+        'Milestone Reason Code' : o.Milestone__Reason_Code == "---" ? "" : o.Milestone__Reason_Code,
+        '% Completed' : o.PerCompleted == "---" ? "" : o.PerCompleted,
+        'iMeet Milestone Country Status' : o.CountryStatus == "---" ? "" : o.CountryStatus,
+        'iMeet Project Level' : o.ProjectLevel == "---" ? "" : o.ProjectLevel,
+        'Completed Date' : o.CompletedDate == null ? null : new Date(o.CompletedDate),
+        'Milestone Due Date' : o.MilestoneDueDate == null ? null : new Date(o.MilestoneDueDate),
+        'Workspace Project Owner' : o.ProjectOwner == "---" ? "" : o.ProjectOwner,
+        'Global Project Manager' : o.GlobalProjectManager == "---" ? "" : o.GlobalProjectManager,
+        'Regional Project Manager' : o.RegionalProjectManager == "---" ? "" : o.RegionalProjectManager,
+        'Assignee Full Name' : o.AssigneeFullName == "---" ? "" : o.AssigneeFullName,
+        'Global CIS DQS Lead' : o.AssigneeFullName == "---" ? "" : o.GlobalCISDQSLead,
+        'Global Digital OBT Lead' : o.GlobalCISOBTLead == "---" ? "" : o.GlobalCISOBTLead,
+        'Regional Digital OBT Lead' : o.RegionalCISOBTLead == "---" ? "" : o.RegionalCISOBTLead,
+        'Local Digital OBT Lead' : o.LocalDigitalOBTLead == "---" ? "" : o.LocalDigitalOBTLead,
+        'Local Digital AdHoc Support' : o.LocalDigitalAdHocSupport == "---" ? "" : o.LocalDigitalAdHocSupport,
+        'Global Digital Portrait Lead' : o.GlobalCISPortraitLead == "---" ? "" : o.GlobalCISPortraitLead,
+        'Regional Digital Portrait Lead' : o.RegionalCISPortraitLead == "---" ? "" : o.RegionalCISPortraitLead,
+        'Global Digital HR Feed Special list' : o.GlobalCISHRFeedSpecialist == "---" ? "" : o.GlobalCISHRFeedSpecialist,
+        'GDS' : o.GDS == "---" ? "" : o.GDS,
+        'Digital Team Activity Type' : o.ActivityType == "---" ? "" : o.ActivityType,
+        'Complexity Score' : o.ComplexityScore,
+        'Milestone Title' : o.MilestoneTitle == "---" ? "" : o.MilestoneTitle,
+        'Milestone Record ID Key' : o.Milestone__Record_ID_Key == "---" ? "" : o.Milestone__Record_ID_Key,
+        'Group Name' : o.Group_Name == "---" ? "" : o.Group_Name,
+        'Milestone Project Notes' : o.Milestone__Project_Notes == "---" ? "" : o.Milestone__Project_Notes,
+        'Milestone Closed Loop Owner' : o.Milestone__Closed_Loop_Owner == "---" ? "" : o.Milestone__Closed_Loop_Owner,
+        'Workspace ELT Overall Status' : o.Workspace__ELT_Overall_Status == "---" ? "" : o.Workspace__ELT_Overall_Status,
+        'Workspace ELT Overall Comments' : o.Workspace__ELT_Overall_Comments == "---" ? "" : o.Workspace__ELT_Overall_Comments,
+        'Customer Row ID' : o.Customer_Row_ID,
+        'Opportunity ID' : o.Opportunity_ID,
+        // 'Account Name' : o.Account_Name == "---" ? "" : o.Account_Name,
+        'Account Owner' : o.Account_Name == "---" ? "" : o.AccountOwner,
+        'Sales Stage Name' : o.Sales_Stage_Name == "---" ? "" : o.Sales_Stage_Name,
+        'Opportunity Type' : o.Opportunity_Type == "---" ? "" : o.Opportunity_Type,
+        'Revenue Status' : o.Revenue_Status == "---" ? "" : o.Revenue_Status,
+        'Revenue Opportunity Type' : o.Revenue_Opportunity_Type == "---" ? "" : o.Revenue_Opportunity_Type,
+        'Opportunity Owner' : o.Opportunity_Owner == "---" ? "" : o.Opportunity_Owner,
+        'Opportunity Category' : o.Opportunity_Category == "---" ? "" : o.Opportunity_Category,
+        'Market Leader' : o.MarketLeader == "---" ? "" : o.MarketLeader,
+        'Revenue Total Transactions' : o.Revenue_Total_Transactions,
+        'Line Win Probability' : o.Line_Win_Probability,
+        'Next Step' : o.Next_Step == "---" ? "" : o.Next_Step,
+        'Implementation Fee PSD' : o.Implementation_Fee__PSD_,
+        'Awarded Date' : o.AwardedDate == null ? null : new Date(o.AwardedDate),
+        //'ExternalKickoffDuedate' : o.ExternalKickoffDuedate_c,
+        'Milestone Type' : o.MilestoneType == "---" ? "" : o.MilestoneType,
+        'Project Effort' : o.Project_Effort,
+        'Description' : o.DataDescription == "---" ? "" : o.DataDescription,
+        'Last Updated Date' : o.Date_added_to_the_CLR == null ? null : new Date(o.Date_added_to_the_CLR),
+        'Go-Live Month' : o.GoLiveMonth == "---" ? "" : o.GoLiveMonth,
+        'Go-Live Year' : o.GoLiveYear == "---" ? "" : o.GoLiveYear,
+        'Quarter' : o.Quarter == "---" ? "" : o.Quarter,
+        'Cycle Time Categories' : o.CycleTimeCategories,
+        'Account Category' : o.AccountCategory,
+        'SOW Status' : o.SOWStatus,
+        'OBT Adoption Rate' : o.OBTAdoptionRate,
+        'Implementation Ready' : o.ImplementationReady,
+        'Record Status' : o.RecordStatus,
+        'Data Source Type' : o.DataSourceType == "---" ? "" : o.DataSourceType,
+        'Data Quality' : o.CheckComments == "---" ? "" : o.CheckComments,
+      };
+    });
+    this.excelService.exportAsExcelFile(CustomizedData,'CLRData');
+    this.dashboard.ShowSpinnerHandler(false);
   }
   ReplicateCLR(){
     if(localStorage.getItem('AutomatedFilters') == null){
@@ -2114,45 +2148,62 @@ export class AutomatedCLRComponent implements OnInit {
       localStorage.removeItem('AutomatedFilters');
       localStorage.setItem('AutomatedFilters',JSON.stringify(this.filteredValues));
     }
-    let p_data : ParsingData = {
-      ButtonType : "Replicate",
-      ManualID : null,
-      Client : "",
-      CLRID : "",
-      //iMeet_Workspace_Title : "",
-      //Date_added_to_the_CLR : null,
-      Implementation_Type : "",
-      //CLR_Country : "",
-      Pipeline_status : "",
-      Pipeline_comments : "",
-      // Service_configuration : "",
-      // OBT_Reseller___Direct : "",
-      //Servicing_location : "",
-      Assignment_date : null,
-      RevenueID : null,
-      Project_Effort : 0,
-      GoLiveDate : null,
-      ProjectStatus : "",
-      ProjectLevel : "",
-      GlobalProjectManager : "",
-      RegionalProjectManager : "",
-      AssigneeFullName : "",
-      RecordStatus : "",
-      SelectionType : "",
-      DigitalTeam : this.DigitalTeamList,
-    }
-    const dialogRef = this.dialog.open(ReplicateDailog, {
-      data : p_data
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      this.SelectionType = result.SelectionType;
-      if(this.SelectionType == "Cancel"){
-      }else if(this.SelectionType == "Update" || this.SelectionType == "Replicate"){
-        this.GetData();
-        this.GenerateTracker();
-      }else{
+    let RevenueIDS : any[] = [];
+    this.dataSource.data.filter(values => {
+      if(values.Select_Row){
+        RevenueIDS.push(values.RevenueID)
       }
-    });
+    })
+    let pipelinerecords = 0;
+    let otherrecords = 0;
+    for(let i = 0;i< RevenueIDS.length;i++){
+      pipelinerecords += this.dataSource.data.filter(x => x.RevenueID == RevenueIDS[i] && (x.ProjectStatus == "P-Pipeline" || x.ProjectStatus == "EP-Early Potential" || x.ProjectStatus == "HP-High Potential")).length;
+      otherrecords += this.dataSource.data.filter(x => x.RevenueID == RevenueIDS[i] && x.ProjectStatus != "P-Pipeline" && x.ProjectStatus != "EP-Early Potential" && x.ProjectStatus != "HP-High Potential").length;
+    }
+    if(pipelinerecords > 0 && otherrecords > 0){
+      alert("Select either Pipeline records or any other project status records, please do not select multiple project status records to replicate.");
+    }else{
+      let p_data : ParsingData = {
+        ButtonType : "Replicate",
+        ManualID : pipelinerecords,
+        Client : "",
+        CLRID : this.dataSource.data.filter(x => x.Select_Row == true).length,
+        //iMeet_Workspace_Title : "",
+        //Date_added_to_the_CLR : null,
+        Implementation_Type : "",
+        //CLR_Country : "",
+        Pipeline_status : "",
+        Pipeline_comments : "",
+        // Service_configuration : "",
+        // OBT_Reseller___Direct : "",
+        //Servicing_location : "",
+        Assignment_date : null,
+        RevenueID : RevenueIDS,
+        Project_Effort : otherrecords,
+        GoLiveDate : null,
+        ProjectStatus : "",
+        ProjectLevel : "",
+        GlobalProjectManager : "",
+        RegionalProjectManager : "",
+        AssigneeFullName : "",
+        RecordStatus : "",
+        SelectionType : "",
+        DigitalTeam : this.DigitalTeamList,
+        CLRData : this.dataSource.data
+      }
+      const dialogRef = this.dialog.open(ReplicateDailog, {
+        data : p_data
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        this.SelectionType = result.SelectionType;
+        if(this.SelectionType == "Cancel"){
+        }else if(this.SelectionType == "Update" || this.SelectionType == "Replicate"){
+          this.GetData();
+          this.GenerateTracker();
+        }else{
+        }
+      });
+    }
   }
   RowSelected(j,CLRID : number,ManualID : number,Client : string,iMeet_Workspace_Title : string,Date_added_to_the_CLR : Date,Implementation_Type : string,CLR_Country : string,Pipeline_status : string,Pipeline_comments : string,Service_configuration : string,OBT_Reseller___Direct : string,Servicing_location : string,Assignment_date : Date,New_Business_volume__US__ : number,RevenueID : number,Implementation_Fee__PSD_ : number,EMEA_Country_to_charge : string,EMEA_Client : string,EMEA_OBT_standard_fee : number,EMEA_Included_for_accrual : string,EMEA_Accrual_date : Date,EMEA_Scope_description : string,EMEA_Billing_notes : string,Manual_Entry__Wave_2__Wave_3__etc_ : string,Project_Effort : number,Priority : number,Resource_Status : string,Global_Project_Manager_replacement : string,Regional_Project_Manager_replacement : string,Milestone__Assignee__Full_Name_replacement : string,Global_CIS_OBT_Lead_replacement : string,Global_CIS_HR_Feed_Specialist_replacement : string,Global_CIS_Portrait_Lead_replacement : string,Global_CIS_RoomIT_Integration_Lead_replacement : string,GoLiveDate :Date,ProjectStatus : string,ProjectLevel : string,GlobalProjectManager : string,RegionalProjectManager : string,AssigneeFullName : string,RecordStatus : string,DataSourceType : string)
   {
@@ -2186,7 +2237,8 @@ export class AutomatedCLRComponent implements OnInit {
         AssigneeFullName : AssigneeFullName,
         RecordStatus : RecordStatus,
         SelectionType : "",
-        DigitalTeam : this.DigitalTeamList
+        DigitalTeam : this.DigitalTeamList,
+        CLRData : []
       }
       const dialogRef = this.dialog.open(ProjectTeamDailog, {
         data : p_data
@@ -2761,6 +2813,10 @@ export class ReplicateDailog {
     public dialogRef: MatDialogRef<ReplicateDailog>,
     @Optional() @Inject(MAT_DIALOG_DATA) public data: ParsingData)
     {
+      this.SelectedIdsText = data.CLRID + " Records are Selected";
+      this.SelectedRevenueIDs = data.RevenueID;
+      this.pipelinerecords = data.ManualID;
+      this.otherrecords = data.Project_Effort;
       this.GlobalDigitalOBTLeadList_P = data.DigitalTeam;
       this.GlobalOBTDigitalTeamData.next(this.GlobalDigitalOBTLeadList_P.slice());
       this.RegionalDigitalOBTLeadList_P = data.DigitalTeam;
@@ -2776,12 +2832,15 @@ export class ReplicateDailog {
       // set screenWidth on page load
       this.screenWidth = window.innerWidth;
       this.screenHeight = window.innerHeight;
+      this.Data_CLR = data.CLRData;
       window.onresize = () => {
         // set screenWidth on screen size change
         this.screenWidth = window.innerWidth;
         this.screenHeight = window.innerHeight;
       };
     }
+  SelectedRevenueIDs : [];
+  SelectedIdsText : string;
   todayDate : Date = new Date();
   screenWidth : number;
   screenHeight : number;
@@ -3087,10 +3146,21 @@ export class ReplicateDailog {
       this.OBTList.filter(manager => manager.Opportunity_Type.toLowerCase().indexOf(search) > -1)
     );
   }
+  DisablePipelineColumns : boolean = true;
+  
+  pipelinerecords : number = 0;
+  otherrecords : number = 0;
   ngOnInit() {
+    if(this.pipelinerecords > 0 && this.otherrecords == 0){
+      this.DisablePipelineColumns = true;
+    }else if(this.pipelinerecords == 0 && this.otherrecords > 0){
+      this.DisablePipelineColumns = false;
+    }else{
+      this.DisablePipelineColumns = false;
+    }
     this.service.ListofLeadersManagers().subscribe(data =>{
       if(data.code == 200){
-        var datas = { GlobalProjectManager : "---",isSelected : true};
+        var datas = {GlobalProjectManager : "---",isSelected : true};
         var datas1 = {GlobalProjectManager : "Not Required",isSelected : true};
         var datas2 = {GlobalProjectManager : "To Be Assigned",isSelected : true};
         data.FilterGlobalProjectManager.push(datas);
@@ -3176,33 +3246,32 @@ export class ReplicateDailog {
     this.GlobalCISHRFeedSpecialistchecked = false;
     this.ActivityTypechecked = false;
     this.Complexitychecked = false;
-    // this.GDSchecked = false;
-    this.service.GetRevenueId().subscribe(data =>{
-      if(data.code == 200){
-        this.RevIDData = data.RevenueId;
-        for(let i = 0;i<data.RevenueId.length;i++){
-          this.RevIDData[i].item_id = i+1;
-          if(data.RevenueId[i].Opportunity_ID == null ||data.RevenueId[i].Opportunity_ID == ""){
-            data.RevenueId[i].Opportunity_ID = "0";
-          }
-          this.RevIDData[i].item_text = data.RevenueId[i].Workspace_Title+ ","+data.RevenueId[i].Region+","+data.RevenueId[i].Opportunity_ID + "," + data.RevenueId[i].RevenueID +","+data.RevenueId[i].CountryCode;
-        }
-        this.dropdownList = this.RevIDData;
-        this.dropdownSettings = {
-          singleSelection: false,
-          idField: 'item_id',
-          textField: 'item_text',
-          selectAllText: 'Select All',
-          unSelectAllText: 'UnSelect All',
-          itemsShowLimit: 10,
-          allowSearchFilter: true,
-          limitSelection: 100,
-        };
-      }
-      else{
-        alert(data.message);
-      }
-    })
+    // this.service.GetRevenueId().subscribe(data =>{
+    //   if(data.code == 200){
+    //     this.RevIDData = data.RevenueId;
+    //     for(let i = 0;i<data.RevenueId.length;i++){
+    //       if(data.RevenueId[i].Opportunity_ID == null ||data.RevenueId[i].Opportunity_ID == ""){
+    //         data.RevenueId[i].Opportunity_ID = "0";
+    //       }
+    //       this.RevIDData[i].item_text = data.RevenueId[i].Workspace_Title+ ","+data.RevenueId[i].Region+","+data.RevenueId[i].Opportunity_ID + "," + data.RevenueId[i].RevenueID +","+data.RevenueId[i].CountryCode;
+    //       this.RevIDData[i].item_id = data.RevenueId[i].Workspace_Title+ ","+data.RevenueId[i].Region+","+data.RevenueId[i].Opportunity_ID + "," + data.RevenueId[i].RevenueID +","+data.RevenueId[i].CountryCode;
+    //     }
+    //     this.dropdownList = this.RevIDData;
+    //     this.dropdownSettings = {
+    //       singleSelection: false,
+    //       idField: 'item_id',
+    //       textField: 'item_text',
+    //       selectAllText: 'Select All',
+    //       unSelectAllText: 'UnSelect All',
+    //       itemsShowLimit: 10,
+    //       allowSearchFilter: true,
+    //       limitSelection: 100,
+    //     };
+    //   }
+    //   else{
+    //     alert(data.message);
+    //   }
+    // })
   }
   checkUncheckSelectall(){
     if(this.Selectallchecked == true){
@@ -3369,7 +3438,7 @@ export class ReplicateDailog {
   OnSaveClick(){
     this.Errors = 0;
     this.ErrorChecks();
-    this.SelectedData = this.selectedItems;
+    this.SelectedData = this.SelectedRevenueIDs;
     if(this.Errors == 0){
       if(this.SelectedData.length <= 0){
         alert("Please Select atleast one Revenue ID");
@@ -3377,9 +3446,9 @@ export class ReplicateDailog {
         var RevID;
         for(let i=0;i<this.SelectedData.length;i++){
           if(i == 0){
-            RevID = this.SelectedData[i].item_text.split(',')[3];
+            RevID = this.SelectedData[i];
           }else{
-            RevID += ","+this.SelectedData[i].item_text.split(',')[3];
+            RevID += ","+this.SelectedData[i];
           }
         }
         if(this.DateGolive_R == null){
@@ -3446,20 +3515,29 @@ export class ReplicateDailog {
   OnCancelClick(){
     this.dialogRef.close({SelectionType : 'Cancel'});
   }
+  
+  Data_CLR : DataCLR[];
   OnApplyClick(){
-    this.service.GetManualdataUsingRevID(this.ManualRevenueID).subscribe(data =>{
-      if(data.code == 200){
-        this.Implementation_Type = data.Data[0].Implementation_Type;
-        this.Pipeline_status = data.Data[0].Pipeline_status;
-        this.Pipeline_comments = data.Data[0].Pipeline_comments;
-        // this.Service_configuration = data.Data[0].Service_configuration;
-        // this.OBT_Reseller___Direct.setValue(data.Data[0].OBT_Reseller___Direct);
-        this.dateAssignment = new Date(data.Data[0].Assignment_date);
-        this.Project_Effort = data.Data[0].Project_Effort;
-        this.Record_Status = data.Data[0].RecordStatus;
-      }else{
-      }
-    })
+      this.Data_CLR = this.Data_CLR.filter(x => x.RevenueID == this.ManualRevenueID+"");
+      this.Implementation_Type = this.Data_CLR[0].Implementation_Type;
+      this.Pipeline_status = this.Data_CLR[0].Pipeline_status;
+      this.Pipeline_comments = this.Data_CLR[0].Pipeline_comments;
+      this.dateAssignment = new Date(this.Data_CLR[0].Assignment_date);
+      this.DateGolive_R = new Date(this.Data_CLR[0].GoLiveDate);
+      this.Project_Effort = this.Data_CLR[0].Project_Effort;
+      this.ProjectLevel = this.Data_CLR[0].ProjectLevel;
+      this.Record_Status = this.Data_CLR[0].RecordStatus;
+      this.GlobalManager_R.setValue(this.Data_CLR[0].GlobalProjectManager);
+      this.RegionalManager_R.setValue(this.Data_CLR[0].RegionalProjectManager);
+      this.AssignePerson_R.setValue(this.Data_CLR[0].AssigneeFullName);
+      this.GlobalCISOBTLead.setValue(this.Data_CLR[0].GlobalCISOBTLead);
+      this.RegionalCISOBTLead.setValue(this.Data_CLR[0].RegionalCISOBTLead);
+      this.LocalDigitalOBTLead.setValue(this.Data_CLR[0].LocalDigitalOBTLead);
+      this.GlobalCISPortraitLead.setValue(this.Data_CLR[0].GlobalCISPortraitLead);
+      this.RegionalCISPortraitLead.setValue(this.Data_CLR[0].RegionalCISPortraitLead);
+      this.GlobalCISHRFeedSpecialist.setValue(this.Data_CLR[0].GlobalCISHRFeedSpecialist);
+      this.ActivityType.setValue(this.Data_CLR[0].ActivityType);
+      this.ComplexityScore = this.Data_CLR[0].ComplexityScore;
   }
 }
 @Component({

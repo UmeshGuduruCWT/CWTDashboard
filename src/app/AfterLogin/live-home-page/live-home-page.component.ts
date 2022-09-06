@@ -6,6 +6,7 @@ import { LivedashboardComponent } from '../livedashboard/livedashboard.component
 import { FormControl } from '@angular/forms';
 import { Chart } from 'chart.js';
 import { DatePipe } from '@angular/common';
+import { DashboardComponent } from '../dashboard/dashboard.component';
 
 @Component({
   selector: 'app-live-home-page',
@@ -46,7 +47,7 @@ export class LiveHomePageComponent implements OnInit {
   PotentialRecords: string;
   DisableCountry : boolean = true;
   CountryList : Countries[];mastercountry : boolean;CountryNG = [];SelectedCountry;
-  constructor(private router : Router,public service : DashboardServiceService,public datepipe : DatePipe,public dashboard : LivedashboardComponent,) { }
+  constructor(private router : Router,public service : DashboardServiceService,public datepipe : DatePipe,public dashboard : LivedashboardComponent) { }
   // constructor(private router : Router) {
   //   this.screenWidth = window.innerWidth;
   //   this.screenHeight = window.innerHeight;

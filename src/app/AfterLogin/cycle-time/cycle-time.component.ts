@@ -268,39 +268,6 @@ export class CycleTimeComponent implements OnInit {
             this.Overall = data.Data[0].Overall;
           }
         }
-        // if(data.TargetCycleTimeData.length < 1 || data.Data == null || data.Data == undefined){
-        // }else{
-        //   if(data.TargetCycleTimeData[0].NewGlobal == null){
-        //     this.H_NewGlobal = 0;
-        //   }else{
-        //     this.H_NewGlobal = data.TargetCycleTimeData[0].NewGlobal;
-        //   }
-        //   if(data.TargetCycleTimeData[0].NewRegional == null){
-        //     this.H_NewRegional = 0;
-        //   }else{
-        //     this.H_NewRegional = data.TargetCycleTimeData[0].NewRegional;
-        //   }
-        //   if(data.TargetCycleTimeData[0].NewLocal == null){
-        //     this.H_NewLocal = 0;
-        //   }else{
-        //     this.H_NewLocal = data.TargetCycleTimeData[0].NewLocal;
-        //   }
-        //   if(data.TargetCycleTimeData[0].ExistingAddChange == null){
-        //     this.H_ExistingAddChangeOBT = 0;
-        //   }else{
-        //     this.H_ExistingAddChangeOBT = data.TargetCycleTimeData[0].ExistingAddChange;
-        //   }
-        //   if(data.TargetCycleTimeData[0].ExistingServiceConfigChange == null){
-        //     this.H_ExistingServiceConfigChange = 0;
-        //   }else{
-        //     this.H_ExistingServiceConfigChange = data.TargetCycleTimeData[0].ExistingServiceConfigChange;
-        //   }
-        //   if(data.TargetCycleTimeData[0].Overall == null){
-        //     this.H_Overall = 0;
-        //   }else{
-        //     this.H_Overall = data.TargetCycleTimeData[0].Overall;
-        //   }
-        // }
       })
       this.allloader = true;
       this.m_loader = true;
@@ -316,28 +283,16 @@ export class CycleTimeComponent implements OnInit {
           if(SelectedCaegory == "Overall" || SelectedCaegory == null){
             for(let i = 0; i<data.CycleTimeByCategories.length;i++){
               if(data.CycleTimeByCategories[i].CycleTimeCategory == "Overall"){
-                // data.CycleTimeByCategories[i].TargetCycleTime = Math.round(this.Overall);
-                // data.CycleTimeByCategories[i].TargetH1 = Math.round(this.H_Overall);
                 data.CycleTimeByCategories[i].Target_A = Math.round(this.Overall);
               }else if(data.CycleTimeByCategories[i].CycleTimeCategory == "Existing Add/Change OBT"){
-                // data.CycleTimeByCategories[i].TargetCycleTime = Math.round(this.ExistingAddChangeOBT);
-                // data.CycleTimeByCategories[i].TargetH1 = Math.round(this.H_ExistingAddChangeOBT);
                 data.CycleTimeByCategories[i].Target_A = Math.round(this.ExistingAddChangeOBT);
               }else if(data.CycleTimeByCategories[i].CycleTimeCategory == "New Local Including Upsell"){
-                // data.CycleTimeByCategories[i].TargetCycleTime = Math.round(this.NewLocal);
-                // data.CycleTimeByCategories[i].TargetH1 = Math.round(this.H_NewLocal);
                 data.CycleTimeByCategories[i].Target_A = Math.round(this.NewLocal);
               }else if(data.CycleTimeByCategories[i].CycleTimeCategory == "New Global Including Upsell"){
-                // data.CycleTimeByCategories[i].TargetCycleTime = Math.round(this.NewGlobal);
-                // data.CycleTimeByCategories[i].TargetH1 = Math.round(this.H_NewGlobal);
                 data.CycleTimeByCategories[i].Target_A = Math.round(this.NewGlobal);
               }else if(data.CycleTimeByCategories[i].CycleTimeCategory == "New Regional Including Upsell"){
-                // data.CycleTimeByCategories[i].TargetCycleTime = Math.round(this.NewRegional);
-                // data.CycleTimeByCategories[i].TargetH1 = Math.round(this.H_NewRegional);
                 data.CycleTimeByCategories[i].Target_A = Math.round(this.NewRegional);
               }else if(data.CycleTimeByCategories[i].CycleTimeCategory == "Existing Service Config Change (catch all including Spins/Mergers)"){
-                // data.CycleTimeByCategories[i].TargetCycleTime = Math.round(this.ExistingServiceConfigChange);
-                // data.CycleTimeByCategories[i].TargetH1 = Math.round(this.H_ExistingServiceConfigChange);
                 data.CycleTimeByCategories[i].Target_A = Math.round(this.ExistingServiceConfigChange);
               }
               data.CycleTimeByCategories[i].January_A = Math.round(data.CycleTimeByCategories[i].January_A);
@@ -356,9 +311,6 @@ export class CycleTimeComponent implements OnInit {
               data.CycleTimeByCategories[i].H_Two_A= Math.round(data.CycleTimeByCategories[i].H_Two_A);
               data.CycleTimeByCategories[i].Total_A = Math.round(data.CycleTimeByCategories[i].Total_A);
             }
-            // if(i>0){
-              // data.CycleTimeByCategories.splice(1,29);
-            // }
             this.CycleTimeData = data.CycleTimeByCategories;
             for(let i = 0;i<data.CycleTimeData.length;i++){
               if(data.CycleTimeData[i].ProjectStart_ForCycleTime == null){

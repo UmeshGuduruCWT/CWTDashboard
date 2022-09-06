@@ -8,6 +8,7 @@ import { ExcelService } from '../../excel.service';
 import { LivedashboardComponent } from '../livedashboard/livedashboard.component';
 import { DatePipe } from '@angular/common';
 import { DashboardComponent } from '../dashboard/dashboard.component';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 @Component({
   selector: 'app-critical-tasks-over-due',
@@ -114,16 +115,17 @@ export class CriticalTasksOverDueComponent implements OnInit {
       this.service.RegionWiseCount(this.SelectedGroupName,this.SelectedLevel,this.SelectedRegions,this.SelectedAssigne).subscribe(data =>{
         this.Apply_disable = true;
         var Options = {
+          responsive : true,
           legend: {
             display: true,
             position : 'bottom' as 'bottom',
             fullWidth : true,
             labels: {
-                fontColor: '#000000',
-                fontSize :  10,
-                padding : 10,
-                fontStyle : 'normal',
-                fontFamily : 'Arial',
+              fontColor: '#000000',
+              fontSize :  12,
+              padding : 10,
+              fontStyle : 'bold',
+              fontFamily : 'Arial',
             }
           },
           title: {
@@ -134,26 +136,19 @@ export class CriticalTasksOverDueComponent implements OnInit {
             mode: 'index' as 'index',
             intersect: false
           },
-          responsive : true,
           scales: {
             xAxes: [{
               ticks: {
+                beginAtZero: true,
                 fontSize : 10,
-                fontStyle : 'normal',
+                fontStyle : 'bold',
                 fontColor : '#000000',
                 fontFamily : 'Arial',
-                // autoSkip: false,
-                // maxRotation: 0,
-                // minRotation: 0
               },
-              gridLines: {
-                color: "rgba(0, 0, 0, 0)",
-              }
             }],
             yAxes: [{
               ticks: {
                 beginAtZero:true,
-                // max:700,
                 fontSize : 10,
                 fontStyle : 'bold',
                 fontColor : '#000000',
@@ -165,14 +160,17 @@ export class CriticalTasksOverDueComponent implements OnInit {
             }]
           },
           plugins: {
-            labels: {
-              render: 'value',
-              fontColor: '#3B3B3B',
-              textMargin: 6,
-              arc: false,
-              fontSize: 10,
-              fontStyle: 'bold',
-              fontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
+            datalabels: {
+              anchor : 'end' as 'end',
+              align : 'end' as 'end',
+              color : 'black',
+              backgroundColor : 'rgb(93, 173, 226)',
+              padding : 3,
+              borderRadius : 6,
+              font: {
+                size: 11,
+                weight: 'bold' as 'bold'
+              }
             }
           },
           tooltips: {
@@ -195,7 +193,8 @@ export class CriticalTasksOverDueComponent implements OnInit {
               this.Rcanvas.destroy();
             }
             this.Rcanvas = new Chart('Rcanvas', {
-              type : 'bar',
+              plugins: [ChartDataLabels],
+              type: 'horizontalBar',
               data : {
                 labels : this.ProjectStatus,
                 //labels : ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
@@ -219,16 +218,17 @@ export class CriticalTasksOverDueComponent implements OnInit {
       this.service.GroupNameCountCTO(this.SelectedGroupName,this.SelectedLevel,this.SelectedRegions,this.SelectedAssigne).subscribe(data =>{
         this.Apply_disable = true;
         var Options = {
+          responsive : true,
           legend: {
             display: true,
             position : 'bottom' as 'bottom',
             fullWidth : true,
             labels: {
-                fontColor: '#000000',
-                fontSize :  10,
-                padding : 10,
-                fontStyle : 'normal',
-                fontFamily : 'Arial',
+              fontColor: '#000000',
+              fontSize :  12,
+              padding : 10,
+              fontStyle : 'bold',
+              fontFamily : 'Arial',
             }
           },
           title: {
@@ -239,26 +239,19 @@ export class CriticalTasksOverDueComponent implements OnInit {
             mode: 'index' as 'index',
             intersect: false
           },
-          responsive : true,
           scales: {
             xAxes: [{
               ticks: {
+                beginAtZero: true,
                 fontSize : 10,
-                fontStyle : 'normal',
+                fontStyle : 'bold',
                 fontColor : '#000000',
                 fontFamily : 'Arial',
-                // autoSkip: false,
-                // maxRotation: 0,
-                // minRotation: 0
               },
-              gridLines: {
-                color: "rgba(0, 0, 0, 0)",
-              }
             }],
             yAxes: [{
               ticks: {
                 beginAtZero:true,
-                // max:700,
                 fontSize : 10,
                 fontStyle : 'bold',
                 fontColor : '#000000',
@@ -269,27 +262,18 @@ export class CriticalTasksOverDueComponent implements OnInit {
               }
             }]
           },
-          // scales: {
-          //   yAxes: [{
-          //     scaleLabel: {
-          //         display: true,
-          //         labelString: 'Projects Count',
-          //         fontSize : 10,
-          //         fontStyle : 'normal',
-          //         fontColor : '#000000',
-          //         fontFamily : 'Arial',
-          //     }
-          //   }]
-          // },
           plugins: {
-            labels: {
-              render: 'value',
-              fontColor: '#3B3B3B',
-              textMargin: 6,
-              arc: false,
-              fontSize: 10,
-              fontStyle: 'bold',
-              fontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
+            datalabels: {
+              anchor : 'end' as 'end',
+              align : 'end' as 'end',
+              color : 'black',
+              backgroundColor : 'rgb(48, 219, 193)',
+              padding : 3,
+              borderRadius : 6,
+              font: {
+                size: 11,
+                weight: 'bold' as 'bold'
+              }
             }
           },
           tooltips: {
@@ -312,15 +296,17 @@ export class CriticalTasksOverDueComponent implements OnInit {
               this.GNcanvas.destroy();
             }
             this.GNcanvas = new Chart('GNcanvas', {
-              type : 'bar',
+              plugins: [ChartDataLabels],
+              type: 'horizontalBar',
               data : {
                 labels : this.GroupNames,
                 //labels : ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
                 datasets: [{
                   label: "Total Count By Group Names ("+Math.round(data.Data.map(t => t.ProjectsCount).reduce((acc,value) => acc + value,0))+")",
-                  backgroundColor : 'rgba(23, 32, 42 ,1)',
+                  // backgroundColor : 'rgba(23, 32, 42 ,1)',
+                  backgroundColor : 'rgba(48, 219, 193 ,1)',
                   borderColor : 'rgba(229, 231, 233 ,1)',
-                  hoverBackgroundColor : 'rgba(23, 32, 42 ,0.6)',
+                  hoverBackgroundColor : 'rgba(48, 219, 193 ,0.6)',
                   borderWidth: 2,
                   data: this.GroupNameCount,
                   fill: false,
@@ -333,6 +319,11 @@ export class CriticalTasksOverDueComponent implements OnInit {
         }
       });
     }
+  }
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.FilteredCount = this.dataSource.filteredData.length;
   }
   exportData(){
     this.dashboard.ShowSpinnerHandler(true);

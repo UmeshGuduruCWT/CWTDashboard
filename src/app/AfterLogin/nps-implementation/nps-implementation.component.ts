@@ -8,6 +8,7 @@ import { LivedashboardComponent } from '../livedashboard/livedashboard.component
 import { Chart } from 'chart.js';
 import jspdf from 'jspdf';
 import html2canvas from 'html2canvas';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 @Component({
   selector: 'app-nps-implementation',
   templateUrl: './nps-implementation.component.html',
@@ -225,35 +226,25 @@ export class NpsImplementationComponent implements OnInit {
         var options4 = {
           legend: {
             display: false,
-            // position : 'bottom',
-            // fullWidth : true,
-            // labels: {
-            //     fontColor: '#000000',
-            //     fontSize :  11,
-            //     padding : 15,
-            //     fontStyle : '500',
-            //     fontFamily : 'Arial',
-            // }
           },
           hover: {
             mode: 'index' as 'index',
             intersect: false
           },
-          // title: {
-          //   display: true,
-          //   text: ' '
+          // plugins: {
+            // datalabels: {
+            //   anchor : 'end' as 'end',
+            //   align : 'end' as 'end',
+            //   color : 'black',
+            //   backgroundColor : 'rgb(52, 152, 219 ,0.4)',
+            //   padding : 3,
+            //   borderRadius : 6,
+            //   font: {
+            //     size: 11,
+            //     weight: 'bold' as 'bold'
+            //   }
+            // }
           // },
-          plugins: {
-            labels: {
-              render: 'value',
-              fontColor: '#3B3B3B',
-              position: 'outside',
-              textMargin: 6,
-              fontSize: 12,
-              fontStyle: 'bold',
-              fontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
-            }
-          },
           tooltips: {
             mode: 'index' as 'index',
             intersect: false,
@@ -275,9 +266,6 @@ export class NpsImplementationComponent implements OnInit {
                 fontFamily : 'Arial',
                 stepSize: 1,
               }
-              // gridLines: {
-              //   color: "rgba(0, 0, 0, 0)",
-              // }
             }],
             yAxes: [{ 
               stacked: true,
@@ -296,7 +284,6 @@ export class NpsImplementationComponent implements OnInit {
           },
         }
         var pieOptions = {
-          //events: false,
           legend: {
             display: true,
             position : 'bottom' as 'bottom',
@@ -309,15 +296,10 @@ export class NpsImplementationComponent implements OnInit {
               fontFamily : 'Arial',
             }
           },
-          // title: {
-          //   display: true,
-          //   text: ' '
-          // },
           plugins: {
             labels: {
               render: 'value',
               fontColor: '#3B3B3B',
-              //position: 'outside',
               textMargin: 6,
               arc: false,
               fontSize: 13,
