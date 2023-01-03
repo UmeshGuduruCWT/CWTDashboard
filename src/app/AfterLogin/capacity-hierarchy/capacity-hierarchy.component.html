@@ -14,7 +14,7 @@
 </div>
 <app-config *ngIf="DisplayConfigData"></app-config>
 <div class="col-12">
-    <div class="example-container" [ngStyle]="{'height' : (screenHeight-165)+'px'}" style="border: 1px solid rgb(196, 196, 196);">
+    <div class="example-container" [ngStyle]="{'height' : (screenHeight-165)+'px'}" style="border: 2px solid black;">
         <table mat-table [dataSource]="dataSource">
             <ng-container matColumnDef="Region">
                 <th mat-header-cell *matHeaderCellDef class="maintextSizes" style="padding-left: 10px;"> Region </th>

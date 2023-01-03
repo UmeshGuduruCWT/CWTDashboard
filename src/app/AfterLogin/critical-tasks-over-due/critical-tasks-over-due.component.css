@@ -69,7 +69,9 @@
     /* max-height: 500px; */
     overflow: auto; 
     width: 100%;
-    margin-top: 15px;
+    margin-top: 20px;
+    border: 2px solid black;
+    margin-left: 15px;
     margin-bottom: 20px;
   }
   table {
@@ -78,14 +80,11 @@
   tr.mat-footer-row {
     font-weight: bold;
   }
-  .mat-table-sticky {
-    border-top: 1px solid #e0e0e0;
-  }
   .textSizes
   {
     font-size: 14px;
     text-align: center;
-    font-family: "Montserrat", sans-serif;
+    font-family: "Montserrat", sans-serif;border-bottom: 2px solid black;
   }
   .mat-cell,.mat-header-cell {
     /* width: max-content; */

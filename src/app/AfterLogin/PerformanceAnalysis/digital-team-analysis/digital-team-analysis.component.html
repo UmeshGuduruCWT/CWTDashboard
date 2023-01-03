@@ -1,5 +1,5 @@
 <mat-drawer-container>
-    <mat-drawer #sidenav mode="side" opened style="position: fixed;padding-top: 60px;width: 17%">
+    <mat-drawer #sidenav mode="side" opened style="position: fixed;padding-top: 60px;width: 15%;border: 1px solid #333F48;">
         <div class="row" style="margin: 0px;padding: 0px;">
             <div class="col-12" style="margin: 0px;padding: 0px;">
                 <div class="sticky">
@@ -109,31 +109,31 @@
                     <div class="example-container" [ngStyle]="{'height' : (screenHeight-155)+'px'}" style="margin-left: 15px;border: 2px solid black;">
                         <table mat-table [dataSource]="dataSource_GM" #GMSort="matSort" matSort>
                             <ng-container matColumnDef="Leader">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="border-bottom: 2px solid black;padding-left: 10px;background-color:  #3B8AD9;color: white;">Leader</th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="border-bottom: 2px solid black;padding-left: 10px;background-color:  #34495E;color: white;">Leader</th>
                                 <td mat-cell *matCellDef="let element" style="padding-left: 10px;"> {{element.Leader}} </td>
                             </ng-container>
                             <ng-container matColumnDef="Manager">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="border-bottom: 2px solid black;background-color:  #3B8AD9;color: white;">Digital Specialist</th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="border-bottom: 2px solid black;background-color:  #34495E;color: white;">Digital Specialist</th>
                                 <td mat-cell *matCellDef="let element" class="manager_text" (click)="MangerProjectDetails(element.Manager,element.Leader)"> {{element.Manager}} </td>
                             </ng-container>
                             <ng-container matColumnDef="Region">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="border-bottom: 2px solid black;background-color:  #3B8AD9;color: white;">Region</th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="border-bottom: 2px solid black;background-color:  #34495E;color: white;">Region</th>
                                 <td mat-cell *matCellDef="let element"> {{element.Region}} </td>
                             </ng-container>
                             <ng-container matColumnDef="Role">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="border-bottom: 2px solid black;background-color:  #3B8AD9;color: white;">Role</th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="border-bottom: 2px solid black;background-color:  #34495E;color: white;">Role</th>
                                 <td mat-cell *matCellDef="let element"> {{element.Role}} </td>
                             </ng-container>
                             <ng-container matColumnDef="ProjectEffort_c">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="border-bottom: 2px solid black;background-color:  #3B8AD9;color: white;">Total Complexity Score</th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="border-bottom: 2px solid black;background-color:  #34495E;color: white;">Total Complexity Score</th>
                                 <td mat-cell *matCellDef="let element"> {{element.ProjectEffort_c}} </td>
                             </ng-container>
                             <ng-container matColumnDef="ClientCount">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="border-bottom: 2px solid black;background-color:  #3B8AD9;color: white;"> Project Count</th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="border-bottom: 2px solid black;background-color:  #34495E;color: white;"> Project Count</th>
                                 <td mat-cell *matCellDef="let element"> {{element.ClientCount}} </td>
                             </ng-container>
                             <ng-container matColumnDef="RevenueVolume">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="border-bottom: 2px solid black;background-color:  #3B8AD9;color: white;border-right: none;">Revenue Volume</th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="border-bottom: 2px solid black;background-color:  #34495E;color: white;border-right: none;">Revenue Volume</th>
                                 <td mat-cell *matCellDef="let element" style="border-right: none;"> {{element.RevenueVolumeUSD}} </td>
                             </ng-container>
                             <ng-container matColumnDef="Leader_h">

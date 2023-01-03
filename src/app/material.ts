@@ -58,6 +58,8 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatBadgeModule} from '@angular/material/badge';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {CdkTableModule} from '@angular/cdk/table';
+import {CdkTreeModule} from '@angular/cdk/tree';
 @NgModule({
   declarations: [],
   imports: [
@@ -69,7 +71,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     //MatNativeDateModule
   ],
   exports:[ MatButtonModule, MatCheckboxModule,MatToolbarModule,MatSidenavModule,MatSortModule,MatBadgeModule,
-    MatIconModule,MatListModule,MatInputModule,MatCardModule,MatTabsModule,MatSnackBarModule,MatNativeDateModule,
+    MatIconModule,MatListModule,MatInputModule,MatCardModule,MatTabsModule,MatSnackBarModule,MatNativeDateModule,CdkTableModule,CdkTreeModule,
     MatExpansionModule,FlexLayoutModule,LayoutModule,MatFormFieldModule,MatDatepickerModule,MatDialogModule,MatProgressSpinnerModule,
     MatRadioModule,MatSelectModule,MatPaginatorModule,MatTableModule,MatStepperModule,MatAutocompleteModule,MatProgressBarModule,
     //MatNativeDateModule

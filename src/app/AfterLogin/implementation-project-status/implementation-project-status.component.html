@@ -1,5 +1,5 @@
 <mat-drawer-container>
-    <mat-drawer mode="side" #sidenav opened style="position: fixed;padding-top: 60px;width: 19%;">
+    <mat-drawer mode="side" #sidenav opened style="position: fixed;padding-top: 60px;width: 15%;border: 1px solid #333F48;">
         <div class="row" style="margin: 0px;padding: 0px;">
             <div class="col-12" style="margin: 0px;padding: 0px;">
                 <div class="sticky">
@@ -124,7 +124,7 @@
         </div>
     </mat-drawer>
     <mat-drawer-content>
-        <div class="row" style="margin: 0px;padding: 0px;">
+        <div class="row" style="margin: 0px;padding: 0px;position: relative;">
             <div class="row col-md-12">
                 <div class="col-md-6">
                     <mat-card class="example-card mat-elevation-z2" style="margin-left: 15px;height: auto;overflow: auto;padding: 0px;">
@@ -185,86 +185,86 @@
                     </button>
                 </label>
                 <div class="col-md-12" style="margin-top: 15px;">
-                    <div class="example-container" [ngStyle]="{'height' : (screenHeight-115)+'px'}" style="margin-left: 15px;border: 1px solid rgb(196, 196, 196);">
+                    <div class="example-container" [ngStyle]="{'height' : (screenHeight-115)+'px'}" style="margin-left: 15px;border: 2px solid black;">
                         <table mat-table [dataSource]="dataSource" matSort>
                             <ng-container matColumnDef="Workspace_Title">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="padding-left: 10px;background-color:  rgb(112, 173, 71);color: white;"> Workspace : Title </th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="padding-left: 10px;background-color:  #34495E;color: white;"> Workspace : Title </th>
                                 <td mat-cell *matCellDef="let element" style="padding-left: 10px;"> {{element.Workspace_Title}} </td>
                             </ng-container>
                             <ng-container matColumnDef="Milestone_Title">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  rgb(112, 173, 71);color: white;"> Milestone Title </th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #34495E;color: white;"> Milestone Title </th>
                                 <td mat-cell *matCellDef="let element"> {{element.Milestone_Title}} </td>
                             </ng-container>
                             <ng-container matColumnDef="Milestone__Assignee__Reports_to__Full_Name">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  rgb(112, 173, 71);color: white;"> M : Assignee Reports to Full Name </th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #34495E;color: white;"> M : Assignee Reports to Full Name </th>
                                 <td mat-cell *matCellDef="let element"> {{element.Milestone__Assignee__Reports_to__Full_Name}} </td>
                             </ng-container>
                             <ng-container matColumnDef="Milestone__Assignee__Full_Name">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  rgb(112, 173, 71);color: white;">M : Assignee FullName</th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #34495E;color: white;">M : Assignee FullName</th>
                                 <td mat-cell *matCellDef="let element" > {{element.Milestone__Assignee__Full_Name}} </td>
                             </ng-container>
                             <ng-container matColumnDef="Task_Start_Date_c">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  rgb(112, 173, 71);color: white;"> T : Start Date </th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #34495E;color: white;"> T : Start Date </th>
                                 <td mat-cell *matCellDef="let element"> {{element.Task_Start_Date_c}} </td>
                             </ng-container>
                             <ng-container matColumnDef="Group_Name">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  rgb(112, 173, 71);color: white;"> Group Name </th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #34495E;color: white;"> Group Name </th>
                                 <td mat-cell *matCellDef="let element"> {{element.Group_Name}} </td>
                             </ng-container>
                             <ng-container matColumnDef="Milestone__Region">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  rgb(112, 173, 71);color: white;"> M : Region </th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #34495E;color: white;"> M : Region </th>
                                 <td mat-cell *matCellDef="let element"> {{element.Milestone__Region}} </td>
                             </ng-container>
                             <ng-container matColumnDef="Milestone__Project_Status">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  rgb(112, 173, 71);color: white;"> M : Project Status </th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #34495E;color: white;"> M : Project Status </th>
                                 <td mat-cell *matCellDef="let element"> {{element.Milestone__Project_Status}} </td>
                             </ng-container>
                             <ng-container matColumnDef="Workspace__Project_Level">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  rgb(112, 173, 71);color: white;"> W :Project Level </th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #34495E;color: white;"> W :Project Level </th>
                                 <td mat-cell *matCellDef="let element"> {{element.Workspace__Project_Level}} </td>
                             </ng-container>
                             <ng-container matColumnDef="Milestone__CRM_Revenue_ID__">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  rgb(112, 173, 71);color: white;"> M: CRM Revenue Id #</th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #34495E;color: white;"> M: CRM Revenue Id #</th>
                                 <td mat-cell *matCellDef="let element"> {{element.Milestone__CRM_Revenue_ID__}} </td>
                             </ng-container>
                             <ng-container matColumnDef="Task_Title">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  rgb(112, 173, 71);color: white;"> T : Title </th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #34495E;color: white;"> T : Title </th>
                                 <td mat-cell *matCellDef="let element"> {{element.Task_Title}} </td>
                             </ng-container>
                             <ng-container matColumnDef="Task__Task_Record_ID_Key">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  rgb(112, 173, 71);color: white;"> T : Task Record Id Key </th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #34495E;color: white;"> T : Task Record Id Key </th>
                                 <td mat-cell *matCellDef="let element"> {{element.Task__Task_Record_ID_Key}} </td>
                             </ng-container>
                             <ng-container matColumnDef="Workspace__CRM_Customer_Row_ID">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  rgb(112, 173, 71);color: white;"> W: Customer Row Id </th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #34495E;color: white;"> W: Customer Row Id </th>
                                 <td mat-cell *matCellDef="let element"> {{element.Workspace__CRM_Customer_Row_ID}} </td>
                             </ng-container>
                             <ng-container matColumnDef="Workspace__ELT_Overall_Status">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  rgb(112, 173, 71);color: white;"> W: ELT Overall Status </th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #34495E;color: white;"> W: ELT Overall Status </th>
                                 <td mat-cell *matCellDef="let element"> {{element.Workspace__ELT_Overall_Status}} </td>
                             </ng-container>
                             <ng-container matColumnDef="Workspace__ELT_Overall_Comments">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  rgb(112, 173, 71);color: white;"> W: ELT Overall Comments</th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #34495E;color: white;"> W: ELT Overall Comments</th>
                                 <td mat-cell *matCellDef="let element"><label (click)="ShowComment(element.Workspace_Title,element.Milestone__Project_Status,element.Workspace__ELT_Overall_Comments)" class="showlessText"> {{element.Workspace__ELT_Overall_Comments}}</label> </td>
                             </ng-container>
                             <ng-container matColumnDef="Milestone__Country">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  rgb(112, 173, 71);color: white;"> M: Country </th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #34495E;color: white;"> M: Country </th>
                                 <td mat-cell *matCellDef="let element"><label (click)="ShowComment(element.Workspace_Title,element.Milestone__Project_Status,element.Milestone__Country)" class="showlessText"> {{element.Milestone__Country}}</label> </td>
                             </ng-container>
                             <ng-container matColumnDef="C__Complete">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  rgb(112, 173, 71);color: white;"> % Complete </th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #34495E;color: white;"> % Complete </th>
                                 <td mat-cell *matCellDef="let element"> {{element.C__Complete}} </td>
                             </ng-container>
                             <ng-container matColumnDef="Milestone__Project_Notes">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  rgb(112, 173, 71);color: white;"> M: Project Notes </th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #34495E;color: white;"> M: Project Notes </th>
                                 <td mat-cell *matCellDef="let element"><label (click)="ShowComment(element.Workspace_Title,element.Milestone__Project_Status,element.Milestone__Project_Notes)" class="showlessText">{{element.Milestone__Project_Notes}}</label> </td>
                             </ng-container>
                             <ng-container matColumnDef="Milestone__Reason_Code">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  rgb(112, 173, 71);color: white;"> M: Reason Code </th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #34495E;color: white;"> M: Reason Code </th>
                                 <td mat-cell *matCellDef="let element"><label (click)="ShowComment(element.Workspace_Title,element.Milestone__Project_Status,element.Milestone__Reason_Code)" class="showlessText">{{element.Milestone__Reason_Code}}</label> </td>
                             </ng-container>
                             <ng-container matColumnDef="Milestone__Closed_Loop_Owner">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="padding-right: 10px;background-color:  rgb(112, 173, 71);color: white;"> M Closed Loop Owner </th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="padding-right: 10px;background-color:  #34495E;color: white;"> M Closed Loop Owner </th>
                                 <td mat-cell *matCellDef="let element" style="padding-right: 10px;"> {{element.Milestone__Closed_Loop_Owner}} </td>
                             </ng-container>
                             <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky : true;"></tr>

@@ -210,7 +210,7 @@ export class LivedashboardComponent implements OnInit, OnDestroy {
       // }
       if(this.LoginUserName == null || this.LoginUserName == ""){
         localStorage.clear();
-        this.router.navigate(["/Login"]);
+        this.router.navigate(["/Dashboard"]);
       }
       this.sub = this.route.paramMap.subscribe(data =>{
         this.LoggedINID = data.get("UID");
@@ -540,6 +540,20 @@ export class LivedashboardComponent implements OnInit, OnDestroy {
         this.LastUpdatedText = "";
       }
       break;
+      case 20 : {
+        this.ReportSelected = "Go Live Report";
+        this.LastUpdatedText = "";
+        this.service.UsersUsageofReports(this.LoginUID,"GoLiveReport","PanelClick").subscribe(data =>{
+        })
+      }
+      break;
+      // case 22 : {
+      //   this.ReportSelected = "eSow Report";
+      //   this.LastUpdatedText = "";
+      //   // this.service.UsersUsageofReports(this.LoginUID,"GoLiveReport","PanelClick").subscribe(data =>{
+      //   // })
+      // }
+      // break;
       default : {
         this.ReportSelected = "Home Page";
         this.LastUpdatedText = "";

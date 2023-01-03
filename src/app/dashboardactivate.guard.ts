@@ -12,7 +12,7 @@ export class DashboardactivateGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree 
     {
       if(localStorage.getItem("UID") == null && localStorage.getItem("Password") == null){
-        this.router.navigate(["/Login"]);
+        this.router.navigate(["/Dashboard"]);
         return false;
       }else{
         return true;

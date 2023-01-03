@@ -121,11 +121,11 @@
                 </th>
             </ng-container>
             <ng-container matColumnDef="Comments">
-                <th mat-header-cell *matHeaderCellDef class="maintextSizes" mat-sort-header style="max-width: 90px;width: 90px;"> Comments </th>
-                <td mat-cell *matCellDef="let element" class="texttd" style="max-width: 90px;width: 90px;"><div (click)="OpenComment(element.HierarchyID,element.Comments)" class="showlessText"> {{element.Comments}}</div></td>
+                <th mat-header-cell *matHeaderCellDef class="maintextSizes" mat-sort-header style="max-width: 130px;width: 130px;"> Comments </th>
+                <td mat-cell *matCellDef="let element" class="texttd" style="max-width: 130px;width: 130px;padding: 0px 10px 0px 10px;"><div (click)="OpenComment(element.HierarchyID,element.Comments)" class="showlessText"> {{element.Comments}}</div></td>
             </ng-container>
             <ng-container matColumnDef="Comments_h">
-                <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="max-width: 90px;width: 90px;" [ngStyle]="{'background-color' : CommentsFilter.value == '' || CommentsFilter.value == null ? '#FFFFFF' : '#F5B7B1'}" >
+                <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="max-width: 130px;width: 130px;" [ngStyle]="{'background-color' : CommentsFilter.value == '' || CommentsFilter.value == null ? '#FFFFFF' : '#F5B7B1'}" >
                     <mat-form-field class="mat-form-wrap" style="text-align: center;" appearance="outline">
                         <mat-label style="text-align: center;">Comments</mat-label>
                         <input style="font-weight: bold" matInput [formControl]="CommentsFilter">
@@ -179,165 +179,165 @@
                 <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color': element.C1stweek == 0 ? '#C9C9C9' : (element.C1stweek > 0 && element.C1stweek <= element.TUWorkingDays) ? '#A9D08E' : element.C1stweek > element.TUWorkingDays ? '#FF7C80' : '#C9C9C9'}"  style="color: black;text-align: center" class="texttd"> {{element.C1stweek}} </td>
             </ng-container>
             <ng-container matColumnDef="C1stweek_h" stickyEnd>
-                <th mat-header-cell *matHeaderCellDef colspan="24" class="formheader" style="background-color: #C9C9C9;text-align: center;color: black;">Ash - No Projects <br> Green - Under utilized and can manage more projects<br>
+                <th mat-header-cell *matHeaderCellDef colspan="24" class="formheader" style="background-color: rgb(213, 216, 220);text-align: center;color: black;">Ash - No Projects <br> Green - Under utilized and can manage more projects<br>
                     Red - Over utilized and needs to direct projects to other resources </th>
             </ng-container>
             <ng-container matColumnDef="C2ndweek" stickyEnd>
-                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color: #333F48;"><div class="texttransform"> {{C2ndweek}}</div></th>
+                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color: #34495E;"><div class="texttransform"> {{C2ndweek}}</div></th>
                 <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color': element.C2ndweek == 0 ? '#C9C9C9' : (element.C2ndweek > 0 && element.C2ndweek <= element.TUWorkingDays) ? '#A9D08E' : element.C2ndweek > element.TUWorkingDays ? '#FF7C80' : '#C9C9C9'}"  style="color: black;text-align: center" class="texttd"> {{element.C2ndweek}} </td>
             </ng-container>
             <ng-container matColumnDef="C2ndweek_h" stickyEnd>
                 <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="background-color: #C9C9C9;"></th>
             </ng-container>
             <ng-container matColumnDef="C3rdweek" stickyEnd>
-                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color: #333F48;"><div class="texttransform"> {{C3rdweek}}</div></th>
+                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color: #34495E;"><div class="texttransform"> {{C3rdweek}}</div></th>
                 <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color': element.C3rdweek == 0 ? '#C9C9C9' : (element.C3rdweek > 0 && element.C3rdweek <= element.TUWorkingDays) ? '#A9D08E' : element.C3rdweek > element.TUWorkingDays ? '#FF7C80' : '#C9C9C9'}"  style="color: black;text-align: center" class="texttd"> {{element.C3rdweek}} </td>
             </ng-container>
             <ng-container matColumnDef="C3rdweek_h" stickyEnd>
                 <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="background-color: #C9C9C9;"></th>
             </ng-container>
             <ng-container matColumnDef="C4thweek" stickyEnd>
-                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color: #333F48;"><div class="texttransform"> {{C4thweek}} </div></th>
+                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color: #34495E;"><div class="texttransform"> {{C4thweek}} </div></th>
                 <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color': element.C4thweek == 0 ? '#C9C9C9' : (element.C4thweek > 0 && element.C4thweek <= element.TUWorkingDays) ? '#A9D08E' : element.C4thweek > element.TUWorkingDays ? '#FF7C80' : '#C9C9C9'}"  style="color: black;text-align: center" class="texttd"> {{element.C4thweek}} </td>
             </ng-container>
             <ng-container matColumnDef="C4thweek_h" stickyEnd>
                 <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="background-color: #C9C9C9;"></th>
             </ng-container>
             <ng-container matColumnDef="C5thweek" stickyEnd>
-                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color: #333F48;"><div class="texttransform"> {{C5thweek}}</div></th>
+                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color: #34495E;"><div class="texttransform"> {{C5thweek}}</div></th>
                 <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color': element.C5thweek == 0 ? '#C9C9C9' : (element.C5thweek > 0 && element.C5thweek <= element.TUWorkingDays) ? '#A9D08E' : element.C5thweek > element.TUWorkingDays ? '#FF7C80' : '#C9C9C9'}"  style="color: black;text-align: center" class="texttd"> {{element.C5thweek}} </td>
             </ng-container>
             <ng-container matColumnDef="C5thweek_h" stickyEnd>
                 <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="background-color: #C9C9C9;"></th>
             </ng-container>
             <ng-container matColumnDef="C6thweek" stickyEnd>
-                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color: #333F48;"><div class="texttransform">{{C6thweek}}</div></th>
+                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color: #34495E;"><div class="texttransform">{{C6thweek}}</div></th>
                 <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color': element.C6thweek == 0 ? '#C9C9C9' : (element.C6thweek > 0 && element.C6thweek <= element.TUWorkingDays) ? '#A9D08E' : element.C6thweek > element.TUWorkingDays ? '#FF7C80' : '#C9C9C9'}"  style="color: black;text-align: center" class="texttd"> {{element.C6thweek}} </td>
             </ng-container>
             <ng-container matColumnDef="C6thweek_h" stickyEnd>
                 <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="background-color: #C9C9C9;"></th>
             </ng-container>
             <ng-container matColumnDef="C7thweek" stickyEnd>
-                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color: #333F48;"><div class="texttransform"> {{C7thweek}}</div></th>
+                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color: #34495E;"><div class="texttransform"> {{C7thweek}}</div></th>
                 <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color': element.C7thweek == 0 ? '#C9C9C9' : (element.C7thweek > 0 && element.C7thweek <= element.TUWorkingDays) ? '#A9D08E' : element.C7thweek > element.TUWorkingDays ? '#FF7C80' : '#C9C9C9'}"  style="color: black;text-align: center" class="texttd"> {{element.C7thweek}} </td>
             </ng-container>
             <ng-container matColumnDef="C7thweek_h" stickyEnd>
                 <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="background-color: #C9C9C9;"></th>
             </ng-container>
             <ng-container matColumnDef="C8thweek" stickyEnd>
-                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color: #333F48;"><div class="texttransform"> {{C8thweek}}</div></th>
+                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color: #34495E;"><div class="texttransform"> {{C8thweek}}</div></th>
                 <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color': element.C8thweek == 0 ? '#C9C9C9' : (element.C8thweek > 0 && element.C8thweek <= element.TUWorkingDays) ? '#A9D08E' : element.C8thweek > element.TUWorkingDays ? '#FF7C80' : '#C9C9C9'}"  style="color: black;text-align: center" class="texttd"> {{element.C8thweek}} </td>
             </ng-container>
             <ng-container matColumnDef="C8thweek_h" stickyEnd>
                 <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="background-color: #C9C9C9;"></th>
             </ng-container>
             <ng-container matColumnDef="C9thweek" stickyEnd>
-                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color: #333F48;"><div class="texttransform"> {{C9thweek}} </div></th>
+                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color: #34495E;"><div class="texttransform"> {{C9thweek}} </div></th>
                 <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color': element.C9thweek == 0 ? '#C9C9C9' : (element.C9thweek > 0 && element.C9thweek <= element.TUWorkingDays) ? '#A9D08E' : element.C9thweek > element.TUWorkingDays ? '#FF7C80' : '#C9C9C9'}"  style="color: black;text-align: center" class="texttd"> {{element.C9thweek}} </td>
             </ng-container>
             <ng-container matColumnDef="C9thweek_h" stickyEnd>
                 <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="background-color: #C9C9C9;"></th>
             </ng-container>
             <ng-container matColumnDef="C10thweek" stickyEnd>
-                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color: #333F48;"><div class="texttransform"> {{C10thweek}}</div></th>
+                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color: #34495E;"><div class="texttransform"> {{C10thweek}}</div></th>
                 <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color': element.C10thweek == 0 ? '#C9C9C9' : (element.C10thweek > 0 && element.C10thweek <= element.TUWorkingDays) ? '#A9D08E' : element.C10thweek > element.TUWorkingDays ? '#FF7C80' : '#C9C9C9'}"  style="color: black;text-align: center" class="texttd"> {{element.C10thweek}} </td>
             </ng-container>
             <ng-container matColumnDef="C10thweek_h" stickyEnd>
                 <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="background-color: #C9C9C9;"></th>
             </ng-container>
             <ng-container matColumnDef="C11thweek" stickyEnd>
-                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color: #333F48;"><div class="texttransform">{{C11thweek}} </div></th>
+                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color: #34495E;"><div class="texttransform">{{C11thweek}} </div></th>
                 <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color': element.C11thweek == 0 ? '#C9C9C9' : (element.C11thweek > 0 && element.C11thweek <= element.TUWorkingDays) ? '#A9D08E' : element.C11thweek > element.TUWorkingDays ? '#FF7C80' : '#C9C9C9'}"  style="color: black;text-align: center" class="texttd"> {{element.C11thweek}} </td>
             </ng-container>
             <ng-container matColumnDef="C11thweek_h" stickyEnd>
                 <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="background-color: #C9C9C9;"></th>
             </ng-container>
             <ng-container matColumnDef="C12thweek" stickyEnd>
-                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color: #333F48;"><div class="texttransform"> {{C12thweek}}</div></th>
+                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color: #34495E;"><div class="texttransform"> {{C12thweek}}</div></th>
                 <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color': element.C12thweek == 0 ? '#C9C9C9' : (element.C12thweek > 0 && element.C12thweek <= element.TUWorkingDays) ? '#A9D08E' : element.C12thweek > element.TUWorkingDays ? '#FF7C80' : '#C9C9C9'}"  style="color: black;text-align: center;" class="texttd"> {{element.C12thweek}} </td>
             </ng-container>
             <ng-container matColumnDef="C12thweek_h" stickyEnd>
                 <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="background-color: #C9C9C9;"></th>
             </ng-container>
             <ng-container matColumnDef="c13thweek" stickyEnd>
-                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color: #333F48;"><div class="texttransform">{{c13thweek}} </div></th>
+                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color: #34495E;"><div class="texttransform">{{c13thweek}} </div></th>
                 <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color': element.c13thweek == 0 ? '#C9C9C9' : (element.c13thweek > 0 && element.c13thweek <= element.TUWorkingDays) ? '#A9D08E' : element.c13thweek > element.TUWorkingDays ? '#FF7C80' : '#C9C9C9'}"  style="color: black;text-align: center" class="texttd"> {{element.c13thweek}} </td>
             </ng-container>
             <ng-container matColumnDef="c13thweek_h" stickyEnd>
                 <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="background-color: #C9C9C9;"></th>
             </ng-container>
             <ng-container matColumnDef="c14thweek" stickyEnd>
-                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color: #333F48;"><div class="texttransform">{{c14thweek}} </div></th>
+                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color: #34495E;"><div class="texttransform">{{c14thweek}} </div></th>
                 <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color': element.c14thweek == 0 ? '#C9C9C9' : (element.c14thweek > 0 && element.c14thweek <= element.TUWorkingDays) ? '#A9D08E' : element.c14thweek > element.TUWorkingDays ? '#FF7C80' : '#C9C9C9'}"  style="color: black;text-align: center" class="texttd"> {{element.c14thweek}} </td>
             </ng-container>
             <ng-container matColumnDef="c14thweek_h" stickyEnd>
                 <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="background-color: #C9C9C9;"></th>
             </ng-container>
             <ng-container matColumnDef="c15thweek" stickyEnd>
-                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color: #333F48;"><div class="texttransform">{{c15thweek}} </div></th>
+                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color: #34495E;"><div class="texttransform">{{c15thweek}} </div></th>
                 <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color': element.c15thweek == 0 ? '#C9C9C9' : (element.c15thweek > 0 && element.c15thweek <= element.TUWorkingDays) ? '#A9D08E' : element.c15thweek > element.TUWorkingDays ? '#FF7C80' : '#C9C9C9'}"  style="color: black;text-align: center" class="texttd"> {{element.c15thweek}} </td>
             </ng-container>
             <ng-container matColumnDef="c15thweek_h" stickyEnd>
                 <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="background-color: #C9C9C9;"></th>
             </ng-container>
             <ng-container matColumnDef="c16thweek" stickyEnd>
-                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color: #333F48;"><div class="texttransform">{{c16thweek}} </div></th>
+                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color: #34495E;"><div class="texttransform">{{c16thweek}} </div></th>
                 <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color': element.c16thweek == 0 ? '#C9C9C9' : (element.c16thweek > 0 && element.c16thweek <= element.TUWorkingDays) ? '#A9D08E' : element.c16thweek > element.TUWorkingDays ? '#FF7C80' : '#C9C9C9'}"  style="color: black;text-align: center" class="texttd"> {{element.c16thweek}} </td>
             </ng-container>
             <ng-container matColumnDef="c16thweek_h" stickyEnd>
                 <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="background-color: #C9C9C9;"></th>
             </ng-container>
             <ng-container matColumnDef="c17thweek" stickyEnd>
-                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color: #333F48;"><div class="texttransform">{{c17thweek}} </div></th>
+                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color: #34495E;"><div class="texttransform">{{c17thweek}} </div></th>
                 <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color': element.c17thweek == 0 ? '#C9C9C9' : (element.c17thweek > 0 && element.c17thweek <= element.TUWorkingDays) ? '#A9D08E' : element.c17thweek > element.TUWorkingDays ? '#FF7C80' : '#C9C9C9'}"  style="color: black;text-align: center" class="texttd"> {{element.c17thweek}} </td>
             </ng-container>
             <ng-container matColumnDef="c17thweek_h" stickyEnd>
                 <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="background-color: #C9C9C9;"></th>
             </ng-container>
             <ng-container matColumnDef="c18thweek" stickyEnd>
-                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color: #333F48;"><div class="texttransform">{{c18thweek}} </div></th>
+                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color: #34495E;"><div class="texttransform">{{c18thweek}} </div></th>
                 <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color': element.c18thweek == 0 ? '#C9C9C9' : (element.c18thweek > 0 && element.c18thweek <= element.TUWorkingDays) ? '#A9D08E' : element.c18thweek > element.TUWorkingDays ? '#FF7C80' : '#C9C9C9'}"  style="color: black;text-align: center" class="texttd"> {{element.c18thweek}} </td>
             </ng-container>
             <ng-container matColumnDef="c18thweek_h" stickyEnd>
                 <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="background-color: #C9C9C9;"></th>
             </ng-container>
             <ng-container matColumnDef="c19thweek" stickyEnd>
-                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color: #333F48;"><div class="texttransform">{{c19thweek}} </div></th>
+                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color: #34495E;"><div class="texttransform">{{c19thweek}} </div></th>
                 <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color': element.c19thweek == 0 ? '#C9C9C9' : (element.c19thweek > 0 && element.c19thweek <= element.TUWorkingDays) ? '#A9D08E' : element.c19thweek > element.TUWorkingDays ? '#FF7C80' : '#C9C9C9'}"  style="color: black;text-align: center" class="texttd"> {{element.c19thweek}} </td>
             </ng-container>
             <ng-container matColumnDef="c19thweek_h" stickyEnd>
                 <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="background-color: #C9C9C9;"></th>
             </ng-container>
             <ng-container matColumnDef="c20thweek" stickyEnd>
-                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color: #333F48;"><div class="texttransform">{{c20thweek}} </div></th>
+                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color: #34495E;"><div class="texttransform">{{c20thweek}} </div></th>
                 <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color': element.c20thweek == 0 ? '#C9C9C9' : (element.c20thweek > 0 && element.c20thweek <= element.TUWorkingDays) ? '#A9D08E' : element.c20thweek > element.TUWorkingDays ? '#FF7C80' : '#C9C9C9'}"  style="color: black;text-align: center" class="texttd"> {{element.c20thweek}} </td>
             </ng-container>
             <ng-container matColumnDef="c20thweek_h" stickyEnd>
                 <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="background-color: #C9C9C9;"></th>
             </ng-container>
             <ng-container matColumnDef="c21thweek" stickyEnd>
-                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color: #333F48;"><div class="texttransform">{{c21thweek}} </div></th>
+                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color: #34495E;"><div class="texttransform">{{c21thweek}} </div></th>
                 <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color': element.c21thweek == 0 ? '#C9C9C9' : (element.c21thweek > 0 && element.c21thweek <= element.TUWorkingDays) ? '#A9D08E' : element.c21thweek > element.TUWorkingDays ? '#FF7C80' : '#C9C9C9'}"  style="color: black;text-align: center" class="texttd"> {{element.c21thweek}} </td>
             </ng-container>
             <ng-container matColumnDef="c21thweek_h" stickyEnd>
                 <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="background-color: #C9C9C9;"></th>
             </ng-container>
             <ng-container matColumnDef="c22thweek" stickyEnd>
-                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color: #333F48;"><div class="texttransform">{{c22thweek}} </div></th>
+                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color: #34495E;"><div class="texttransform">{{c22thweek}} </div></th>
                 <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color': element.c22thweek == 0 ? '#C9C9C9' : (element.c22thweek > 0 && element.c22thweek <= element.TUWorkingDays) ? '#A9D08E' : element.c22thweek > element.TUWorkingDays ? '#FF7C80' : '#C9C9C9'}"  style="color: black;text-align: center" class="texttd"> {{element.c22thweek}} </td>
             </ng-container>
             <ng-container matColumnDef="c22thweek_h" stickyEnd>
                 <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="background-color: #C9C9C9;"></th>
             </ng-container>
             <ng-container matColumnDef="c23thweek" stickyEnd>
-                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color: #333F48;"><div class="texttransform">{{c23thweek}} </div></th>
+                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color: #34495E;"><div class="texttransform">{{c23thweek}} </div></th>
                 <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color': element.c23thweek == 0 ? '#C9C9C9' : (element.c23thweek > 0 && element.c23thweek <= element.TUWorkingDays) ? '#A9D08E' : element.c23thweek > element.TUWorkingDays ? '#FF7C80' : '#C9C9C9'}"  style="color: black;text-align: center" class="texttd"> {{element.c23thweek}} </td>
             </ng-container>
             <ng-container matColumnDef="c23thweek_h" stickyEnd>
                 <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="background-color: #C9C9C9;"></th>
             </ng-container>
             <ng-container matColumnDef="c24thweek" stickyEnd>
-                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color: #333F48;padding-right: 0px;"><div class="texttransform"> {{c24thweek}}</div></th>
+                <th mat-header-cell *matHeaderCellDef class="textSizes" style="background-color: #34495E;padding-right: 0px;"><div class="texttransform"> {{c24thweek}}</div></th>
                 <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color': element.c24thweek == 0 ? '#C9C9C9' : (element.c24thweek > 0 && element.c24thweek <= element.TUWorkingDays) ? '#A9D08E' : element.c24thweek > element.TUWorkingDays ? '#FF7C80' : '#C9C9C9'}"  style="color: black;text-align: center;padding-right: 0px;" class="texttd"> {{element.c24thweek}} </td>
             </ng-container>
             <ng-container matColumnDef="c24thweek_h" stickyEnd>

@@ -148,9 +148,14 @@ export interface FilterServiceConfiguration {
     Service_Configuration : string;
     isSelected: boolean;
 }
+export interface CycleTimeCategories {
+    CycleTimeCategories : string;
+    isSelected: boolean;
+}
 export interface AutomatedCLRFilters {
     message: string;
     code: number;
+    CycleTimeCategories : CycleTimeCategories[];
     FilterImplementationType: FilterImplementationType[];
     FilterRegion: FilterRegion[];
     FilterQuarter : FilterQuarter[];

@@ -1,5 +1,5 @@
 <mat-drawer-container>
-    <mat-drawer mode="side" #sidenav opened style="position: fixed;padding-top: 60px;width: 19%;">
+    <mat-drawer mode="side" #sidenav opened style="position: fixed;padding-top: 60px;width: 15%;border: 1px solid #333F48;">
         <div class="row" style="margin: 0px;padding: 0px;">
             <div class="col-12" style="margin: 0px;padding: 0px;">
                 <div class="sticky">
@@ -79,7 +79,7 @@
         </div>
     </mat-drawer>
     <mat-drawer-content>
-        <div class="row" style="margin: 0px;padding: 0px;">
+        <div class="row" style="margin: 0px;padding: 0px;position: relative;">
             <div class="row col-md-12">
                 <div class="col-md-6">
                     <mat-card class="example-card mat-elevation-z2" style="margin-left: 15px;height: auto;overflow: auto;padding: 0px;">
@@ -116,7 +116,7 @@
                     <label style="margin: 8px 25px 0px 0px;font-size: 16px;font-weight: bold;font-family: Arial, Helvetica, sans-serif;">{{FilteredCount}}</label>   
                 </div>
                 <div class="col-md-12">
-                    <div class="example-container" [ngStyle]="{'height' : (screenHeight-115)+'px'}" style="margin-left: 15px;border: 1px solid rgb(196, 196, 196);">
+                    <div class="example-container" [ngStyle]="{'height' : (screenHeight-115)+'px'}">
                         <table mat-table [dataSource]="dataSource" matSort>
                             <ng-container matColumnDef="Workspace_Title">
                                 <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="padding-left: 10px;background-color: #34495E ;color: white;">W : Title</th>
@@ -154,11 +154,15 @@
                                 <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color: #34495E ;color: white;"> Critical Overdue </th>
                                 <td mat-cell *matCellDef="let element" [ngStyle]="{'color' : element.Task_Overdue > 5 ? 'rgb(255, 0, 0)' : '#000000'}"> {{element.Critical_Overdue}} </td>
                             </ng-container>
+                            <ng-container matColumnDef="OwnershipRevenue">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color: #34495E ;color: white;"> Ownership Revenue </th>
+                                <td mat-cell *matCellDef="let element" [ngStyle]="{'color' : element.Task_Overdue > 5 ? 'rgb(255, 0, 0)' : '#000000'}"> {{element.OwnershipRevenue}} </td>
+                            </ng-container>
                             <ng-container matColumnDef="Task_Overdue">
                                 <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="padding-right: 10px;background-color:#34495E ;color: white;"> T : Overdue </th> 
                                 <td mat-cell *matCellDef="let element" style="padding-right: 10px;" [ngStyle]="{'color' : element.Task_Overdue > 5 ? 'rgb(255, 0, 0)' : '#000000'}"> {{element.Task_Overdue}} </td>
                             </ng-container>
-                            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky : true;" style="background-color:   #34495E ;padding-top: 0px;margin-top: 0px;height: 45px"></tr>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky : true;" style="padding-top: 0px;margin-top: 0px;height: 45px"></tr>
                             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                         </table>
                     </div>

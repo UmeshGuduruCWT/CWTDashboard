@@ -68,4 +68,10 @@ export interface YearMonth{
     Client : string;
     Revenue : number;
     Revenue_volume : string;
+    ProjectStatus : string;
+    CLRGoLiveMonth : string;
+    CLRProjectStatus : string;
+    Country : string;
+    RevenueID : number;
+    ChangesMadeforAccount : string;
 }

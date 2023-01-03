@@ -9,7 +9,7 @@ export class AppComponent {
   title = 'app';
   constructor(private router: Router) { }
   ngOnInit() {
-    this.router.navigate(["/Login"]);
+    // this.router.navigate(["/Login"]);
     // this.router.navigate(["/Dashboard"]);
   }
 }

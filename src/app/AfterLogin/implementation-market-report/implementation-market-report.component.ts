@@ -15,7 +15,6 @@ import { DatePipe } from '@angular/common';
 import { ClrData } from '../../Models/ClrResponse';
 import { MatPaginator } from '@angular/material/paginator';
 import { LivedashboardComponent } from '../livedashboard/livedashboard.component';
-import { CursorError } from '@angular/compiler/src/ml_parser/lexer';
 //import { ChartModule } from 'angular2-chartjs';
 //import 'chartjs-plugin-labels';
 export interface ImeetMilestoneProjectStatus {
@@ -74,10 +73,12 @@ export class ImplementationMarketReportComponent implements OnInit {
   // RegionWiseRevenue : Data[];
   yearList : Year[];
   yearListSelected : Year[];
-  SelectedYears : any;SelectedMonths : any;SelectedOwnership : any;SelectedLevels : any;SelectedRegions : any;SelectedStatus : any;SelectedLeader : any;SelectedCountry;SelectedMilestonestatus : any;Selectedprojectstatus : any;
-  c_SelectedYears : any;c_SelectedMonths : any;c_SelectedLevels : any;c_SelectedMilestonestatus : any;c_SelectedRegions : any;
-  rp_SelectedYears : any;
-  SelectedImplementation : any;
+  SelectedYears : any;SelectedMonths : any;SelectedOwnership : any;SelectedLevels : any;
+  SelectedRegions : any;SelectedStatus : any;SelectedLeader : any;SelectedCountry : any;
+  SelectedMilestonestatus : any;Selectedprojectstatus : any;
+  c_SelectedYears : any;c_SelectedMonths : any;c_SelectedLevels : any;
+  c_SelectedMilestonestatus : any;c_SelectedRegions : any;
+  rp_SelectedYears : any;SelectedImplementation : any;
   c_SelectedImplementation : any;
   monthList : Month[];
   monthListSelected : Month[];
@@ -90,14 +91,14 @@ export class ImplementationMarketReportComponent implements OnInit {
   statusList : Status[];//[] = ['Backlog', 'Started'];
   statusListSelected : Status[];
   marketleaderList : MarketLeader[];//[] = ['Barbara', 'Bindu Batia', 'Cathy voss','Chris Bowen'];
-  CountryList : Country[];
-  // marketleaderListSelected : MarketLeader[];
+  CountryList : Country[];// marketleaderListSelected : MarketLeader[];
   implementationtypeList: ImplementationType[];
   implementationtypeListSelected : ImplementationType[];
   MilestonestatusList : MilestoneStatus[];
   MilestonestatusListSelected : MilestoneStatus[];
-  masteryear : boolean;masterownerShip : boolean;mastermonth : boolean;
-  masterlevel : boolean;masterregion : boolean;masterstatus : boolean;
+  masteryear : boolean;masterownerShip : boolean;
+  mastermonth : boolean;masterstatus : boolean;
+  masterlevel : boolean;masterregion : boolean;
   masterleader : boolean;masterCountry : boolean;
   masterMilestonestatus : boolean;masterimplementation : boolean;
   // c_masteryear : boolean;c_mastermonth : boolean;c_masterlevel : boolean;c_masterMilestonestatus : boolean;c_masterregion : boolean;c_masterimplementation : boolean;
@@ -120,6 +121,7 @@ export class ImplementationMarketReportComponent implements OnInit {
   MonthlydisplayedColumns: any[] = ['Leftheaders', 'Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec','Total'];
   displayedColumnsrw : any[] = ['Region__Opportunity_','ProjectsCount','RevenueVolume_string'];
   displayedColumnsplw : any[] = ['iMeet_Project_Level','ProjectsCount','RevenueVolume_string'];
+  // isExpansionDetailRow = (index, row) => row.hasOwnProperty('detailRow');
   rw_dataSource;
   plw_dataSource;
   filterEntity : Data;
@@ -313,28 +315,25 @@ export class ImplementationMarketReportComponent implements OnInit {
     }
     var years = [];
     var backgroundColor = [
-      'rgb(0, 100, 200)','rgb(241, 130, 38)','rgb(14, 61, 89)', 'rgb(255, 219, 105)', 'rgb(217,37,38)', 'rgb(75, 192, 192)', 'rgb(255, 99, 132)'
-    ]
-    var bordercolor = [
-      'rgb(0, 100, 200)','rgb(241, 130, 38)','rgb(14, 61, 89)', 'rgb(255, 219, 105)', 'rgb(217,37,38)', 'rgb(75, 192, 192)', 'rgb(255, 99, 132)'
+      'rgb(40, 180, 99)','rgb(40, 180, 99,0.7)','rgb(40, 180, 99,0.4)', 'rgb(40, 180, 99,0.1)'
     ]
     var bgColor = [
-      'rgba(39, 174, 96 ,0.5)','rgba(93, 173, 226,0.5)','rgba(14, 61, 89,0.5)', 'rgb(255, 219, 105)', 'rgb(217,37,38)', 'rgb(75, 192, 192)', 'rgb(255, 99, 132)'
+      'rgba(40, 180, 99,1)','rgba(93, 173, 226,1)','rgba(14, 61, 89,1)', 'rgb(255, 219, 105,1)'
     ]
     var bocolor = [
       'rgba(229, 231, 233 ,1)','rgba(229, 231, 233 ,1)','rgba(229, 231, 233,1)', 'rgba(229, 231, 233,1)', 'rgba(229, 231, 233,1)', 'rgba(229, 231, 233,1)', 'rgba(229, 231, 233,1)'
     ]
     var hoverbgcolor = [
-      'rgba(39, 174, 96 ,1)','rgb(93, 173, 226,1)','rgba(14, 61, 89,1)'
+      'rgba(40, 180, 99,0.7)','rgb(93, 173, 226,0.7)','rgba(14, 61, 89,0.7)'
     ]
     var anotherbackgroundColor = [
-      'rgb(241, 130, 38)','rgb(59, 138, 217)','rgb(14, 61, 89)', 'rgb(255, 219, 105)', 'rgb(217,37,38)', 'rgb(75, 192, 192)', 'rgb(255, 99, 132)'
+      'rgba(46, 134, 193 )','rgba(46, 134, 193 ,0.7)','rgba(46, 134, 193 ,0.4)', 'rgba(46, 134, 193 ,0.1)'
     ]
     var anotherbordercolor = [
       'rgb(241, 130, 38)','rgb(59, 138, 217)','rgb(14, 61, 89)', 'rgb(255, 219, 105)', 'rgb(217,37,38)', 'rgb(75, 192, 192)', 'rgb(255, 99, 132)'
     ]
     var anotherbgColor = [
-      'rgb(52, 73, 94)','rgb(241, 130, 38)','rgb(255, 219, 105)','rgb(14, 61, 89)',  'rgb(217,37,38)', 'rgb(75, 192, 192)', 'rgb(255, 99, 132)'
+      'rgb(212, 172, 13)','rgb(212, 172, 13,0.7)','rgb(212, 172, 13,0.4)','rgb(212, 172, 13,0.1)'
     ]
     var str = this.SelectedYears+"";
     var mydatasets = [];
@@ -622,7 +621,7 @@ export class ImplementationMarketReportComponent implements OnInit {
             }
           },
           fontColor: (c) => {
-            return c.dataset.type == "line" ? c.dataset.order == 1 ? '#34495E' : '#F18226' : '#1F8A4C'
+            return c.dataset.type == "line" ? c.dataset.order == 1 ? 'rgb(212, 172, 13)' : 'rgb(46, 134, 193 )' : 'rgb(40, 180, 99)'
           },
           textMargin: 6,
           overlap: false,
@@ -661,8 +660,8 @@ export class ImplementationMarketReportComponent implements OnInit {
           position: 'left',
           // stacked: true,
           ticks: {
-            fontSize : 11,
-            fontStyle : 'bold',
+            fontSize : 12,
+            fontStyle : 'normal',
             fontColor : '#000000',
             fontFamily : 'Arial',
             callback: function(label, index, labels) {
@@ -698,8 +697,8 @@ export class ImplementationMarketReportComponent implements OnInit {
           scaleLabel: {
             display: true,
             labelString: 'Revenue Total Volume USD',
-            fontSize : 13,
-            fontStyle : 'bold',
+            fontSize : 14,
+            fontStyle : 'normal',
             fontColor : '#000000',
             fontFamily : 'Arial',
           }
@@ -708,8 +707,8 @@ export class ImplementationMarketReportComponent implements OnInit {
           type: 'linear',
           position: 'right',
           ticks: {
-            fontSize : 11,
-            fontStyle : 'bold',
+            fontSize : 12,
+            fontStyle : 'normal',
             fontColor : '#000000',
             fontFamily : 'Arial',
           },
@@ -719,16 +718,16 @@ export class ImplementationMarketReportComponent implements OnInit {
           scaleLabel: {
             display: true,
             labelString: 'Projects Count & Average Cycle Time (Days)',
-            fontSize : 13,
-            fontStyle : 'bold',
+            fontSize : 14,
+            fontStyle : 'normal',
             fontColor : '#000000',
             fontFamily : 'Arial',
           }
         }],
         xAxes: [{
           ticks: {
-            fontSize : 11,
-            fontStyle : 'bold',
+            fontSize : 12,
+            fontStyle : 'normal',
             fontColor : '#000000',
             fontFamily : 'Arial',
           },gridLines: {
@@ -856,29 +855,29 @@ export class ImplementationMarketReportComponent implements OnInit {
       hoverbgcolor = [];
       years.map(x => {
         if(x == CurrentYear){
-          bgColor.push('rgba(39, 174, 96, 0.5)');
-          hoverbgcolor.push('rgb(39, 174, 96)');
+          bgColor.push('rgba(40, 180, 99, 1)');
+          hoverbgcolor.push('rgba(40, 180, 99, 0.7)');
         }else if(x == CurrentYear-1){
-          bgColor.push('rgba(255, 219, 105,0.5)');
-          hoverbgcolor.push('rgb(255, 219, 105)');
+          bgColor.push('rgba(255, 219, 105, 1)');
+          hoverbgcolor.push('rgba(255, 219, 105, 0.7)');
         }else if(x == CurrentYear-2){
-          bgColor.push('rgba(217,37,38,0.5)');
-          hoverbgcolor.push('rgb(217,37,38)');
+          bgColor.push('rgba(217, 37, 38, 1)');
+          hoverbgcolor.push('rgba(217, 37, 38, 0.7)');
         }else if(x == CurrentYear+1){
-          bgColor.push('rgba(93, 173, 226 ,0.5)');
-          hoverbgcolor.push('93, 173, 226)');
+          bgColor.push('rgba(93, 173, 226, 1)');
+          hoverbgcolor.push('rgba(93, 173, 226, 0.7)');
         }else if(x == CurrentYear+2){
-          bgColor.push('rgba(14, 61, 89,0.5)');
-          hoverbgcolor.push('rgb(14, 61, 89)');
+          bgColor.push('rgba(14, 61, 89, 1)');
+          hoverbgcolor.push('rgba(14, 61, 89, 0.7)');
         }else if(x == CurrentYear+3){
-          bgColor.push('rgba(255, 99, 132,0.5)');
-          hoverbgcolor.push('rgb(255, 99, 132)');
+          bgColor.push('rgba(255, 99, 132, 1)');
+          hoverbgcolor.push('rgba(255, 99, 132, 0.7)');
         }else if(x == 2050){
-          bgColor.push('rgba(203, 202, 202 ,0.5)');
-          hoverbgcolor.push('rgb(203, 202, 202)');
+          bgColor.push('rgba(203, 202, 202, 1)');
+          hoverbgcolor.push('rgba(203, 202, 202, 0.7)');
         }else{
-          bgColor.push('rgba(203, 202, 202 ,0.5)');
-          hoverbgcolor.push('rgb(203, 202, 202)');
+          bgColor.push('rgba(203, 202, 202, 1)');
+          hoverbgcolor.push('rgb(203, 202, 202, 0.7)');
         }
       });
       for(let i=0;i<years.length;i++){
@@ -960,7 +959,7 @@ export class ImplementationMarketReportComponent implements OnInit {
                   label : years[i]+" Project Count",
                   data: [data.Data[0].January_PC,data.Data[0].February_PC,data.Data[0].March_PC,data.Data[0].April_PC,data.Data[0].May_PC,data.Data[0].June_PC,data.Data[0].July_PC,data.Data[0].August_PC,data.Data[0].September_PC,data.Data[0].October_PC,data.Data[0].November_PC,data.Data[0].December_PC],
                   backgroundColor : anotherbackgroundColor[k],
-                  borderColor : anotherbordercolor[k],
+                  borderColor : anotherbackgroundColor[k],
                   fill : false,lineTension: 0,
                   type : 'line',
                   yAxisID: 'B',
@@ -969,10 +968,10 @@ export class ImplementationMarketReportComponent implements OnInit {
                 VolumeDataset[k] = {
                   label : years[i]+" Revenue Total Volume USD",
                   data: [data.Data[0].January_RV,data.Data[0].February_RV,data.Data[0].March_RV,data.Data[0].April_RV,data.Data[0].May_RV,data.Data[0].June_RV,data.Data[0].July_RV,data.Data[0].August_RV,data.Data[0].September_RV,data.Data[0].October_RV,data.Data[0].November_RV,data.Data[0].December_RV],
-                  backgroundColor : bgColor[k],
+                  backgroundColor : backgroundColor[k],
                   borderColor : bocolor[k],
                   borderWidth : 2,
-                  hoverBackgroundColor : hoverbgcolor[k],
+                  hoverBackgroundColor : backgroundColor[k],
                   fill : false,
                   type : 'bar',
                   yAxisID: 'A',
@@ -1034,35 +1033,35 @@ export class ImplementationMarketReportComponent implements OnInit {
               }
             }
           });
-          this.service.ProjectCountByYear(years[i],this.SelectedMonths,this.SelectedLevels,this.SelectedRegions,this.SelectedMilestonestatus,this.SelectedImplementation,this.SelectedCountry,this.SelectedOwnership).subscribe(data => {
-            if(data.code == 200){
-              if(data.Data.length > 0){
-                PCmydatasets[l] = {
-                  label : years[i]+"",
-                  data : [data.Data[0].January,data.Data[0].February,data.Data[0].March,data.Data[0].April,data.Data[0].May,data.Data[0].June,data.Data[0].July,data.Data[0].August,data.Data[0].September,data.Data[0].October,data.Data[0].November,data.Data[0].December],
-                  backgroundColor : anotherbackgroundColor[l],
-                  borderColor : anotherbordercolor[l],
-                  fill : false,
-                }
-                if(i == 0){
-                  if(this.ypcchart != undefined){
-                    this.ypcchart.destroy();
-                  }
-                  this.ypcchart = new Chart('YPCcanvas', {
-                    type : 'line',
-                    data : {
-                      labels : ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
-                      datasets : PCmydatasets,
-                    },
-                    options: PCOptions,
-                  })
-                }else{
-                  this.ypcchart.update();
-                }
-                l++;
-              }
-            }
-          });
+          // this.service.ProjectCountByYear(years[i],this.SelectedMonths,this.SelectedLevels,this.SelectedRegions,this.SelectedMilestonestatus,this.SelectedImplementation,this.SelectedCountry,this.SelectedOwnership).subscribe(data => {
+          //   if(data.code == 200){
+          //     if(data.Data.length > 0){
+          //       PCmydatasets[l] = {
+          //         label : years[i]+"",
+          //         data : [data.Data[0].January,data.Data[0].February,data.Data[0].March,data.Data[0].April,data.Data[0].May,data.Data[0].June,data.Data[0].July,data.Data[0].August,data.Data[0].September,data.Data[0].October,data.Data[0].November,data.Data[0].December],
+          //         backgroundColor : anotherbackgroundColor[l],
+          //         borderColor : anotherbordercolor[l],
+          //         fill : false,
+          //       }
+          //       if(i == 0){
+          //         if(this.ypcchart != undefined){
+          //           this.ypcchart.destroy();
+          //         }
+          //         this.ypcchart = new Chart('YPCcanvas', {
+          //           type : 'line',
+          //           data : {
+          //             labels : ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+          //             datasets : PCmydatasets,
+          //           },
+          //           options: PCOptions,
+          //         })
+          //       }else{
+          //         this.ypcchart.update();
+          //       }
+          //       l++;
+          //     }
+          //   }
+          // });
           if(i == years.length-1){
             this.dashboard.ShowSpinnerHandler(false);
           }
@@ -1085,6 +1084,7 @@ export class ImplementationMarketReportComponent implements OnInit {
             
           }
         }
+        data.Data = data.Data.sort((a,b) => a.Region__Opportunity_.localeCompare(b.Region__Opportunity_));
         data.Data.forEach(item =>{
           this.RWRegions.push(item.Region__Opportunity_);
           this.RWRevenueVolume.push(item.RevenueVolume);
@@ -1227,20 +1227,21 @@ export class ImplementationMarketReportComponent implements OnInit {
                 label : "Project Count",
                 data : this.RWProjectCount,
                 hoverBackgroundColor: [
-                  'rgb(151, 187, 205,0.7)', 'rgb(253, 180, 92,0.7)', 'rgb(247, 70, 74,0.7)', 'rgb(70, 191, 189,0.7)', 'rgb(220, 220, 220,0.7)'
+                  'rgb(176, 185, 31,0.7)', 'rgb(0, 169, 201,0.7)', 'rgb(118, 173, 153,0.7)', 'rgb(252, 186, 47,0.7)', 'rgb(220, 220, 220,0.7)'
                 ],
                 backgroundColor: [
-                  'rgb(151, 187, 205)', 'rgb(253, 180, 92)', 'rgb(247, 70, 74)', 'rgb(70, 191, 189)', 'rgb(220, 220, 220)'
+                  'rgb(176, 185, 31)', 'rgb(0, 169, 201)', 'rgb(118, 173, 153)', 'rgb(252, 186, 47)', 'rgb(220, 220, 220)'
                 ]
+                // 'rgb(151, 187, 205)', 'rgb(253, 180, 92)', 'rgb(247, 70, 74)', 'rgb(70, 191, 189)', 'rgb(220, 220, 220)'
               },
               {
                 label : "Revenue Volume",
                 data : this.RWRevenueVolume,
                 hoverBackgroundColor: [
-                  'rgb(151, 187, 205,0.7)', 'rgb(253, 180, 92,0.7)', 'rgb(247, 70, 74,0.7)', 'rgb(70, 191, 189,0.7)', 'rgb(220, 220, 220,0.7)'
+                  'rgb(176, 185, 31,0.7)', 'rgb(0, 169, 201,0.7)', 'rgb(118, 173, 153,0.7)', 'rgb(252, 186, 47,0.7)', 'rgb(220, 220, 220,0.7)'
                 ],
                 backgroundColor: [
-                  'rgb(151, 187, 205)', 'rgb(253, 180, 92)', 'rgb(247, 70, 74)', 'rgb(70, 191, 189)', 'rgb(220, 220, 220)'
+                  'rgb(176, 185, 31)', 'rgb(0, 169, 201)', 'rgb(118, 173, 153)', 'rgb(252, 186, 47)', 'rgb(220, 220, 220)'
                 ]
               }
             ]
@@ -1249,6 +1250,7 @@ export class ImplementationMarketReportComponent implements OnInit {
         })
         this.dashboard.ShowSpinnerHandler(false);
       });
+      
       this.dashboard.ShowSpinnerHandler(true);
       this.plw_dataSource = null;
       this.service.ProjectLevelWise(this.SelectedYears,this.SelectedMonths,this.SelectedLevels,this.SelectedRegions,this.SelectedMilestonestatus,this.SelectedImplementation,this.SelectedCountry,this.SelectedOwnership).subscribe(data =>{
@@ -1312,10 +1314,10 @@ export class ImplementationMarketReportComponent implements OnInit {
                 label : "Project Count",
                 data : this.PLWProjectCount,
                 hoverBackgroundColor: [
-                  'rgb(255, 61, 103)', 'rgb(5, 155, 255)', 'rgb(255, 194, 51)'
+                  'rgb(255, 61, 103,0.7)', 'rgb(5, 155, 255,0.7)', 'rgb(255, 194, 51,0.7)'
                 ],
                 backgroundColor: [
-                  'rgb(255, 99, 132)', 'rgb(54, 162, 235)', 'rgb(255, 205, 86)'
+                  'rgb(255, 61, 103)', 'rgb(5, 155, 255)', 'rgb(255, 194, 51)'
                 ]
                 //           fill : false,
               },
@@ -1323,10 +1325,11 @@ export class ImplementationMarketReportComponent implements OnInit {
                 label : "Revenue Volume",
                 data : this.PLWRevenueVolume,
                 hoverBackgroundColor: [
-                  'rgb(255, 61, 103)', 'rgb(5, 155, 255)', 'rgb(255, 194, 51)'
+                  // 'rgb(255, 61, 103)', 'rgb(5, 155, 255)', 'rgb(255, 194, 51)'
+                  'rgb(255, 61, 103,0.7)', 'rgb(5, 155, 255,0.7)', 'rgb(255, 194, 51,0.7)'
                 ],
                 backgroundColor: [
-                  'rgb(255, 99, 132)', 'rgb(54, 162, 235)', 'rgb(255, 205, 86)'
+                  'rgb(255, 61, 103)', 'rgb(5, 155, 255)', 'rgb(255, 194, 51)'
                 ]
               }
             ]
@@ -1377,7 +1380,7 @@ export class ImplementationMarketReportComponent implements OnInit {
         // this.dataSource_VCtPc = data.VolumeCountCycleTime;
         this.ChartProjectCount = Math.round(data.VolumeCountCycleTime.map(t => t.ProjectsCount).reduce((acc,value) => acc + value,0));
         this.ChartRevenueTotalVolume = Math.round(data.VolumeCountCycleTime.map(t => t.Revenue_Total_Volume_USD).reduce((acc,value) => acc + value,0)).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
-        this.ChartAvgCycleTime = Math.round(data.VolumeCountCycleTime.map(t => t.Average).reduce((acc,value) => acc + value,0)/12);
+        this.ChartAvgCycleTime = Math.round(data.VolumeCountCycleTime.map(t => t.cycletimesum).reduce((acc,value) => acc + value,0)/Math.round(data.VolumeCountCycleTime.map(t => t.cycletimeCount).reduce((acc,value) => acc + value,0)));
         for(let i =0; i<data.VolumeCountCycleTime.length; i++){
           if(this.VolumeCountCycleTime[i].Average <= 0)
           {
@@ -1391,11 +1394,7 @@ export class ImplementationMarketReportComponent implements OnInit {
             this.VolumeCountCycleTime[i].Revenue_Total_Volume = "$0";
           }
         }
-        // this.filterEntity = new VolumeCountCycleTime();
-        // this.filterType = MatTableFilter.ANYWHERE;
         this.dataSource_VCtPc = new MatTableDataSource(this.VolumeCountCycleTime);
-          // this.dataSource_VCtPc.sort = this.sort;
-          // this.dataSource_VCtPc.paginator = this.paginator;
         this.dashboard.ShowSpinnerHandler(false);
       });
     }

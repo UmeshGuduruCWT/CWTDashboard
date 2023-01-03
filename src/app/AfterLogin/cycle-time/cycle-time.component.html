@@ -1,5 +1,5 @@
 <mat-drawer-container>
-    <mat-drawer mode="side" #sidenav opened style="position: fixed;padding-top: 60px;width: 19%;">
+    <mat-drawer mode="side" #sidenav opened style="position: fixed;padding-top: 60px;width: 15%;border: 1px solid #333F48;">
         <div class="row" style="margin: 0px;padding: 0px;">
             <div class="col-12" style="margin: 0px;padding: 0px;">
                 <div class="sticky">
@@ -60,13 +60,12 @@
         </div>
     </mat-drawer>
     <mat-drawer-content>
-        <div class="row" style="margin: 0px;padding: 0px;">
+        <div class="row" style="margin: 0px;padding: 0px;position: relative;">
             <div class="row col-md-12">
-                <div class="col-md-6">
+                <!-- <div class="col-md-6">
                     <mat-card class="example-card mat-elevation-z2" style="margin-left: 15px;height: auto;overflow: auto;padding: 0px;">
                         <div class="col-12" style="height: 35px;background-color: #34495E ;color:white;padding: 5px 0px 0px 0px; margin : 0px;text-align: center">
                             <label style="width: 100%;font-size: 16px;margin-top: 5px;text-align: center;font-family: Montserrat, sans-serif">Average Cycle Time <label style="color: rgb(245, 176, 65);">({{SelectedCategory}})</label></label>
-                            <!-- <label style="width: 100%;font-size: 10px;margin: 0px;height: 18px;text-align: center;">Distinct count of Workspace Title</label> -->
                         </div>
                         <div class="col-md-12" style="margin-bottom: 10px;">
                             <div style="width: 100%;text-align: center;padding-left: 40%;">
@@ -76,104 +75,104 @@
                             </canvas>
                         </div>
                     </mat-card>
-                </div>
-                <div class="col-md-6">
+                </div> -->
+                <div class="col-md-12">
                     <mat-card class="example-card mat-elevation-z2" style="margin-left: 15px;height: auto;overflow: auto;padding: 0px;">
                         <div class="col-12" style="height: 35px;background-color: #34495E ;color:white;padding: 5px 0px 0px 0px; margin : 0px;text-align: center">
-                            <label style="width: 100%;font-size: 16px;margin-top: 5px;text-align: center;font-family: Montserrat, sans-serif">Average Cycle Time: Current Vs. Target <label style="color: rgb(245, 176, 65);">({{SelectedCategory}})</label></label>
+                            <label style="width: 100%;font-size: 16px;margin-top: 5px;text-align: center;font-family: Montserrat, sans-serif">Average Cycle Time: Current Vs Target Vs Project Count <label style="color: rgb(245, 176, 65);">({{SelectedCategory}})</label></label>
                             <!-- <label style="width: 100%;font-size: 10px;margin: 0px;height: 18px;text-align: center;">Distinct count of Workspace Title</label> -->
                         </div>
                         <div class="col-md-12" style="margin-bottom: 10px;">
                             <div style="width: 100%;text-align: center;padding-left: 40%;">
                                 <mat-spinner *ngIf="allloader" strokeWidth="5" style="margin-top: 100px;" color="warn"></mat-spinner>
                             </div>
-                            <canvas id="TargetsCanvas">
+                            <canvas id="TargetsCanvas" height="100">
                             </canvas>
                         </div>
                     </mat-card>
                 </div>
                 <div class="col-md-12">
-                    <div class="example-container" style="height: auto;margin-left: 15px;border: 1px solid rgb(196, 196, 196);">
+                    <div class="example-container" style="height: auto;margin-left: 15px;border: 2px solid black;;">
                         <table mat-table matTableFilter [dataSource]="dataSource" style="text-align: center;">
                             <ng-container matColumnDef="CycleTimeCategory">
-                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="padding-left: 10px;background-color:  rgb(0, 100, 200);color: white;text-align: center;"> Cycle Time Categories </th>
+                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="padding-left: 10px;background-color:  #34495E;color: white;text-align: center;"> Cycle Time Categories </th>
                                 <td mat-cell *matCellDef="let element" class="ref" [ngStyle]="{'font-weight' : element.CycleTimeCategory == 'Overall' ? 'bold' : 'normal','background-color' : element.CycleTimeCategory == SelectedCategory ? 'rgb(245, 176, 65)' : SelectedCategory != 'Overall' && element.CycleTimeCategory == 'Overall' ? 'rgba(133, 146, 158,3)' : '#FFFFFF'}" style="padding-left: 10px;text-align: left;" (click)="CategoryClick(element.CycleTimeCategory)"> {{element.CycleTimeCategory}} </td>
                             </ng-container>
                             <ng-container matColumnDef="January_A">
-                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="text-align: center;background-color: rgb(0, 100, 200);color: white"> Jan </th>
+                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="text-align: center;background-color:  #34495E;color: white"> Jan </th>
                                 <td mat-cell *matCellDef="let element" [ngStyle]="{'font-weight' : element.CycleTimeCategory == 'Overall' ? 'bold' : 'normal','background-color' : element.CycleTimeCategory == 'Overall' ? 'rgba(133, 146, 158,3)' : '#FFFFFF'}"> {{element.January_A}} </td>
                             </ng-container>
                             <ng-container matColumnDef="February_A">
-                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="text-align: center;background-color: rgb(0, 100, 200);color: white"> Feb </th>
+                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="text-align: center;background-color:  #34495E;color: white"> Feb </th>
                                 <td mat-cell *matCellDef="let element" [ngStyle]="{'font-weight' : element.CycleTimeCategory == 'Overall' ? 'bold' : 'normal','background-color' : element.CycleTimeCategory == 'Overall' ? 'rgba(133, 146, 158,3)' : '#FFFFFF'}"> {{element.February_A}} </td>
                             </ng-container>
                             <ng-container matColumnDef="March_A">
-                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="text-align: center;background-color: rgb(0, 100, 200);color : white"> Mar </th>
+                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="text-align: center;background-color:  #34495E;color: white"> Mar </th>
                                 <td mat-cell *matCellDef="let element" [ngStyle]="{'font-weight' : element.CycleTimeCategory == 'Overall' ? 'bold' : 'normal','background-color' : element.CycleTimeCategory == 'Overall' ? 'rgba(133, 146, 158,3)' : '#FFFFFF'}"> {{element.March_A}} </td>
                             </ng-container>
                             <ng-container matColumnDef="April_A">
-                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="text-align: center;background-color: rgb(0, 100, 200);color : white"> Apr </th>
+                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="text-align: center;background-color:  #34495E;color: white"> Apr </th>
                                 <td mat-cell *matCellDef="let element" [ngStyle]="{'font-weight' : element.CycleTimeCategory == 'Overall' ? 'bold' : 'normal','background-color' : element.CycleTimeCategory == 'Overall' ? 'rgba(133, 146, 158,3)' : '#FFFFFF'}"> {{element.April_A}} </td>
                             </ng-container>
                             <ng-container matColumnDef="May_A">
-                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="text-align: center;background-color: rgb(0, 100, 200);color : white"> May </th>
+                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="text-align: center;background-color:  #34495E;color: white"> May </th>
                                 <td mat-cell *matCellDef="let element" [ngStyle]="{'font-weight' : element.CycleTimeCategory == 'Overall' ? 'bold' : 'normal','background-color' : element.CycleTimeCategory == 'Overall' ? 'rgba(133, 146, 158,3)' : '#FFFFFF'}"> {{element.May_A}} </td>
                             </ng-container>
                             <ng-container matColumnDef="June_A">
-                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="text-align: center;background-color: rgb(0, 100, 200);color : white"> Jun </th>
+                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="text-align: center;background-color:  #34495E;color: white"> Jun </th>
                                 <td mat-cell *matCellDef="let element" [ngStyle]="{'font-weight' : element.CycleTimeCategory == 'Overall' ? 'bold' : 'normal','background-color' : element.CycleTimeCategory == 'Overall' ? 'rgba(133, 146, 158,3)' : '#FFFFFF'}"> {{element.June_A}} </td>
                             </ng-container>
                             <!-- <ng-container matColumnDef="H_One_A">
-                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="text-align: center;background-color: rgb(0, 100, 200);color : white"> H-1 </th>
+                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="text-align: center;background-color:  #34495E;color: white"> H-1 </th>
                                 <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color' : element.TargetH1 >= element.H_One_A ? '#A9D08E' : (element.TargetH1 < element.H_One_A && (element.TargetH1+5) > element.H_One_A) ? '#FFE699' : '#FF7C80'}" style="font-weight: bold;"> {{element.H_One_A}} </td>
                             </ng-container> -->
                             <!-- <ng-container matColumnDef="TargetH1">
-                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="text-align: center;background-color: rgb(0, 100, 200);color : white"> Target H1 </th>
+                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="text-align: center;background-color:  #34495E;color: white"> Target H1 </th>
                                 <td mat-cell *matCellDef="let element" [ngStyle]="{'font-weight' : element.CycleTimeCategory == 'Overall' ? 'bold' : 'normal','background-color' : element.CycleTimeCategory == 'Overall' ? 'rgba(133, 146, 158,3)' : 'rgb(213, 216, 220)'}" style="font-weight: bold;"> {{element.TargetH1}} </td>
                             </ng-container> -->
                             <ng-container matColumnDef="July_A">
-                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="text-align: center;background-color: rgb(0, 100, 200);color : white"> Jul </th>
+                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="text-align: center;background-color:  #34495E;color: white"> Jul </th>
                                 <td mat-cell *matCellDef="let element" [ngStyle]="{'font-weight' : element.CycleTimeCategory == 'Overall' ? 'bold' : 'normal','background-color' : element.CycleTimeCategory == 'Overall' ? 'rgba(133, 146, 158,3)' : '#FFFFFF'}"> {{element.July_A}} </td>
                             </ng-container>
                             <ng-container matColumnDef="August_A">
-                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="text-align: center;background-color: rgb(0, 100, 200);color : white"> Aug </th>
+                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="text-align: center;background-color:  #34495E;color: white"> Aug </th>
                                 <td mat-cell *matCellDef="let element" [ngStyle]="{'font-weight' : element.CycleTimeCategory == 'Overall' ? 'bold' : 'normal','background-color' : element.CycleTimeCategory == 'Overall' ? 'rgba(133, 146, 158,3)' : '#FFFFFF'}"> {{element.August_A}} </td>
                             </ng-container>
                             <ng-container matColumnDef="September_A">
-                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="text-align: center;background-color: rgb(0, 100, 200);color : white"> Sep </th>
+                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="text-align: center;background-color:  #34495E;color: white"> Sep </th>
                                 <td mat-cell *matCellDef="let element" [ngStyle]="{'font-weight' : element.CycleTimeCategory == 'Overall' ? 'bold' : 'normal','background-color' : element.CycleTimeCategory == 'Overall' ? 'rgba(133, 146, 158,3)' : '#FFFFFF'}"> {{element.September_A}} </td>
                             </ng-container>
                             <ng-container matColumnDef="October_A">
-                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="text-align: center;background-color: rgb(0, 100, 200);color : white"> Oct </th>
+                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="text-align: center;background-color:  #34495E;color: white"> Oct </th>
                                 <td mat-cell *matCellDef="let element" [ngStyle]="{'font-weight' : element.CycleTimeCategory == 'Overall' ? 'bold' : 'normal','background-color' : element.CycleTimeCategory == 'Overall' ? 'rgba(133, 146, 158,3)' : '#FFFFFF'}"> {{element.October_A}} </td>
                             </ng-container>
                             <ng-container matColumnDef="November_A">
-                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="text-align: center;background-color: rgb(0, 100, 200);color : white"> Nov </th>
+                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="text-align: center;background-color:  #34495E;color: white"> Nov </th>
                                 <td mat-cell *matCellDef="let element" [ngStyle]="{'font-weight' : element.CycleTimeCategory == 'Overall' ? 'bold' : 'normal','background-color' : element.CycleTimeCategory == 'Overall' ? 'rgba(133, 146, 158,3)' : '#FFFFFF'}"> {{element.November_A}} </td>
                             </ng-container>
                             <ng-container matColumnDef="December_A">
-                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="text-align: center;background-color: rgb(0, 100, 200);color : white"> Dec </th>
+                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="text-align: center;background-color:  #34495E;color: white"> Dec </th>
                                 <td mat-cell *matCellDef="let element" [ngStyle]="{'font-weight' : element.CycleTimeCategory == 'Overall' ? 'bold' : 'normal','background-color' : element.CycleTimeCategory == 'Overall' ? 'rgba(133, 146, 158,3)' : '#FFFFFF'}"> {{element.December_A}} </td>
                             </ng-container>
                             <!-- <ng-container matColumnDef="H_Two_A">
-                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="text-align: center;background-color: rgb(0, 100, 200);color : white"> H-2 </th>
+                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="text-align: center;background-color:  #34495E;color: white"> H-2 </th>
                                 <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color' : element.TargetCycleTime >= element.H_Two_A ? '#A9D08E' : (element.TargetCycleTime < element.H_Two_A && (element.TargetCycleTime+5) > element.H_Two_A) ? '#FFE699' : '#FF7C80'}" style="font-weight: bold;"> {{element.H_Two_A}} </td>
                             </ng-container>
                             <ng-container matColumnDef="TargetCycleTime">
-                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="text-align: center;background-color: rgb(0, 100, 200);color : white"> Target H2 </th>
+                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="text-align: center;background-color:  #34495E;color: white"> Target H2 </th>
                                 <td mat-cell *matCellDef="let element"  [ngStyle]="{'font-weight' : element.CycleTimeCategory == 'Overall' ? 'bold' : 'normal','background-color' : element.CycleTimeCategory == 'Overall' ? 'rgba(133, 146, 158,3)' : 'rgb(213, 216, 220)'}" style="font-weight: bold;"> {{element.TargetCycleTime}} </td>
                             </ng-container> -->
                             <ng-container matColumnDef="Target_A">
-                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="padding-right: 10px;border-right: none;text-align: center;background-color: rgb(0, 100, 200);color : white;"> Target </th>
+                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="padding-right: 10px;border-right: none;text-align: center;background-color:  #34495E;color: white;"> Target </th>
                                 <td mat-cell *matCellDef="let element;" style="background-color: rgb(213, 216, 220);border-right: none;padding-right : 10px;font-weight: bold;"> {{element.Target_A}} </td>
                                 <!-- [rowSpan]="6" -->
                             </ng-container>
                             <!-- <ng-container matColumnDef="Total_A">
-                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="padding-right: 10px;border-right: none;text-align: center;background-color: rgb(0, 100, 200);color : white"> Full Year Average</th>
+                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="padding-right: 10px;border-right: none;text-align: center;background-color:  #34495E;color: white"> Full Year Average</th>
                                 <td mat-cell *matCellDef="let element;let iRow = index" [attr.rowspan]="rowSpans[14][iRow].span" [style.display]="rowSpans[14][iRow].span === 0 ? 'none'  : ''" style="background-color: rgba(133, 146, 158,3);border-right: none;padding-right : 10px;font-weight: bold;"> {{element.Total_A}} </td>
                             </ng-container> -->
                             <ng-container matColumnDef="Total_A">
-                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="text-align: center;background-color: rgb(0, 100, 200);color : white;width: 80px;"> Current Cycle Time</th>
+                                <th mat-header-cell *matHeaderCellDef class="textSizes" style="text-align: center;background-color:  #34495E;color: white;width: 80px;"> Current Cycle Time</th>
                                 <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color' : element.Target_A >= element.Total_A ? '#A9D08E' : (element.Target_A < element.Total_A && (element.Target_A+5) > element.Total_A) ? '#FFE699' : '#FF7C80'}"  style="font-weight: bold;width: 80px;"> {{element.Total_A}} </td>
                             </ng-container>
                             <ng-container  matColumnDef="loader" sticky>
@@ -207,63 +206,67 @@
                     <div class="example-container" [ngStyle]="{'height' : (screenHeight-80)+'px'}" style="margin-left: 15px;border: 1px solid rgb(196, 196, 196);">
                         <table mat-table matTableFilter [dataSource]="dataSource_data" style="text-align: center;" #GMSort="matSort" matSort>
                             <ng-container matColumnDef="Client">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="padding-left: 10px;background-color:  rgb(0, 100, 200);color: white;text-align: center;"> Client </th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="padding-left: 10px;background-color:  #34495E;color: white;text-align: center;"> Client </th>
                                 <td mat-cell *matCellDef="let element" class="ref"  style="padding-left: 10px;text-align: left;"><label (click)="ShowComment(element.Client,element.RevenueID,'')" class="showlessText"> {{element.Client}} </label></td>
                             </ng-container>
                             <ng-container matColumnDef="RevenueID">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  rgb(0, 100, 200);color: white;text-align: center;"> Revenue ID </th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #34495E;color: white;text-align: center;"> Revenue ID </th>
                                 <td mat-cell *matCellDef="let element"> {{element.RevenueID}} </td>
                             </ng-container>
                             <ng-container matColumnDef="Workspace_Title">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="text-align: center;background-color: rgb(0, 100, 200);color : white"> Workspace_Title </th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="text-align: center;background-color:  #34495E;color: white"> Workspace_Title </th>
                                 <td mat-cell *matCellDef="let element"><label (click)="ShowComment(element.Client,element.RevenueID,element.Workspace_Title)" class="showlessText"> {{element.Workspace_Title}}</label> </td>
                             </ng-container>
                             <ng-container matColumnDef="MilestoneTitle">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="text-align: center;background-color: rgb(0, 100, 200);color : white"> MilestoneTitle </th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="text-align: center;background-color:  #34495E;color: white"> MilestoneTitle </th>
                                 <td mat-cell *matCellDef="let element"> <label (click)="ShowComment(element.Client,element.RevenueID,element.MilestoneTitle)" class="showlessText">{{element.MilestoneTitle}} </label></td>
                             </ng-container>
                             <ng-container matColumnDef="ImplementationType">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="text-align: center;background-color: rgb(0, 100, 200);color : white"> ImplementationType </th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="text-align: center;background-color:  #34495E;color: white"> ImplementationType </th>
                                 <td mat-cell *matCellDef="let element"><label (click)="ShowComment(element.Client,element.RevenueID,element.ImplementationType)" class="showlessText"> {{element.ImplementationType}}</label> </td>
                             </ng-container>
                             <ng-container matColumnDef="Region">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="text-align: center;background-color: rgb(0, 100, 200);color : white"> Region </th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="text-align: center;background-color:  #34495E;color: white"> Region </th>
                                 <td mat-cell *matCellDef="let element"> {{element.Region}} </td>
                             </ng-container>
                             <ng-container matColumnDef="Country">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="text-align: center;background-color: rgb(0, 100, 200);color : white"> Country </th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="text-align: center;background-color:  #34495E;color: white"> Country </th>
                                 <td mat-cell *matCellDef="let element" style="white-space: nowrap;"> {{element.Country}} </td>
                             </ng-container>
                             <ng-container matColumnDef="ProjectStatus">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="text-align: center;background-color: rgb(0, 100, 200);color : white">Project Status</th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="text-align: center;background-color:  #34495E;color: white">Project Status</th>
                                 <td mat-cell *matCellDef="let element"> <label (click)="ShowComment(element.Client,element.RevenueID,element.ProjectStatus)" class="showlessText">{{element.ProjectStatus}}</label> </td>
                             </ng-container>
                             <ng-container matColumnDef="ProjectLevel">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="text-align: center;background-color: rgb(0, 100, 200);color : white"> Project Level </th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="text-align: center;background-color:  #34495E;color: white"> Project Level </th>
                                 <td mat-cell *matCellDef="let element"> {{element.ProjectLevel}} </td>
                             </ng-container>
                             <ng-container matColumnDef="GoLive">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="text-align: center;background-color: rgb(0, 100, 200);color : white"> Go Live Date </th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="text-align: center;background-color:  #34495E;color: white"> Go Live Date </th>
                                 <td mat-cell *matCellDef="let element" style="white-space: nowrap;"> {{element.GoLive}} </td>
                             </ng-container>
                             <ng-container matColumnDef="ProjectStart">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="text-align: center;background-color: rgb(0, 100, 200);color : white"> Project Start Date</th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="text-align: center;background-color:  #34495E;color: white"> Project Start Date</th>
                                 <td mat-cell *matCellDef="let element" style="white-space: nowrap;"> {{element.ProjectStart}} </td>
                             </ng-container>
                             <ng-container matColumnDef="CycleTime">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="text-align: center;background-color: rgb(0, 100, 200);color : white"> Cycle Time</th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="text-align: center;background-color:  #34495E;color: white"> Cycle Time</th>
                                 <td mat-cell *matCellDef="let element"> {{element.CycleTime}} </td>
                             </ng-container>
                             <ng-container matColumnDef="CycleTimeCategories">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="text-align: center;background-color: rgb(0, 100, 200);color : white"> Cycle Time Categories</th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="text-align: center;background-color:  #34495E;color: white"> Cycle Time Categories</th>
                                 <td mat-cell *matCellDef="let element"><label (click)="ShowComment(element.Client,element.RevenueID,element.CycleTimeCategories)" class="showlessText"> {{element.CycleTimeCategories}}</label> </td>
                             </ng-container>
+                            <ng-container matColumnDef="CycleTimeDelayCode">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="text-align: center;background-color:  #34495E;color: white"> Cycle Time Delay Code </th>
+                                <td mat-cell *matCellDef="let element"><label (click)="ShowComment(element.Client,element.RevenueID,element.CycleTimeDelayCode)" class="showlessText"> {{element.CycleTimeDelayCode}}</label> </td>
+                            </ng-container>
                             <ng-container matColumnDef="GoLiveYear">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="text-align: center;background-color: rgb(0, 100, 200);color : white"> Go Live Year</th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="text-align: center;background-color:  #34495E;color: white"> Go Live Year</th>
                                 <td mat-cell *matCellDef="let element"> {{element.GoLiveYear}} </td>
                             </ng-container>
                             <ng-container matColumnDef="GoLiveMonth">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="padding-right: 10px;border-right: none;text-align: center;background-color: rgb(0, 100, 200);color : white"> Go Live Month </th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="padding-right: 10px;border-right: none;text-align: center;background-color:  #34495E;color: white"> Go Live Month </th>
                                 <td mat-cell *matCellDef="let element" style="border-right: none;padding-right : 10px;"> {{element.GoLiveMonth}} </td>
                             </ng-container>
                             <ng-container  matColumnDef="loader" sticky>

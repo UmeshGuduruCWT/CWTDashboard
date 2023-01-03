@@ -105,6 +105,8 @@ export class DataCLR {
     MilestoneDueDate_c : string;
     ProjectOwner: string;
     GlobalProjectManager: string;
+    CycleTimeDelayCode : string;
+    Cycletimetarget : Number;
     ProjectConsultant: string;
     RegionalProjectManager: any;
     AssigneeFullName: any;
@@ -194,4 +196,8 @@ export class DataCLR {
     SOWStatus : string;
     OBTAdoptionRate : string;
     ImplementationReady : string;
+    Promoter : number;
+    Detractor : number;
+    NpsTotal : number;
+    NpsScore : any;
 }

@@ -4,6 +4,7 @@ import { eSOWData } from '../../Models/eSOWResponse';
 import { DatePipe } from '@angular/common';
 import { ProspectType, SalesLeaderTypeAndTypeOfBid } from '../../Models/eSOWFilters';
 import { DashboardComponent } from '../dashboard/dashboard.component';
+import { LivedashboardComponent } from '../livedashboard/livedashboard.component';
 
 export interface AccountAndVolumes {
   Leftheaders: string;
@@ -77,7 +78,7 @@ export class ESowReportComponent implements OnInit {
   Prospect_TypeListSelected : ProspectType[];
   constructor(private service : DashboardServiceService,
     public datepipe : DatePipe,
-    private dashboard : DashboardComponent) { }
+    private dashboard : LivedashboardComponent) { }
   ngOnInit() {
     this.dashboard.ShowSpinnerHandler(true);
     this.service.EssentialTablesFilters().subscribe(data => {

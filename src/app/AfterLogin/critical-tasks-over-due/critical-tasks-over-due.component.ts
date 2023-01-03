@@ -48,7 +48,7 @@ export class CriticalTasksOverDueComponent implements OnInit {
   LoginUID : string;
   FilteredCount;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
-  displayedColumns: string[] = ['Workspace_Title', 'Milestone_Title_Country___Est_Go_Live_Date','Task_Title','Milestone__Project_Status','Milestone__Region','Workspace__Project_Level','Group_Name','Task_Due_Date_c','Task_Overdue'];
+  displayedColumns: string[] = ['Workspace_Title', 'Milestone_Title_Country___Est_Go_Live_Date','Task_Title','Milestone__Project_Status','Milestone__Region','Workspace__Project_Level','Group_Name','OwnershipRevenue','Task_Due_Date_c','Task_Overdue'];
   constructor(public datepipe : DatePipe,public service : DashboardServiceService, public dashboard : LivedashboardComponent, private excelService:ExcelService) {
     //set screenWidth on page load
     this.screenWidth = window.innerWidth;
@@ -368,6 +368,7 @@ export class CriticalTasksOverDueComponent implements OnInit {
             'Task List Title' : o.Task_List_Title,
             'Task Title' : o.Task_Title,
             'Task Assignee Full Name' : o.Task__Assignee__Full_Name,
+            'OwnershipRevenue' : o.OwnershipRevenue,
             'Task Status' : o.Task_Status,
             'Task Overdue' : o.Task_Overdue,
             'Task Start Date' : o.Task_Start_Date_c,

@@ -33,7 +33,7 @@ export class ELTReportComponent implements OnInit {
   displayedColumns_Ry : string[] = ['Client', 'Month1_s','Month2_s','RemainingMonths','TotalMonths','EltStatus','TotalAcountVolume_s','Comments'];//'PreviousYear_s',
   dataSource_c;
   dataSource_ce;
-  displayedColumns_ce : string[] = ['Client','Revenue_volume','Comments'];
+  displayedColumns_ce : string[] = ['Client','Revenue_volume','RevenueID','Country','Comments','ChangesMadeforAccount'];
   dataSource_n;
   dataSource_Ry;
   PreviousYear : string;
@@ -207,16 +207,16 @@ export class ELTReportComponent implements OnInit {
           this.CurrentMonthData[i].Comments = this.CurrentMonthData[i].RegionComment + " " + Math.round(this.CurrentMonthData[i].RevenueComment).toLocaleString("en-US",{style : "currency",currency:"USD"}).slice(0,-3);
         }else{
         }
-        if(this.CurrentMonthData[i].EltStatus.includes("On Track")){
+        if(this.CurrentMonthData[i].EltStatus.includes("On Track - Green")){
           this.CurrentMonthData[i].EltStatusColor = "green";
-        }else if(this.CurrentMonthData[i].EltStatus.includes("Possible Risk")){
+        }else if(this.CurrentMonthData[i].EltStatus.includes("Risk - Amber")){
           this.CurrentMonthData[i].EltStatusColor = "orange";
           //this.NextMonthData[i].TotalAcountVolume_s = this.NextMonthData[i].TotalAcountVolume.toLocaleString("en-US",{style : "currency",currency:"USD"}).slice(0,-3);
-        }else if(this.CurrentMonthData[i].EltStatus.includes("Risk")){
+        }else if(this.CurrentMonthData[i].EltStatus.includes("Issue - Red")){
           this.CurrentMonthData[i].EltStatusColor = "red";
         }else if(this.CurrentMonthData[i].EltStatus == null || this.CurrentMonthData[i].EltStatus == "")
         {
-          this.CurrentMonthData[i].EltStatus = "On Track";
+          this.CurrentMonthData[i].EltStatus = "On Track - Green";
           this.CurrentMonthData[i].EltStatusColor = "green";
         }
       }
@@ -232,6 +232,12 @@ export class ELTReportComponent implements OnInit {
           data.YearMonth[i].Revenue_volume = "$0";
         }else{
           data.YearMonth[i].Revenue_volume = Math.round(data.YearMonth[i].Revenue).toLocaleString("en-US",{style : "currency",currency:"USD"}).slice(0,-3);
+        }
+        if(data.YearMonth[i].Month != data.YearMonth[i].CLRGoLiveMonth){
+          data.YearMonth[i].ChangesMadeforAccount = "--> Go-live Month Changed from '" + data.YearMonth[i].Month + "' to '" + data.YearMonth[i].CLRGoLiveMonth+"'.";
+        }
+        if(data.YearMonth[i].ProjectStatus != data.YearMonth[i].CLRProjectStatus){
+          data.YearMonth[i].ChangesMadeforAccount += "\n\n--> Project Status Changed from '" + data.YearMonth[i].ProjectStatus + "' to '" + data.YearMonth[i].CLRProjectStatus+"'.";
         }
       }
       this.dataSource_c = this.CurrentMonthData;
@@ -310,21 +316,16 @@ export class ELTReportComponent implements OnInit {
           this.NextMonthData[i].Comments = this.NextMonthData[i].RegionComment + " " + Math.round(this.NextMonthData[i].RevenueComment).toLocaleString("en-US",{style : "currency",currency:"USD"}).slice(0,-3);
         }else{
         }
-        //EltStatus Color
-        // if(this.NextMonthData[i].EltStatus.includes("Possible Risk")){
-        //   this.NextMonthData[i].EltStatus = "Possible Risk";
-        //   this.NextMonthData[i].EltStatusColor = "orange";
-        // }
-        if(this.NextMonthData[i].EltStatus.includes("On Track")){
+        if(this.NextMonthData[i].EltStatus.includes("On Track - Green")){
           this.NextMonthData[i].EltStatusColor = "green";
-        }else if(this.NextMonthData[i].EltStatus.includes("Possible Risk")){
+        }else if(this.NextMonthData[i].EltStatus.includes("Risk - Amber")){
           this.NextMonthData[i].EltStatusColor = "orange";
           //this.NextMonthData[i].TotalAcountVolume_s = this.NextMonthData[i].TotalAcountVolume.toLocaleString("en-US",{style : "currency",currency:"USD"}).slice(0,-3);
-        }else if(this.NextMonthData[i].EltStatus.includes("Risk")){
+        }else if(this.NextMonthData[i].EltStatus.includes("Issue - Red")){
           this.NextMonthData[i].EltStatusColor = "red";
         }else if(this.NextMonthData[i].EltStatus == null || this.NextMonthData[i].EltStatus == "")
         {
-          this.NextMonthData[i].EltStatus = "On Track";
+          this.NextMonthData[i].EltStatus = "On Track - Green";
           this.NextMonthData[i].EltStatusColor = "green";
         }
       }
@@ -390,18 +391,18 @@ export class ELTReportComponent implements OnInit {
         }else{
         }
         //EltStatus Color
-        if(this.RemainingMonthsData[i].EltStatus.includes("Possible Risk")){
-          this.RemainingMonthsData[i].EltStatus = "Possible Risk";
+        if(this.RemainingMonthsData[i].EltStatus.includes("Risk - Amber")){
+          this.RemainingMonthsData[i].EltStatus = "Risk - Amber";
           this.RemainingMonthsData[i].EltStatusColor = "orange";
         }
-        if(this.RemainingMonthsData[i].EltStatus.includes("On Track")){
+        if(this.RemainingMonthsData[i].EltStatus.includes("On Track - Green")){
           this.RemainingMonthsData[i].EltStatusColor = "green";
-        }else if(this.RemainingMonthsData[i].EltStatus.includes("Possible Risk")){
+        }else if(this.RemainingMonthsData[i].EltStatus.includes("Risk - Amber")){
           this.RemainingMonthsData[i].EltStatusColor = "orange";
-        }else if(this.RemainingMonthsData[i].EltStatus.includes("Risk")){
+        }else if(this.RemainingMonthsData[i].EltStatus.includes("Issue - Red")){
           this.RemainingMonthsData[i].EltStatusColor = "red";
         }else if(this.RemainingMonthsData[i].EltStatus == null || this.RemainingMonthsData[i].EltStatus == ""){
-          this.RemainingMonthsData[i].EltStatus = "On Track";
+          this.RemainingMonthsData[i].EltStatus = "On Track - Green";
           this.RemainingMonthsData[i].EltStatusColor = "green";
         }
       }

@@ -82,77 +82,79 @@
                         <input matInput (keyup)="applyFilter($event)" #input>
                         <mat-icon matSuffix>search</mat-icon>
                     </mat-form-field>
-                    <button mat-raised-button (click)="Export()" style="padding-left: 8px;background-color: #F16950;min-width: 40px;width: 40px;margin-left: 30px;"><mat-icon style="color: white;font-size: 22px;padding-top: 2px;" matTooltip="Export Data">file_download</mat-icon></button>
+                    <button mat-raised-button style="height: 33px;background-color: #F16950;margin-left: 30px;color: white;" (click)="Export()">Export
+                        <mat-icon style="font-size: 18px;color: white;">save_alt</mat-icon>
+                    </button>
                 </div>
                 <div class="col-md-12">
-                    <div class="example-container" [ngStyle]="{'height' : (screenHeight-185)+'px'}" style="margin-left: 15px;border: 1px solid rgb(196, 196, 196);">
+                    <div class="example-container" [ngStyle]="{'height' : (screenHeight-185)+'px'}" style="margin-left: 15px;border: 2px solid black;">
                         <table mat-table [dataSource]="dataSource" #GMSort="matSort" matSort>
                             <ng-container matColumnDef="Client">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="padding-left: 10px;background-color:  #3B8AD9;color: white;">Client</th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="padding-left: 10px;background-color:  #34495E;color: white;">Client</th>
                                 <td mat-cell *matCellDef="let element" style="padding-left: 10px;"> <label (click)="ShowComment(element.Client,element.RevenueID,element.Opportunity_Owner)" class="showlessText"> {{element.Client}}</label></td>
                             </ng-container>
                             <ng-container matColumnDef="Line_Win_Probability">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="max-width: 100px;width: 100px;background-color:  #3B8AD9;color: white;word-wrap: break-word !important;white-space: normal;">Line Win Probability</th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="max-width: 100px;width: 100px;background-color:  #34495E;color: white;word-wrap: break-word !important;white-space: normal;">Line Win Probability</th>
                                 <td mat-cell *matCellDef="let element" class="manager_text" (click)="MangerProjectDetails(element.Manager,element.Leader)"> {{element.Line_Win_Probability}} </td>
                             </ng-container>
                             <ng-container matColumnDef="Opportunity_Owner">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #3B8AD9;color: white;">Opportunity Owner</th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #34495E;color: white;">Opportunity Owner</th>
                                 <td mat-cell *matCellDef="let element"> <label (click)="ShowComment(element.Client,element.RevenueID,element.Opportunity_Owner)" class="showlessText"> {{element.Opportunity_Owner}}</label></td>
                             </ng-container>
                             <ng-container matColumnDef="Region">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #3B8AD9;color: white;"> Region</th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #34495E;color: white;"> Region</th>
                                 <td mat-cell *matCellDef="let element"> {{element.Region}} </td>
                             </ng-container>
                             <ng-container matColumnDef="Country">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #3B8AD9;color: white;">Country</th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #34495E;color: white;">Country</th>
                                 <td mat-cell *matCellDef="let element" > <label (click)="ShowComment(element.Client,element.RevenueID,element.Country)" class="showlessText"> {{element.Country}}</label></td>
                             </ng-container>
                             <ng-container matColumnDef="ImplementationType">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #3B8AD9;color: white;">Implementation Type</th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #34495E;color: white;">Implementation Type</th>
                                 <td mat-cell *matCellDef="let element" ><label (click)="ShowComment(element.Client,element.RevenueID,element.ImplementationType)" class="showlessText"> {{element.ImplementationType}}</label></td>
                             </ng-container>
                             <ng-container matColumnDef="OBTResellerDirect">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #3B8AD9;color: white;">OBT Reseller Direct</th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #34495E;color: white;">OBT Reseller Direct</th>
                                 <td mat-cell *matCellDef="let element" ><label (click)="ShowComment(element.Client,element.RevenueID,element.OBTResellerDirect)" class="showlessText"> {{element.OBTResellerDirect}}</label></td>
                             </ng-container>
                             <ng-container matColumnDef="Service_Configuration">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #3B8AD9;color: white;">Service Configuration</th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #34495E;color: white;">Service Configuration</th>
                                 <td mat-cell *matCellDef="let element" ><label (click)="ShowComment(element.Client,element.RevenueID,element.Service_Configuration)" class="showlessText"> {{element.Service_Configuration}}</label></td>
                             </ng-container>
                             <ng-container matColumnDef="GlobalProjectManager">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #3B8AD9;color: white;">Global Project Manager</th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #34495E;color: white;">Global Project Manager</th>
                                 <td mat-cell *matCellDef="let element" > <label (click)="ShowComment(element.Client,element.RevenueID,element.GlobalProjectManager)" class="showlessText"> {{element.GlobalProjectManager}}</label></td>
                             </ng-container>
                             <ng-container matColumnDef="RegionalProjectManager">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #3B8AD9;color: white;">Regional Project Manager</th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #34495E;color: white;">Regional Project Manager</th>
                                 <td mat-cell *matCellDef="let element" > <label (click)="ShowComment(element.Client,element.RevenueID,element.RegionalProjectManager)" class="showlessText"> {{element.RegionalProjectManager}}</label></td>
                             </ng-container>
                             <ng-container matColumnDef="LocalProjectManager">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #3B8AD9;color: white;">Local Project Manager</th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #34495E;color: white;">Local Project Manager</th>
                                 <td mat-cell *matCellDef="let element" > <label (click)="ShowComment(element.Client,element.RevenueID,element.LocalProjectManager)" class="showlessText"> {{element.LocalProjectManager}}</label></td>
                             </ng-container>
                             <ng-container matColumnDef="GlobalCISOBTLead">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #3B8AD9;color: white;">Global Digital OBT Lead</th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #34495E;color: white;">Global Digital OBT Lead</th>
                                 <td mat-cell *matCellDef="let element" > <label (click)="ShowComment(element.Client,element.RevenueID,element.GlobalCISOBTLead)" class="showlessText"> {{element.GlobalCISOBTLead}}</label></td>
                             </ng-container>
                             <ng-container matColumnDef="RegionalCISOBTLead">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #3B8AD9;color: white;">Regional Digital OBT Lead</th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #34495E;color: white;">Regional Digital OBT Lead</th>
                                 <td mat-cell *matCellDef="let element" > <label (click)="ShowComment(element.Client,element.RevenueID,element.RegionalCISOBTLead)" class="showlessText"> {{element.RegionalCISOBTLead}}</label></td>
                             </ng-container>
                             <ng-container matColumnDef="Pipeline_comments">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #3B8AD9;color: white;">Pipeline comments</th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #34495E;color: white;">Pipeline comments</th>
                                 <td mat-cell *matCellDef="let element" > <label (click)="ShowComment(element.Client,element.RevenueID,element.Pipeline_comments)" class="showlessText"> {{element.Pipeline_comments}}</label> </td>
                             </ng-container>
                             <ng-container matColumnDef="DataDescription">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #3B8AD9;color: white;">CRM Description</th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #34495E;color: white;">CRM Description</th>
                                 <td mat-cell *matCellDef="let element" ><label (click)="ShowComment(element.Client,element.RevenueID,element.DataDescription)" class="showlessText"> {{element.DataDescription}}</label></td>
                             </ng-container>
                             <ng-container matColumnDef="Next_Step">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #3B8AD9;color: white;">Next Step</th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #34495E;color: white;">Next Step</th>
                                 <td mat-cell *matCellDef="let element"> <label (click)="ShowComment(element.Client,element.RevenueID,element.Next_Step)" class="showlessText"> {{element.Next_Step}}</label></td>
                             </ng-container>
                             <ng-container matColumnDef="RevenueVolumeUSD">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #3B8AD9;color: white;">Revenue Volume USD</th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #34495E;color: white;">Revenue Volume USD</th>
                                 <td mat-cell *matCellDef="let element" > {{element.RevenueVolume}} </td>
                             </ng-container>
                             <ng-container  matColumnDef="loader" sticky>

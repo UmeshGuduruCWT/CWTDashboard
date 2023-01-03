@@ -53,6 +53,7 @@ export interface NPSViewData{
     CustomerContactNumber : string;
     Country : string;
     GoLiveDate : Date;
+    OpprtunityId : string;
     GlobalProjectManager : string;
     RegionalProjectManager : string;
     LocalProjectManager : string;

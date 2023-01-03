@@ -41,10 +41,20 @@ import { NPSClientEntriesComponent } from './AfterLogin/npsclient-entries/npscli
 import { NPSViewComponent } from './AfterLogin/npsview/npsview.component';
 import { DigitalReportComponent } from './AfterLogin/digital-report/digital-report.component';
 import { RollingNPSComponent } from './AfterLogin/rolling-nps/rolling-nps.component';
+import { GoLiveReportComponent } from './AfterLogin/go-live-report/go-live-report.component';
+import { DashboardComponentWOLoginComponent } from './dashboard-component-wologin/dashboard-component-wologin.component';
 const routes: Routes = [
-  { path:'',redirectTo: 'Login', pathMatch: 'full'},
+  { path:'',redirectTo: 'Dashboard', pathMatch: 'full'},
   { path:'Login',component:LoginComponent},
   { path:'Register',component:RegistrationComponent},
+  { path:'GoLiveReport',component:GoLiveReportComponent},
+  { path:'Dashboard',component:DashboardComponentWOLoginComponent,
+    children : [
+      {path : '',redirectTo : 'GoLiveReport',pathMatch: 'full'},
+      {path:'GoLiveReport',component:GoLiveReportComponent},
+
+    ]
+  },
   { path:'ForgotPassword',component:ForgotPasswordComponent},
   { path:'Dashboard/:UID',
     component: LivedashboardComponent,
@@ -54,6 +64,7 @@ const routes: Routes = [
       //{path:'',redirectTo: 'HomePage', pathMatch: 'full'},
       {path:'HomePage',component:LiveHomePageComponent},
       {path:'INProgressHomePage',component:HomepageComponent},
+      {path:'GoLiveReport',component:GoLiveReportComponent},
       {path:'ImplementationMarket',component:ImplementationMarketReportComponent},
       //{path:'HierarchyImplementation',component:MarketImplementationComponent},
       {path:'PerformanceLeader',component:PerformanceLeaderComponent},

@@ -118,7 +118,7 @@
                     </canvas>
                     <table mat-table [dataSource]="a_type_datasource" style="width: 100%;border : 1px solid black">
                         <ng-container [matColumnDef]="a_type_column" *ngFor="let a_type_column of a_type_displayColumns">
-                          <th mat-header-cell *matHeaderCellDef style="min-width: 50px;max-width: 80px;padding-left: 5px;padding-right: 5px;"><!--*ngIf="a_type_column !== '1'"--> <p  style="font-weight: bold;font-size: 11px;width: 100%;word-wrap: break-word;color: black;">{{a_type_column}}</p></th>
+                          <th mat-header-cell *matHeaderCellDef style="min-width: 50px;max-width: 80px;padding-left: 5px;padding-right: 5px;border-bottom: 1px solid black;background-color: #34495E;color: white;"><!--*ngIf="a_type_column !== '1'"--> <p  style="font-weight: bold;font-size: 11px;width: 100%;word-wrap: break-word;color: white;">{{a_type_column}}</p></th>
                           <!-- <th mat-header-cell *matHeaderCellDef *ngIf="column !== '1'"> {{ column }} </th> -->
                           <td mat-cell *matCellDef="let element"  style="min-width: 50px;max-width: 80px;font-size: 12px;padding-left: 5px;padding-right: 5px;" [ngClass]="{'highlight': a_type_column == 'Total'}">{{ element[a_type_column] }} </td>
                         </ng-container>
@@ -141,7 +141,7 @@
                     </canvas>
                     <table mat-table [dataSource]="imp_datasource" style="width: 100%;border : 1px solid black">
                         <ng-container [matColumnDef]="column" *ngFor="let column of imp_displayColumns">
-                          <th mat-header-cell *matHeaderCellDef style="min-width: 30px;max-width: 80px;padding-left: 5px;padding-right: 5px;"> <!--*ngIf="column !== '1'"--> <p style="font-weight: bold;font-size: 11px;width: 100%;word-wrap: break-word;color: black;">{{column}}</p></th>
+                          <th mat-header-cell *matHeaderCellDef style="min-width: 30px;max-width: 80px;padding-left: 5px;padding-right: 5px;border-bottom: 1px solid black;background-color: #34495E;color: white;"> <!--*ngIf="column !== '1'"--> <p style="font-weight: bold;font-size: 11px;width: 100%;word-wrap: break-word;color: white;">{{column}}</p></th>
                           <!-- <th mat-header-cell *matHeaderCellDef *ngIf="column !== '1'"> {{ column }} </th> -->
                           <td mat-cell *matCellDef="let element;" style="min-width: 50px;max-width: 80px;font-size: 12px;padding-left: 5px;padding-right: 5px;" [ngClass]="{'highlight': column == 'Total'}">{{element[column]}}</td>
                         </ng-container>
@@ -151,15 +151,31 @@
                 </div>
             </div>
             <div class="col-md-12">
-                <div class="example-container" [ngStyle]="{'max-height' : (screenHeight-185)+'px'}" style="min-height: 500px;margin-left: 15px;border: 1px solid rgb(196, 196, 196);">
+                <mat-form-field class="mat-form-wrap" appearance="outline">
+                    <mat-label>OBT Type</mat-label>
+                    <mat-select [formControl]="OBTResellerFilter" multiple (selectionChange)="onOBTResellerchange()">
+                        <mat-select-trigger>
+                            {{OBTResellerFilter.value ? OBTResellerFilter.value[0] : ''}}
+                            <span *ngIf="OBTResellerFilter.value?.length > 1" class="example-additional-selection">
+                                (+{{OBTResellerFilter.value.length - 1}} {{OBTResellerFilter.value?.length === 2 ? 'OBT Type' : 'OBT Types'}})
+                            </span>
+                        </mat-select-trigger>
+                        <div style="padding-top: 15px">
+                            <mat-checkbox style="margin-left: 15px;margin-top: 25px;" class="example-margin" [(ngModel)]="masterOBTReseller" name="masterOBTReseller" (change)="checkUncheckOBTReseller()" color="primary">Select all</mat-checkbox>
+                        </div>
+                        <mat-divider style="margin-left: 5px;margin-right: 5px"></mat-divider>
+                        <mat-option *ngFor="let OBTReseller_data of OBTResellerList" [value]="OBTReseller_data">{{OBTReseller_data}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <div class="example-container" [ngStyle]="{'max-height' : (screenHeight-185)+'px'}" style="min-height: 500px;margin-left: 15px;border: 2px solid black;">
                     <table mat-table [dataSource]="dataSource" #DROBT_R_Sort="matSort" matSort>
                         <ng-container matColumnDef="OBTReseller">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="padding-left: 10px;background-color:  rgb(213, 216, 220);color: black;">OBT Type</th>
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="border-right: 2px solid black;padding-left: 10px;background-color:  rgb(213, 216, 220);color: black;">OBT Type</th>
                             <td mat-cell *matCellDef="let element" style="padding-left: 10px;color: black;">{{element.OBTReseller}}</td>
                             <td mat-footer-cell *matFooterCellDef class="row_textsize ref" style="background-color:  rgb(213, 216, 220);color: black;text-align: center;font-weight: bold;">Total</td>
                         </ng-container>
                         <ng-container matColumnDef="OBTReseller_h">
-                            <th mat-header-cell *matHeaderCellDef style="max-width: 160px;width: 160px;" colspan="6" class="formheader" [ngStyle]="{'background-color' : OBTResellerFilter.value == '' || OBTResellerFilter.value == null ? '#FFFFFF' : '#F5B7B1'}">
+                            <th mat-header-cell *matHeaderCellDef style="max-width: 160px;width: 160px;border-top: 2px solid black;border-bottom: 2px solid black;" colspan="6" class="formheader" [ngStyle]="{'background-color' : OBTResellerFilter.value == '' || OBTResellerFilter.value == null ? '#FFFFFF' : '#F5B7B1'}">
                                 <mat-form-field class="mat-form-wrap" appearance="outline">
                                     <mat-label>OBT Type</mat-label>
                                     <mat-select [formControl]="OBTResellerFilter" multiple (selectionChange)="onOBTResellerchange()">
@@ -179,22 +195,22 @@
                             </th>
                         </ng-container>
                         <ng-container matColumnDef="APAC">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  rgb(213, 216, 220);color: black;">APAC</th>
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="border-right: 2px solid black;background-color:  rgb(213, 216, 220);color: black;">APAC</th>
                             <td mat-cell *matCellDef="let element"> {{element.APAC}} </td>
                             <td mat-footer-cell *matFooterCellDef class="row_textsize ref" style="background-color:  rgb(213, 216, 220);color: black;text-align: center;font-weight: bold;">{{OBT_APACTotal}}</td>
                         </ng-container>
                         <ng-container matColumnDef="EMEA">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  rgb(213, 216, 220);color: black;">EMEA</th>
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="border-right: 2px solid black;background-color:  rgb(213, 216, 220);color: black;">EMEA</th>
                             <td mat-cell *matCellDef="let element"> {{element.EMEA}} </td>
                             <td mat-footer-cell *matFooterCellDef class="row_textsize ref" style="background-color:  rgb(213, 216, 220);color: black;text-align: center;font-weight: bold;">{{OBT_EMEATotal}}</td>
                         </ng-container>
                         <ng-container matColumnDef="LATAM">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  rgb(213, 216, 220);color: black;">LATAM</th>
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="border-right: 2px solid black;background-color:  rgb(213, 216, 220);color: black;">LATAM</th>
                             <td mat-cell *matCellDef="let element"> {{element.LATAM}} </td>
                             <td mat-footer-cell *matFooterCellDef class="row_textsize ref" style="background-color:  rgb(213, 216, 220);color: black;text-align: center;font-weight: bold;">{{OBT_LATAMTotal}}</td>
                         </ng-container>
                         <ng-container matColumnDef="NORAM">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  rgb(213, 216, 220);color: black;">NORAM</th>
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="border-right: 2px solid black;background-color:  rgb(213, 216, 220);color: black;">NORAM</th>
                             <td mat-cell *matCellDef="let element"> {{element.NORAM}} </td>
                             <td mat-footer-cell *matFooterCellDef class="row_textsize ref" style="background-color:  rgb(213, 216, 220);color: black;text-align: center;font-weight: bold;">{{OBT_NORAMTotal}}</td>
                         </ng-container>
@@ -227,14 +243,14 @@
                             </th>
                         </ng-container>
                         <ng-container matColumnDef="header">
-                            <th mat-header-cell *matHeaderCellDef class="textSizes_header" style="background-color: #3B8AD9;text-align: center" colspan="6">OBT Type By Region</th>
+                            <th mat-header-cell *matHeaderCellDef class="textSizes_header" style="background-color: #34495E;text-align: center" colspan="6">OBT Type By Region</th>
                         </ng-container>
                         <!-- <ng-container matColumnDef="header2">
                             <th mat-header-cell *matHeaderCellDef class="textSizes_header" colspan="5"></th>
                         </ng-container> -->
                         <tr mat-header-row *matHeaderRowDef="['header']; sticky: true"></tr>
-                        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky : true;" ></tr>
-                        <tr mat-header-row *matHeaderRowDef="['OBTReseller_h']; sticky: true" style="padding-top: 0px;margin-top: 0px;"></tr>
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky : true;"></tr>
+                        <!-- <tr mat-header-row *matHeaderRowDef="['OBTReseller_h']; sticky: true" style="padding-top: 0px;margin-top: 0px;"></tr> -->
                         <tr mat-header-row *matHeaderRowDef="['loader']; sticky: true" style="padding-top: 0px;margin-top: 0px;" [ngStyle]="{'height' : isLoading_OR == true ? (screenHeight-365)+'px' : '0px'}"></tr>
                         <tr mat-row *matRowDef="let row; columns: displayedColumns;" style="height: 20px;max-height: 20px;"></tr>
                         <tr mat-footer-row *matFooterRowDef="displayedColumns; sticky: true" style="height: 35px;max-height: 35px;"></tr>

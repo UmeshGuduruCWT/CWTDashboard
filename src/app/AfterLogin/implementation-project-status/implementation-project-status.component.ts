@@ -201,13 +201,16 @@ export class ImplementationProjectStatusComponent implements OnInit {
                   label : "Total Count By Project Level ("+Math.round(this.LevelsCount[0].Global+this.LevelsCount[0].Local+this.LevelsCount[0].Regional)+")",
                   data : [this.LevelsCount[0].Global,this.LevelsCount[0].Local,this.LevelsCount[0].Regional],
                   backgroundColor: [
-                    'rgba(83, 188, 155,0.4)', 'rgba(245, 141, 54,0.4)', 'rgba(134, 98, 164,0.4)'
+                    'rgba(255, 61, 103,0.4)', 'rgba(5, 155, 255,0.4)', 'rgba(255, 194, 51,0.4)'
+                    // 'rgba(83, 188, 155,0.4)', 'rgba(245, 141, 54,0.4)', 'rgba(134, 98, 164,0.4)'
                   ],
                   borderColor: [
-                    'rgba(83, 188, 155,1)', 'rgba(245, 141, 54,1)', 'rgba(134, 98, 164,1)'
+                    'rgba(255, 61, 103)', 'rgba(5, 155, 255)', 'rgba(255, 194, 51)'
+                    // 'rgba(83, 188, 155,1)', 'rgba(245, 141, 54,1)', 'rgba(134, 98, 164,1)'
                   ],
                   hoverBackgroundColor: [
-                    'rgba(83, 188, 155,1)', 'rgba(245, 141, 54,1)', 'rgba(134, 98, 164,1)'
+                    'rgba(255, 61, 103)', 'rgba(5, 155, 255)', 'rgba(255, 194, 51)'
+                    // 'rgba(83, 188, 155,1)', 'rgba(245, 141, 54,1)', 'rgba(134, 98, 164,1)'
                   ],
                 }
               ]
@@ -222,19 +225,19 @@ export class ImplementationProjectStatusComponent implements OnInit {
         this.StatusCounts = PSdata.Data;
         var data = {
           //labels : ['(blanks)','A-Active/Date Confirmed','C-Closed','H-On Hold','N-Active/No Date Confirmed','P-Pipeline','X-Cancelled'],
-          labels : ['C-Closed','H-Hold','A-Active/Date Confirmed','N-Active/No Date Confirmed'],
+          labels : ['A-Active/Date Confirmed','C-Closed','H-Hold','N-Active/No Date Confirmed'],
           datasets : [
             {
               label : "Total Count By Project Status ("+Math.round(this.StatusCounts[0].C_Closed+this.StatusCounts[0].H_OnHold+this.StatusCounts[0].A_Active_Date+this.StatusCounts[0].N_Active_NoDate)+")",
-              data : [this.StatusCounts[0].C_Closed,this.StatusCounts[0].H_OnHold,this.StatusCounts[0].A_Active_Date,this.StatusCounts[0].N_Active_NoDate],
+              data : [this.StatusCounts[0].A_Active_Date,this.StatusCounts[0].C_Closed,this.StatusCounts[0].H_OnHold,this.StatusCounts[0].N_Active_NoDate],
               backgroundColor: [
-                'rgba(245, 176, 65,0.4)', 'rgba(93, 173, 226,0.4)','rgba(244, 208, 63 ,0.4)','rgba(93, 109, 126,0.4)'
+                'rgba(46, 204, 113 ,1)','rgba(245, 176, 65,1)', 'rgba(234, 135, 69,1)','rgba(236, 112, 99,1)'
               ],
               borderColor: [
-                'rgba(245, 176, 65,1)', 'rgba(93, 173, 226,1)','rgba(244, 208, 63 ,1)', 'rgba(93, 109, 126,1)'
+                'rgba(229, 231, 233,1)','rgba(229, 231, 233,1)', 'rgba(229, 231, 233,1)', 'rgba(229, 231, 233,1)'
               ],
               hoverBackgroundColor: [
-                'rgba(245, 176, 65,1)', 'rgba(93, 173, 226,1)','rgba(244, 208, 63 ,1)', 'rgba(93, 109, 126,1)'
+                'rgba(46, 204, 113 ,0.7)','rgba(245, 176, 65,0.7)', 'rgba(234, 135, 69,0.7)','rgba(236, 112, 99,0.7)'
               ],
               // borderWidth: 2,
               // fill: false,
@@ -380,9 +383,12 @@ export class ImplementationProjectStatusComponent implements OnInit {
             {
               label : "Total Count By Leaders ("+Math.round(PLdata.Data.map(t => t.WorkspaceCount).reduce((acc,value) => acc + value,0))+")",
               data : this.LeadersCount,
-              backgroundColor: 'rgb(46, 204, 113 ,0.4)',
-              borderColor : 'rgb(46, 204, 113 ,1)',
-              hoverBackgroundColor : 'rgb(46, 204, 113 ,1)',
+              // backgroundColor: 'rgb(46, 204, 113 ,0.4)',
+              // borderColor : 'rgb(46, 204, 113 ,1)',
+              // hoverBackgroundColor : 'rgb(46, 204, 113 ,1)',
+              backgroundColor : 'rgb(52, 152, 219 ,0.4)',
+              borderColor : 'rgb(52, 152, 219 ,1)',
+              hoverBackgroundColor : 'rgb(52, 152, 219 ,1)',
               borderWidth: 2,
               fill: false,
             }
@@ -438,7 +444,7 @@ export class ImplementationProjectStatusComponent implements OnInit {
               anchor : 'end' as 'end',
               align : 'end' as 'end',
               color : 'black',
-              backgroundColor : 'rgb(46, 204, 113 ,0.4)',
+              backgroundColor : 'rgb(52, 152, 219,0.4)',
               padding : 3,
               borderRadius : 6,
               font: {
@@ -489,9 +495,12 @@ export class ImplementationProjectStatusComponent implements OnInit {
               {
                 label : "Total Count By Group Names ("+Math.round(GNdata.Data.map(t => t.WorkspaceCount).reduce((acc,value) => acc + value,0))+")",
                 data : this.GroupNamesCount,
-                backgroundColor : 'rgb(52, 152, 219 ,0.4)',
-                borderColor : 'rgb(52, 152, 219 ,1)',
-                hoverBackgroundColor : 'rgb(52, 152, 219 ,1)',
+                backgroundColor : 'rgba(48, 219, 193 ,0.4)',
+                borderColor : 'rgba(48, 219, 193 ,1)',
+                hoverBackgroundColor : 'rgba(48, 219, 193,1)',
+                // backgroundColor : 'rgb(52, 152, 219 ,0.4)',
+                // borderColor : 'rgb(52, 152, 219 ,1)',
+                // hoverBackgroundColor : 'rgb(52, 152, 219 ,1)',
                 borderWidth: 2,
                 fill : false
                 //backgroundColor: 'rgb(70, 191, 189,0.7)',//rgb(59, 138, 217,0.9)',
@@ -545,7 +554,7 @@ export class ImplementationProjectStatusComponent implements OnInit {
                 anchor : 'end' as 'end',
                 align : 'end' as 'end',
                 color : 'black',
-                backgroundColor : 'rgb(52, 152, 219 ,0.4)',
+                backgroundColor : 'rgb(48, 219, 193 ,0.4)',
                 padding : 3,
                 borderRadius : 6,
                 font: {

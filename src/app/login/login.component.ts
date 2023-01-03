@@ -45,6 +45,10 @@ export class LoginComponent implements OnInit {
       }
     }
   }
+  Cancel(){
+    localStorage.clear();
+    this.router.navigate(["/Dashboard"]);
+  }
   OnRegisterClick(){
     this.router.navigate(["/Register"]);
   }

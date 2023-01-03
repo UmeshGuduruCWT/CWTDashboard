@@ -28,6 +28,7 @@ export interface CTOData {
     Task_Start_Date : string,
     Task_Start_Date_c : string,
     Task_Due_Date : string,
+    OwnershipRevenue : string,
     Task_Due_Date_c : string,
     Workspace__Project_Level : string,
     //Milestone__Project_Start_Date : string,

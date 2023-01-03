@@ -43,10 +43,9 @@ export class CycleTimeComponent implements OnInit {
   c_SelectedYears : any;c_SelectedMonths : any;c_SelectedLevels : any;c_SelectedMilestonestatus : any;c_SelectedRegions : any;c_SelectedImplementation : any;
   displayedColumns: string[] = ['CycleTimeCategory', 'January_A','February_A','March_A','April_A','May_A','June_A','July_A','August_A','September_A','October_A','November_A','December_A','Total_A','Target_A',];//'H_One_A','TargetH1','H_Two_A','TargetCycleTime'//,'Total_A'
   // 'TargetH1',
-  displayedColumns_data: string[] = ['Client', 'RevenueID','Workspace_Title','MilestoneTitle','ImplementationType','Region','Country','ProjectStatus','ProjectLevel','GoLive','ProjectStart','CycleTime','CycleTimeCategories','GoLiveYear','GoLiveMonth'];
-  constructor(
-    public datepipe : DatePipe,public service : DashboardServiceService,public dialog: MatDialog, public dashboard : LivedashboardComponent,private excelService:ExcelService) 
-  {
+  displayedColumns_data: string[] = ['Client', 'RevenueID','Workspace_Title','MilestoneTitle','ImplementationType','Region','Country','ProjectStatus','ProjectLevel','GoLive','ProjectStart','CycleTime','CycleTimeCategories','CycleTimeDelayCode','GoLiveYear','GoLiveMonth'];
+  constructor(public datepipe : DatePipe,public service : DashboardServiceService,public dialog: MatDialog,
+    public dashboard : LivedashboardComponent,private excelService:ExcelService) {
     //set screenWidth on page load
     this.screenWidth = window.innerWidth;
     this.screenHeight = window.innerHeight;
@@ -478,13 +477,105 @@ export class CycleTimeComponent implements OnInit {
         }
       },
     }
+    // var Options = {
+    //   responsive : true,
+    //   bezierCurve: false,
+    //   hover: {
+    //     mode: 'index' as 'index',
+    //     intersect: false,
+    //     animationDuration: 0 
+    //   },
+    //   legend: {
+    //     display: true,
+    //     position : 'bottom' as 'bottom',
+    //     fullWidth : true,
+    //     labels: {
+    //         fontColor: '#000000',
+    //         fontSize :  13,
+    //         padding : 10,
+    //         fontStyle : 'bold',
+    //         fontFamily : 'Arial',
+    //     }
+    //   },
+    //   title: {
+    //     display: true,
+    //     text: ' '
+    //   },
+    //   scales: {
+    //     yAxes: [{
+    //       id: 'A',
+    //       type: 'linear',
+    //       position: 'left',
+    //       ticks: {
+    //         fontSize : 12,
+    //         fontStyle : 'normal',
+    //         fontColor : '#000000',
+    //         fontFamily : 'Arial',
+    //       },
+    //       gridLines: {
+    //         color: "rgba(0, 0, 0, 0)",
+    //       },
+    //       scaleLabel: {
+    //         display: true,
+    //         labelString: 'Cycle Time',
+    //         fontSize : 14,
+    //         fontStyle : 'normal',
+    //         fontColor : '#000000',
+    //         fontFamily : 'Arial',
+    //       }
+    //     }],
+    //     xAxes: [{
+    //       ticks: {
+    //         fontSize : 12,
+    //         fontStyle : 'normal',
+    //         fontColor : '#000000',
+    //         fontFamily : 'Arial',
+    //       },
+    //       gridLines: {
+    //         color: "rgba(0, 0, 0, 0)",
+    //       },
+    //     }]
+    //   },
+    //   plugins :{
+    //     labels: {
+    //       render : function(args){
+    //         return Math.round(args.value);
+    //       },
+    //       fontColor: '#3B3B3B',
+    //       position: 'outside',
+    //       textMargin: 6,
+    //       fontSize: 13,
+    //       fontStyle : 'bold',
+    //       fontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
+    //     }
+    //     // labels : false,
+    //   },
+    //   animation: {
+    //     duration: 0, // general animation time
+    //   },
+    //   responsiveAnimationDuration: 0, // animation duration after a resize
+    //   tooltips: {
+    //     callbacks: {
+    //       label: function(tooltipItems, data) {
+    //         if(tooltipItems.datasetIndex === 0){
+    //           // return data.labels[tooltipItems.index] +
+    //           return " Project Count : " + 
+    //           Math.round(data.datasets[tooltipItems.datasetIndex].data[tooltipItems.index]);
+    //         }else if(tooltipItems.datasetIndex === 1){
+    //           // return data.labels[tooltipItems.index] +
+    //           return " Cycle Time : " + 
+    //           Math.round(data.datasets[tooltipItems.datasetIndex].data[tooltipItems.index]);
+    //         }
+    //       }
+    //     }
+    //   },
+    // }
     var Options = {
       responsive : true,
       bezierCurve: false,
       hover: {
         mode: 'index' as 'index',
         intersect: false,
-        animationDuration: 0 
       },
       legend: {
         display: true,
@@ -518,7 +609,28 @@ export class CycleTimeComponent implements OnInit {
           },
           scaleLabel: {
             display: true,
-            labelString: 'Cycle Time',
+            labelString: 'Project Count',
+            fontSize : 14,
+            fontStyle : 'normal',
+            fontColor : '#000000',
+            fontFamily : 'Arial',
+          }
+        },{
+          id: 'B',
+          type: 'linear',
+          position: 'right',
+          ticks: {
+            fontSize : 12,
+            fontStyle : 'normal',
+            fontColor : '#000000',
+            fontFamily : 'Arial',
+          },
+          gridLines: {
+            color: "rgba(0, 0, 0, 0)",
+          },
+          scaleLabel: {
+            display: true,
+            labelString: 'Cycle Time & Targets',
             fontSize : 14,
             fontStyle : 'normal',
             fontColor : '#000000',
@@ -540,12 +652,22 @@ export class CycleTimeComponent implements OnInit {
       plugins :{
         labels: {
           render : function(args){
-            return Math.round(args.value);
+            if(args.dataset.yAxisID == "B"){
+              if(args.dataset.order == 1){
+                return "          "+Math.round(args.value)
+              }else{
+                return "                    "+Math.round(args.value)
+              }
+            }else{
+              return Math.round(args.value);
+            }
           },
-          fontColor: '#3B3B3B',
+          fontColor: (c) => {
+            return c.dataset.type == "line" ? c.dataset.order == 1 ? 'rgb(255, 43, 22)' : 'rgb(212, 172, 13)' : 'rgb(46, 134, 193)'
+          },
           position: 'outside',
           textMargin: 6,
-          fontSize: 13,
+          fontSize: 14,
           fontStyle : 'bold',
           fontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
         }
@@ -556,15 +678,18 @@ export class CycleTimeComponent implements OnInit {
       },
       responsiveAnimationDuration: 0, // animation duration after a resize
       tooltips: {
+        mode: 'index' as 'index',
+        intersect: false,
         callbacks: {
           label: function(tooltipItems, data) {
             if(tooltipItems.datasetIndex === 0){
-              // return data.labels[tooltipItems.index] +
-              return " Project Count : " + 
+              return " Target : " + 
               Math.round(data.datasets[tooltipItems.datasetIndex].data[tooltipItems.index]);
             }else if(tooltipItems.datasetIndex === 1){
-              // return data.labels[tooltipItems.index] +
               return " Cycle Time : " + 
+              Math.round(data.datasets[tooltipItems.datasetIndex].data[tooltipItems.index]);
+            }else if(tooltipItems.datasetIndex === 2){
+              return " Project Count : " + 
               Math.round(data.datasets[tooltipItems.datasetIndex].data[tooltipItems.index]);
             }
           }
@@ -597,9 +722,9 @@ export class CycleTimeComponent implements OnInit {
               {
                 label : "Project Count",
                 data: [this.CycleTimeData[i].January_PC,this.CycleTimeData[i].February_PC,this.CycleTimeData[i].March_PC,this.CycleTimeData[i].April_PC,this.CycleTimeData[i].May_PC,this.CycleTimeData[i].June_PC,this.CycleTimeData[i].July_PC,this.CycleTimeData[i].August_PC,this.CycleTimeData[i].September_PC,this.CycleTimeData[i].October_PC,this.CycleTimeData[i].November_PC,this.CycleTimeData[i].December_PC],
-                backgroundColor : 'rgba(5, 155, 255, 0.5)',
-                borderColor : "rgb(5, 155, 255)",
-                hoverBackgroundColor : "rgb(5, 155, 255)",
+                backgroundColor : 'rgba(46, 134, 193, 1)',
+                borderColor : "rgb(229, 231, 233)",
+                hoverBackgroundColor : "rgba(46, 134, 193, 0.7)",
                 fill : false,
                 borderWidth : 2,
                 type : 'bar',
@@ -609,6 +734,32 @@ export class CycleTimeComponent implements OnInit {
           },
           options: Options2,
         })
+        // this.TargetsCanvas = new Chart('TargetsCanvas', {
+        //   type : 'bar',
+        //   data : {
+        //     labels : ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+        //     datasets: [{
+        //       label : "Target",
+        //       data: [this.CycleTimeData[i].Target_A,this.CycleTimeData[i].Target_A,this.CycleTimeData[i].Target_A,this.CycleTimeData[i].Target_A,this.CycleTimeData[i].Target_A,this.CycleTimeData[i].Target_A,this.CycleTimeData[i].Target_A,this.CycleTimeData[i].Target_A,this.CycleTimeData[i].Target_A,this.CycleTimeData[i].Target_A,this.CycleTimeData[i].Target_A,this.CycleTimeData[i].Target_A],
+        //       // data: [this.CycleTimeData[i].TargetH1,this.CycleTimeData[i].TargetH1,this.CycleTimeData[i].TargetH1,this.CycleTimeData[i].TargetH1,this.CycleTimeData[i].TargetH1,this.CycleTimeData[i].TargetH1,this.CycleTimeData[i].TargetCycleTime,this.CycleTimeData[i].TargetCycleTime,this.CycleTimeData[i].TargetCycleTime,this.CycleTimeData[i].TargetCycleTime,this.CycleTimeData[i].TargetCycleTime,this.CycleTimeData[i].TargetCycleTime],
+        //       backgroundColor : 'rgb(255, 43, 22)',
+        //       borderColor : 'rgb(255, 43, 22)',
+        //       fill : false,lineTension: 0,
+        //       type : 'line',
+        //       yAxisID: 'A',
+        //     },{
+        //       label : "Cycle Time",
+        //       data: [this.CycleTimeData[i].January_A,this.CycleTimeData[i].February_A,this.CycleTimeData[i].March_A,this.CycleTimeData[i].April_A,this.CycleTimeData[i].May_A,this.CycleTimeData[i].June_A,this.CycleTimeData[i].July_A,this.CycleTimeData[i].August_A,this.CycleTimeData[i].September_A,this.CycleTimeData[i].October_A,this.CycleTimeData[i].November_A,this.CycleTimeData[i].December_A],
+        //       fill : false,lineTension: 0,
+        //       backgroundColor : 'rgb(212, 172, 13)',
+        //       borderColor : 'rgb(212, 172, 13)',
+        //       type : 'line',
+        //       yAxisID: 'A',
+        //     }
+        //   ]
+        //   },
+        //   options: Options,
+        // })
         this.TargetsCanvas = new Chart('TargetsCanvas', {
           type : 'bar',
           data : {
@@ -621,15 +772,29 @@ export class CycleTimeComponent implements OnInit {
               borderColor : 'rgb(255, 43, 22)',
               fill : false,lineTension: 0,
               type : 'line',
-              yAxisID: 'A',
+              yAxisID: 'B',
+              order : 1
             },{
               label : "Cycle Time",
               data: [this.CycleTimeData[i].January_A,this.CycleTimeData[i].February_A,this.CycleTimeData[i].March_A,this.CycleTimeData[i].April_A,this.CycleTimeData[i].May_A,this.CycleTimeData[i].June_A,this.CycleTimeData[i].July_A,this.CycleTimeData[i].August_A,this.CycleTimeData[i].September_A,this.CycleTimeData[i].October_A,this.CycleTimeData[i].November_A,this.CycleTimeData[i].December_A],
               fill : false,lineTension: 0,
-              backgroundColor : 'rgb(40, 180, 99)',
-              borderColor : 'rgb(40, 180, 99)',
+              backgroundColor : 'rgb(212, 172, 13)',
+              borderColor : 'rgb(212, 172, 13)',
               type : 'line',
+              yAxisID: 'B',
+              order : 2
+            },
+            {
+              label : "Project Count",
+              data: [this.CycleTimeData[i].January_PC,this.CycleTimeData[i].February_PC,this.CycleTimeData[i].March_PC,this.CycleTimeData[i].April_PC,this.CycleTimeData[i].May_PC,this.CycleTimeData[i].June_PC,this.CycleTimeData[i].July_PC,this.CycleTimeData[i].August_PC,this.CycleTimeData[i].September_PC,this.CycleTimeData[i].October_PC,this.CycleTimeData[i].November_PC,this.CycleTimeData[i].December_PC],
+              backgroundColor : 'rgba(46, 134, 193,1)',
+              borderColor : "rgb(229, 231, 233)",
+              hoverBackgroundColor : "rgba(46, 134, 193,0.7)",
+              fill : false,
+              borderWidth : 2,
+              type : 'bar',
               yAxisID: 'A',
+              order : 3
             }
           ]
           },
@@ -639,11 +804,6 @@ export class CycleTimeComponent implements OnInit {
       this.allloader = false;
       this.m_loader = false;
       this.dataSource = null;
-      // delete this.CycleTimeData[1].Target_A;
-      // delete this.CycleTimeData[2].Target_A;
-      // delete this.CycleTimeData[3].Target_A;
-      // delete this.CycleTimeData[4].Target_A;
-      // delete this.CycleTimeData[5].Target_A;
       this.dataSource = this.CycleTimeData;
       console.log(this.dataSource);
     })
@@ -682,6 +842,7 @@ export class CycleTimeComponent implements OnInit {
             'CycleTimeCategories' : o.CycleTimeCategories,
             'GoLiveYear' : o.GoLiveYear,
             'GoLiveMonth' : o.GoLiveMonth,
+            'CycleTimeDelayCode' : o.CycleTimeDelayCode
           };
         });
         this.excelService.exportAsExcelFile(CustomizedData, 'CycleTime Data');

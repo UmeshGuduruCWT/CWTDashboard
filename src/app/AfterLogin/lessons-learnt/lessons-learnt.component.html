@@ -1,5 +1,5 @@
 <mat-drawer-container>
-    <mat-drawer mode="side" #sidenav opened style="position: fixed;padding-top: 60px;width: 19%;">
+    <mat-drawer mode="side" #sidenav opened style="position: fixed;padding-top: 60px;width: 15%;border: 1px solid #333F48;">
         <div class="row" style="margin: 0px;padding: 0px;">
             <div class="col-12" style="margin: 0px;padding: 0px;">
                 <div class="sticky">
@@ -45,7 +45,7 @@
         </div>
     </mat-drawer>
     <mat-drawer-content>
-        <div class="row" style="margin: 0px;padding: 0px;">
+        <div class="row" style="margin: 0px;padding: 0px;position: relative;">
             <div class="col-md-12">
                 <label class="col-md-12" style="margin-top : 20px;height: 25px;">
                     <button mat-raised-button style="height: 33px;background-color: #F16950;color: white;" (click)="ExportData()">Export
@@ -53,7 +53,7 @@
                     </button>
                 </label>
                 <div class="col-md-12">
-                    <div class="example-container" [ngStyle]="{'height' : (screenHeight-100)+'px'}" style="border: 1px solid rgb(196, 196, 196);">
+                    <div class="example-container" [ngStyle]="{'height' : (screenHeight-160)+'px'}" style="border: 2px solid black;">
                         <table mat-table [dataSource]="dataSource" matSort>
                             <ng-container matColumnDef="iMeet_Workspace_Title">
                                 <th mat-header-cell *matHeaderCellDef  mat-sort-header class="textSizes" style="padding-left: 10px;"> Workspace Title </th>
@@ -111,14 +111,14 @@
                                 <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="padding-right: 10px;"> Action Taken By Leader </th>
                                 <td mat-cell *matCellDef="let element" style="padding-right: 10px;"> <label (click)="ShowComment(element.iMeet_Workspace_Title,element.Region,element.Action_Taken__By_Leader_)" class="showlessText">{{element.Action_Taken__By_Leader_}}</label></td>
                             </ng-container>
-                            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true" style="background-color: #A6A6A6;"></tr>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true" style="padding-top: 0px;margin-top: 0px;"></tr>
                             <tr mat-row *matRowDef="let row; columns: displayedColumns;" style="height: 23px;"></tr>
                         </table>
                     </div>
                 </div>
             </div>
             <div style="position: absolute;cursor: pointer;width: 30px;height: 30px;background-color: #333F48;margin-left: 0px;margin-top: 20%;" class="mat-elevation-z2" (click)= "sidenav.toggle()"><mat-icon *ngIf="!sidenav.opened" style="color: white;font-size: 24px;margin-top: 2px;margin-left: 3px;">arrow_forward_ios</mat-icon><mat-icon *ngIf="sidenav.opened" style="color: white;font-size: 24px;margin-top: 2px;margin-left: 8px;">arrow_back_ios</mat-icon></div>
-            <div style="position: absolute;cursor: pointer;width: 30px;height: 30px;background-color: #333F48;margin-left: 0px;margin-top: 20%;" class="mat-elevation-z2" (click)= "sidenav.toggle()"><mat-icon *ngIf="!sidenav.opened" style="color: white;font-size: 24px;margin-top: 2px;margin-left: 3px;">arrow_forward_ios</mat-icon><mat-icon *ngIf="sidenav.opened" style="color: white;font-size: 24px;margin-top: 2px;margin-left: 8px;">arrow_back_ios</mat-icon></div>
+            <!-- <div style="position: absolute;cursor: pointer;width: 30px;height: 30px;background-color: #333F48;margin-left: 0px;margin-top: 20%;" class="mat-elevation-z2" (click)= "sidenav.toggle()"><mat-icon *ngIf="!sidenav.opened" style="color: white;font-size: 24px;margin-top: 2px;margin-left: 3px;">arrow_forward_ios</mat-icon><mat-icon *ngIf="sidenav.opened" style="color: white;font-size: 24px;margin-top: 2px;margin-left: 8px;">arrow_back_ios</mat-icon></div> -->
         </div>
         <!-- <div style="height: 40px;text-align: center;background-color: #333F48;">
             <label style="text-align: center;margin-top: 10px;font-size: 12px;color: white;font-family: Montserrat, sans-serif">Copyright ©2020 @CWT | All rights reserved</label>

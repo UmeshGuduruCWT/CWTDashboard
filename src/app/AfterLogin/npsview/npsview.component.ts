@@ -41,7 +41,9 @@ export class NPSViewComponent implements OnInit {
   Language = new FormControl();
   CompanyName;
   // CompanyName = new FormControl();
-  ClientType;ClientContactNumber;ClientScope: string = "";DSD;DQS;OnlineTeam;
+  ClientType;ClientContactNumber;
+  OpportunityId;
+  ClientScope: string = "";DSD;DQS;OnlineTeam;
   SurveyReceived;Nps_comments_positive;Nps_comments_improve;Nps_comments_happier;Status;
   NpsCommentOne = new FormControl();NpsCommentwo = new FormControl();NpsCommentthree = new FormControl();
   AssignLeader_data;NPSScore_data;NPSIndicator_data;Client_Feedback;action;
@@ -491,13 +493,18 @@ export class NPSViewComponent implements OnInit {
       Errors = Errors+1;
       ErrorMessage += "NPS Score should not be empty";
     }
+    if(this.OpportunityId != null && (this.OpportunityId < 100000000000000 || this.OpportunityId > 999999999999999) )
+    {
+      Errors = Errors+1;
+      ErrorMessage += "Opportunity Id should be 15 digits";
+    }
     if(this.SurveyReceived != null && this.NPSScore.value < 7 && (this.AssignLeader.value == null || this.AssignLeader.value == "" || this.AssignLeader.value == "N/A")){
       Errors = Errors+1;
       ErrorMessage += "Assign Leader should not be empty";
     }
     if(Errors == 0){
       this.service.NPSViewUpdate(this.NPSID,this.ClientName,this.CompanyName,this.Email,this.Country.value,this.Region,this.Language.value,this.RManager.value,this.GManager.value,
-        this.LManager.value,this.ClientType,this.ClientContactNumber,Survey_Sent,this.ClientScope,Survey_Received,this.Status,this.AssignLeader.value,this.NPSScore.value,this.NPSIndicator.value,this.Nps_comments_positive,this.Nps_comments_improve,this.Nps_comments_happier,
+        this.LManager.value,this.ClientType,this.ClientContactNumber,Survey_Sent,this.ClientScope,Survey_Received,this.Status,this.AssignLeader.value,this.OpportunityId,this.NPSScore.value,this.NPSIndicator.value,this.Nps_comments_positive,this.Nps_comments_improve,this.Nps_comments_happier,
         this.Client_Feedback,this.action,this.SelectedReasonType,localStorage.getItem("UID"),nps_commentone,nps_commenttwo,nps_commentthree,RecordStatus).subscribe(data=>{
           if(data.code == 200){
             alert(data.message);
@@ -547,7 +554,8 @@ export class NPSViewComponent implements OnInit {
         "What can we improve to make your experience better" : o.NPSCommentsTwo,
         "NPS Comments What is the one thing we can do to make you happier" : o.NPSComments_Whatistheonethingwecandotomakeyouhappier,
         "What can we do to go above expectations" : o.NPSCommentsThree,
-        "Record Status" : o.RecordStatus
+        "Record Status" : o.RecordStatus,
+        "Opportunity Id" : o.OpprtunityId
       };
     });
     this.excelservice.exportAsExcelFile(CustomizedData, 'NPS View');
@@ -604,6 +612,7 @@ export class NPSViewComponent implements OnInit {
     this.NPSID = this.NPSViewData[this.RecordNO].NpsId;
     this.ClientName = this.NPSViewData[this.RecordNO].ClientName;
     this.ClientType = this.NPSViewData[this.RecordNO].ClientType;
+    this.OpportunityId = this.NPSViewData[this.RecordNO].OpprtunityId;
     // this.SingleResource = this.NPSViewData[this.RecordNO].SingleResource;
     if(this.NPSViewData[this.RecordNO].LocalProjectManager == null || this.NPSViewData[this.RecordNO].LocalProjectManager == "null"){
       this.LManager.setValue("---");

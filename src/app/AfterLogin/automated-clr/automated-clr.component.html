@@ -26,9 +26,7 @@
 </div>
 <app-adhoc [AdhocData]="AdhocData" (SendOutput)="RecievedOutput($event)" *ngIf="NgIfAdhocDisplay" style="background-color: green;"></app-adhoc>
 <!-- *ngIf="NgIfAutomatedCLR" -->
-<ng-template #HtmlContent>
-<p>Hello i'm a <strong>bold</strong> text!</p>
-</ng-template>
+
 <div class="col-12">
     <div class="example-container" [ngStyle]="{'height' : (screenHeight-210)+'px'}" style="border: 1px solid rgb(196, 196, 196);">
         <!-- [ngStyle]="{'height' : screenHeight > 540 ? (screenHeight-160)+'px' : (screenHeight-160)+'px'}" -->
@@ -41,8 +39,11 @@
                 <th mat-header-cell *matHeaderCellDef colspan="1" class="maintextSizes" style="padding: 8px 0px 0px 0px;background-color: rgb(241, 241, 241);max-width: 40px;width: 40px;"><mat-checkbox color="warn" [(ngModel)]="selectAllIds" (change)="onSelectAllIds()" name="selectAllIds"></mat-checkbox></th>
             </ng-container>
             <ng-container matColumnDef="Client" sticky>
-                <th mat-header-cell *matHeaderCellDef [matTooltip]="HtmlContent" contentType="template" class="maintextSizes" mat-sort-header  style="max-width: 160px;width: 160px;background-color: #00B0F0;" > Account Name </th>
-                <td mat-cell *matCellDef="let element" class="texttd" style="max-width: 160px;width: 160px;" [ngStyle]="{'background-color' : ClientFilter.value == '' || ClientFilter.value == null ? '#F1F1F1' : '#F3F189','color' : element.CheckComments == '---' ? '#000000' : '#EC7063','font-weight' : element.CheckComments == '---' ? 'normal' : 'bold'}"><label (click)="ShowComment(element.Client,element.RevenueID,'')" class="showlessText"> {{element.Client}}</label> </td>
+                <th mat-header-cell *matHeaderCellDef class="maintextSizes" mat-sort-header  style="max-width: 160px;width: 160px;background-color: #00B0F0;">
+                    Account Name
+                </th>
+                <td mat-cell *matCellDef="let element" class="texttd" style="max-width: 160px;width: 160px;" [ngStyle]="{'background-color' : element.GoLiveYear == CurrentYear ? element.Workspace__ELT_Overall_Status == 'Issue - Red' ? '#CB4335' : element.Workspace__ELT_Overall_Status == 'Risk - Amber' ? '#F7DC6F' : '#FFFFFF' : '#FFFFFF','color' : element.GoLiveYear == CurrentYear ? element.Workspace__ELT_Overall_Status == 'Issue - Red' ? 'white' : 'black'  : 'black'}" ><label (click)="ShowComment(element.Client,element.RevenueID,'')" class="showlessText"> {{element.Client}}</label> </td>
+                <!-- [ngStyle]="{'background-color' : ClientFilter.value == '' || ClientFilter.value == null ? '#F1F1F1' : '#F3F189','color' : element.CheckComments == '---' ? '#000000' : '#EC7063','font-weight' : element.CheckComments == '---' ? 'normal' : 'bold'}" -->
             </ng-container>
             <ng-container matColumnDef="Client_h" sticky>
                 <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" [ngStyle]="{'background-color' : ClientFilter.value == '' || ClientFilter.value == null ? '#FFFFFF' : '#F5B7B1'}" style="background-color: #F1F1F1;max-width: 160px;width: 160px;">
@@ -52,10 +53,54 @@
                     </mat-form-field>
                 </th>
             </ng-container>
+            <ng-template #HtmlContentRI style="padding : 10px">
+                <style>
+                    .tooltip_table, .tooltip_th, .tooltip_td {
+                        border: 1px solid rgb(196, 196, 196);
+                        border-collapse: collapse;
+                        text-align : center;
+                        padding : 3px
+                    }
+                    .tooltip_table{
+                        padding : 0px;
+                        margin: 0px;
+                        background-color: #FF0000;
+                    }
+                    .tooltip_th {
+                        background-color: #FF0000;
+                        color: white;
+                        text-align: center;
+                        font-size: 12px;
+                        font-weight: bold;
+                    }
+                    .tooltip_td{
+                        padding: 5px;
+                        font-size: 12px;
+                        color: black;
+                        background-color: white;
+                    }
+                </style>
+                <table class="tooltip_table">
+                  <tr>
+                    <th class="tooltip_th">Revenue ID Series</th>
+                    <th class="tooltip_th">Data taken from</th>
+                  </tr>
+                  <tr>
+                    <td class="tooltip_td">1 Series and 3 Series</td>
+                    <td class="tooltip_td">Combination of CRM and iMeet or Pipeline Records </td>
+                  </tr>
+                  <tr>
+                    <td class="tooltip_td">4 Series</td>
+                    <td class="tooltip_td">When record not available in CRM/PSD</td>
+                  </tr>
+                  <tr>
+                    <td class="tooltip_td">6 Series</td>
+                    <td class="tooltip_td">Ad-hoc record</td>
+                  </tr>
+                </table>
+            </ng-template>
             <ng-container matColumnDef="RevenueID" sticky>
-                <th mat-header-cell *matHeaderCellDef class="maintextSizes" mat-sort-header  style="max-width: 140px;width: 140px;background-color: #00B0F0;" matTooltip="Revenue ID 1&3 series for project team (taken from CRM). 
-                Revenue ID 4 series to be used when Revenue ID not available in CRM. 
-                Revenue ID 6 series for Ad-Hoc records."> Revenue ID </th>
+                <th mat-header-cell *matHeaderCellDef class="maintextSizes" mat-sort-header  style="max-width: 140px;width: 140px;background-color: #00B0F0;" [options]="tooltipOptions2" [tooltip]="HtmlContentRI" content-type="template"> Revenue ID </th>
                 <td mat-cell *matCellDef="let element" style="max-width: 140px;width: 140px;" [ngStyle]="{'background-color' : RevenueIDFilter.value == '' || RevenueIDFilter.value == null ? '#FFFFFF' : '#F3F189'}" class="texttd"> {{element.RevenueID}} </td>
             </ng-container>
             <ng-container matColumnDef="RevenueID_h" sticky>
@@ -114,8 +159,44 @@
                     </mat-form-field>
                 </th>
             </ng-container>
+            <ng-template #HtmlContentPS style="padding : 10px">
+                <style>
+                    .tooltip_table, .tooltip_th, .tooltip_td {
+                        border: 1px solid rgb(196, 196, 196);
+                        border-collapse: collapse;
+                        text-align : center;
+                        padding : 3px
+                    }
+                    .tooltip_table{
+                        padding : 0px;
+                        margin: 0px;
+                        background-color: #FF0000;
+                    }
+                    .tooltip_th {
+                        background-color: #FF0000;
+                        color: white;
+                        text-align: center;
+                        font-size: 12px;
+                        font-weight: bold;
+                    }
+                    .tooltip_td{
+                        padding: 5px;
+                        font-size: 12px;
+                        color: black;
+                        background-color: white;
+                    }
+                </style>
+                <table class="tooltip_table">
+                  <tr>
+                    <th class="tooltip_th">Pipeline Status</th>
+                  </tr>
+                  <tr>
+                    <td class="tooltip_td">Before updating this column, please ensure you own the Opportunity as a whole for Implementations and not a Revenue Id only as this column is used to manage Status for the whole Opportunity</td>
+                  </tr>
+                </table>
+            </ng-template>
             <ng-container matColumnDef="Pipeline_status">
-                <th mat-header-cell *matHeaderCellDef class="maintextSizes" mat-sort-header style="background-color: #7030A0;color: white;max-width: 120px;width: 120px;" matTooltip="Before updating this column, please ensure you own the Opportunity as a whole for Implementations and not a Revenue Id only as this column is used to manage Status for the whole Opportunity"> Pipeline Status</th>
+                <th mat-header-cell *matHeaderCellDef class="maintextSizes" mat-sort-header style="background-color: #7030A0;color: white;max-width: 120px;width: 120px;" [options]="tooltipOptions2" [tooltip]="HtmlContentPS" content-type="template"> Pipeline Status</th>
                 <td mat-cell *matCellDef="let element" style="max-width: 120px;width: 120px;" [ngStyle]="{'background-color' : Pipeline_statusFilter.value == '' || Pipeline_statusFilter.value == null ? '#FFFFFF' : '#F3F189'}" class="texttd"> {{element.Pipeline_status}} </td>
             </ng-container>
             <ng-container matColumnDef="Pipeline_status_h">
@@ -323,8 +404,45 @@
                     </mat-form-field>
                 </th>
             </ng-container>
+            <ng-template #HtmlContentPSD style="padding : 10px">
+                <style>
+                    .tooltip_table, .tooltip_th, .tooltip_td {
+                        border: 1px solid rgb(196, 196, 196);
+                        border-collapse: collapse;
+                        text-align : center;
+                        padding : 3px
+                    }
+                    .tooltip_table{
+                        padding : 0px;
+                        margin: 0px;
+                        background-color: #FF0000;
+                    }
+                    .tooltip_th {
+                        background-color: #FF0000;
+                        color: white;
+                        text-align: center;
+                        font-size: 12px;
+                        font-weight: bold;
+                    }
+                    .tooltip_td{
+                        padding: 5px;
+                        font-size: 12px;
+                        color: black;
+                        background-color: white;
+                    }
+                </style>
+                <table class="tooltip_table">
+                  <tr>
+                    <th class="tooltip_th">Project Start Date</th>
+                  </tr>
+                  <tr>
+                    <td class="tooltip_td">Task Type: Project start, if the task status is 'Completed' then the start date is the task completed date,
+                         if the status is 'To Do' then the start date is the task due date</td>
+                  </tr>
+                </table>
+            </ng-template>
             <ng-container matColumnDef="ProjectStart_ForCycleTime_c">
-                <th mat-header-cell *matHeaderCellDef class="maintextSizes" mat-sort-header style="background-color: #FFC000;max-width: 120px;width: 120px;" matTooltip="Task Type: Project start, if the task status is 'Completed' then the start date is the task completed date, if the status is 'To Do' then the start date is the task due date"> Project Start Date </th>
+                <th mat-header-cell *matHeaderCellDef class="maintextSizes" mat-sort-header style="background-color: #FFC000;max-width: 120px;width: 120px;" [options]="tooltipOptions2" [tooltip]="HtmlContentPSD" content-type="template"> Project Start Date </th>
                 <td mat-cell *matCellDef="let element" style="max-width: 120px;width: 120px;" [ngStyle]="{'background-color' : ProjectStartDate_cFilter.value == '' || ProjectStartDate_cFilter.value == null ? '#FFFFFF' : '#F3F189','color' : element.CheckComments.indexOf('Project Start') > 0 ? '#EC7063' : '#000000','font-weight' : element.CheckComments.indexOf('Project Start') > 0 ? 'bold' : 'normal'}" class="texttd"> {{element.ProjectStart_ForCycleTime_c}} </td>
             </ng-container>
             <ng-container matColumnDef="ProjectStartDate_c_h">
@@ -335,9 +453,45 @@
                     </mat-form-field>
                 </th>
             </ng-container>
+            <ng-template #HtmlContentCT style="padding : 10px">
+                <style>
+                    .tooltip_table, .tooltip_th, .tooltip_td {
+                        border: 1px solid rgb(196, 196, 196);
+                        border-collapse: collapse;
+                        text-align : center;
+                        padding : 3px
+                    }
+                    .tooltip_table{
+                        padding : 0px;
+                        margin: 0px;
+                        background-color: #FF0000;
+                    }
+                    .tooltip_th {
+                        background-color: #FF0000;
+                        color: white;
+                        text-align: center;
+                        font-size: 12px;
+                        font-weight: bold;
+                    }
+                    .tooltip_td{
+                        padding: 5px;
+                        font-size: 12px;
+                        color: black;
+                        background-color: white;
+                    }
+                </style>
+                <table class="tooltip_table">
+                  <tr>
+                    <th class="tooltip_th">Cycle Time</th>
+                  </tr>
+                  <tr>
+                    <td class="tooltip_td">Cycle time is calculated basis the project start date -> go live date</td>
+                  </tr>
+                </table>
+            </ng-template>
             <ng-container matColumnDef="CycleTime">
-                <th mat-header-cell *matHeaderCellDef class="maintextSizes" mat-sort-header style="background-color: #FFC000;max-width: 100px;width: 100px;" matTooltip="Cycle time is calculated basis the project start date -> go live date"> Cycle Time </th>
-                <td mat-cell *matCellDef="let element" style="max-width: 100px;width: 100px;" [ngStyle]="{'background-color' : CycleTimeFilter.value == '' || CycleTimeFilter.value == null ? '#FFFFFF' : '#F3F189'}" class="texttd"> {{element.CycleTime}} </td>
+                <th mat-header-cell *matHeaderCellDef class="maintextSizes" mat-sort-header style="background-color: #FFC000;max-width: 100px;width: 100px;" [options]="tooltipOptions2" [tooltip]="HtmlContentCT" content-type="template"> Cycle Time </th>
+                <td mat-cell *matCellDef="let element" style="max-width: 100px;width: 100px;" [ngStyle]="{'background-color' : CycleTimeFilter.value == '' || CycleTimeFilter.value == null ? '#FFFFFF' : '#F3F189','color' : element.CheckComments.indexOf('Cycle Time is') > 0 ? '#EC7063' : '#000000','font-weight' : element.CheckComments.indexOf('Cycle Time is') > 0 ? 'bold' : 'normal'}" class="texttd"> {{element.CycleTime}} </td>
             </ng-container>
             <ng-container matColumnDef="CycleTime_h">
                 <th mat-header-cell *matHeaderCellDef style="max-width: 100px;width: 100px;" colspan="1" class="formheader"  [ngStyle]="{'background-color' : CycleTimeFilter.value == '' || CycleTimeFilter.value == null ? '#FFFFFF' : '#F5B7B1'}" >
@@ -347,8 +501,158 @@
                     </mat-form-field>
                 </th>
             </ng-container>
+            <ng-container matColumnDef="CycleTimeCategories">
+                <th mat-header-cell *matHeaderCellDef class="maintextSizes" mat-sort-header style="background-color: #FFC000;max-width: 100px;width: 100px;"> Cycle Time Category </th>
+                <td mat-cell *matCellDef="let element" style="max-width: 230px;width: 230px;" [ngStyle]="{'background-color' : CycleTimeCategoriesFilter.value == '' || CycleTimeCategoriesFilter.value == null ? '#FFFFFF' : '#F3F189','color' : element.CheckComments.indexOf('Cycle Time is') > 0 ? '#EC7063' : '#000000','font-weight' : element.CheckComments.indexOf('Cycle Time is') > 0 ? 'bold' : 'normal'}" class="texttd"><label (click)="ShowComment(element.Client,element.RevenueID,element.CycleTimeCategories)" class="showlessText"> {{element.CycleTimeCategories}} </label></td>
+            </ng-container>
+            <ng-container matColumnDef="CycleTimeCategories_h">
+                <!-- <th mat-header-cell *matHeaderCellDef style="max-width: 230px;width: 230px;" colspan="1" class="formheader"  [ngStyle]="{'background-color' : CycleTimeCategoriesFilter.value == '' || CycleTimeCategoriesFilter.value == null ? '#FFFFFF' : '#F5B7B1'}" >
+                    <mat-form-field class="mat-form-wrap" appearance="outline">
+                        <mat-label>Cycle Time Category</mat-label>
+                        <input style="font-weight: bold" matInput [formControl]="CycleTimeCategoriesFilter">
+                    </mat-form-field>
+                </th> -->
+                <th mat-header-cell *matHeaderCellDef style="max-width: 230px;width: 230px;" colspan="1" class="formheader" [ngStyle]="{'background-color' : CycleTimeCategoriesFilter.value == '' || CycleTimeCategoriesFilter.value == null ? '#FFFFFF' : '#F5B7B1'}">
+                    <mat-form-field class="mat-form-wrap" appearance="outline">
+                        <mat-label>Cycle Time Category</mat-label>
+                        <mat-select [formControl]="CycleTimeCategoriesFilter" multiple (selectionChange)="onCycleTimeCategorychange()">
+                            <mat-select-trigger>
+                                {{CycleTimeCategoriesFilter.value ? CycleTimeCategoriesFilter.value[0] : ''}}
+                                <span *ngIf="CycleTimeCategoriesFilter.value?.length > 1" class="example-additional-selection">
+                                  (+{{CycleTimeCategoriesFilter.value.length - 1}} {{CycleTimeCategoriesFilter.value?.length === 2 ? 'Cycle Time Category' : 'Cycle Time Categories'}})
+                                </span>
+                            </mat-select-trigger>
+                            <div style="padding-top: 15px">
+                                <mat-checkbox style="margin-left: 15px;margin-top: 25px;" class="example-margin" [(ngModel)]="masterCycleTimeCategory" name="masterCycleTimeCategory" (change)="checkUncheckCycleTimeCategory()" color="primary">Select all</mat-checkbox>
+                            </div>
+                            <mat-divider style="margin-left: 5px;margin-right: 5px"></mat-divider>
+                            <mat-option *ngFor="let cycletime_category of CycleTimeCategoryList" [value]="cycletime_category">{{cycletime_category}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </th>
+            </ng-container>
+            <ng-container matColumnDef="CycleTimeDelayCode">
+                <th mat-header-cell *matHeaderCellDef class="maintextSizes" mat-sort-header style="background-color: #FFC000;max-width: 100px;width: 100px;"> Cycle Time Delay Code </th>
+                <td mat-cell *matCellDef="let element" style="max-width: 200px;width: 200px;" [ngStyle]="{'background-color' : CycleTimeDelayCodeFilter.value == '' || CycleTimeDelayCodeFilter.value == null ? '#FFFFFF' : '#F3F189','color' : element.CheckComments.indexOf('Cycle Time is') > 0 ? '#EC7063' : '#000000','font-weight' : element.CheckComments.indexOf('Cycle Time is') > 0 ? 'bold' : 'normal'}" class="texttd"><label (click)="ShowComment(element.Client,element.RevenueID,element.CycleTimeDelayCode)" class="showlessText"> {{element.CycleTimeDelayCode}} </label></td>
+            </ng-container>
+            <ng-container matColumnDef="CycleTimeDelayCode_h">
+                <th mat-header-cell *matHeaderCellDef style="max-width: 140px;width: 140px;" colspan="1" class="formheader"  [ngStyle]="{'background-color' : CycleTimeDelayCodeFilter.value == '' || CycleTimeDelayCodeFilter.value == null ? '#FFFFFF' : '#F5B7B1'}" >
+                    <mat-form-field class="mat-form-wrap" appearance="outline">
+                        <mat-label>Cycle Time</mat-label>
+                        <input style="font-weight: bold" matInput [formControl]="CycleTimeDelayCodeFilter">
+                    </mat-form-field>
+                </th>
+            </ng-container>
+            <ng-template #HtmlContent style="padding : 10px">
+                <style>
+                    .tooltip_table, .tooltip_th, .tooltip_td {
+                        border: 1px solid rgb(196, 196, 196);
+                        border-collapse: collapse;
+                        text-align : center;
+                        padding : 3px
+                    }
+                    .tooltip_table{
+                        padding : 0px;
+                        margin: 0px;
+                        background-color: #FF0000;
+                    }
+                    .tooltip_th {
+                        background-color: #FF0000;
+                        color: white;
+                        text-align: center;
+                        font-size: 12px;
+                        font-weight: bold;
+                    }
+                    .th_one{
+                        width: 200px;
+                    }
+                    .tooltip_td{
+                        padding: 5px;
+                        font-size: 12px;
+                        color: black;
+                        background-color: white;
+                    }
+                </style>
+                <table class="tooltip_table">
+                  <tr>
+                    <th class="tooltip_th th_one">Column Name</th>
+                    <th class="tooltip_th">CRM - Pipeline Data</th>
+                    <th class="tooltip_th">CRM - High Potentials Data</th>
+                    <th class="tooltip_th">CRM - Early Potentials Data</th>
+                  </tr>
+                  <tr>
+                    <td class="tooltip_td">Revenue Opportunity Type</td>
+                    <td class="tooltip_td">
+                      Up-Sell(Add Offices/Countries),Re-Bid With Up-Sell, New Business,
+                      Service model change
+                    </td>
+                    <td class="tooltip_td">
+                      Up-Sell(Add Offices/Countries),Re-Bid With Up-Sell, New Business,
+                      service model change
+                    </td>
+                    <td class="tooltip_td">
+                      New Business, Service Model Change, Re-Bid With Up-Sell, Up-Sell(Add
+                      Offices/Countries)
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="tooltip_td">Closed Date</td>
+                    <td class="tooltip_td">Greater than 2019</td>
+                    <td class="tooltip_td">Greater than 2020</td>
+                    <td class="tooltip_td">Greater than 2019</td>
+                  </tr>
+                  <tr>
+                    <td class="tooltip_td">Revenue ID</td>
+                    <td class="tooltip_td">Should not present in iMeet & Old data</td>
+                    <td class="tooltip_td">Should not present in iMeet & Old data</td>
+                    <td class="tooltip_td">-</td>
+                  </tr>
+                  <tr>
+                    <td class="tooltip_td">Sales Stage Name</td>
+                    <td class="tooltip_td">Contract Signed, Verbal Award</td>
+                    <td class="tooltip_td">
+                      RFP Received, Proposal Submitted, Needs are Identified, Negotiations,
+                      RFI Received, RFI Submitted
+                    </td>
+                    <td class="tooltip_td">Negotiations, Proposal Submitted</td>
+                  </tr>
+                  <tr>
+                    <td class="tooltip_td">Revenue Status</td>
+                    <td class="tooltip_td">Remove 'Lost' clients</td>
+                    <td class="tooltip_td">Remove 'Lost' clients</td>
+                    <td class="tooltip_td">-</td>
+                  </tr>
+                  <tr>
+                    <td class="tooltip_td">Opportunity Scope</td>
+                    <td class="tooltip_td">(Global, Regional) Consider all countries</td>
+                    <td class="tooltip_td">-</td>
+                    <td class="tooltip_td">-</td>
+                  </tr>
+                  <tr>
+                    <td class="tooltip_td">Line Win Probability</td>
+                    <td class="tooltip_td">-</td>
+                    <td class="tooltip_td">>= 60 and <= 98</td>
+                    <td class="tooltip_td">>= 30 and <= 59</td>
+                  </tr>
+                  <tr>
+                    <td class="tooltip_td">Opportunity Total Volume USD</td>
+                    <td class="tooltip_td">-</td>
+                    <td class="tooltip_td">-</td>
+                    <td class="tooltip_td">Greater then $15M</td>
+                  </tr>
+                  <tr>
+                    <td class="tooltip_td">Region Revenue</td>
+                    <td class="tooltip_td">-</td>
+                    <td class="tooltip_td">-</td>
+                    <td class="tooltip_td">should not be empty</td>
+                  </tr>
+                </table>
+            </ng-template>
             <ng-container matColumnDef="ProjectStatus">
-                <th mat-header-cell *matHeaderCellDef class="maintextSizes" mat-sort-header style="background-color: #FFC000;max-width: 160px;width: 160px;"> Project Status </th>
+                <th mat-header-cell *matHeaderCellDef class="maintextSizes" mat-sort-header style="background-color: #FFC000;max-width: 160px;width: 160px;"
+                [options]="tooltipOptions" [tooltip]="HtmlContent" content-type="template">
+                    Project Status 
+                </th>
                 <td mat-cell *matCellDef="let element" style="max-width: 160px;width: 160px;" [ngStyle]="{'background-color' : ProjectStatusFilter.value == '' || ProjectStatusFilter.value == null ? '#FFFFFF' : '#F3F189','color' : element.CheckComments.indexOf('Project Status') > 0 ? '#EC7063' : '#000000','font-weight' : element.CheckComments.indexOf('Project Status') > 0 ? 'bold' : 'normal'}" class="texttd"><label (click)="ShowComment(element.Client,element.RevenueID,element.ProjectStatus)" class="showlessText">  {{element.ProjectStatus}}</label> </td>
             </ng-container>
             <ng-container matColumnDef="ProjectStatus_h">
@@ -372,8 +676,45 @@
                     </mat-form-field>
                 </th>
             </ng-container>
+            <ng-template #HtmlContentMRC style="padding : 10px">
+                <style>
+                    .tooltip_table, .tooltip_th, .tooltip_td {
+                        border: 1px solid rgb(196, 196, 196);
+                        border-collapse: collapse;
+                        text-align : center;
+                        padding : 3px
+                    }
+                    .tooltip_table{
+                        padding : 0px;
+                        margin: 0px;
+                        background-color: #FF0000;
+                    }
+                    .tooltip_th {
+                        background-color: #FF0000;
+                        color: white;
+                        text-align: center;
+                        font-size: 12px;
+                        font-weight: bold;
+                    }
+                    .tooltip_td{
+                        padding: 5px;
+                        font-size: 12px;
+                        color: black;
+                        background-color: white;
+                    }
+                </style>
+                <table class="tooltip_table">
+                  <tr>
+                    <th class="tooltip_th">Milestone Reason Code</th>
+                  </tr>
+                  <tr>
+                    <td class="tooltip_td">Milestone reason code needs to be mentioned if Project Status is H-Hold</td>
+                  </tr>
+                </table>
+            </ng-template>
             <ng-container matColumnDef="Milestone__Reason_Code">
-                <th mat-header-cell *matHeaderCellDef class="maintextSizes" mat-sort-header  style="background-color: #FFC000;max-width: 140px;width: 140px;" matTooltip="Milestone reason code needs to be mentioned if Project Status is H-Hold"> Milestone Reason Code </th>
+                <th mat-header-cell *matHeaderCellDef class="maintextSizes" mat-sort-header  style="background-color: #FFC000;max-width: 140px;width: 140px;" [options]="tooltipOptions2" [tooltip]="HtmlContentMRC" content-type="template"> Milestone Reason Code </th>
+                <!-- matTooltip="Milestone reason code needs to be mentioned if Project Status is H-Hold" -->
                 <td mat-cell *matCellDef="let element" style="max-width: 140px;width: 140px;" [ngStyle]="{'background-color' : Milestone__Reason_CodeFilter.value == '' || Milestone__Reason_CodeFilter.value == null ? '#FFFFFF' : '#F3F189','color' : element.CheckComments.indexOf('Milestone Reason code') > 0 ? '#EC7063' : '#000000','font-weight' : element.CheckComments.indexOf('Milestone Reason code') > 0 ? 'bold' : 'normal'}" class="texttd"><label (click)="ShowComment(element.Client,element.RevenueID,element.Milestone__Reason_Code)" class="showlessText" style="width: 120px;">{{element.Milestone__Reason_Code}} </label> </td>
             </ng-container>
             <ng-container matColumnDef="Milestone__Reason_Code_h">
@@ -705,7 +1046,7 @@
             </ng-container>
             <ng-container matColumnDef="Workspace__ELT_Overall_Status">
                 <th mat-header-cell *matHeaderCellDef class="maintextSizes" mat-sort-header style="background-color: #FFC000;max-width: 120px;width: 120px;"> Workspace ELT Overall Status </th>
-                <td mat-cell *matCellDef="let element" style="max-width: 120px;width: 120px;" [ngStyle]="{'background-color' : element.Workspace__ELT_Overall_Status == 'Risk' ? '#CB4335' : element.Workspace__ELT_Overall_Status == 'Possible Risk' ? '#F7DC6F' : '#FFFFFF','color' : element.Workspace__ELT_Overall_Status == 'Risk' ? 'white' : 'black'}" class="texttd">{{element.Workspace__ELT_Overall_Status}}</td>
+                <td mat-cell *matCellDef="let element" style="max-width: 120px;width: 120px;" [ngStyle]="{'background-color' : element.GoLiveYear == CurrentYear ? element.Workspace__ELT_Overall_Status == 'Issue - Red' ? '#CB4335' : element.Workspace__ELT_Overall_Status == 'Risk - Amber' ? '#F7DC6F' : '#FFFFFF' : '#FFFFFF','color' : element.GoLiveYear == CurrentYear ? element.Workspace__ELT_Overall_Status == 'Issue - Red' ? 'white' : 'black'  : 'black'}" class="texttd">{{element.Workspace__ELT_Overall_Status}}</td>
             </ng-container>
             <ng-container matColumnDef="Workspace__ELT_Overall_Status_h">
                 <th mat-header-cell *matHeaderCellDef style="max-width: 120px;width: 120px;" colspan="1" class="formheader" [ngStyle]="{'background-color' : Workspace__ELT_Overall_StatusFilter.value == '' || Workspace__ELT_Overall_StatusFilter.value == null ? '#FFFFFF' : '#F5B7B1'}">
@@ -761,6 +1102,108 @@
                     <mat-form-field class="mat-form-wrap" appearance="outline">
                         <mat-label>Opportunity ID</mat-label>
                         <input style="font-weight: bold" matInput  [formControl]="Opportunity_IDFilter">
+                    </mat-form-field>
+                </th>
+            </ng-container>
+            <ng-template #HtmlContentNPS style="padding : 10px">
+                <style>
+                    .tooltip_table, .tooltip_th, .tooltip_td {
+                        border: 1px solid rgb(196, 196, 196);
+                        border-collapse: collapse;
+                        text-align : center;
+                        padding : 3px;
+                    }
+                    .tooltip_table{
+                        padding : 0px;
+                        margin: 0px;
+                        background-color: #FF0000;
+                    }
+                    .tooltip_th {
+                        background-color: #FF0000;
+                        color: white;
+                        text-align: center;
+                        font-size: 12px;
+                        font-weight: bold;
+                    }
+                    .tooltip_td{
+                        padding: 5px;
+                        font-size: 12px;
+                        color: black;
+                        background-color: white;
+                    }
+                    .strong{
+                        font-weight: bold;
+                        color: black;
+                    }
+                </style>
+                <table class="tooltip_table">
+                  <tr>
+                    <th class="tooltip_th">NPS Indicator</th>
+                    <th class="tooltip_th">Count</th>
+                  </tr>
+                  <tr>
+                    <td class="tooltip_td">Promoter</td>
+                    <td class="tooltip_td">{{Promoter}}</td>
+                  </tr>
+                  <tr>
+                    <td class="tooltip_td">Detractor</td>
+                    <td class="tooltip_td">{{Detractor}}</td>
+                  </tr>
+                  <tr>
+                    <td class="tooltip_td">Passive</td>
+                    <td class="tooltip_td">{{Passive}}</td>
+                  </tr>
+                  <tr>
+                    <td class="tooltip_td strong">Total</td>
+                    <td class="tooltip_td strong">{{NpsTotal}}</td>
+                  </tr>
+                </table>
+            </ng-template>
+            <ng-template #HtmlContentNPSscore style="padding : 10px">
+                <style>
+                    .tooltip_table, .tooltip_th, .tooltip_td {
+                        border: 1px solid rgb(196, 196, 196);
+                        border-collapse: collapse;
+                        text-align : center;
+                        padding : 3px
+                    }
+                    .tooltip_table{
+                        padding : 0px;
+                        margin: 0px;
+                        background-color: #FF0000;
+                    }
+                    .tooltip_th {
+                        background-color: #FF0000;
+                        color: white;
+                        text-align: center;
+                        font-size: 12px;
+                        font-weight: bold;
+                    }
+                    .tooltip_td{
+                        padding: 5px;
+                        font-size: 12px;
+                        color: black;
+                        background-color: white;
+                    }
+                </style>
+                <table class="tooltip_table">
+                  <tr>
+                    <th class="tooltip_th">Formula To Calculate NPS Score</th>
+                  </tr>
+                  <tr>
+                    <td class="tooltip_td">((Total Promoter / Total Records) * 100) - ((Total Detractors / Total Records) * 100)</td>
+                  </tr>
+                </table>
+            </ng-template>
+            <ng-container matColumnDef="NpsScore">
+                <th mat-header-cell *matHeaderCellDef class="maintextSizes" mat-sort-header style="background-color: #34495E;max-width: 140px;width: 140px;color: white;" [options]="tooltipOptions2" [tooltip]="HtmlContentNPSscore" content-type="template"> NPS Score </th>
+                <td mat-cell *matCellDef="let element" style="max-width: 140px;width: 140px;" (mouseenter) ="mouseEnter(element.Promoter,element.Detractor,element.Passive,element.NpsTotal)" [options]="tooltipOptions2" [tooltip]="HtmlContentNPS" content-type="template" [ngStyle]="{'background-color' : NpsScoreFilter.value == '' || NpsScoreFilter.value == null ? '#FFFFFF' : '#F3F189'}" class="texttd"> {{element.NpsScore}} </td>
+            </ng-container>
+            <ng-container matColumnDef="NpsScore_h">
+                <th mat-header-cell *matHeaderCellDef style="max-width: 140px;width: 140px;" colspan="1" class="formheader" [ngStyle]="{'background-color' : NpsScoreFilter.value == '' || NpsScoreFilter.value == null ? '#FFFFFF' : '#F5B7B1'}">
+                    <mat-form-field class="mat-form-wrap" appearance="outline">
+                        <mat-label>NPS Score</mat-label>
+                        <input style="font-weight: bold" matInput  [formControl]="NpsScoreFilter">
                     </mat-form-field>
                 </th>
             </ng-container>
@@ -950,6 +1393,18 @@
                     </mat-form-field>
                 </th>
             </ng-container>
+            <ng-container matColumnDef="Next_Step">
+                <th mat-header-cell *matHeaderCellDef class="maintextSizes" mat-sort-header style="background-color: #00B0F0;color: black;width: 150px;"> Next Step </th>
+                <td mat-cell *matCellDef="let element" style="max-width: 150px;width: 150px;" [ngStyle]="{'background-color' : Next_StepFilter.value == '' || Next_StepFilter.value == null ? '#FFFFFF' : '#F3F189'}" class="texttd"><label style="width: 120px;" (click)="ShowComment(element.Client,element.RevenueID,element.Next_Step)" class="showlessText"> {{element.Next_Step}} </label></td>
+            </ng-container>
+            <ng-container matColumnDef="Next_Step_h">
+                <th mat-header-cell *matHeaderCellDef style="max-width: 150px;width: 150px;" colspan="1" class="formheader" [ngStyle]="{'background-color' : Next_StepFilter.value == '' || Next_StepFilter.value == null ? '#FFFFFF' : '#F5B7B1'}" >
+                    <mat-form-field class="mat-form-wrap" appearance="outline">
+                        <mat-label>Next Step</mat-label>
+                        <input style="font-weight: bold" matInput [formControl]="Next_StepFilter">
+                    </mat-form-field>
+                </th>
+            </ng-container>
             <ng-container matColumnDef="Implementation_Fee__PSD_">
                 <th mat-header-cell *matHeaderCellDef class="maintextSizes" mat-sort-header style="background-color: #00B0F0;max-width: 120px;width: 120px;"> Implementation Fee PSD</th>
                 <td mat-cell *matCellDef="let element" style="max-width: 120px;width: 120px;" [ngStyle]="{'background-color' : Implementation_Fee__PSD_Filter.value == '' || Implementation_Fee__PSD_Filter.value == null ? '#FFFFFF' : '#F3F189'}" class="texttd"> {{element.Implementation_Fee__PSD_c}} </td>
@@ -1089,7 +1544,7 @@
             <ng-container matColumnDef="SOWStatus_h">
                 <th mat-header-cell *matHeaderCellDef colspan="1" style="max-width: 140px;width: 140px;" class="formheader" colspan="1" [ngStyle]="{'background-color' : SOWStatusFilter.value == '' || SOWStatusFilter.value == null ? '#FFFFFF' : '#F5B7B1'}">
                     <mat-form-field class="mat-form-wrap" appearance="outline">
-                        <mat-label>Account Category</mat-label>
+                        <mat-label>SOW Status</mat-label>
                         <mat-select [formControl]="SOWStatusFilter" multiple (selectionChange)="oneSowStatuschange()">
                             <mat-select-trigger>
                                 {{SOWStatusFilter.value ? SOWStatusFilter.value[0] : ''}}
@@ -1155,15 +1610,103 @@
                     </mat-form-field>
                 </th>
             </ng-container>
+            <ng-template #HtmlContentDQ style="padding : 10px">
+                <style>
+                    .tooltip_table, .tooltip_th, .tooltip_td {
+                        border: 1px solid rgb(196, 196, 196);
+                        border-collapse: collapse;
+                        text-align : center;
+                        padding : 3px
+                    }
+                    .tooltip_table{
+                        padding : 0px;
+                        margin: 0px;
+                        background-color: #FF0000;
+                    }
+                    .tooltip_th {
+                        background-color: #FF0000;
+                        color: white;
+                        text-align: center;
+                        font-size: 12px;
+                        font-weight: bold;
+                    }
+                    .tooltip_td{
+                        padding: 5px;
+                        font-size: 12px;
+                        color: black;
+                        background-color: white;
+                    }
+                </style>
+                <table class="tooltip_table">
+                    <tr>
+                        <th class="tooltip_th" colspan="2">Data Quality</th>
+                    </tr>
+                    <tr>
+                        <th class="tooltip_th">Name</th>
+                        <th class="tooltip_th">Description</th>
+                    </tr>
+                    <tr>
+                        <td class="tooltip_td">PM = Email ID</td>
+                        <td class="tooltip_td">Project Manager name is an e-mail id. Please change in iMeet</td>
+                    </tr>
+                    <tr>
+                        <td class="tooltip_td">N-Active to be Updated</td>
+                        <td class="tooltip_td">Project Status is N-Active/No Date Confirmed and Go-Live is in the next 15 days</td>
+                    </tr>
+                    <tr>
+                        <td class="tooltip_td">H-Hold/Reason Code Empty</td>
+                        <td class="tooltip_td">Project Status is H-Hold and Milestone Reason code is Blank</td>
+                    </tr>
+                    <tr>
+                        <td class="tooltip_td">Go-Live > today</td>
+                        <td class="tooltip_td">Project Status is C-Closed and Go-Live is greater than today</td>
+                    </tr>
+                    <tr>
+                        <td class="tooltip_td">Milestone Reason Code</td>
+                        <td class="tooltip_td">Project Status is A-Active/Date Confirmed and Milestone Reason code is not Blank</td>
+                    </tr>
+                    <tr>
+                        <td class="tooltip_td">Go-Live > 50 days</td>
+                        <td class="tooltip_td">Project Status is A-Active/Date Confirmed and Go-Live is more than 50 days in the past</td>
+                    </tr>
+                    <tr>
+                        <td class="tooltip_td">Start Date > Go-Live Date</td>
+                        <td class="tooltip_td">Project Start Date is greater than Go-Live Date</td>
+                    </tr>
+                    <tr>
+                        <td class="tooltip_td">Cycle Time Delay Code</td>
+                        <td class="tooltip_td">Cycle Time is greater than Cycle time target. Please update the Delay code</td>
+                    </tr>
+                </table>
+            </ng-template>
             <ng-container matColumnDef="CheckComments">
-                <th mat-header-cell *matHeaderCellDef class="maintextSizes" mat-sort-header style="border-right: none;background-color: #34495E;color: white;max-width: 140px;width: 140px;">Data Quality </th>
-                <td mat-cell *matCellDef="let element" style="max-width: 140px;width: 140px;border-right: none;" [ngStyle]="{'background-color' : CheckCommentsFilter.value == '' || CheckCommentsFilter.value == null ? '#FFFFFF' : '#F3F189'}" class="texttd"> <label (click)="ShowComment(element.Client,element.RevenueID,element.CheckComments)" class="showlessText" style="width: 120px;"> {{element.CheckComments}} </label></td>
+                <th mat-header-cell *matHeaderCellDef class="maintextSizes" mat-sort-header style="border-right: none;background-color: #34495E;color: white;max-width: 200px;width: 200px;" [options]="tooltipOptions" [tooltip]="HtmlContentDQ" content-type="template">Data Quality </th>
+                <td mat-cell *matCellDef="let element" style="max-width: 200px;width: 200px;border-right: none;" [ngStyle]="{'background-color' : CheckCommentsFilter.value == '' || CheckCommentsFilter.value == null ? '#FFFFFF' : '#F3F189'}" class="texttd"> <label (click)="ShowComment(element.Client,element.RevenueID,element.CheckComments)" class="showlessText" style="width: 120px;"> {{element.CheckComments}} </label></td>
             </ng-container>
             <ng-container matColumnDef="CheckComments_h">
-                <th mat-header-cell *matHeaderCellDef style="max-width: 140px;width: 140px;border-right: none;" colspan="1" class="formheader" [ngStyle]="{'background-color' : CheckCommentsFilter.value == '' || CheckCommentsFilter.value == null ? '#FFFFFF' : '#F5B7B1'}" >
+                <!-- <th mat-header-cell *matHeaderCellDef style="max-width: 140px;width: 140px;border-right: none;" colspan="1" class="formheader" [ngStyle]="{'background-color' : CheckCommentsFilter.value == '' || CheckCommentsFilter.value == null ? '#FFFFFF' : '#F5B7B1'}" >
                     <mat-form-field class="mat-form-wrap" appearance="outline">
                         <mat-label>Data Quality</mat-label>
                         <input style="font-weight: bold" matInput [formControl]="CheckCommentsFilter">
+                    </mat-form-field>
+                </th> -->
+                <th mat-header-cell *matHeaderCellDef style="max-width: 200px;width: 200px;border-right: none;" colspan="1" class="formheader" [ngStyle]="{'background-color' : CheckCommentsFilter.value == '' || CheckCommentsFilter.value == null ? '#FFFFFF' : '#F5B7B1'}">
+                    <mat-form-field class="mat-form-wrap" appearance="outline">
+                        <mat-label>Data Quality</mat-label>
+                        <!-- <input style="font-weight: bold" matInput [formControl]="Pipeline_statusFilter"> -->
+                        <mat-select [formControl]="CheckCommentsFilter" multiple (selectionChange)="onDataQualitychange()">
+                            <mat-select-trigger>
+                                {{CheckCommentsFilter.value ? CheckCommentsFilter.value[0] : ''}}
+                                <span *ngIf="CheckCommentsFilter.value?.length > 1" class="example-additional-selection">
+                                  (+{{CheckCommentsFilter.value.length - 1}} {{CheckCommentsFilter.value?.length === 2 ? 'Check Comment' : 'Check Comments'}})
+                                </span>
+                            </mat-select-trigger>
+                            <div style="padding-top: 15px">
+                                <mat-checkbox style="margin-left: 15px;margin-top: 25px;" class="example-margin" [(ngModel)]="masterDataQuality" name="masterDataQuality" (change)="checkUncheckDataQuality()" color="primary">Select all</mat-checkbox>
+                            </div>
+                            <mat-divider style="margin-left: 5px;margin-right: 5px"></mat-divider>
+                            <mat-option *ngFor="let Data_Quality of DatQualityIssueList" [value]="Data_Quality">{{Data_Quality}}</mat-option>
+                        </mat-select>
                     </mat-form-field>
                 </th>
             </ng-container>
@@ -1182,7 +1725,7 @@
             </ng-container>
             <ng-container  matColumnDef="loader" sticky>
                 <!-- [ngStyle]="{'height' : isLoading == true ? (screenHeight-365)+'px' : '0px'}" -->
-                <th mat-header-cell *matHeaderCellDef style="text-align: center;width: 100%;border-right: none;border-bottom: none;padding-left: 0px;padding-right: 0px;" colspan="25">
+                <th mat-header-cell *matHeaderCellDef style="text-align: center;width: 100%;border-right: none;border-bottom: none;padding-left: 0px;padding-right: 0px;" colspan="18">
                     <div *ngIf="isLoading" style="display: flex; justify-content: center;align-items: center;" [ngStyle]="{'height' : (screenHeight-365)+'px','width' : (screenWidth-50)+'px'}">
                         <div class="sk-circle">
                             <a style="width: 100%">

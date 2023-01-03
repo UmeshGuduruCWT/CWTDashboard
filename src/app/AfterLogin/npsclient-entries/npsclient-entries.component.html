@@ -3,7 +3,9 @@
         <div class="col-md-12">
             <label class="main_heading">NPS - Client Info</label>
             <button mat-raised-button (click)="NewRecord()" style="background-color: #F16950;color: white;margin-left: 30px;margin-top: 15px;">New Record</button>
-            <button mat-raised-button (click)="Export()" style="background-color: #F16950;color: white;margin-left: 30px;margin-top: 15px;">Export</button>
+            <button mat-raised-button style="height: 33px;background-color: #F16950;margin-left: 30px;color: white;margin-top: 15px;" (click)="Export()">Export
+                <mat-icon style="font-size: 18px;color: white;">save_alt</mat-icon>
+            </button>
             <mat-form-field style="width: 40%;margin-left: 50px;">
                 <mat-label style="padding-left: 5px;font-weight: bold;">Search</mat-label>
                 <input matInput (keyup)="applyFilter($event)" #input>
@@ -14,7 +16,7 @@
         </div>
     </div>
 </div>
-<div *ngIf="ShowForm" class="mat-elevation-z2" style="margin: 20px;">
+<div *ngIf="ShowForm" class="mat-elevation-z2" style="margin: 15px 20px 0px 20px;">
     <div class="row col-md-12" style="margin: 0px;padding : 0px">
         <div class="col-md-12">
             <label class="heading">{{HeadingName}}</label>
@@ -198,9 +200,9 @@
         </div>
     </div>
 </div>
-<div style="margin: 0px 20px 20px 20px;">
+<div style="margin: 15px 20px 20px 20px;">
     <div class="row col-md-12" style="margin: 0px;padding : 0px">
-        <div class="example-container mat-elevation-z2" [ngStyle]="{'height' : (screenHeight-230)+'px'}" style="border: 1px solid rgb(196, 196, 196);">
+        <div class="example-container mat-elevation-z2" [ngStyle]="{'height' : (screenHeight-230)+'px'}" style="border: 2px solid black;">
             <table mat-table [dataSource]="dataSource" matSort>
                 <ng-container matColumnDef="Company">
                     <th mat-header-cell mat-sort-header *matHeaderCellDef class="maintextSizes" style="padding-left: 10px;"> Company Name </th>

@@ -210,6 +210,20 @@ export class DashboardServiceService {
     params = params.append('OwnerShip',OwnerShip);
     return this.http.post<Responce>(`${this.Baseurl+"RegionWiseRevenue"}`,params);
   }
+  public MarketGoliveReport(Region : string,ProjectLevel : string,ProjectStatus : string,ImplementationType : string,OwnerShip : string){
+    let params = new HttpParams();
+    // params = params.append('GoLiveYear',GoLiveYear+"");
+    // params = params.append('GoLiveMonth',GoLiveMonth);
+    // params = params.append('Quarter',Quarter);
+    params = params.append('ProjectLevel',ProjectLevel);
+    // params = params.append('BacklogStarted',BacklogStarted);
+    params = params.append('Region',Region);
+    // params = params.append('Country',Country);
+    params = params.append('ProjectStatus',ProjectStatus);
+    params = params.append('ImplementationType',ImplementationType);
+    params = params.append('OwnerShip',OwnerShip);
+    return this.http.post<Responce>(`${this.Baseurl+"MarketGoliveReport"}`,params);
+  }
   public ProjectLevelWise(GoLiveYear: number,GoLiveMonth : string,ProjectLevel : string,Region : string,ProjectStatus : string,ImplementationType : string,Country : string,OwnerShip : string){
     let params = new HttpParams();
     params = params.append('GoLiveYear',GoLiveYear+"");
@@ -1450,7 +1464,7 @@ export class DashboardServiceService {
     return this.http.post<UserReportAccess>(`${this.Baseurl+"NPSDelete"}`,params);
   }
   public NPSViewUpdate(NpsId : string,ClientName : string,Company : string,Email : string,Country : string,Region : string,Language : string,RegionalProjectManager : string,GlobalProjectManager : string,LocalProjectManager : string,ClientType : string,CustomerContactNumber : string,DateServeySent : string,ClientScope : string,DateSurveyReceived : string,
-    Status : string,AssignLeaderForClosedLoop : string,NPSScore : string,NPSIndicator : string,NPSCommentsWhatwasPositive : string,NPSComments_Howcouldwehaveimproved : string,NPSComments_Whatistheonethingwecandotomakeyouhappier : string,ClientFeedback : string,Action : string,ReasonType : string,UpdatedBy : string,NPSCommentsOne : string,NPSCommentsTwo : string,NPSCommentsThree : string,RecordStatus : string){
+    Status : string,AssignLeaderForClosedLoop : string,OpprtunityId : string,NPSScore : string,NPSIndicator : string,NPSCommentsWhatwasPositive : string,NPSComments_Howcouldwehaveimproved : string,NPSComments_Whatistheonethingwecandotomakeyouhappier : string,ClientFeedback : string,Action : string,ReasonType : string,UpdatedBy : string,NPSCommentsOne : string,NPSCommentsTwo : string,NPSCommentsThree : string,RecordStatus : string){
     let params = new HttpParams();
     params = params.append('NpsId',NpsId);
     params = params.append('ClientName',ClientName);
@@ -1474,6 +1488,7 @@ export class DashboardServiceService {
     params = params.append('Status',Status);
     params = params.append('AssignLeaderForClosedLoop',AssignLeaderForClosedLoop);
     params = params.append('NPSScore',NPSScore);
+    params = params.append('OpprtunityId',OpprtunityId);
     params = params.append('NPSIndicator',NPSIndicator);
     params = params.append('NPSCommentsOne',NPSCommentsOne);
     params = params.append('NPSCommentsTwo',NPSCommentsTwo);

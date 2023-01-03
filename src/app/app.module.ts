@@ -56,6 +56,9 @@ import { NPSClientEntriesComponent,DeleteNPSClient } from './AfterLogin/npsclien
 import { NPSViewComponent } from './AfterLogin/npsview/npsview.component';
 import { DigitalReportComponent } from './AfterLogin/digital-report/digital-report.component';
 import { RollingNPSComponent } from './AfterLogin/rolling-nps/rolling-nps.component';
+import { TooltipModule } from 'ng2-tooltip-directive';
+import { GoLiveReportComponent } from './AfterLogin/go-live-report/go-live-report.component';
+import { DashboardComponentWOLoginComponent } from './dashboard-component-wologin/dashboard-component-wologin.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -102,11 +105,13 @@ import { RollingNPSComponent } from './AfterLogin/rolling-nps/rolling-nps.compon
     NPSClientEntriesComponent,
     NPSViewComponent,
     DigitalReportComponent,
-    RollingNPSComponent
+    RollingNPSComponent,
+    GoLiveReportComponent,
+    DashboardComponentWOLoginComponent
   ],
   imports: [
     BrowserModule, CommonModule,
-    AppRoutingModule, MaterialModule,
+    AppRoutingModule, MaterialModule,TooltipModule.forRoot({}),
     ReactiveFormsModule, FormsModule,PdfViewerModule,NgxMatSelectSearchModule,
     MatTableFilterModule,ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'}),
     BrowserAnimationsModule, HttpClientModule,NgMultiSelectDropDownModule.forRoot()

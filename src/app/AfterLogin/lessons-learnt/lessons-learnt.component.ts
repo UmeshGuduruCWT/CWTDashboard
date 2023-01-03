@@ -20,7 +20,7 @@ export interface LLDialogData {
   styleUrls: ['./lessons-learnt.component.css']
 })
 export class LessonsLearntComponent implements OnInit {
-  displayedColumns : string[] = ['iMeet_Workspace_Title','Date_feedback_raised_c','Country_Area_of_Responsibility','Region','What_was_the_event_issue_concern','Is_there_any_specific_recognition_to_a_person_group_process_rela','Go_Live_Date_c','Reason_Type','Created_by_Field','Leader','Reason_Code__Added_by_Leader_','What_do_you_recommend___to_avoid_this_occurring_again_in_future','Status__By_Leader_','Action_Taken__By_Leader_'];
+  displayedColumns : string[] = ['iMeet_Workspace_Title','Date_feedback_raised_c','Country_Area_of_Responsibility','Region','What_was_the_event_issue_concern','Is_there_any_specific_recognition_to_a_person_group_process_rela','Go_Live_Date_c','Reason_Type','Leader','Reason_Code__Added_by_Leader_','What_do_you_recommend___to_avoid_this_occurring_again_in_future','Status__By_Leader_','Action_Taken__By_Leader_'];
   dataSource;
   masterRegion : boolean; masterStatus : boolean;
   RegionList : Region[];
