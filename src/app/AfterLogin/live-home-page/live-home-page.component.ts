@@ -249,9 +249,9 @@ export class LiveHomePageComponent implements OnInit {
             {
               label: 'Response Received',
               data: this.ReceivedResponses,
-              backgroundColor : 'rgba(88, 214, 141,1)',
+              backgroundColor : 'rgba(25, 215, 172,1)',
               borderColor : 'rgba(255, 255,255 ,1)',
-              hoverBackgroundColor : 'rgba(88, 214, 141,1)',
+              hoverBackgroundColor : 'rgba(25, 215, 172,1)',
               borderWidth: 2,
               type : 'bar',
               fill: false,

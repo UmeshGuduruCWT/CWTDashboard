@@ -367,7 +367,12 @@ export class AutomatedCLRComponent implements OnInit {
   Date_added_to_the_CLR_cFilter = new FormControl();
   CheckCommentsFilter = new FormControl();
   @ViewChild(MatSort) sort: MatSort;
+  // actualPaginator: MatPaginator;
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  // @ViewChild(MatPaginator, {static: false})
+  // set paginator(value: MatPaginator) {
+  //   this.actualPaginator = value;
+  // }
   ngAfterViewInit() {
     // this.dataSource.filterPredicate = this.customFilterPredicate();
     // this.dataSource.paginator = this.paginator;
@@ -1835,6 +1840,7 @@ export class AutomatedCLRComponent implements OnInit {
             }
           }
         }
+        // this.dataSource.paginator = this.paginator;
         this.dataSource = new MatTableDataSource(this.DataCLR);
         // this.dataSource.data = this.DataCLR;
         this.onFilterValueChange();
@@ -2044,6 +2050,7 @@ export class AutomatedCLRComponent implements OnInit {
       if(data.code == 200){
         this.service.PSDExport().subscribe(psddata =>{
           if(data.code == 200){
+            console.log(data.Data);
             const CustomizedData = data.Data.map(o => {
               return {
                 'Revenue_Id': o.Revenue_Id,
@@ -2098,7 +2105,8 @@ export class AutomatedCLRComponent implements OnInit {
                 'BT Incumbent Agency' : o.BT_Incumbent_Agency,
                 'Revenue Opportunity Type' : o.Revenue_Opportunity_Type,
                 'Revenue Status' : o.Revenue_Status,
-                'Last Update Date' : o.Last_Update_Date
+                'Last Update Date' : o.Last_Update_Date,
+                'Is Implementation Team Support' : o.IsImplementationTeamsupport
               };
             });
             const PSDCustomizedData = psddata.Data.map(o =>{

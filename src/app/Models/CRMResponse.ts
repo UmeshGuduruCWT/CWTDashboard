@@ -58,4 +58,5 @@ export interface CRMData {
     Revenue_Opportunity_Type: string;
     Revenue_Status: string;
     Last_Update_Date: Date;
+    IsImplementationTeamsupport : string;
 }
