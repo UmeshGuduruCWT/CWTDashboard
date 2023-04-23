@@ -87,6 +87,7 @@ export class DataCLR {
     TaskStatus : string;
     Servicing_location : string;
     Assignment_date : Date;
+    ResourseRequestedDate : Date;
     New_Business_volume__US__ : number;
     RevenueVolumeUSD: number;
     Region: any;
@@ -106,7 +107,8 @@ export class DataCLR {
     ProjectOwner: string;
     GlobalProjectManager: string;
     CycleTimeDelayCode : string;
-    Cycletimetarget : Number;
+    EltClientDelayDescription : string;
+    Cycletimetarget : any;
     ProjectConsultant: string;
     RegionalProjectManager: any;
     AssigneeFullName: any;
@@ -163,6 +165,7 @@ export class DataCLR {
     Date_added_to_the_CLR_c : string;
     TestingDate : Date;
     Assignment_date_c : string;
+    ResourseRequestedDate_c : string;
     UpdateOn : Date;
     UpdateOn_c : string;
     OppVolume : number;
@@ -200,4 +203,11 @@ export class DataCLR {
     Detractor : number;
     NpsTotal : number;
     NpsScore : any;
+    APAC_DQS  : string;
+    DQS_Import  : string;
+    DQS_Support  : string;
+    LATAM_DQS  : string;
+    NORAM_DQS  : string;
+    DQS_Operations  : string;
+
 }

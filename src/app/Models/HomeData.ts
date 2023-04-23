@@ -32,6 +32,16 @@ export interface HomeData{
     Countries : Countries[];
     NpsData : any;
     RollingNpsData : any;
+    ExistingAddChangeCycleTime : any;
+    ExistingAddChangeProjectCount : any;
+    ExistingServiceCycleTime : any;
+    ExistingServiceProjectCount : any;
+    NewGlobalCycleTime : any;
+    NewGlobalProjectCount : any;
+    NewLocalCycleTime : any;
+    NewLocalProjectCount : any;
+    OverallCycleTime : any;
+    OverallProjectCount : any;
 }
 export interface Countries{
     Country : string;

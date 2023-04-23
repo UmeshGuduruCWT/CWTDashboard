@@ -59,6 +59,10 @@ import { RollingNPSComponent } from './AfterLogin/rolling-nps/rolling-nps.compon
 import { TooltipModule } from 'ng2-tooltip-directive';
 import { GoLiveReportComponent } from './AfterLogin/go-live-report/go-live-report.component';
 import { DashboardComponentWOLoginComponent } from './dashboard-component-wologin/dashboard-component-wologin.component';
+import { SteeringCommitteeComponent, DeleteSteeringCommitteeDailog } from './AfterLogin/steering-committee/steering-committee.component';
+import { AddUpdateSteeringCommitteeComponent } from './AfterLogin/add-update-steering-committee/add-update-steering-committee.component';
+import { KnowledgeBaseComponent } from './AfterLogin/knowledge-base/knowledge-base.component';
+import { SteeringCommitteeRecordViewComponent } from './AfterLogin/steering-committee-record-view/steering-committee-record-view.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -84,7 +88,7 @@ import { DashboardComponentWOLoginComponent } from './dashboard-component-wologi
     //  MarketImplementationComponent
     TrackerComponent,ResourceUtilizationComponent,
     CapacityHierarchyComponent,CapacityHierarchyDailog,ProfileDialog,
-    EditUserAccess,GrantAccessDialog,DeleteUserDailog,DeleteNPSClient,
+    EditUserAccess,GrantAccessDialog,DeleteUserDailog,DeleteNPSClient,DeleteSteeringCommitteeDailog,
     ProspectComponent,AdminDeleteDialog,
     ProjectTeamDailog,ReplicateDailog,
     CLRExportComponent,
@@ -107,7 +111,11 @@ import { DashboardComponentWOLoginComponent } from './dashboard-component-wologi
     DigitalReportComponent,
     RollingNPSComponent,
     GoLiveReportComponent,
-    DashboardComponentWOLoginComponent
+    DashboardComponentWOLoginComponent,
+    SteeringCommitteeComponent,
+    AddUpdateSteeringCommitteeComponent,
+    KnowledgeBaseComponent,
+    SteeringCommitteeRecordViewComponent
   ],
   imports: [
     BrowserModule, CommonModule,
@@ -117,7 +125,7 @@ import { DashboardComponentWOLoginComponent } from './dashboard-component-wologi
     BrowserAnimationsModule, HttpClientModule,NgMultiSelectDropDownModule.forRoot()
     //,SelectAutocompleteModule
   ],
-  entryComponents: [ELTReportComponent, EltDailog,PriorMonthData,CLRCommentdailog,ResourceComment,ManagerPojectDetails,DigitalManagerDetails,AuditLogdailog,RecordLevelAuditLogdailog,ConfigDeleteDialog,DigitalTeamdailog,MatTableFilterModule,TrackerCommentdailog,LessonsLearntdailog,ImplementationProjectStatusdailog, CommentsDialog, DataDialog, AddingUser, DeleteUser, CapacityHierarchyDailog,ProfileDialog,EditUserAccess,GrantAccessDialog,DeleteUserDailog,DeleteNPSClient,AdminDeleteDialog,ProjectTeamDailog,ReplicateDailog],
+  entryComponents: [ELTReportComponent, EltDailog,PriorMonthData,CLRCommentdailog,ResourceComment,ManagerPojectDetails,DigitalManagerDetails,AuditLogdailog,RecordLevelAuditLogdailog,ConfigDeleteDialog,DigitalTeamdailog,MatTableFilterModule,TrackerCommentdailog,LessonsLearntdailog,ImplementationProjectStatusdailog, CommentsDialog, DataDialog, AddingUser, DeleteUser, CapacityHierarchyDailog,ProfileDialog,EditUserAccess,GrantAccessDialog,DeleteUserDailog,DeleteSteeringCommitteeDailog,DeleteNPSClient,AdminDeleteDialog,ProjectTeamDailog,ReplicateDailog],
   providers: [DatePipe, ExcelService],
   bootstrap: [AppComponent]
 })

@@ -183,7 +183,7 @@
                         </div>
                     </mat-card>
                 </div>
-                <div class="col-md-12">
+                <div class="col-md-12" *ngIf="DisplayDelta">
                     <div class="example-container" style="margin-left: 15px;border: 2px solid black;">
                         <table mat-table [dataSource]="dataSource2">
                             <ng-container matColumnDef="Leftheaders" sticky>

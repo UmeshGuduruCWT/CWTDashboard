@@ -105,15 +105,15 @@ export class GoLiveReportComponent implements OnInit {
       this.NextMonthYear = new Date(today_forMonth.setMonth(today_forMonth.getMonth()+1)).toLocaleString('en-us', { month: 'short' }) + " - " + new Date(today_forYear.setMonth(today_forYear.getMonth()+1)).getFullYear();
       this.NextMonthYearPlusOne = new Date(today_forMonth.setMonth(today_forMonth.getMonth()+1)).toLocaleString('en-us', { month: 'short' }) + " - " + new Date(today_forYear.setMonth(today_forYear.getMonth()+1)).getFullYear();
       this.OwnerShipList = data.OwnerShip;
-      this.masterownerShip = false;
-      for (var i = 0; i < this.OwnerShipList.length; i++) {
-        if(this.OwnerShipList[i].OwnerShip == "JV" || this.OwnerShipList[i].OwnerShip == "WO"){
-          this.OwnerShipList[i].isSelected = true;
-        }
-        else{
-          this.OwnerShipList[i].isSelected = false;
-        }
-      }
+      this.masterownerShip = true;
+      // for (var i = 0; i < this.OwnerShipList.length; i++) {
+      //   if(this.OwnerShipList[i].OwnerShip == "JV" || this.OwnerShipList[i].OwnerShip == "WO"){
+      //     this.OwnerShipList[i].isSelected = true;
+      //   }
+      //   else{
+      //     this.OwnerShipList[i].isSelected = false;
+      //   }
+      // }
       this.getSelectedOwnerships();
       // var CurrentMonth = (new Date()).toLocaleString('en-us', { month: 'short' });/* Jun */
       this.matSortActiveColumn = "CurrentMonth";
@@ -206,6 +206,7 @@ export class GoLiveReportComponent implements OnInit {
       }
       this.GolivedataSource = new MatTableDataSource(data.Data);
       this.GolivedataSource.sort = this.sort;
+      console.log(this.GolivedataSource)
     })
   }
   

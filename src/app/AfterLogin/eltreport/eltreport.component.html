@@ -28,38 +28,38 @@
                     <button mat-menu-item >Excel</button>
                 </mat-menu> -->
             </div>
-            <div class="example-container" style="border : 2px solid black;height: auto;margin-top: 15px;width: 100%;">
+            <div class="example-container" style="border : 2px solid #e0e0e0;height: auto;margin-top: 15px;width: 100%;">
                 <!-- mat-elevation-z2 -->
                 <table mat-table [dataSource]="dataSource_c" style="text-align: center;">
                     <ng-container matColumnDef="Client">
                         <th mat-header-cell *matHeaderCellDef class="textSizes" style="border-right: 1px solid #e0e0e0;padding-right: 8px;background-color: #34495E;color: white;">Client</th>
                         <td mat-cell *matCellDef="let element" style="border-right: 1px solid #e0e0e0;padding-right: 8px;text-align: left"><label class="Hyperlink" matTooltip="Click to open Workspace in iMeet" (click)="openLinkelt(element.Workspace)">{{element.Client}}</label></td>
-                        <td mat-footer-cell *matFooterCellDef style="text-align: left;border-right: 2px solid black;"> Sub Total </td>
+                        <td mat-footer-cell *matFooterCellDef style="text-align: left;border-right: 1px solid #e0e0e0;"> Sub Total </td>
                     </ng-container>
                     <ng-container matColumnDef="APAC_volume">
                         <th mat-header-cell *matHeaderCellDef class="textSizes" style="width: 150px;border-right: 1px solid #e0e0e0;padding-right: 8px;background-color: #34495E;color: white;text-align: center">APAC</th>
                         <td mat-cell *matCellDef="let element" style="border-right: 1px solid #e0e0e0;padding-right: 8px;text-align: center"> {{element.APAC_volume}} </td>
-                        <td mat-footer-cell *matFooterCellDef style="text-align: center;border-right: 2px solid black">{{SubTotalAPAC_C}}</td>
+                        <td mat-footer-cell *matFooterCellDef style="text-align: center;border-right: 1px solid #e0e0e0">{{SubTotalAPAC_C}}</td>
                     </ng-container>
                     <ng-container matColumnDef="EMEA_volume">
                         <th mat-header-cell *matHeaderCellDef class="textSizes" style="width: 150px;border-right: 1px solid #e0e0e0;padding-right: 8px;background-color: #34495E;color: white;text-align: center">EMEA</th>
                         <td mat-cell *matCellDef="let element" style="border-right: 1px solid #e0e0e0;padding-right: 8px;text-align: center"> {{element.EMEA_volume}} </td>
-                        <td mat-footer-cell *matFooterCellDef style="text-align: center;border-right: 2px solid black">{{SubTotalEMEA_C}}</td>
+                        <td mat-footer-cell *matFooterCellDef style="text-align: center;border-right: 1px solid #e0e0e0">{{SubTotalEMEA_C}}</td>
                     </ng-container>
                     <ng-container matColumnDef="LATAM_volume">
                         <th mat-header-cell *matHeaderCellDef class="textSizes" style="width: 150px;border-right: 1px solid #e0e0e0;padding-right: 8px;background-color: #34495E;color: white;text-align: center">LATAM</th>
                         <td mat-cell *matCellDef="let element" style="border-right: 1px solid #e0e0e0;padding-right: 8px;text-align: center"> {{element.LATAM_volume}} </td>
-                        <td mat-footer-cell *matFooterCellDef style="text-align: center;border-right: 2px solid black">{{SubTotalLatam_C}}</td>
+                        <td mat-footer-cell *matFooterCellDef style="text-align: center;border-right: 1px solid #e0e0e0">{{SubTotalLatam_C}}</td>
                     </ng-container>
                     <ng-container matColumnDef="NORAM_volume">
                         <th mat-header-cell *matHeaderCellDef class="textSizes" style="width: 150px;border-right: 1px solid #e0e0e0;padding-right: 8px;background-color: #34495E;color: white;text-align: center">NORAM</th>
                         <td mat-cell *matCellDef="let element" style="border-right: 1px solid #e0e0e0;padding-right: 8px;text-align: center"> {{element.NORAM_volume}} </td>
-                        <td mat-footer-cell *matFooterCellDef style="text-align: center;border-right: 2px solid black">{{SubTotalNoram_C}}</td>
+                        <td mat-footer-cell *matFooterCellDef style="text-align: center;border-right: 1px solid #e0e0e0">{{SubTotalNoram_C}}</td>
                     </ng-container>
                     <ng-container matColumnDef="CurrentMonth_s">
                         <th mat-header-cell *matHeaderCellDef class="textSizes" style="width: 150px;border-right: 1px solid #e0e0e0;padding-right: 8px;padding-left: 8px;background-color: #34495E;color: white;text-align: center">{{CurrentMonth}}</th>
                         <td mat-cell *matCellDef="let element" style="border-right: 1px solid #e0e0e0;padding-right: 8px;text-align: center"> {{element.CurrentMonth_s}} </td>
-                        <td mat-footer-cell *matFooterCellDef style="text-align: center;border-right: 2px solid black">{{SubTotal_C}}</td>
+                        <td mat-footer-cell *matFooterCellDef style="text-align: center;border-right: 1px solid #e0e0e0">{{SubTotal_C}}</td>
                     </ng-container>
                     <ng-container matColumnDef="PriorMonthElt_s">
                         <th mat-header-cell *matHeaderCellDef class="textSizes" style="width: 130px;border-right: 1px solid #e0e0e0;padding-right: 8px;background-color: #34495E;color: white;text-align: center">NB Reported Prior Month <p style="font-size : 12px;color: #ff0000;font-weight: normal;">(As of {{PriorMonthDate}})</p></th>
@@ -98,29 +98,30 @@
                         <td mat-footer-cell *matFooterCellDef style="border-bottom: none;"></td>
                     </ng-container>
                     <ng-container matColumnDef="OtherClients">
-                        <th mat-footer-cell *matFooterCellDef style="padding-left: 23px;font-size: 14px;text-align: left;border-right: 2px solid black;" colspan="5"> Other Clients</th>
+                        <th mat-footer-cell *matFooterCellDef style="padding-left: 23px;font-size: 14px;text-align: left;border-right: 1px solid #e0e0e0;" colspan="5"> Other Clients</th>
                     </ng-container>
                     <ng-container matColumnDef="OtherClientsTotal">
-                        <th mat-footer-cell *matFooterCellDef style="font-size: 14px;border-right: 2px solid black"> {{OtherClient_C}} </th>
+                        <th mat-footer-cell *matFooterCellDef style="font-size: 14px;border-right: 1px solid #e0e0e0"> {{OtherClient_C}} </th>
                     </ng-container>
                     <ng-container matColumnDef="GrandTotal">
-                        <th mat-footer-cell *matFooterCellDef style="padding-left: 23px;font-size: 14px;text-align: left;border-right: 2px solid black" colspan="5"> Grand Total</th>
+                        <th mat-footer-cell *matFooterCellDef style="padding-left: 23px;font-size: 14px;text-align: left;border-right: 1px solid #e0e0e0" colspan="5"> Grand Total</th>
                     </ng-container>
                     <ng-container matColumnDef="GrandTotalValue">
-                        <th mat-footer-cell *matFooterCellDef style="font-size: 14px;text-align: center;border-right: 2px solid black"> {{GrandTotal_C}} </th>
+                        <th mat-footer-cell *matFooterCellDef style="font-size: 14px;text-align: center;border-right: 1px solid #e0e0e0"> {{GrandTotal_C}} </th>
                     </ng-container>
                     <!-- <ng-container matColumnDef="ExcelExplore">
                         <th mat-footer-cell *matFooterCellDef style="font-size: 14px;"> <div style="font-weight: bold;text-decoration: underline;margin-left: 15px;cursor: pointer;" (click)="exportAsXLSXCM()">Explore<img width="23" height="23" style="margin-left: 15px" src="assets/images/excel.png"></div> </th>
                     </ng-container> -->
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns_c" style="border-bottom: 2px solid black;"></tr>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns_c" style="border-bottom: 1px solid #e0e0e0;"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedColumns_c;"></tr>
-                    <tr mat-footer-row *matFooterRowDef="displayedColumns_c;" style="border-top: 2px solid black;"></tr>
-                    <tr mat-footer-row *matFooterRowDef="['OtherClients','OtherClientsTotal'];" style="border-top: 2px solid black;"></tr>
-                    <tr mat-footer-row *matFooterRowDef="['GrandTotal','GrandTotalValue'];" style="border-top: 2px solid black;"></tr>
+                    <tr mat-footer-row *matFooterRowDef="displayedColumns_c;" style="border-top: 1px solid #e0e0e0;"></tr>
+                    <tr mat-footer-row *matFooterRowDef="['OtherClients','OtherClientsTotal'];" style="border-top: 1px solid #e0e0e0;"></tr>
+                    <tr mat-footer-row *matFooterRowDef="['GrandTotal','GrandTotalValue'];" style="border-top: 1px solid #e0e0e0;"></tr>
                 </table>
             </div>
-            <div style="border-top : 2px solid rgb(122, 122, 122);width: 100%;margin-top: 20px;margin-bottom: 5px;"></div>
-            <div class="example-container" style="border : 2px solid black;height: auto;margin-top: 15px;">
+            <div style="border-top : 2px solid #e0e0e0;width: 100%;margin-top: 20px;margin-bottom: 5px;"></div>
+            <!-- <div style="border-top : 2px solid rgb(122, 122, 122);width: 100%;margin-top: 20px;margin-bottom: 5px;"></div> -->
+            <div class="example-container" style="border : 2px solid #e0e0e0;height: auto;margin-top: 15px;">
                 <table mat-table [dataSource]="dataSource_ce" style="text-align: center;">
                     <ng-container matColumnDef="Client">
                         <th mat-header-cell *matHeaderCellDef class="textSizes" style="border-right: 1px solid #e0e0e0;padding-right: 8px;background-color: #34495E;color: white;text-align: center;" matTooltip="This table represents the projects that were originally part of current months revenue but due to change in Go-Live date, it got moved to future month.">Projects That Fell Off from Current Month</th>
@@ -149,7 +150,7 @@
                     <!-- <ng-container matColumnDef="ExcelExplore">
                         <th mat-footer-cell *matFooterCellDef style="font-size: 14px;"> <div style="font-weight: bold;text-decoration: underline;margin-left: 15px;cursor: pointer;" (click)="exportAsXLSXCM()">Explore<img width="23" height="23" style="margin-left: 15px" src="assets/images/excel.png"></div> </th>
                     </ng-container> -->
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns_ce" style="border-bottom: 2px solid black;"></tr>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns_ce" style="border-bottom: 1px solid #e0e0e0;"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedColumns_ce;"></tr>
                 </table>
             </div>
@@ -165,37 +166,37 @@
                     <button mat-menu-item >Excel</button>
                 </mat-menu> -->
             </div>
-            <div class="example-container" style="border : 2px solid black;height: auto;margin-top: 15px">
+            <div class="example-container" style="border : 2px solid #e0e0e0;height: auto;margin-top: 15px">
                 <table mat-table [dataSource]="dataSource_n" style="text-align: center">
                     <ng-container matColumnDef="Client">
                         <th mat-header-cell *matHeaderCellDef class="textSizes" style="border-right: 1px solid #e0e0e0;background-color: #34495E;color: white;">Client</th>
                         <td mat-cell *matCellDef="let element" style="border-right: 1px solid #e0e0e0;text-align: left"> {{element.Client}} </td>
-                        <td mat-footer-cell *matFooterCellDef style="text-align: left"> Sub Total </td>
+                        <td mat-footer-cell *matFooterCellDef style="text-align: left;border-right: 1px solid #e0e0e0"> Sub Total </td>
                     </ng-container>
                     <ng-container matColumnDef="APAC_volume">
                         <th mat-header-cell *matHeaderCellDef class="textSizes" style="width: 150px;border-right: 1px solid #e0e0e0;padding-right: 8px;background-color: #34495E;color: white;text-align: center">APAC</th>
                         <td mat-cell *matCellDef="let element" style="border-right: 1px solid #e0e0e0;padding-right: 8px;text-align: center"> {{element.APAC_volume}} </td>
-                        <td mat-footer-cell *matFooterCellDef style="text-align: center;border-right: 2px solid black">{{SubTotalAPAC_N}}</td>
+                        <td mat-footer-cell *matFooterCellDef style="text-align: center;border-right: 1px solid #e0e0e0">{{SubTotalAPAC_N}}</td>
                     </ng-container>
                     <ng-container matColumnDef="EMEA_volume">
                         <th mat-header-cell *matHeaderCellDef class="textSizes" style="width: 150px;border-right: 1px solid #e0e0e0;padding-right: 8px;background-color: #34495E;color: white;text-align: center">EMEA</th>
                         <td mat-cell *matCellDef="let element" style="border-right: 1px solid #e0e0e0;padding-right: 8px;text-align: center"> {{element.EMEA_volume}} </td>
-                        <td mat-footer-cell *matFooterCellDef style="text-align: center;border-right: 2px solid black">{{SubTotalEMEA_N}}</td>
+                        <td mat-footer-cell *matFooterCellDef style="text-align: center;border-right: 1px solid #e0e0e0">{{SubTotalEMEA_N}}</td>
                     </ng-container>
                     <ng-container matColumnDef="LATAM_volume">
                         <th mat-header-cell *matHeaderCellDef class="textSizes" style="width: 150px;border-right: 1px solid #e0e0e0;padding-right: 8px;background-color: #34495E;color: white;text-align: center">LATAM</th>
                         <td mat-cell *matCellDef="let element" style="border-right: 1px solid #e0e0e0;padding-right: 8px;text-align: center"> {{element.LATAM_volume}} </td>
-                        <td mat-footer-cell *matFooterCellDef style="text-align: center;border-right: 2px solid black">{{SubTotalLatam_N}}</td>
+                        <td mat-footer-cell *matFooterCellDef style="text-align: center;border-right: 1px solid #e0e0e0">{{SubTotalLatam_N}}</td>
                     </ng-container>
                     <ng-container matColumnDef="NORAM_volume">
                         <th mat-header-cell *matHeaderCellDef class="textSizes" style="width: 150px;border-right: 1px solid #e0e0e0;padding-right: 8px;background-color: #34495E;color: white;text-align: center">NORAM</th>
                         <td mat-cell *matCellDef="let element" style="border-right: 1px solid #e0e0e0;padding-right: 8px;text-align: center"> {{element.NORAM_volume}} </td>
-                        <td mat-footer-cell *matFooterCellDef style="text-align: center;border-right: 2px solid black">{{SubTotalNoram_N}}</td>
+                        <td mat-footer-cell *matFooterCellDef style="text-align: center;border-right: 1px solid #e0e0e0">{{SubTotalNoram_N}}</td>
                     </ng-container>
                     <ng-container matColumnDef="CurrentMonth_s">
                         <th mat-header-cell *matHeaderCellDef class="textSizes" style="border-right: 1px solid #e0e0e0;background-color: #34495E;color: white;text-align: center">{{NextMonth_N}} </th>
                         <td mat-cell *matCellDef="let element" style="border-right: 1px solid #e0e0e0;"> {{element.CurrentMonth_s}} </td>
-                        <td mat-footer-cell *matFooterCellDef style="text-align: center;border-right: 2px solid black">{{SubTotal_N}}</td>
+                        <td mat-footer-cell *matFooterCellDef style="text-align: center;border-right: 1px solid #e0e0e0">{{SubTotal_N}}</td>
                     </ng-container>
                     <ng-container matColumnDef="PreviousYear_s">
                         <th mat-header-cell *matHeaderCellDef class="textSizes" style="border-right: 1px solid #e0e0e0;background-color: #34495E;color: white;text-align: center">{{PreviousYear_N}}</th>
@@ -227,25 +228,25 @@
                         <td mat-footer-cell *matFooterCellDef></td>
                     </ng-container> -->
                     <ng-container matColumnDef="OtherClients_n">
-                        <th mat-footer-cell *matFooterCellDef style="text-align: left;padding-left: 23px;font-size: 14px;" colspan="5"> Other Clients</th>
+                        <th mat-footer-cell *matFooterCellDef style="text-align: left;padding-left: 23px;font-size: 14px;border-right: 1px solid #e0e0e0" colspan="5"> Other Clients</th>
                     </ng-container>
                     <ng-container matColumnDef="OtherClientsTotal_n">
-                        <th mat-footer-cell *matFooterCellDef style="text-align: center;font-size: 14px;border-right: 2px solid black"> {{OtherClient_N}} </th>
+                        <th mat-footer-cell *matFooterCellDef style="text-align: center;font-size: 14px;border-right: 1px solid #e0e0e0"> {{OtherClient_N}} </th>
                     </ng-container>
                     <ng-container matColumnDef="GrandTotal_n">
-                        <th mat-footer-cell *matFooterCellDef style="text-align: left;padding-left: 23px;font-size: 14px;" colspan="5"> Grand Total</th>
+                        <th mat-footer-cell *matFooterCellDef style="text-align: left;padding-left: 23px;font-size: 14px;border-right: 1px solid #e0e0e0" colspan="5"> Grand Total</th>
                     </ng-container>
                     <ng-container matColumnDef="GrandTotalValue_n">
-                        <th mat-footer-cell *matFooterCellDef style="text-align: center;font-size: 14px;border-right: 2px solid black"> {{GrandTotal_N}} </th>
+                        <th mat-footer-cell *matFooterCellDef style="text-align: center;font-size: 14px;border-right: 1px solid #e0e0e0"> {{GrandTotal_N}} </th>
                     </ng-container>
                     <!-- <ng-container matColumnDef="ExcelExplore_n">
                         <th mat-footer-cell *matFooterCellDef style="font-size: 14px;"><div style="font-weight: bold;text-decoration: underline;margin-left: 15px;cursor: pointer;" (click)="exportAsXLSXNM()">Explore<img width="23" height="23" style="margin-left: 15px" src="assets/images/excel.png"></div></th>
                     </ng-container> -->
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns_n" style="border-bottom : 2px solid black;"></tr>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns_n" style="border-bottom : 1px solid #e0e0e0;"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedColumns_n;"></tr>
-                    <tr mat-footer-row *matFooterRowDef="displayedColumns_n;" style="border-top : 2px solid black;"></tr>
-                    <tr mat-footer-row *matFooterRowDef="['OtherClients_n','OtherClientsTotal_n'];" style="border-top : 2px solid black;"></tr>
-                    <tr mat-footer-row *matFooterRowDef="['GrandTotal_n','GrandTotalValue_n'];" style="border-top : 2px solid black;"></tr>
+                    <tr mat-footer-row *matFooterRowDef="displayedColumns_n;" style="border-top : 1px solid #e0e0e0;"></tr>
+                    <tr mat-footer-row *matFooterRowDef="['OtherClients_n','OtherClientsTotal_n'];" style="border-top : 1px solid #e0e0e0;"></tr>
+                    <tr mat-footer-row *matFooterRowDef="['GrandTotal_n','GrandTotalValue_n'];" style="border-top : 1px solid #e0e0e0;"></tr>
                 </table>
             </div>
         </div>
@@ -260,27 +261,27 @@
                     <button mat-menu-item >Excel</button>
                 </mat-menu> -->
             </div>
-            <div class="example-container mat-elevation-z2" style="border: 2px solid black;height: auto;margin-top: 15px">
+            <div class="example-container mat-elevation-z2" style="border: 2px solid #e0e0e0;height: auto;margin-top: 15px">
                 <table mat-table [dataSource]="dataSource_Ry" style="text-align: center">
                     <ng-container matColumnDef="Client">
                         <th mat-header-cell *matHeaderCellDef class="textSizes" style="border-right: 1px solid #e0e0e0;background-color: #34495E;color: white;text-align: center">Client</th>
                         <td mat-cell *matCellDef="let element" style="border-right: 1px solid #e0e0e0;text-align: left;"> {{element.Client}} </td>
-                        <td mat-footer-cell *matFooterCellDef style="text-align: left"> Sub Total </td>
+                        <td mat-footer-cell *matFooterCellDef style="text-align: left;border-right: 1px solid #e0e0e0"> Sub Total </td>
                     </ng-container>
                     <ng-container matColumnDef="Month1_s">
                         <th mat-header-cell *matHeaderCellDef class="textSizes" style="border-right: 1px solid #e0e0e0;background-color: #34495E;color: white;text-align: center">{{Month1_ry}}</th>
                         <td mat-cell *matCellDef="let element" style="border-right: 1px solid #e0e0e0;">{{element.Month1_s}}</td>
-                        <td mat-footer-cell *matFooterCellDef>{{Month1SubTotal_ry}}</td>
+                        <td mat-footer-cell *matFooterCellDef style="border-right: 1px solid #e0e0e0">{{Month1SubTotal_ry}}</td>
                     </ng-container>
                     <ng-container matColumnDef="Month2_s">
                         <th mat-header-cell *matHeaderCellDef class="textSizes" style="border-right: 1px solid #e0e0e0;background-color: #34495E;color: white;text-align: center">{{Month2_ry}}</th>
                         <td mat-cell *matCellDef="let element" style="border-right: 1px solid #e0e0e0;">{{element.Month2_s}}</td>
-                        <td mat-footer-cell *matFooterCellDef>{{Month2SubTotal_ry}}</td>
+                        <td mat-footer-cell *matFooterCellDef style="border-right: 1px solid #e0e0e0">{{Month2SubTotal_ry}}</td>
                     </ng-container>
                     <ng-container matColumnDef="RemainingMonths">
                         <th mat-header-cell *matHeaderCellDef class="textSizes" style="border-right: 1px solid #e0e0e0;background-color: #34495E;color: white;text-align: center">{{RemainingMonths_ry}} </th>
                         <td mat-cell *matCellDef="let element" style="border-right: 1px solid #e0e0e0;">{{element.RemainingMonths}}</td>
-                        <td mat-footer-cell *matFooterCellDef style="border-right: 2px solid black">{{RemainingMonthsSubTotal_ry}}</td>
+                        <td mat-footer-cell *matFooterCellDef style="border-right: 1px solid #e0e0e0">{{RemainingMonthsSubTotal_ry}}</td>
                     </ng-container>
                     <ng-container matColumnDef="TotalMonths">
                         <th mat-header-cell *matHeaderCellDef class="textSizes" style="border-right: 1px solid #e0e0e0;background-color: #34495E;color: white;text-align: center">Total (Status:Active/Closed/N-Active)</th>
@@ -313,37 +314,37 @@
                         <td mat-footer-cell *matFooterCellDef></td>
                     </ng-container>
                     <ng-container matColumnDef="OtherClients_ry">
-                        <th mat-footer-cell *matFooterCellDef style="padding-left: 23px;font-size: 14px;text-align: left;"> Other Clients</th>
+                        <th mat-footer-cell *matFooterCellDef style="padding-left: 23px;font-size: 14px;text-align: left;border-right: 1px solid #e0e0e0"> Other Clients</th>
                     </ng-container>
                     <ng-container matColumnDef="OtherClientsMonth1_ry">
-                        <th mat-footer-cell *matFooterCellDef style="font-size: 14px;"> {{Month1OC_ry}} </th>
+                        <th mat-footer-cell *matFooterCellDef style="font-size: 14px;border-right: 1px solid #e0e0e0"> {{Month1OC_ry}} </th>
                     </ng-container>
                     <ng-container matColumnDef="OtherClientsMonth2_ry">
-                        <th mat-footer-cell *matFooterCellDef style="font-size: 14px;"> {{Month2OC_ry}} </th>
+                        <th mat-footer-cell *matFooterCellDef style="font-size: 14px;border-right: 1px solid #e0e0e0"> {{Month2OC_ry}} </th>
                     </ng-container>
                     <ng-container matColumnDef="OtherClientsRemaining_ry" colspan="4">
-                        <th mat-footer-cell *matFooterCellDef style="font-size: 14px;border-right: 2px solid black"> {{RemainingOC_ry}} </th>
+                        <th mat-footer-cell *matFooterCellDef style="font-size: 14px;border-right: 1px solid #e0e0e0"> {{RemainingOC_ry}} </th>
                     </ng-container>
                     <ng-container matColumnDef="GrandTotal_ry">
-                        <th mat-footer-cell *matFooterCellDef style="padding-left: 23px;font-size: 14px;text-align: left"> Grand Total</th>
+                        <th mat-footer-cell *matFooterCellDef style="padding-left: 23px;font-size: 14px;text-align: left;border-right: 1px solid #e0e0e0"> Grand Total</th>
                     </ng-container>
                     <ng-container matColumnDef="GrandTotalMonth1_ry">
-                        <th mat-footer-cell *matFooterCellDef style="font-size: 14px;"> {{Month1GT_ry}} </th>
+                        <th mat-footer-cell *matFooterCellDef style="font-size: 14px;border-right: 1px solid #e0e0e0"> {{Month1GT_ry}} </th>
                     </ng-container>
                     <ng-container matColumnDef="GrandTotalMonth2_ry">
-                        <th mat-footer-cell *matFooterCellDef style="font-size: 14px;"> {{Month2GT_ry}} </th>
+                        <th mat-footer-cell *matFooterCellDef style="font-size: 14px;border-right: 1px solid #e0e0e0"> {{Month2GT_ry}} </th>
                     </ng-container>
                     <ng-container matColumnDef="GrandTotalRemaining_ry">
-                        <th mat-footer-cell *matFooterCellDef style="font-size: 14px;border-right: 2px solid black"> {{RemainingGT_ry}} </th>
+                        <th mat-footer-cell *matFooterCellDef style="font-size: 14px;border-right: 1px solid #e0e0e0"> {{RemainingGT_ry}} </th>
                     </ng-container>
                     <!-- <ng-container matColumnDef="ExcelExplore_ry">
                         <th mat-footer-cell *matFooterCellDef style="font-size: 14px;"> <div style="font-weight: bold;text-decoration: underline;margin-left: 15px;cursor: pointer;" (click)="exportAsXLSXROY()">Explore<img width="23" height="23" style="margin-left: 15px" src="assets/images/excel.png"></div> </th>
                     </ng-container> -->
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns_Ry" style="border-bottom: 2px solid black"></tr>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns_Ry" style="border-bottom: 1px solid #e0e0e0"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedColumns_Ry;"></tr>
-                    <tr mat-footer-row *matFooterRowDef="displayedColumns_Ry;" style="border-top: 2px solid black"></tr>
-                    <tr mat-footer-row *matFooterRowDef="['OtherClients_ry','OtherClientsMonth1_ry','OtherClientsMonth2_ry','OtherClientsRemaining_ry'];" style="border-top: 2px solid black"></tr>
-                    <tr mat-footer-row *matFooterRowDef="['GrandTotal_ry','GrandTotalMonth1_ry','GrandTotalMonth2_ry','GrandTotalRemaining_ry'];" style="border-top: 2px solid black"></tr>
+                    <tr mat-footer-row *matFooterRowDef="displayedColumns_Ry;" style="border-top: 1px solid #e0e0e0"></tr>
+                    <tr mat-footer-row *matFooterRowDef="['OtherClients_ry','OtherClientsMonth1_ry','OtherClientsMonth2_ry','OtherClientsRemaining_ry'];" style="border-top: 1px solid #e0e0e0"></tr>
+                    <tr mat-footer-row *matFooterRowDef="['GrandTotal_ry','GrandTotalMonth1_ry','GrandTotalMonth2_ry','GrandTotalRemaining_ry'];" style="border-top: 1px solid #e0e0e0"></tr>
                 </table>
             </div>
         </div>

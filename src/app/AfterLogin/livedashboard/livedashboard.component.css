@@ -50,3 +50,75 @@
     background-color:  rgba(0, 0, 0, 0.74);
     color: white;
 }
+/* ::ng-deep .mat-form-field-wrapper{
+  margin-bottom: 0px !important;
+  padding: 0px !important;
+}
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-wrapper {
+  margin: 0px 0px 0px 0px !important;
+  background-color: white !important;
+  border-radius: 0px !important;
+  border: 1.5px solid white !important;
+}
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-flex {
+  padding: 0px 15px 0px 15px !important;
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+  color: white !important;
+}
+::ng-deep .mat-form-field-flex > .mat-form-field-infix { padding: 0.3em 0px !important;}
+::ng-deep .mat-form-field-label-wrapper { top: -1.60em; } */
+
+/* ::ng-deep .my-form-field > .mat-form-field-wrapper{
+  margin-bottom: 0px !important;
+  padding: 0px !important;
+}
+::ng-deep .mat-form-field-appearance-outline  .mat-form-field-wrapper {
+  margin: 0px 0px 0px 0px !important;
+  background-color: white !important;
+  border-radius: 0px !important;
+  border: 1.5px solid white !important;
+}
+::ng-deep .my-form-field > .mat-form-field-wrapper > .mat-form-field-flex {
+  padding: 0px 15px 0px 15px !important;
+}
+
+::ng-deep  .my-form-field > .mat-form-field-wrapper > .mat-form-field-flex .mat-form-field-outline {
+  color: white !important;
+}
+::ng-deep .my-form-field > .mat-form-field-wrapper > .mat-form-field-flex > .mat-form-field-infix { padding: 0.3em 0px !important;}
+::ng-deep .my-form-field > .mat-form-field-wrapper > .mat-form-field-flex > .mat-form-field-infix > .mat-form-field-label-wrapper { top: -1.80em; }
+
+
+.Search_results{
+  width: 800px;
+  height: 700px;
+  background-color: white;
+  position: absolute;
+  z-index: 10;
+  margin: 40px 0px 0px -17px;
+  border: 1px solid #c3c3c3;
+}
+.SearchReselts_details{
+  padding: 15px;
+}
+.sr_name{
+  font-size: 22px;
+  font-weight: bold;
+  font-family: Arial, Helvetica, sans-serif;
+  color: black;
+  cursor: pointer;
+}
+.sr_name:hover{
+  font-size: 22px;
+  font-weight: normal;
+  color: rgb(70, 70, 232);
+  text-decoration: underline;
+}
+.sr_comments{
+  font-size: 15px;
+  font-weight: bold;
+  font-family: Arial, Helvetica, sans-serif;
+  color: rgb(89, 89, 89);
+} */

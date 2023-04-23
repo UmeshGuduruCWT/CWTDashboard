@@ -1,0 +1,156 @@
+<mat-form-field appearance="outline" class="col-md-3">
+    <mat-label style="font-size: 15px;">Client Name</mat-label>
+    <mat-select [formControl]="Client_Name" (selectionChange)="onClientNameChange()">
+        <mat-option>
+            <ngx-mat-select-search
+                [formControl]="ClientName_Search"
+                placeholderLabel=""
+                noEntriesFoundLabel="'no match found'">
+            </ngx-mat-select-search>
+        </mat-option>
+        <mat-option *ngFor="let clientname of SC_ClientName | async" [value]="clientname.ClientName">{{clientname.ClientName}}</mat-option>
+    </mat-select>
+</mat-form-field>
+<div class="row" style="margin: 0px;padding: 5px;" *ngFor="let sc_data of SelectedSCData">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-10 main_header">
+                <div>Steering Committee Update</div>
+            </div>
+            <div class="col-md-2 main_header">
+                <div>Last Updated Date : {{sc_data.LastUpdatedDate}}</div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="sub_header">Client Name</div>
+                <div>{{sc_data.ClientName}}</div>
+            </div>
+            <div class="col-md-2">
+                <div class="sub_header">Client Type</div>
+                <div>{{sc_data.ClientType}}</div>
+            </div>
+            <div class="col-md-2">
+                <div class="sub_header">Project Lead</div>
+                <div>{{sc_data.ProjectLead}}</div>
+            </div>
+            <div class="col-md-2">
+                <div class="sub_header">Project Status</div>
+                <div>{{sc_data.ProjectStatus}}</div>
+            </div>
+            <div class="col-md-2">
+                <div class="sub_header">Project Trend</div>
+                <div>{{sc_data.ProjectTrend}}</div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="normal_header">Project Scope</div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class = "normal_text">Total Business Volume</div>
+                        <div>{{sc_data.TotalBusineesVolume}}</div>
+                        <div class = "normal_text">New Business Volume</div>
+                        <div>{{sc_data.NewBusinessVolume}}</div>
+                        <div class = "normal_text">Region</div>
+                        <div>{{sc_data.Region}}</div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class = "normal_text">Country</div>
+                        <div>{{sc_data.Country}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="normal_header">Overall Scope/Current State</div>
+                <div>{{sc_data.CurrentState}}</div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 normal_header" style = "text-align: center;font-size: 25px;margin: 2px;">
+                Risks - Mitigation
+            </div>
+            <div class="col-md-1 main_header">
+                Risks
+            </div>
+            <div class="col-md-3 main_header">
+                Risks/Gaps
+            </div>
+            <div class="col-md-3 main_header">
+                Mitigation Plan
+            </div>
+            <div class="col-md-1 main_header">
+                Steer Co Sup?
+            </div>
+            <div class="col-md-2 main_header">
+                Due Date
+            </div>
+            <div class="col-md-2 main_header">
+                Owner
+            </div>
+        </div>
+        <div class="row" *ngFor="let riskgap of sc_data.RiskGaps;let rg = index" style = "text-align: center;margin: 2px;">
+            <div class="col-md-1">
+                Risk - {{rg+1}}
+            </div>
+            <div class="col-md-3">
+                {{riskgap.RisksGaps}}
+            </div>
+            <div class="col-md-3">
+                {{riskgap.MitigationPlan}}
+            </div>
+            <div class="col-md-1">
+                {{riskgap.SteeringCommitteeSupportNeed}}
+            </div>
+            <div class="col-md-2">
+                {{riskgap.DueDate}}
+            </div>
+            <div class="col-md-2">
+                {{riskgap.Owner}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 normal_header" style = "text-align: center;font-size: 25px;margin: 2px;">
+                Project Scope - Country Waves
+            </div>
+            <div class="col-md-1 main_header">
+                Waves
+            </div>
+            <div class="col-md-1 main_header">
+                Region
+            </div>
+            <div class="col-md-3 main_header">
+                Country
+            </div>
+            <div class="col-md-4 main_header">
+                Scope
+            </div>
+            <div class="col-md-1 main_header">
+                Go Live Date
+            </div>
+            <div class="col-md-2 main_header">
+                Status
+            </div>
+        </div>
+        <div class="row" *ngFor="let waves of sc_data.Waves;let w = index" style = "text-align: center;margin: 2px;">
+            <div class="col-md-1">
+                Waves - {{w+1}}
+            </div>
+            <div class="col-md-1">
+                {{waves.Region}}
+            </div>
+            <div class="col-md-3">
+                {{waves.Country}}
+            </div>
+            <div class="col-md-4">
+                {{waves.Scope}}
+            </div>
+            <div class="col-md-1">
+                {{waves.GoLiveDate}}
+            </div>
+            <div class="col-md-2">
+                {{waves.Status}}
+            </div>
+        </div>
+    </div>
+</div>

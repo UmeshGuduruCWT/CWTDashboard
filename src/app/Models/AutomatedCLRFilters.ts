@@ -152,6 +152,10 @@ export interface CycleTimeCategories {
     CycleTimeCategories : string;
     isSelected: boolean;
 }
+export interface FilterCycleTime {
+    Status: string;
+    isSelected: boolean;
+}
 export interface AutomatedCLRFilters {
     message: string;
     code: number;

@@ -245,10 +245,10 @@
                             <ng-container matColumnDef="expand">
                                 <th mat-header-cell *matHeaderCellDef aria-label="row actions" style="border-bottom: 2px solid black;padding-left: 10px;width: 100px;text-align: center;background-color:#34495E;color: white;border-right: none;">&nbsp;</th>
                                 <td mat-cell *matCellDef="let element" style="border-right: none;padding-left: 10px;width: 100px;">
-                                <button mat-icon-button aria-label="expand row" (click)="(expandedElement = expandedElement === element ? null : element); $event.stopPropagation()">
-                                    <mat-icon *ngIf="expandedElement !== element">keyboard_arrow_down</mat-icon>
-                                    <mat-icon *ngIf="expandedElement === element">keyboard_arrow_up</mat-icon>
-                                </button>
+                                    <button mat-icon-button aria-label="expand row" (click)="(expandedElement = expandedElement === element ? null : element); $event.stopPropagation()">
+                                        <mat-icon *ngIf="expandedElement !== element">keyboard_arrow_down</mat-icon>
+                                        <mat-icon *ngIf="expandedElement === element">keyboard_arrow_up</mat-icon>
+                                    </button>
                                 </td>
                             </ng-container>
                             <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
@@ -309,34 +309,6 @@
                             <tr mat-footer-row *matFooterRowDef="columnsToDisplay_footer; sticky: true" style="height: 35px;max-height: 35px;"></tr>
                             <!-- <tr mat-footer-row *matFooterRowDef="GolivedisplayedColumns; sticky: true" style="height: 35px;"></tr> -->
                         </table>
-                        <!-- <ng-template #tpl let-element>
-                            <div class="mat-row detail-row" [@detailExpand] style="overflow: hidden">
-                            <mat-table #table [dataSource]="element.CountrywiseSum">
-                                <ng-container matColumnDef="Client">
-                                <mat-cell *matCellDef="let element" style="min-width : 150px;max-width:200px;"> {{element.Client}} </mat-cell>
-                                </ng-container>
-                                <ng-container matColumnDef="Country">
-                                <mat-cell *matCellDef="let element" style="min-width : 150px;max-width:200px;"> {{element.Country}} </mat-cell>
-                                </ng-container>
-                                <ng-container matColumnDef="January">
-                                <mat-cell *matCellDef="let element" style="min-width : 150px;max-width:200px;"> {{element.January}} </mat-cell>
-                                </ng-container>
-                                <ng-container matColumnDef="February">
-                                <mat-cell *matCellDef="let element" style="min-width : 150px;max-width:200px;"> {{element.February}} </mat-cell>
-                                </ng-container>
-                                <ng-container matColumnDef="March">
-                                    <mat-cell *matCellDef="let element" style="min-width : 150px;max-width:200px;"> {{element.March}} </mat-cell>
-                                </ng-container>
-                                <ng-container matColumnDef="April">
-                                    <mat-cell *matCellDef="let element" style="min-width : 150px;max-width:200px;"> {{element.April}} </mat-cell>
-                                </ng-container>
-                                <mat-row
-                                *matRowDef="let row; columns: columnsToDisplay_h;"
-                                class="element-row">
-                                </mat-row>
-                            </mat-table>
-                            </div>
-                        </ng-template> -->
                     </div>
                     <!-- <ng-template #tpl let-element>
                         <div class="mat-row detail-row" [@detailExpand] style="overflow: hidden">

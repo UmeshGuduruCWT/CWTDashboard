@@ -42,7 +42,7 @@
   .mat-cell,.mat-header-cell {
     min-width: 80px;
     max-width: 250px;
-    white-space: normal; 
+    white-space: normal;
     /* width: max-content;
     white-space: normal; */
   }

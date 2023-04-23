@@ -211,9 +211,18 @@ export class NpsImplementationComponent implements OnInit {
           },
           plugins: {
             labels: {
+              render: function (args) {
+                if(args.value > 0) {
+                  return ''+args.value;
+                }
+                else
+                {
+                  return '';
+                }
+              },
               align: 'center',
               anchor: 'center',
-              render: 'value',
+              // render: 'value',
               fontColor: '#3B3B3B',
               // position: 'outside',
               textMargin: 6,

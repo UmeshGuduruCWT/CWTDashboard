@@ -181,6 +181,7 @@ export class ImplementationMarketReportComponent implements OnInit {
     this.TotalCost = Math.round(this.dataSource.filteredData.map(t => t.Revenue_Total_Volume_USD).reduce((acc,value) => acc + value,0)).toLocaleString("en-US",{style : "currency",currency:"USD"}).slice(0,-3);
   }
   LoginUID : string;
+  DisplayDelta : boolean;
   ngOnInit() {
     this.LoginUID = localStorage.getItem("UID");
     this.dashboard.ShowSpinnerHandler(true);
@@ -1343,6 +1344,7 @@ export class ImplementationMarketReportComponent implements OnInit {
       this.filterEntity = null;
       this.filterType = null;
       this.dataSource = null;
+      console.log(this.SelectedYears,this.SelectedMonths,this.SelectedLevels,this.SelectedRegions,this.SelectedMilestonestatus,this.SelectedImplementation,this.SelectedCountry,this.SelectedOwnership)
       this.service.ImeetMilestoneProjectStatus(this.SelectedYears,this.SelectedMonths,this.SelectedLevels,this.SelectedRegions,this.SelectedMilestonestatus,this.SelectedImplementation,this.SelectedCountry,this.SelectedOwnership).subscribe(data =>{
         if(data.code == 200){
           this.SelectedProjectCount = data.Data.length;
@@ -1375,6 +1377,7 @@ export class ImplementationMarketReportComponent implements OnInit {
       });
       this.VolumeCountCycleTime = [];
       this.dataSource_VCtPc = null;
+      console.log(this.SelectedYears,this.SelectedMonths,this.SelectedLevels,this.SelectedRegions,this.SelectedMilestonestatus,this.SelectedImplementation,this.SelectedCountry,this.SelectedOwnership)
       this.service.ChartVolumeCycleTimeCounts(this.SelectedYears,this.SelectedMonths,this.SelectedLevels,this.SelectedRegions,this.SelectedMilestonestatus,this.SelectedImplementation,this.SelectedCountry,this.SelectedOwnership).subscribe(data => {
         this.VolumeCountCycleTime = data.VolumeCountCycleTime;
         // this.dataSource_VCtPc = data.VolumeCountCycleTime;
@@ -1400,6 +1403,19 @@ export class ImplementationMarketReportComponent implements OnInit {
     }
     this.LoadingMonthlyTotalRevenue();
     this.Apply_disable = true;
+    if(this.yearList.length > 1){
+      if(this.SelectedYears.includes(this.CurrentYears)){
+        this.DisplayDelta = true;
+      }else{
+        this.DisplayDelta = false;
+      }
+    }else{
+      if(this.SelectedYears.includes(this.CurrentYears)){
+        this.DisplayDelta = true;
+      }else{
+        this.DisplayDelta = false;
+      }
+    }
   }
   FormatingNumber(number : any){
     if(number == 0) {

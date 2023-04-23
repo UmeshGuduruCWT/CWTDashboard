@@ -1,0 +1,281 @@
+<div class="card row" style="margin: 0px;padding: 0px;">
+    <div class="col-md-12">
+        <label class="text_headers">Steering Committee</label>
+    </div>
+    <mat-divider style="width: 100%;"></mat-divider>
+    <div class="col-md-12">
+        <div *ngIf="ButtonName == 'Save' ? true : false">
+            <div class="row" style="margin: 20px 0px 0px 0px;">
+                <label style="font-size: 15px;color: #7a7a7a;padding: 0px 0px 0px 15px;">Get details from CLR by using Opportunity ID in below input field</label>
+            </div>
+            <div class="row" style="margin: 5px 0px 0px 0px;">
+                <mat-form-field appearance="outline" class="col-md-3">
+                    <mat-label style="font-size: 15px;">Opportunity ID </mat-label>
+                    <input style="color: gray;" [(ngModel)]="OppID" name="OppID" matInput>
+                </mat-form-field>
+                <button mat-raised-button (click)="OnApplyClick()" style="height: 35px;background-color: #F16950;color: white;margin-left: 20px;margin-top: 10px;"><span class="material-icons">forward</span></button>    
+            </div>
+            <div class="row" style="margin: 0px;">
+                <label style="font-size: 13px;color: rgb(255, 56, 56);padding: 0px 0px 0px 20px;">{{OppIDErrorMessage}}</label>
+            </div>
+        </div>
+        <div class="row" style="margin : 20px 0px 0px 0px;width: 100%;">
+            <mat-form-field appearance="outline" class="col-md-3">
+                <mat-icon matSuffix><span class="material-symbols-outlined">task_alt</span></mat-icon>
+                <mat-label style="font-size: 15px;">Record Status</mat-label>
+                <mat-select [(value)]="Record_Status" required>
+                    <mat-option value="Active">Active</mat-option>
+                    <mat-option value="Closed">Closed</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="col-md-3">
+                <mat-icon matSuffix><span class="material-symbols-outlined">account_circle</span></mat-icon>
+                <mat-label style="font-size: 15px;">Client Name</mat-label>
+                <input style="color: gray;" [(ngModel)]="ClientName" type="text" name="ClientName" matInput required>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="col-md-3">
+                <mat-icon matSuffix><span class="material-symbols-outlined">task_alt</span></mat-icon>
+                <mat-label style="font-size: 15px;">Client Type</mat-label>
+                <mat-select [(value)]="Client_Type" required>
+                    <mat-option value="New Client Implementation">New Client Implementation</mat-option>
+                    <mat-option value="Existing Client Implementation">Existing Client Implementation</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="col-md-3">
+                <mat-icon matSuffix><span class="material-symbols-outlined">person</span></mat-icon>
+                <mat-label style="font-size: 15px;">Project Lead</mat-label>
+                <input style="color: gray;" [(ngModel)]="Project_Lead" type="text" name="Project_Lead" matInput required>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="col-md-3">
+                <mat-icon matSuffix><span class="material-symbols-outlined">task_alt</span></mat-icon>
+                <mat-label style="font-size: 15px;">Project Status</mat-label>
+                <mat-select [(value)]="Project_Status" required>
+                    <mat-option value="Green">Green</mat-option>
+                    <mat-option value="Amber">Amber</mat-option>
+                    <mat-option value="Red">Red</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="col-md-3">
+                <mat-icon matSuffix><span class="material-symbols-outlined">task_alt</span></mat-icon>
+                <mat-label style="font-size: 15px;">Project Trend</mat-label>
+                <mat-select [(value)]="Project_Trend" required>
+                    <mat-option value="Up">Up</mat-option>
+                    <mat-option value="Stable">Stable</mat-option>
+                    <mat-option value="Down">Down</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="col-md-3">
+                <mat-icon matSuffix><span class="material-symbols-outlined">attach_money</span></mat-icon>
+                <mat-label style="font-size: 15px;">Total Business Volume</mat-label>
+                <input style="color: gray;" [(ngModel)]="TotalBusinessVolume" type="number" name="TotalBusinessVolume" matInput required>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="col-md-3">
+                <mat-icon matSuffix><span class="material-symbols-outlined">attach_money</span></mat-icon>
+                <mat-label style="font-size: 15px;">New Business Volume</mat-label>
+                <input style="color: gray;" [(ngModel)]="NewBusinessVolume" type="number" name="NewBusinessVolume" matInput required>
+            </mat-form-field>
+            <!-- <mat-form-field appearance="outline" class="col-md-3">
+                <mat-label style="font-size: 15px;">Region</mat-label>
+                <mat-select [(value)]="Region">
+                    <mat-option value="APAC">APAC</mat-option>
+                    <mat-option value="EMEA">EMEA</mat-option>
+                    <mat-option value="LATAM">LATAM</mat-option>
+                    <mat-option value="NORAM">NORAM</mat-option>
+                    <mat-option value="Global">Global</mat-option>
+                </mat-select>
+            </mat-form-field> -->
+            <div class="col-md-3" style="padding: 5px 0px 0px 15px;">
+                <p style="font-size: 14px;">Region</p>
+                <ng-multiselect-dropdown
+                    #multiSelect
+                    [settings]="RegionSettings"
+                    [data]="SC_Region"
+                    [(ngModel)]="Region"
+                    (onSelect)="onRegionChange()" 
+                    (onDeSelect)="onRegionChange()"
+                    (onSelectAll)="onRegionChangeAll($event)"
+                    (onDeSelectAll)="onRegionChangeAll($event)"
+                    [disabled]="false">
+                </ng-multiselect-dropdown>
+            </div>
+            <div class="col-md-3" style="padding: 5px 0px 0px 15px;">
+                <p style="font-size: 14px;">Country</p>
+                <!-- [placeholder]="'Country'" -->
+                <ng-multiselect-dropdown
+                    #multiSelect
+                    [settings]="CountrySettings"
+                    [data]="SC_Country"
+                    [(ngModel)]="Country"
+                    [disabled]="false">
+                </ng-multiselect-dropdown>
+            </div>
+            <div class="col-md-12" style="margin-top: 20px;"></div>
+            <mat-form-field appearance="outline" class="col-md-3">
+                <mat-label style="font-size: 15px;">Overall Scope/Current State</mat-label>
+                <mat-icon matSuffix><span class="material-symbols-outlined">format_align_left</span></mat-icon>
+                <textarea rows="10" style="color: gray;" [(ngModel)]="CurrentState" name="CurrentState" matInput></textarea>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="col-md-3">
+                <mat-label style="font-size: 15px;">Completed Key Deliverables</mat-label>
+                <mat-icon matSuffix><span class="material-symbols-outlined">format_align_left</span></mat-icon>
+                <textarea rows="10" style="color: gray;" [(ngModel)]="CompletedKeyDeliverables" name="CompletedKeyDeliverables" matInput></textarea>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="col-md-3">
+                <mat-label style="font-size: 15px;">Scheduled Key Deliverables</mat-label>
+                <mat-icon matSuffix><span class="material-symbols-outlined">format_align_left</span></mat-icon>
+                <textarea rows="10" style="color: gray;" [(ngModel)]="ScheduledKeyDeliverables" name="ScheduledKeyDeliverables" matInput></textarea>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="col-md-3">
+                <mat-label style="font-size: 15px;">Additional Notes</mat-label>
+                <mat-icon matSuffix><span class="material-symbols-outlined">format_align_left</span></mat-icon>
+                <textarea rows="10" style="color: gray;" [(ngModel)]="AdditionalNotes" name="AdditionalNotes" matInput></textarea>
+            </mat-form-field>
+        </div>
+    </div>
+    <mat-divider style="width: 100%;"></mat-divider>
+    <mat-accordion multi="true" style="margin: 0px;padding: 0px;">
+        <div style="width: 100%;height: 60px;">
+            <label class="text_headers">Risks Gap</label>
+            <button [disabled]="DisableAddNewRiskButton" mat-raised-button (click)="addnewriskgap()" style="background-color: #8AB458;color: white;margin-left: 25px;margin-right: 25px;border-radius: 1px;" matTooltip="Add Risks Gap">
+                <mat-icon style="color: white;font-size: 20px;margin-top: 4px;">add</mat-icon>New Risk Gap
+            </button>
+        </div>
+        <mat-divider style="width: 100%;margin-top: 10px;"></mat-divider>
+        <mat-expansion-panel class="mat-elevation-z0" *ngFor="let risk_gap of RisksGap;let j = index" style="border-radius: 0px;border-bottom: 1px solid rgba(0,0,0,.12);height: auto;" expanded='false' >
+            <mat-expansion-panel-header style="padding: 13px 20px 13px 0px" [collapsedHeight]="'60px'" [expandedHeight]="'60px'">
+                <mat-panel-title>
+                    <div class="col-12">
+                        <div class="col-12">
+                            <label style="font-size: 12px;font-weight: bold;font-family: Arial, Helvetica, sans-serif;">Risks/Gaps - {{j+1}}</label>
+                        </div>
+                    </div>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="col-md-12" style="margin: 0px;padding: 0px;height: auto">
+                <div class="row" style="margin : 0px;width: 100%;height: auto;" >
+                    <!-- <div class="col-md-3" style="padding: 5px 0px 0px 15px;">
+                        <ng-multiselect-dropdown
+                            #multiSelect
+                            [placeholder]="'Select Owner'"
+                            [settings]="dropdownSettings"
+                            [data]="OwnersList"
+                            [(ngModel)]="risk_gap.Owners"
+                            [disabled]="false">
+                        </ng-multiselect-dropdown>
+                    </div> -->
+                    <mat-form-field appearance="outline" class="col-md-3">
+                        <mat-icon matSuffix><span class="material-symbols-outlined">person</span></mat-icon>
+                        <mat-label style="font-size: 15px;">Owner</mat-label>
+                        <input style="color: gray;" [(ngModel)]="risk_gap.Owners" type="text" name="risk_gap.Owners" matInput>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="col-md-3">
+                        <mat-icon matSuffix><span class="material-symbols-outlined">task_alt</span></mat-icon>
+                        <mat-label style="font-size: 15px;">Steering Committee Supp Need?</mat-label>
+                        <mat-select [(value)]="risk_gap.SteeringCommitteeSupportNeed" >
+                            <mat-option value="Yes">Yes</mat-option>
+                            <mat-option value="No">No</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <!-- style="background-color: #FAF9F8;" -->
+                    <mat-form-field appearance="outline" class="col-md-3">
+                        <mat-label>Due Date</mat-label>
+                        <input matInput [matDatepicker]="Due_Date" [(ngModel)]="risk_gap.Due_Date" required>
+                        <mat-datepicker-toggle matSuffix [for]="Due_Date"></mat-datepicker-toggle>
+                        <mat-datepicker #Due_Date color="primary"></mat-datepicker>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="col-md-3">
+                        <mat-icon matSuffix><span class="material-symbols-outlined">task_alt</span></mat-icon>
+                        <mat-label style="font-size: 15px;">Status</mat-label>
+                        <mat-select [(value)]="risk_gap.Status" required>
+                            <mat-option value="Open">Open</mat-option>
+                            <mat-option value="Closed">Closed</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <div class="col-md-12"></div>
+                    <mat-form-field appearance="outline" class="col-md-4">
+                        <mat-label style="font-size: 15px;">Risks/Gaps - {{j+1}}</mat-label>
+                        <mat-icon matSuffix><span class="material-symbols-outlined">format_align_left</span></mat-icon>
+                        <textarea rows="10" style="color: gray;" [(ngModel)]="risk_gap.RisksGaps" name="risk_gap.RisksGaps" matInput></textarea>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="col-md-4">
+                        <mat-label style="font-size: 15px;">Mitigation Plan - {{j+1}}</mat-label>
+                        <mat-icon matSuffix><span class="material-symbols-outlined">format_align_left</span></mat-icon>
+                        <textarea rows="10" style="color: gray;" [(ngModel)]="risk_gap.MitigationPlan" name="risk_gap.MitigationPlan" matInput></textarea>
+                    </mat-form-field>
+                </div>
+            </div>
+        </mat-expansion-panel>
+    </mat-accordion>
+    <mat-accordion multi="true" style="margin: 0px;padding: 0px;">
+        <div style="width: 100%;height: 60px;">
+            <label class="text_headers">Waves</label>
+            <button [disabled]="DisableAddNewWaveButton" mat-raised-button (click)="addnewWave()" style="background-color: #8AB458;color: white;margin-left: 25px;margin-right: 25px;border-radius: 1px;" matTooltip="Add New Wave">
+                <mat-icon style="color: white;font-size: 20px;margin-top: 4px;">add</mat-icon>New Wave
+            </button>
+        </div>
+        <mat-divider style="width: 100%;margin-top: 10px;"></mat-divider>
+        <mat-expansion-panel class="mat-elevation-z0" *ngFor="let wave_list of waves;let k = index" style="border-radius: 0px;border-bottom: 1px solid rgba(0,0,0,.12);" expanded='false' >
+            <mat-expansion-panel-header style="padding: 13px 20px 13px 0px" [collapsedHeight]="'60px'" [expandedHeight]="'60px'">
+                <mat-panel-title>
+                    <div class="col-12">
+                        <div class="col-12">
+                            <label style="font-size: 12px;font-weight: bold;font-family: Arial, Helvetica, sans-serif;">Wave - {{k+1}}</label>
+                        </div>
+                    </div>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="col-md-12" style="margin: 0px;padding: 0px;">
+                <div class="row" style="margin : 0px;width: 100%;" >
+                    <div class="col-md-3" style="padding: 5px 0px 0px 15px;">
+                        <ng-multiselect-dropdown
+                            #multiSelect
+                            [placeholder]="'Region'"
+                            [settings]="RegionSettings"
+                            [data]="SC_Region"
+                            [(ngModel)]="wave_list.arr_Region"
+                            [disabled]="false"
+                            (onSelect)="onWaveRegionChange(k)" 
+                            (onDeSelect)="onWaveRegionChange(k)"
+                            (onSelectAll)="onWaveRegionChangeAll($event,k)"
+                            (onDeSelectAll)="onWaveRegionChangeAll($event,k)">
+                        </ng-multiselect-dropdown>
+                    </div>
+                    <div class="col-md-3" style="padding: 5px 0px 0px 15px;">
+                        <ng-multiselect-dropdown
+                            #multiSelect
+                            [placeholder]="'Country'"
+                            [settings]="CountrySettings"
+                            [data]="wave_list.SC_Country"
+                            [(ngModel)]="wave_list.arr_Country"
+                            [disabled]="false">
+                        </ng-multiselect-dropdown>
+                    </div>
+                    <mat-form-field appearance="outline" class="col-md-3">
+                        <mat-label>Go-Live Date</mat-label>
+                        <input matInput [matDatepicker]="GoLive_Date" [(ngModel)]="wave_list.GoLive" required>
+                        <mat-datepicker-toggle matSuffix [for]="GoLive_Date"></mat-datepicker-toggle>
+                        <mat-datepicker #GoLive_Date color="primary"></mat-datepicker>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="col-md-3">
+                        <mat-icon matSuffix><span class="material-symbols-outlined">task_alt</span></mat-icon>
+                        <mat-label style="font-size: 15px;">Status</mat-label>
+                        <mat-select [(value)]="wave_list.Status" required>
+                            <mat-option value="On Track">On Track</mat-option>
+                            <mat-option value="Live">Live</mat-option>
+                            <mat-option value="Not Started">Not Started</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="col-md-4">
+                        <mat-label style="font-size: 15px;">Scope</mat-label>
+                        <mat-icon matSuffix><span class="material-symbols-outlined">format_align_left</span></mat-icon>
+                        <textarea rows="10" style="color: gray;" [(ngModel)]="wave_list.Scope" name="wave_list.Scope" matInput></textarea>
+                    </mat-form-field>
+                </div>
+            </div>
+        </mat-expansion-panel>
+    </mat-accordion>
+    <div class="col-md-12" style="margin: 0px;padding: 0px 0px 0px 20px;text-align: left">
+        <button mat-raised-button style="background-color: #F16950;color: white;margin : 25px 0px;" (click)="onSaveClick()">{{ButtonName}}</button>
+        <button mat-raised-button style="background-color: #F16950;color: white;margin : 25px 0px 25px 25px" (click)="onCancelClick()">Cancel</button>
+    </div>
+</div>

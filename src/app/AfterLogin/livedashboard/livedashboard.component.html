@@ -15,6 +15,24 @@
                 <div style="width: 100%;text-align: center;font-weight: bold;color: #ff0000;height: 20px;font-family: Montserrat, sans-serif;margin-top: 10px;font-size: 18px;">{{Time}}</div>
             </div>
             <span class="spacer"></span>
+            <!-- <mat-form-field appearance="outline" class="my-form-field col-md-3" style="margin-top: 2px;position: relative;">
+                <div *ngIf="Search_resultsData" class="Search_results">
+                    <div *ngFor="let kb of KB_SearchData;let j=index">
+                        <div class="SearchReselts_details" style="width:100%" (click)="OpenLink(kb.Link)">
+                            <label class="sr_name">{{kb.Name}}</label><br> 
+                            <label class="sr_comments">{{kb.Comments}}</label>
+                        </div>
+                        <mat-divider></mat-divider>
+                    </div>
+                </div>
+                <mat-label style="font-size: 15px;">Search</mat-label>
+                <input style="color: gray;background-color: white;" [formControl]="Search_Filter" matInput>
+                <mat-icon matSuffix>search</mat-icon>
+                
+            </mat-form-field> -->
+            <!-- <div class="my-form-field col-md-3" style="">
+
+            </div> -->
             <!-- <div style="height: 100%;width: 100px;text-align: center">
                 <li style="list-style-type: none;margin-top: 8px;">
                     <label style="color: #FEFEFF;font-size: 15px;font-family: Montserrat, sans-serif;"><strong>{{TodayDate}}</strong></label>
@@ -116,6 +134,19 @@
                 <mat-list-item *ngIf="ShowCTO" (click)= "[sidenav.close(), SelectedReport(2)]" routerLinkActive="active-list-item" [routerLink]="['CriticalTaskOverdue']">Critical Tasks Overdue</mat-list-item>
                 <mat-list-item *ngIf="ShowAutomatedCLR" (click)="[sidenav.close(), SelectedReport(15)]" routerLinkActive="active-list-item" [routerLink]="['ResourceAssignment']">Resource Assignment</mat-list-item>
                 <mat-list-item *ngIf="ShowLL" (click)= "[sidenav.close(), SelectedReport(3)]" routerLinkActive="active-list-item" [routerLink]="['LessonsLearnt']">Lessons Learnt</mat-list-item>
+                <!-- <mat-list-item (click)= "[sidenav.close()]" routerLinkActive="active-list-item" [routerLink]="['KnowledgeBase']">Knowledge Base</mat-list-item> -->
+                <!-- <mat-list-item (click)= "[sidenav.close(), SelectedReport(21)]" routerLinkActive="active-list-item" [routerLink]="['SteeringCommittee']">Steering Committee</mat-list-item> -->
+                <!-- <mat-expansion-panel  class="mat-elevation-z0" style="background-color: #D5DBDB;"  #scdata (opened)="scdata.expanded = true" (closed)="scdata.expanded = false">
+                    <mat-expansion-panel-header style="padding: 0px 15px 0px 15px;">
+                        <mat-panel-title style="font-size: 15px;">
+                            <label>Steering Committee</label>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <mat-nav-list>
+                        <mat-list-item (click)= "[sidenav.close(), SelectedReport(22)]" routerLinkActive="active-list-item" [routerLink]="['SteeringCommitteeView']"><li>Steering Committee View</li></mat-list-item>
+                    </mat-nav-list>
+                </mat-expansion-panel> -->
+                <!-- <mat-list-item (click)= "[sidenav.close(), SelectedReport(21)]" routerLinkActive="active-list-item" [routerLink]="['AddSteeringCommittee']">Steering Committee</mat-list-item> -->
                 <!-- <mat-list-item (click)= "[sidenav.close(), SelectedReport(22)]" routerLinkActive="active-list-item" [routerLink]="['eSOWReport']">eSOW Report</mat-list-item> -->
                 <!-- <mat-list-item *ngIf="ShowSGT" (click)= "[sidenav.close(), SelectedReport(4)]" routerLinkActive="active-list-item" [routerLink]="['StageGateTesting']">Stage Gate Testing</mat-list-item> -->
                 <!-- <mat-list-item (click)= "[sidenav.close(), SelectedReport(15)]" routerLinkActive="active-list-item" [routerLink]="['PerformanceLeader']">performanceleader</mat-list-item> -->

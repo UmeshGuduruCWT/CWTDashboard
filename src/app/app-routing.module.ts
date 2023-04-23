@@ -43,21 +43,24 @@ import { DigitalReportComponent } from './AfterLogin/digital-report/digital-repo
 import { RollingNPSComponent } from './AfterLogin/rolling-nps/rolling-nps.component';
 import { GoLiveReportComponent } from './AfterLogin/go-live-report/go-live-report.component';
 import { DashboardComponentWOLoginComponent } from './dashboard-component-wologin/dashboard-component-wologin.component';
+import { SteeringCommitteeComponent } from './AfterLogin/steering-committee/steering-committee.component';
+import { AddUpdateSteeringCommitteeComponent } from './AfterLogin/add-update-steering-committee/add-update-steering-committee.component';
+import { KnowledgeBaseComponent } from './AfterLogin/knowledge-base/knowledge-base.component';
+import { SteeringCommitteeRecordViewComponent } from './AfterLogin/steering-committee-record-view/steering-committee-record-view.component';
 const routes: Routes = [
   { path:'',redirectTo: 'Dashboard', pathMatch: 'full'},
   { path:'Login',component:LoginComponent},
   { path:'Register',component:RegistrationComponent},
-  { path:'GoLiveReport',component:GoLiveReportComponent},
+  // { path:'GoLiveReport',component:GoLiveReportComponent},
   { path:'Dashboard',component:DashboardComponentWOLoginComponent,
     children : [
       {path : '',redirectTo : 'GoLiveReport',pathMatch: 'full'},
       {path:'GoLiveReport',component:GoLiveReportComponent},
-
     ]
   },
   { path:'ForgotPassword',component:ForgotPasswordComponent},
   { path:'Dashboard/:UID',
-    component: LivedashboardComponent,
+    component: DashboardComponent,
     // canActivate : [DashboardactivateGuard],
     children : [
       {path:'',redirectTo: 'HomePage', pathMatch: 'full'},
@@ -69,6 +72,9 @@ const routes: Routes = [
       //{path:'HierarchyImplementation',component:MarketImplementationComponent},
       {path:'PerformanceLeader',component:PerformanceLeaderComponent},
       {path:'CycleTime',component:CycleTimeComponent},
+      {path:'SteeringCommittee',component:SteeringCommitteeComponent},
+      {path:'AddSteeringCommittee',component:AddUpdateSteeringCommitteeComponent},
+      {path:'SteeringCommitteeView',component:SteeringCommitteeRecordViewComponent},
       {path:'Hierarchy',component:HierarchyComponent},
       {path:'CriticalTaskOverdue',component:CriticalTasksOverDueComponent},
       {path:'ImplementationProjectStatus',component:ImplementationProjectStatusComponent},
@@ -97,6 +103,7 @@ const routes: Routes = [
       {path:'NpsDashboard',component:NpsImplementationComponent},
       {path:'DigitalReport',component:DigitalReportComponent},
       {path:'RollingNps',component:RollingNPSComponent},
+      {path:'KnowledgeBase',component:KnowledgeBaseComponent},
   ]},
   // {path:'refresh',component : RefreshComponent}
 ];

@@ -113,13 +113,15 @@ export class RollingNPSComponent implements OnInit {
       // this.PreviousMonths.push(data.ExistingRegionWiseNPSScore[0]);
       this.masterYearMonth == false;
       this.SearchValueChanges();
-      if((new Date()).getMonth() == 0){
-        this.SelectedYearMonth = ((new Date()).getFullYear()-1) + "-12";
-        this.YearMonth.setValue([this.SelectedYearMonth]);
-      }else{
-        this.SelectedYearMonth = (new Date()).getFullYear() + "-" + ((new Date()).getMonth());
-        this.YearMonth.setValue([this.SelectedYearMonth]);
-      }
+      this.YearMonth.setValue(data.ExistingRegionWiseNPSScore);
+      this.getSelectedYearMonth();
+      // if((new Date()).getMonth() == 0){
+      //   this.SelectedYearMonth = ((new Date()).getFullYear()-1) + "-12";
+      //   this.YearMonth.setValue([this.SelectedYearMonth]);
+      // }else{
+      //   this.SelectedYearMonth = (new Date()).getFullYear() + "-" + ((new Date()).getMonth());
+      //   this.YearMonth.setValue([this.SelectedYearMonth]);
+      // }
       this.OnApplyClick();
     })
   }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Countries } from 'src/app/Models/HomeData';
+import { Countries, HomeData } from 'src/app/Models/HomeData';
 import { DashboardServiceService } from 'src/app/dashboard-service.service';
 import { LivedashboardComponent } from '../livedashboard/livedashboard.component';
 import { FormControl } from '@angular/forms';
@@ -47,7 +47,7 @@ export class LiveHomePageComponent implements OnInit {
   PotentialRecords: string;
   DisableCountry : boolean = true;
   CountryList : Countries[];mastercountry : boolean;CountryNG = [];SelectedCountry;
-  constructor(private router : Router,public service : DashboardServiceService,public datepipe : DatePipe,public dashboard : LivedashboardComponent) { }
+  constructor(private router : Router,public service : DashboardServiceService,public datepipe : DatePipe,public dashboard : DashboardComponent) { }
   // constructor(private router : Router) {
   //   this.screenWidth = window.innerWidth;
   //   this.screenHeight = window.innerHeight;
@@ -72,10 +72,30 @@ export class LiveHomePageComponent implements OnInit {
   YearMonths : any[] = [];
   NpsScores : any[] = [];
   ReceivedResponses : any[] = [];
+  ExistingAddChangeCycleTime : any;
+  ExistingAddChangeProjectCount : any;
+  ExistingServiceCycleTime : any;
+  ExistingServiceProjectCount : any;
+  NewGlobalCycleTime : any;
+  NewGlobalProjectCount : any;
+  NewLocalCycleTime : any;
+  NewLocalProjectCount : any;
+  OverallCycleTime : any;
+  OverallProjectCount : any;
   GetData(Region : string){
     this.SelectedRegion = Region;
     this.dashboard.ShowSpinnerHandler(true);
     this.service.HomeDetailsData(Region).subscribe(data =>{
+      this.ExistingAddChangeCycleTime = data.ExistingAddChangeProjectCount > 0 ? Math.round(data.ExistingAddChangeCycleTime/data.ExistingAddChangeProjectCount) : 0 ;
+      this.ExistingAddChangeProjectCount = data.ExistingAddChangeProjectCount;
+      this.ExistingServiceCycleTime = data.ExistingServiceCycleTime > 0 ? Math.round(data.ExistingServiceCycleTime/data.ExistingServiceProjectCount) : 0;
+      this.ExistingServiceProjectCount = data.ExistingServiceProjectCount;
+      this.NewGlobalCycleTime = data.NewGlobalCycleTime > 0 ? Math.round(data.NewGlobalCycleTime/data.NewGlobalProjectCount) : 0;
+      this.NewGlobalProjectCount = data.NewGlobalProjectCount;
+      this.NewLocalCycleTime = data.NewLocalCycleTime > 0 ? Math.round(data.NewLocalCycleTime/data.NewLocalProjectCount) : 0;
+      this.NewLocalProjectCount = data.NewLocalProjectCount;
+      this.OverallCycleTime = data.OverallCycleTime > 0 ? Math.round(data.OverallCycleTime/data.OverallProjectCount) : 0;
+      this.OverallProjectCount = data.OverallProjectCount;
       this.ProjectsCount = data.Projects;
       this.PipelineVolume = this.NumberConverter(data.PipelineVolume);
       this.CurrentMonthVolume = this.NumberConverter(data.CurrentMonthVolume);
@@ -201,6 +221,7 @@ export class LiveHomePageComponent implements OnInit {
             type: 'linear',
             position: 'right',
             ticks: {
+              beginAtZero:true,
               fontSize : 12,
               fontStyle : 'bold',
               fontColor : '#000000',
@@ -341,6 +362,16 @@ export class LiveHomePageComponent implements OnInit {
     if(this.SelectedCountry == null || this.SelectedCountry == ""){
     }else{
       this.service.HomeDetailsDataWithCountry(this.SelectedRegion,this.SelectedCountry).subscribe(data =>{
+        this.ExistingAddChangeCycleTime = data.ExistingAddChangeProjectCount > 0 ? Math.round(data.ExistingAddChangeCycleTime/data.ExistingAddChangeProjectCount) : 0 ;
+        this.ExistingAddChangeProjectCount = data.ExistingAddChangeProjectCount;
+        this.ExistingServiceCycleTime = data.ExistingServiceCycleTime > 0 ? Math.round(data.ExistingServiceCycleTime/data.ExistingServiceProjectCount) : 0;
+        this.ExistingServiceProjectCount = data.ExistingServiceProjectCount;
+        this.NewGlobalCycleTime = data.NewGlobalCycleTime > 0 ? Math.round(data.NewGlobalCycleTime/data.NewGlobalProjectCount) : 0;
+        this.NewGlobalProjectCount = data.NewGlobalProjectCount;
+        this.NewLocalCycleTime = data.NewLocalCycleTime > 0 ? Math.round(data.NewLocalCycleTime/data.NewLocalProjectCount) : 0;
+        this.NewLocalProjectCount = data.NewLocalProjectCount;
+        this.OverallCycleTime = data.OverallCycleTime > 0 ? Math.round(data.OverallCycleTime/data.OverallProjectCount) : 0;
+        this.OverallProjectCount = data.OverallProjectCount;
         this.ProjectsCount = data.Projects;
         this.PipelineVolume = this.NumberConverter(data.PipelineVolume);
         this.CurrentMonthVolume = this.NumberConverter(data.CurrentMonthVolume);

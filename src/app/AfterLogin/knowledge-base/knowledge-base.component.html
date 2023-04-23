@@ -1,0 +1,54 @@
+<div class="row" style="padding : 25px;margin: 0px;">
+    <div  class="col-md-2">
+    </div>
+    <div class="col-md-8">
+        <mat-form-field appearance="outline" style="width: 100%;">
+            <mat-label style="font-size: 15px;">Search</mat-label>
+            <input style="color: gray;" [formControl]="Search_Filter" matInput>
+        </mat-form-field>
+    </div>
+    
+    <!-- <div style="padding: 0px;margin: 0px;border: 0.5px solid rgb(141, 141, 141);" class="col-md-8 SearchReselts_card">
+        <div *ngFor="let kb of KB_SearchData;let j=index">
+            <div class="SearchReselts_details" style="width:100%" (click)="onClick(kb.Link)">
+                <label class="sr_name">{{kb.Name}}</label><br> 
+                <label class="sr_comments">{{kb.Comments}}</label>
+            </div>
+            <mat-divider></mat-divider>
+        </div>
+    </div> -->
+    <div  class="col-md-2">
+    </div>
+    <div  class="col-md-2">
+    </div>
+    <div class="col-md-8">
+        <div *ngIf="ShowBackgroundImage" style="width:100%;align-items: center;">
+            <img src="assets/images/CWT_KnowledgeBase.PNG" style="width:80%;height: auto;margin-left: 10%;margin-top: 50px;">
+        </div>
+        <div class="example-container" *ngIf="!ShowBackgroundImage">
+            <!-- [ngStyle]="{'height' : (screenHeight-160)+'px'}" -->
+            <table mat-table [dataSource]="dataSource" matSort>
+                <ng-container matColumnDef="Name">
+                    <td mat-cell *matCellDef="let element" (click)="onClick(element.Link)" style="padding: 0px;"> 
+                        <div class="kb_Searchdata" style="display : flex">
+                            <div style="width : 100px;padding-top: 15px;"> 
+                                <img [src]="element.Type == 'Doc' ? 'assets/images/Doc.png' : element.Type == 'Buzz Page' ? 'assets/images/cwt.png' : element.Type == 'Form Page' ? 'assets/images/formPage.png' : element.Type == 'Excel' ? 'assets/images/excel.png' : 'assets/images/excel.png'" class="data_icon">
+                            </div>
+                            <div>
+                                <label class="sr_name" [innerHTML]="element.Name"></label><br> 
+                                <label class="sr_source">Source Link From :- <span [innerHTML]="element.Source"></span></label><br> 
+                                <label class="sr_comments" [innerHTML]="element.Comments"></label> 
+                            </div>
+                        </div>
+                    </td>
+                </ng-container>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </div>
+        <div class="width: 100%;" *ngIf="!ShowBackgroundImage">
+            <mat-paginator  style="margin-bottom: 10px;" #paginator [pageSizeOptions]="[10, 15, 25, 50]" [pageSize]="10" showFirstLastButtons class="mat-paginator-sticky"></mat-paginator> 
+        </div>
+    </div>
+    <div  class="col-md-2">
+    </div>
+</div>

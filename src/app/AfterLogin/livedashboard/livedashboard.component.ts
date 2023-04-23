@@ -5,6 +5,8 @@ import { filter, map } from 'rxjs/operators';
 import { ActivatedRoute, Router, NavigationExtras, RouterEvent, NavigationEnd } from '@angular/router';
 import { ViewportScroller,Location, DatePipe } from '@angular/common';
 import { DashboardServiceService } from 'src/app/dashboard-service.service';
+// import { FormControl } from '@angular/forms';
+// import { KB_Data } from 'src/app/Models/SteeringCommitte';
 @Component({
   selector: 'app-livedashboard',
   templateUrl: './livedashboard.component.html',
@@ -18,6 +20,7 @@ export class LivedashboardComponent implements OnInit, OnDestroy {
   imageUrl : string = "assets/images/cwt.png";
   Userimage : string = "assets/images/CWTlogo.jpg";
   sub : Subscription;
+  // Search_Filter = new FormControl();
   LoggedINID;
   public destroyed = new Subject<any>();
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
@@ -349,10 +352,37 @@ export class LivedashboardComponent implements OnInit, OnDestroy {
         }
         this.showSpinner = false;
       })
+      // this.service.KnowledgeBase().subscribe(data=>{
+      //   this.KB_SearchData = [];
+      //   this.KnowledgeBaseData = data.Data;
+      //   this.onFilterValueChange();
+      // })
     // }else{
     //   this._router.navigate(["/Login"]);
     // }
   }
+  // Search_resultsData : boolean = false;
+  // KnowledgeBaseData : KB_Data[];
+  // KB_SearchData : KB_Data[];
+  // onFilterValueChange(){
+  //   this.Search_Filter.valueChanges.subscribe(value => {
+  //     if(this.Search_Filter.value){
+  //       this.Search_resultsData = true;
+  //     }else{
+  //       this.Search_resultsData = false;
+  //     }
+  //     const result = this.KnowledgeBaseData.filter((obj) => {
+  //       return obj.Name.search(this.Search_Filter.value) > -1 ;
+  //       // || obj.Comments.search(this.Search_Filter.value) > -1
+  //     });
+  //     this.KB_SearchData = result;
+  //   });
+  // }
+  // OpenLink(Link : string){
+  //   this.Search_Filter.setValue("");
+  //   this.Search_resultsData = false;
+  //   window.open(Link, "_blank");
+  // }
   Archive(){
     window.open('https://cwt.imeetcentral.com/gcsreporting/folder/WzIwLDEzMjk3ODQ4XQ', "_blank");
   }
@@ -554,6 +584,16 @@ export class LivedashboardComponent implements OnInit, OnDestroy {
       //   // })
       // }
       // break;
+      case 21 : {
+        this.ReportSelected = "Steering Committee";
+        this.LastUpdatedText = "";
+      }
+      break;
+      case 22 : {
+        this.ReportSelected = "Steering Committee View";
+        this.LastUpdatedText = "";
+      }
+      break;
       default : {
         this.ReportSelected = "Home Page";
         this.LastUpdatedText = "";

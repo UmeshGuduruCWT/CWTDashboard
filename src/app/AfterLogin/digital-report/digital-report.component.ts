@@ -73,6 +73,8 @@ export class DigitalReportComponent implements OnInit {
         this.masterquarter = true;
         this.getSelectedQuarter();
         this.LeaderList = data.FilterGlobalDigitalOBTLead;
+        this.LeaderList.push({GlobalCISOBTLead : "(Blanks)",DigitalOBTManager : [{Manager : "(Blanks)",
+        isSelected: true}],isSelected: true});
         this.masterleader = true;
         this.getSelectedleader();
         this.ManagerList = [];
@@ -329,6 +331,7 @@ export class DigitalReportComponent implements OnInit {
         },
       },
     }
+    console.log(this.SelectedManager)
     this.service.DRRegionWiseGDS(this.SelectedYears,this.SelectedQuarter,this.SelectedStatus,this.SelectedRegion,this.SelectedManager).subscribe(data=>{
       for(let i = 0; i<data.Data.length;i++){
         if(data.Data[i].GDS == null){
@@ -421,7 +424,6 @@ export class DigitalReportComponent implements OnInit {
         options : options2,
       })
     })
-    console.log(this.SelectedYears,this.SelectedQuarter,this.SelectedStatus,this.SelectedRegion,this.SelectedManager);
     this.service.DRRegionWiseImplementationType(this.SelectedYears,this.SelectedQuarter,this.SelectedStatus,this.SelectedRegion,this.SelectedManager).subscribe(data=>{
       for(let i = 0; i<data.Data.length;i++){
         if(data.Data[i].ImplementationType == null){
@@ -845,17 +847,23 @@ export class DigitalReportComponent implements OnInit {
   }
   getSelectedManager(){
     this.Apply_disable = false;
-    this.SelectedManager = null;
+    this.SelectedManager = "";
     for(let i=0;i<this.ManagerList.length;i++){
       if(this.ManagerList[i].isSelected == true){
         if(this.SelectedManager == null){
           if(this.ManagerList[i].Manager == null || this.ManagerList[i].Manager == ""){
             this.SelectedManager = ",";
+          }else if(this.ManagerList[i].Manager == "(Blanks)"){
+            this.SelectedManager += "---";
           }else{
             this.SelectedManager = this.ManagerList[i].Manager;
           }
         }else{
-          this.SelectedManager += ","+this.ManagerList[i].Manager;
+          if(this.ManagerList[i].Manager == "(Blanks)"){
+            this.SelectedManager += ","+"---";
+          }else{
+            this.SelectedManager += ","+this.ManagerList[i].Manager;
+          }
         }
       }else{
       }

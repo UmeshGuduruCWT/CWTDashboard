@@ -141,7 +141,7 @@
         <div class="col-md-2">
             <mat-card class="example-card mat-elevation-z6" style="background-color: #212F3D;">
                 <label class="main_heading" style="color: #7DCEA0;">Expected Current Year </label><br>
-                <label class="sub_heading" style="color: #212F3D;">212F3D</label><br>
+                <label class="sub_heading" style="color: #212F3D;">--</label><br>
                 <mat-divider style="width: 90%;align-items: center;margin-left: 15px;text-align: center;"></mat-divider>
                 <div class="row col-md-12" style="margin: 15px 0px 0px 0px;padding : 0px;">
                     <div class="col-md-6" style="margin: 0px;padding : 0px;">
@@ -183,7 +183,7 @@
         <div class="col-md-2">
             <mat-card class="example-card mat-elevation-z6" style="background-color: #212F3D;">
                 <label class="main_heading" style="color: #DC7633;">On Hold</label><br>
-                <label class="sub_heading" style="color: #212F3D;">NA</label><br>
+                <label class="sub_heading" style="color: #212F3D;">--</label><br>
                 <mat-divider style="width: 90%;align-items: center;margin-left: 15px;text-align: center;"></mat-divider>
                 <div class="row col-md-12" style="margin: 15px 0px 0px 0px;padding : 0px;">
                     <div class="col-md-6" style="margin: 0px;padding : 0px;">
@@ -201,7 +201,7 @@
         <div class="col-md-2">
             <mat-card class="example-card mat-elevation-z6" style="background-color: #212F3D;">
                 <label class="main_heading" style="color: #DC7633;">Pipeline </label><br>
-                <label class="sub_heading" style="color: #212F3D;">NA</label><br>
+                <label class="sub_heading" style="color: #212F3D;">--</label><br>
                 <mat-divider style="width: 90%;align-items: center;margin-left: 15px;text-align: center;"></mat-divider>
                 <div class="row col-md-12" style="margin: 15px 0px 0px 0px;padding : 0px;">
                     <div class="col-md-6" style="margin: 0px;padding : 0px;">
@@ -219,7 +219,7 @@
         <div class="col-md-2">
             <mat-card class="example-card mat-elevation-z6" style="background-color: #212F3D;">
                 <label class="main_heading" style="color: #DC7633;">High Potential </label><br>
-                <label class="sub_heading" style="color: #212F3D;">NA</label><br>
+                <label class="sub_heading" style="color: #212F3D;">--</label><br>
                 <mat-divider style="width: 90%;align-items: center;margin-left: 15px;text-align: center;"></mat-divider>
                 <div class="row col-md-12" style="margin: 15px 0px 0px 0px;padding : 0px;">
                     <div class="col-md-6" style="margin: 0px;padding : 0px;">
@@ -237,7 +237,7 @@
         <div class="col-md-2">
             <mat-card class="example-card mat-elevation-z6" style="background-color: #212F3D;">
                 <label class="main_heading" style="color: #7DCEA0;">Potential</label><br>
-                <label class="sub_heading" style="color: #212F3D;">NA</label><br>
+                <label class="sub_heading" style="color: #212F3D;">--</label><br>
                 <mat-divider style="width: 90%;align-items: center;margin-left: 15px;text-align: center;"></mat-divider>
                 <div class="row col-md-12" style="margin: 15px 0px 0px 0px;padding : 0px;">
                     <div class="col-md-6" style="margin: 0px;padding : 0px;">
@@ -246,6 +246,101 @@
                     </div>
                     <div class="col-md-6" style="margin: 0px;padding : 0px;">
                         <label class="number_style" style="color: #AF7AC5;font-size: 19px;">{{PotentialRecords}}</label>
+                        <label class="des_style" style="color: #5DADE2;">Count</label>
+                    </div>
+                </div>
+            </mat-card>
+        </div>
+        <div class="col-md-10" style="margin-left: 7.9%;background-color: #3498DB;text-align: center;border-top : 2px solid white;border-bottom : 2px solid white;height : 50px;margin-top: 20px;">
+            <p style="display: inline-block;color: white;font-size : 18px;padding-top:12px;letter-spacing: 1px;">Cycle Time By Categories </p> 
+        </div>
+        <div class="col-md-12">
+            <label style="color: red;font-weight:  bold;margin-top: 10px;"> *Go-live Year :- Current Year, Project Status :- Closed, Ownership :- WO</label>
+        </div>
+        <div class="col-md-2" style="margin-left: 7%;">
+            <mat-card class=" example-card mat-elevation-z6" style="background-color: #212F3D;">
+                <label class="main_heading" style="color: #F7DC6F;">Existing Service Config Change</label><br>
+                <label class="sub_heading" style="color: #F7DC6F;"></label><br>
+                <mat-divider style="width: 90%;align-items: center;margin-left: 15px;text-align: center;"></mat-divider>
+                <div class="row col-md-12" style="margin: 15px 0px 0px 0px;padding : 0px;">
+                    <div class="col-md-6" style="margin: 0px;padding : 0px;">
+                        <label class="number_style" >{{ExistingServiceCycleTime}}</label>
+                        <label class="des_style" style="color: #58D68D;">Cyle Time</label>
+                    </div>
+                    <div class="col-md-6" style="margin: 0px;padding : 0px;">
+                        <label class="number_style" >{{ExistingServiceProjectCount}}</label>
+                        <label class="des_style" style="color: #5DADE2;">Count</label>
+                    </div>
+                </div>
+            </mat-card>
+        </div>
+        <label style="margin-top: 85px;font-weight: bold;">+</label>
+        <div class="col-md-2">
+            <mat-card class="example-card mat-elevation-z6" style="background-color: #212F3D;">
+                <label class="main_heading" style="color: #F7DC6F;">New Global Including Upsell</label><br>
+                <label class="sub_heading" style="color: #F7DC6F;"></label><br>
+                <mat-divider style="width: 90%;align-items: center;margin-left: 15px;text-align: center;"></mat-divider>
+                <div class="row col-md-12" style="margin: 15px 0px 0px 0px;padding : 0px;">
+                    <div class="col-md-6" style="margin: 0px;padding : 0px;">
+                        <label class="number_style">{{NewGlobalCycleTime}}</label>
+                        <label class="des_style" style="color: #58D68D;">Cyle Time</label>
+                    </div>
+                    <div class="col-md-6" style="margin: 0px;padding : 0px;">
+                        <label class="number_style">{{NewGlobalProjectCount}}</label>
+                        <label class="des_style" style="color: #5DADE2;">Count</label>
+                    </div>
+                </div>
+            </mat-card>
+        </div>
+        <label style="margin-top: 85px;font-weight: bold;">+</label>
+        <div class="col-md-2">
+            <mat-card class="example-card mat-elevation-z6" style="background-color: #212F3D;">
+                <label class="main_heading" style="color: #F7DC6F;">New Local Including Upsell</label><br>
+                <label class="sub_heading" style="color: #F7DC6F;"></label><br>
+                <mat-divider style="width: 90%;align-items: center;margin-left: 15px;text-align: center;"></mat-divider>
+                <div class="row col-md-12" style="margin: 15px 0px 0px 0px;padding : 0px;">
+                    <div class="col-md-6" style="margin: 0px;padding : 0px;">
+                        <label class="number_style">{{NewLocalCycleTime}}</label>
+                        <label class="des_style" style="color: #58D68D;">Cyle Time</label>
+                    </div>
+                    <div class="col-md-6" style="margin: 0px;padding : 0px;">
+                        <label class="number_style">{{NewLocalProjectCount}}</label>
+                        <label class="des_style" style="color: #5DADE2;">Count</label>
+                    </div>
+                </div>
+            </mat-card>
+        </div>
+        <label style="margin-top: 85px;font-weight: bold;">+</label>
+        <div class="col-md-2">
+            <mat-card class="example-card mat-elevation-z6" style="background-color: #212F3D;">
+                <label class="main_heading" style="color: #F7DC6F;">Existing Add/Change OBT</label><br>
+                <label class="sub_heading" style="color: #F7DC6F;"></label><br>
+                <mat-divider style="width: 90%;align-items: center;margin-left: 15px;text-align: center;"></mat-divider>
+                <div class="row col-md-12" style="margin: 15px 0px 0px 0px;padding : 0px;">
+                    <div class="col-md-6" style="margin: 0px;padding : 0px;">
+                        <label class="number_style" >{{ExistingAddChangeCycleTime}}</label>
+                        <label class="des_style" style="color: #58D68D;">Cyle Time</label>
+                    </div>
+                    <div class="col-md-6" style="margin: 0px;padding : 0px;">
+                        <label class="number_style" >{{ExistingAddChangeProjectCount}}</label>
+                        <label class="des_style" style="color: #5DADE2;">Count</label>
+                    </div>
+                </div>
+            </mat-card>
+        </div>
+        <label style="margin-top: 85px;font-weight: bold;">=</label>
+        <div class="col-md-2">
+            <mat-card class="example-card mat-elevation-z6" style="background-color: #212F3D;">
+                <label class="main_heading" style="color: #7DCEA0;">Overall</label><br>
+                <label class="sub_heading" style="color: #212F3D;"></label><br>
+                <mat-divider style="width: 90%;align-items: center;margin-left: 15px;text-align: center;"></mat-divider>
+                <div class="row col-md-12" style="margin: 15px 0px 0px 0px;padding : 0px;">
+                    <div class="col-md-6" style="margin: 0px;padding : 0px;">
+                        <label class="number_style" style="color: #AF7AC5;font-size: 19px;">{{OverallCycleTime}}</label>
+                        <label class="des_style" style="color: #58D68D;">Cyle Time</label>
+                    </div>
+                    <div class="col-md-6" style="margin: 0px;padding : 0px;">
+                        <label class="number_style" style="color : #AF7AC5;font-size: 19px;">{{OverallProjectCount}}</label>
                         <label class="des_style" style="color: #5DADE2;">Count</label>
                     </div>
                 </div>
