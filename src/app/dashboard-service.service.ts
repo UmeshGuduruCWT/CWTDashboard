@@ -45,8 +45,8 @@ import { SteeringCommittee } from './Models/SteeringCommittee';
 })
 export class DashboardServiceService {
   // Baseurl = 'http://localhost:50421/';
-  Baseurl = 'http://10.180.27.32/';
-  // Baseurl = 'http://www.cwtdashboard.com/';
+  // Baseurl = 'http://10.180.27.32/';
+  Baseurl = 'http://www.cwtdashboard.com/';
   // ImeetURl = 'https://edge.imeetcentral.com/v1/reports/WzM1LDE1MzYxXQ?contextId=647';
   httpOptions = {
     headers: new HttpHeaders({
@@ -707,6 +707,11 @@ export class DashboardServiceService {
     params = params.append('Comments',Comments);
     return this.http.post<Responce>(`${this.Baseurl+"ResourceUtilization"}`,params);
   }
+  public ResourceUtilizationNew(Comments : string){
+    let params = new HttpParams();
+    params = params.append('Comments',Comments);
+    return this.http.post<Responce>(`${this.Baseurl+"ResourceUtilizationNew"}`,params);
+  }
   public Tracker(){
     let params = new HttpParams();
     // params = params.append('iMeet_Milestone___Project_Status', iMeet_Milestone___Project_Status+"");
@@ -892,7 +897,7 @@ export class DashboardServiceService {
     // Service_configuration : string,
     // OBT_Reseller___Direct : string,
     Assignment_date : string,
-    ResourceRequestedDate : string,
+    ResourseRequestedDate : string,
     RevenueID : number,
     Project_Effort : string,
     Status : string,
@@ -907,7 +912,7 @@ export class DashboardServiceService {
     // params = params.append('Service_configuration',Service_configuration+"");
     // params = params.append('OBT_Reseller___Direct',OBT_Reseller___Direct+"");
     params = params.append('Assignment_date',Assignment_date+"");
-    params = params.append('ResourceRequestedDate',ResourceRequestedDate+"");
+    params = params.append('ResourseRequestedDate',ResourseRequestedDate+"");
     params = params.append('RevenueID',RevenueID+"");
     params = params.append('Project_Effort',Project_Effort+"");
     params = params.append('Status',Status+"");
@@ -945,7 +950,7 @@ export class DashboardServiceService {
     // OBT_Reseller___Direct : string,
     //Servicing_location : string,
     Assignment_date : string,
-    ResourceRequestedDate : string,
+    ResourseRequestedDate : string,
     //New_Business_volume__US__ : number,
     RevenueID : number,
     //Implementation_Fee__PSD_ : string,
@@ -985,7 +990,7 @@ export class DashboardServiceService {
     // params = params.append('Service_configuration',Service_configuration+"");
     // params = params.append('OBT_Reseller___Direct',OBT_Reseller___Direct+"");
     params = params.append('Assignment_date',Assignment_date+"");
-    params = params.append('ResourceRequestedDate',ResourceRequestedDate+"");
+    params = params.append('ResourseRequestedDate',ResourseRequestedDate+"");
     params = params.append('RevenueID',RevenueID+"");
     params = params.append('Project_Effort',Project_Effort+"");
     params = params.append('GoLiveDate',GoLiveDate+"");
@@ -1015,6 +1020,7 @@ export class DashboardServiceService {
     // Service_configuration : string,
     // OBT_Reseller___Direct : string,
     Assignment_date : string,
+    ResourceRequest_date : string,
     RevenueID : string,
     Project_Effort : number,
     Status : string,
@@ -1029,6 +1035,7 @@ export class DashboardServiceService {
     // Service_configuration_check : boolean,
     // OBT_Reseller___Direct_check : boolean,
     Assignment_date_check : boolean,
+    ResourceRequest_date_check : boolean,
     Project_Effort_check : boolean,
     Status_check : boolean,
     ProjectLevel_check : boolean,
@@ -1065,6 +1072,7 @@ export class DashboardServiceService {
     // params = params.append('Service_configuration',Service_configuration+"");
     // params = params.append('OBT_Reseller___Direct',OBT_Reseller___Direct+"");
     params = params.append('Assignment_date',Assignment_date+"");
+    params = params.append('ResourceRequest_date',ResourceRequest_date+"");
     params = params.append('RevenueID',RevenueID+"");
     params = params.append('Project_Effort',Project_Effort+"");
     params = params.append('Status',Status+"");
@@ -1079,6 +1087,7 @@ export class DashboardServiceService {
     // params = params.append('Service_configuration_check',Service_configuration_check+"");
     // params = params.append('OBT_Reseller___Direct_check',OBT_Reseller___Direct_check+"");
     params = params.append('Assignment_date_check',Assignment_date_check+"");
+    params = params.append('ResourceRequest_date_check',ResourceRequest_date_check+"");
     params = params.append('Project_Effort_check',Project_Effort_check+"");
     params = params.append('Status_check',Status_check+"");
     params = params.append('ProjectLevel_check',ProjectLevel_check+"");
@@ -1195,7 +1204,7 @@ export class DashboardServiceService {
     return this.http.post<UserReportAccess>(`${this.Baseurl+"RequestAccessNotifications"}`,params);
   }
   public UpdatingAccessDetails(UID : string,IMPS:string,CTO : string,StageGate : string,LessonsLearnt : string,AutomatedCLR : string,CLREdits : string,MarketReport : string,MarketCommentsEdit: string,ELTReport : string,UserAccessStatus : string,UpdatedBy : string,CycleTime : string,CapacityTracker : string,ResourceUtilization : string,C_Hierarchy : string,C_HierarchyEdits : string,NPS : string,
-    NPSAdmin : string,NPSClientInfo : string,NPSEdit : string,DigitalReport : string,PerformanceAnalysis : string,){
+    NPSAdmin : string,NPSClientInfo : string,NPSEdit : string,SteeringCommittee : string,SteeringCommitteeEdits : string,DigitalReport : string,PerformanceAnalysis : string,){
     let params = new HttpParams();
     params = params.append('UID',UID);
     params = params.append('IMPS',IMPS);
@@ -1216,6 +1225,8 @@ export class DashboardServiceService {
     params = params.append('NPSAdmin',NPSAdmin);
     params = params.append('NPSClientInfo',NPSClientInfo);
     params = params.append('NPSEdit',NPSEdit);
+    params = params.append('SteeringCommittee',SteeringCommittee);
+    params = params.append('SteeringCommitteeEdits',SteeringCommitteeEdits);
     params = params.append('DigitalReport',DigitalReport);
     params = params.append('PerformanceAnalysis',PerformanceAnalysis);
     params = params.append('UserAccessStatus',UserAccessStatus);
@@ -1700,7 +1711,6 @@ export class DashboardServiceService {
     params = params.append('LastUpdatedBy',LastUpdatedBy);
     return this.http.post<SteeringCommittee>(`${this.Baseurl+"RiskGapUpdate"}`,params);
   }
-  
   public GetSCDataUsingOppID(Opportunity_ID : number){
     let params = new HttpParams();
     params = params.append('Opportunity_ID',Opportunity_ID+"");
@@ -1711,5 +1721,27 @@ export class DashboardServiceService {
     params = params.append('SCID',SCID+"");
     params = params.append('LastUpdatedBy',LastUpdatedBy);
     return this.http.post<SteeringCommittee>(`${this.Baseurl+"DeleteSCData"}`,params);
+  }
+  public DeleteWave(WaveID : number,LastUpdatedBy : string){
+    let params = new HttpParams();
+    params = params.append('WaveID',WaveID+"");
+    params = params.append('LastUpdatedBy',LastUpdatedBy);
+    return this.http.post<SteeringCommittee>(`${this.Baseurl+"DeleteWave"}`,params);
+  }
+  public DeleteRiskGap(RGID : number,LastUpdatedBy : string){
+    let params = new HttpParams();
+    params = params.append('RGID',RGID+"");
+    params = params.append('LastUpdatedBy',LastUpdatedBy);
+    return this.http.post<SteeringCommittee>(`${this.Baseurl+"DeleteRiskGap"}`,params);
+  }
+  
+  public CLRActivityData(){
+    let params = new HttpParams();
+    return this.http.post<Responce>(`${this.Baseurl+"CLRActivityData"}`,params);
+  }
+  public RecordHistoryData(Revenue_ID : string){
+    let params = new HttpParams();
+    params = params.append('Revenue_ID',Revenue_ID+"");
+    return this.http.post<Responce>(`${this.Baseurl+"RecordHistoryData"}`,params);
   }
 }

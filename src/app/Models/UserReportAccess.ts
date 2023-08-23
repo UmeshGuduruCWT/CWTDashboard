@@ -1,7 +1,6 @@
 export interface ReportSAccess {
     UserName: string;
     UserAccessStatus: string;
-
     IMPS: boolean;
     CTO: boolean;
     AutomatedCLR: boolean;
@@ -16,6 +15,10 @@ export interface ReportSAccess {
     MarketCommentsEdit : boolean;
     ResourceUtilization: boolean;
     PerformanceAnalysis : boolean;
+    SteeringCommittee : boolean;
+    SteeringCommittee_icon : string;
+    SteeringCommitteeEdits : boolean;
+    SteeringCommitteeEdits_icon : string;
     NPSAdmin : boolean;
     NPSClientInfo : boolean;
     NPSEdit : boolean;
@@ -45,7 +48,6 @@ export interface ReportSAccess {
     InsertedOn: Date;
     InsertedOn_s: String;
     UpdatedOn_s: String;
-
     UpdatedBy: string;
     UpdatedOn: Date;
     MarketReport : boolean;

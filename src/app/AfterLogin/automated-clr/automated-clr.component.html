@@ -286,7 +286,7 @@
                 </th>
             </ng-container>
             <ng-container matColumnDef="ResourseRequestedDate_c">
-                <th mat-header-cell *matHeaderCellDef class="maintextSizes" mat-sort-header style="background-color: #7030A0;color: white;max-width: 120px;width: 120px;" > Resourse Requested Date </th>
+                <th mat-header-cell *matHeaderCellDef class="maintextSizes" mat-sort-header style="background-color: #7030A0;color: white;max-width: 120px;width: 120px;" > Resource Requested Date </th>
                 <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color' : ResourseRequestedDate_cFilter.value == '' || ResourseRequestedDate_cFilter.value == null ? '#FFFFFF' : '#F3F189'}" class="texttd" style="max-width: 120px;width: 120px;"> {{element.ResourseRequestedDate_c}} </td>
             </ng-container>
             <ng-container matColumnDef="ResourseRequestedDate_c_h">
@@ -1048,7 +1048,7 @@
             </ng-container>
             <ng-container matColumnDef="ActivityType">
                 <th mat-header-cell *matHeaderCellDef class="maintextSizes" mat-sort-header style="background-color: #797D7F;color: white;max-width: 140px;max-width: 140px;width: 140px;"> Digital Team Activity Type </th>
-                <td mat-cell *matCellDef="let element" style="max-width: 140px;width: 140px;" [ngStyle]="{'background-color' : ActivityTypeFilter.value == '' || ActivityTypeFilter.value == null ? '#FFFFFF' : '#F3F189'}" class="texttd"><label (click)="ShowComment(element.Client,element.RevenueID,element.ActivityType)" class="showlessText" style="width: 120px;">{{element.ActivityType}}</label></td>
+                <td mat-cell *matCellDef="let element" style="max-width: 140px;width: 140px;" [ngStyle]="{'background-color' : ActivityTypeFilter.value == '' || ActivityTypeFilter.value == null ? '#FFFFFF' : '#F3F189','color' : element.CheckComments.indexOf('Complexity Score is') > 0 ? '#EC7063' : '#000000','font-weight' : element.CheckComments.indexOf('Complexity Score is') > 0 ? 'bold' : 'normal'}" class="texttd"><label (click)="ShowComment(element.Client,element.RevenueID,element.ActivityType)" class="showlessText" style="width: 120px;">{{element.ActivityType}}</label></td>
             </ng-container>
             <ng-container matColumnDef="ActivityType_h">
                 <th mat-header-cell *matHeaderCellDef style="max-width: 140px;width: 140px;" colspan="1" class="formheader" [ngStyle]="{'background-color' : ActivityTypeFilter.value == '' || ActivityTypeFilter.value == null ? '#FFFFFF' : '#F5B7B1'}">
@@ -1517,6 +1517,18 @@
                     </mat-form-field>
                 </th>
             </ng-container>
+            <ng-container matColumnDef="AwardedDate_c">
+                <th mat-header-cell *matHeaderCellDef class="maintextSizes" mat-sort-header style="background-color: #00B0F0;color: black;width: 150px;"> Verbal Award Date </th>
+                <td mat-cell *matCellDef="let element" style="max-width: 150px;width: 150px;" [ngStyle]="{'background-color' : AwardedDateFilter.value == '' || AwardedDateFilter.value == null ? '#FFFFFF' : '#F3F189'}" class="texttd">{{element.AwardedDate_c}}</td>
+            </ng-container>
+            <ng-container matColumnDef="AwardedDate_h">
+                <th mat-header-cell *matHeaderCellDef style="max-width: 150px;width: 150px;" colspan="1" class="formheader" [ngStyle]="{'background-color' : AwardedDateFilter.value == '' || AwardedDateFilter.value == null ? '#FFFFFF' : '#F5B7B1'}" >
+                    <mat-form-field class="mat-form-wrap" appearance="outline">
+                        <mat-label>YYYY-MMM-DD</mat-label>
+                        <input style="font-weight: bold" matInput [formControl]="AwardedDateFilter">
+                    </mat-form-field>
+                </th>
+            </ng-container>
             <ng-container matColumnDef="Implementation_Fee__PSD_">
                 <th mat-header-cell *matHeaderCellDef class="maintextSizes" mat-sort-header style="background-color: #00B0F0;max-width: 120px;width: 120px;"> Implementation Fee PSD</th>
                 <td mat-cell *matCellDef="let element" style="max-width: 120px;width: 120px;" [ngStyle]="{'background-color' : Implementation_Fee__PSD_Filter.value == '' || Implementation_Fee__PSD_Filter.value == null ? '#FFFFFF' : '#F3F189'}" class="texttd"> {{element.Implementation_Fee__PSD_c}} </td>
@@ -1555,7 +1567,7 @@
             </ng-container>
             <ng-container matColumnDef="ComplexityScore">
                 <th mat-header-cell *matHeaderCellDef class="maintextSizes" mat-sort-header style="background-color: #797D7F;color: white;max-width: 100px;width: 100px;"> Complexity Score </th>
-                <td mat-cell *matCellDef="let element" style="max-width: 100px;width: 100px;" [ngStyle]="{'background-color' : ComplexityScoreFilter.value == '' || ComplexityScoreFilter.value == null ? '#FFFFFF' : '#F3F189'}" class="texttd"> {{element.ComplexityScore}} </td>
+                <td mat-cell *matCellDef="let element" style="max-width: 100px;width: 100px;" [ngStyle]="{'background-color' : ComplexityScoreFilter.value == '' || ComplexityScoreFilter.value == null ? '#FFFFFF' : '#F3F189','color' : element.CheckComments.indexOf('Complexity Score is') > 0 ? '#EC7063' : '#000000','font-weight' : element.CheckComments.indexOf('Complexity Score is') > 0 ? 'bold' : 'normal'}" class="texttd"> {{element.ComplexityScore}} </td>
             </ng-container>
             <ng-container matColumnDef="ComplexityScore_h">
                 <th mat-header-cell *matHeaderCellDef style="max-width: 100px;width: 100px;" colspan="1" class="formheader" [ngStyle]="{'background-color' : ComplexityScoreFilter.value == '' || ComplexityScoreFilter.value == null ? '#FFFFFF' : '#F5B7B1'}" >
@@ -1723,6 +1735,19 @@
                     </mat-form-field>
                 </th>
             </ng-container>
+            <ng-container matColumnDef="RecordHistory_C">
+                <th mat-header-cell *matHeaderCellDef class="maintextSizes" mat-sort-header style="background-color: #34495E;color: white;max-width: 140px;width: 140px;"> Record History </th>
+                <td mat-cell *matCellDef="let element" style="max-width: 140px;width: 140px;background-color: #FFFFFF;cursor: pointer;" class="texttd hoverchange" (click)="RowSelectedRecordHistory(j,element.RevenueID)"> {{element.RecordHistory_C}} </td>
+            </ng-container>
+            <ng-container matColumnDef="RecordHistory_h">
+                <th mat-header-cell *matHeaderCellDef colspan="1" style="max-width: 120px;width: 120px;" class="formheader" colspan="1" [ngStyle]="{'background-color' : RecordHistoryFilter.value == '' || RecordHistoryFilter.value == null ? '#FFFFFF' : '#F5B7B1'}">
+                    <mat-form-field class="mat-form-wrap" appearance="outline">
+                        <mat-label>YYYY-MMM-DD</mat-label>
+                        <input style="font-weight: bold" matInput [formControl]="RecordHistoryFilter">
+                        <!-- <input style="font-weight: bold" matInput> -->
+                    </mat-form-field>
+                </th>
+            </ng-container>
             <ng-container matColumnDef="DataSourceType">
                 <th mat-header-cell *matHeaderCellDef class="maintextSizes" mat-sort-header style="background-color: #34495E;color: white;max-width: 140px;width: 140px;"> Datasource Type </th>
                 <td mat-cell *matCellDef="let element" style="max-width: 140px;width: 140px;" [ngStyle]="{'background-color' : DataSourceTypeFilter.value == '' || DataSourceTypeFilter.value == null ? '#FFFFFF' : '#F3F189'}" class="texttd"> {{element.DataSourceType}} </td>
@@ -1815,6 +1840,10 @@
                         <td class="tooltip_td">Cycle Time Delay Code</td>
                         <td class="tooltip_td">Cycle Time is greater than Cycle time target. Please update the Delay code</td>
                     </tr>
+                    <tr>
+                        <td class="tooltip_td">Complexity Score</td>
+                        <td class="tooltip_td">Complexity Score is greater than 0 when Activity Type is Not Assigned</td>
+                    </tr>
                 </table>
             </ng-template>
             <ng-container matColumnDef="CheckComments">
@@ -1851,8 +1880,8 @@
             <ng-container matColumnDef="actions" stickyEnd>
                 <th mat-header-cell *matHeaderCellDef  style="border-left: 1px solid black;background-color: rgb(241, 241, 241);padding-right: 10px;">Edit</th>
                 <td mat-cell *matCellDef="let element; let j=index;" style="padding-right: 10px;border-left: 1px solid black;text-align: center;background-color: rgb(241, 241, 241)">
-                    <label class="mat-elevation-z4" *ngIf="!displayReplicate" style="cursor: pointer;width: 22px;height: 20px;margin: 0px 8px 0px 6px;font-size: 12px;font-weight: bold;color: #1970DB;background-color: black;border-radius: 4px;" (click)="RowSelected(j,element.CLRID,element.ManualID,element.Client,element.iMeet_Workspace_Title,element.Date_added_to_the_CLR_c,element.Implementation_Type,element.CLR_Country,element.Pipeline_status,element.Pipeline_comments,element.Service_configuration,element.OBT_Reseller___Direct,element.Servicing_location,element.Assignment_date,element.ResourseRequestedDate,element.New_Business_volume__US__,element.RevenueID,element.Implementation_Fee__PSD_,element.EMEA_Country_to_charge,element.EMEA_Client,element.EMEA_OBT_standard_fee_c,element.EMEA_Included_for_accrual,element.EMEA_Accrual_date_c,element.EMEA_Scope_description,element.EMEA_Billing_notes,element.Manual_Entry__Wave_2__Wave_3__etc_,element.Project_Effort,element.Priority,element.Resource_Status,element.Global_Project_Manager_replacement,element.Regional_Project_Manager_replacement,element.Milestone__Assignee__Full_Name_replacement,element.Global_CIS_OBT_Lead_replacement,element.Global_CIS_HR_Feed_Specialist_replacement,element.Global_CIS_Portrait_Lead_replacement,element.Global_CIS_RoomIT_Integration_Lead_replacement,element.GoLiveDate,element.ProjectStatus,element.ProjectLevel,element.GlobalProjectManager,element.RegionalProjectManager,element.AssigneeFullName,element.RecordStatus,element.DataSourceType)">P</label>
-                    <label class="mat-elevation-z4" *ngIf="!displayReplicate" style="cursor: pointer;width: 22px;height: 20px;margin: 0px 8px 0px 0px;font-size: 12px;font-weight: bold;color: #E97500;background-color: black;border-radius: 4px;" (click)="RowSelectedDigitalTeam(j,element.CLRID,element.DTID,element.RevenueID,element.ProjectStatus,element.GlobalCISDQSLead,element.GlobalCISOBTLead,element.RegionalCISOBTLead,element.LocalDigitalOBTLead,element.GlobalCISPortraitLead,element.RegionalCISPortraitLead,element.GlobalCISHRFeedSpecialist,element.GDS,element.ActivityType,element.ComplexityScore,element.Client,element.Country,element.Region,element.GoLiveDate,element.ProjectStart_ForCycleTime,element.Workspace__ELT_Overall_Comments,element.RecordStatus)">D</label>
+                    <label class="mat-elevation-z4" *ngIf="!displayReplicate" style="cursor: pointer;width: 22px;height: 20px;margin: 0px 8px 0px 6px;font-size: 12px;font-weight: bold;color: #1970DB;background-color: black;border-radius: 4px;" (click)="RowSelected(j,element.CLRID,element.ManualID,element.Client,element.iMeet_Workspace_Title,element.Date_added_to_the_CLR_c,element.Implementation_Type,element.CLR_Country,element.Pipeline_status,element.Pipeline_comments,element.Service_configuration,element.OBT_Reseller___Direct,element.Servicing_location,element.Assignment_date_c,element.ResourseRequestedDate_c,element.New_Business_volume__US__,element.RevenueID,element.Implementation_Fee__PSD_,element.EMEA_Country_to_charge,element.EMEA_Client,element.EMEA_OBT_standard_fee_c,element.EMEA_Included_for_accrual,element.EMEA_Accrual_date_c,element.EMEA_Scope_description,element.EMEA_Billing_notes,element.Manual_Entry__Wave_2__Wave_3__etc_,element.Project_Effort,element.Priority,element.Resource_Status,element.Global_Project_Manager_replacement,element.Regional_Project_Manager_replacement,element.Milestone__Assignee__Full_Name_replacement,element.Global_CIS_OBT_Lead_replacement,element.Global_CIS_HR_Feed_Specialist_replacement,element.Global_CIS_Portrait_Lead_replacement,element.Global_CIS_RoomIT_Integration_Lead_replacement,element.GoLiveDate_c,element.ProjectStatus,element.ProjectLevel,element.GlobalProjectManager,element.RegionalProjectManager,element.AssigneeFullName,element.RecordStatus,element.DataSourceType)">P</label>
+                    <label class="mat-elevation-z4" *ngIf="!displayReplicate" style="cursor: pointer;width: 22px;height: 20px;margin: 0px 8px 0px 0px;font-size: 12px;font-weight: bold;color: #E97500;background-color: black;border-radius: 4px;" (click)="RowSelectedDigitalTeam(j,element.CLRID,element.DTID,element.RevenueID,element.ProjectStatus,element.GlobalCISDQSLead,element.GlobalCISOBTLead,element.RegionalCISOBTLead,element.LocalDigitalOBTLead,element.GlobalCISPortraitLead,element.RegionalCISPortraitLead,element.GlobalCISHRFeedSpecialist,element.GDS,element.ActivityType,element.ComplexityScore,element.Client,element.Country,element.Region,element.GoLiveDate_c,element.ProjectStart_ForCycleTime,element.Workspace__ELT_Overall_Comments,element.RecordStatus)">D</label>
                     <label class="mat-elevation-z4" style="cursor: pointer;width: 22px;height: 20px;margin: 0px;padding: 0px;font-size: 12px;font-weight: bold;color: #E97500;background-color: black;border-radius: 4px;" (click)="RowSelectedAudit(j,element.RevenueID)"><mat-icon style="color: white;font-size: 16px;">manage_search</mat-icon></label>
                 </td>
             </ng-container>

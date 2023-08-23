@@ -44,6 +44,7 @@ export class MyFilter {
   PerCompleted : string;
   MilestoneProjectNotes : string;
   Project_Start_Date : string;
+  AssignmentDate_c : string;
   Milestone_Due_Date : string;
   OwnershipType : string;
 }
@@ -66,8 +67,8 @@ export class TrackerComponent implements OnInit {
   date = new Date();
   FirstWeek;SecondWeek;ThirdWeek;FourthWeek;FifthWeek;SixthWeek;SeventhWeek;EigthWeek;NinthWeek;TenthWeek;ElevenWeek;TwelvethWeek;
   C13thweek;C14thWeek;C15thWeek;C16thWeek;C17thWeek;C18thWeek;C19thWeek;C20thWeek;C21stWeek;C22ndWeek;C23rdWeek;C24thWeek;
-  displayedColumns: string[] = ['Client','Country','Region','RevenueID','iMeetWorkspaceTitle','GManager','RManager','LManager','RevenueVolume','Project_Level','ImplementationType','ProjectStatus','OwnershipType','MilestoneProjectNotes','ProjectEffort','GlobalDigitalOBTLead','RegionalDigitalOBTLead','LocalDigitalOBTLead','GlobalDigitalPortraitLead','RegionalDigitalPortraitLead','GlobalDigitalHRFeedSpeciallist','GDS','ComplexityScore','Project_Start_Date','Milestone_Due_Date','Proposed_Start_Date','Go_Live_Date','Proposed_End_Date','CompleteDuration','PerCompleted','FirstWeek','SecondWeek','ThirdWeek','FourthWeek','FivthWeek','SixthWeek','SeventhWeek','EighthWeek','NinthWeek','TenthWeek','EleventhWeek','twelvethWeek','C13thweek','C14thWeek','C15thWeek','C16thWeek','C17thWeek','C18thWeek','C19thWeek','C20thWeek','C21stWeek','C22ndWeek','C23rdWeek','C24thWeek'];
-  displayedColumns_h: string[] = ['Client_h','Country_h','Region_h','RevenueID_h','iMeetWorkspaceTitle_h','GManager_h','RManager_h','LManager_h','RevenueVolume_h','Project_Level_h','ImplementationType_h','ProjectStatus_h','OwnershipType_h','MilestoneProjectNotes_h','ProjectEffort_h','GlobalDigitalOBTLead_h','RegionalDigitalOBTLead_h','LocalDigitalOBTLead_h','GlobalDigitalPortraitLead_h','RegionalDigitalPortraitLead_h','GlobalDigitalHRFeedSpeciallist_h','GDS_h','ComplexityScore_h','Project_Start_Date_h','Milestone_Due_Date_h','Proposed_Start_Date_h','Go_Live_Date_h','Proposed_End_Date_h','CompleteDuration_h','PerCompleted_h','FirstWeek_h'];//,'SecondWeek_h','ThirdWeek_h','FourthWeek_h','FivthWeek_h','SixthWeek_h','SeventhWeek_h','EighthWeek_h','NinthWeek_h','TenthWeek_h','EleventhWeek_h','twelvethWeek_h','C13thweek_h','C14thWeek_h','C15thWeek_h','C16thWeek_h','C17thWeek_h','C18thWeek_h','C19thWeek_h','C20thWeek_h','C21stWeek_h','C22ndWeek_h','C23rdWeek_h','C24thWeek_h'
+  displayedColumns: string[] = ['Client','Country','Region','RevenueID','iMeetWorkspaceTitle','GManager','RManager','LManager','RevenueVolume','Project_Level','ImplementationType','ProjectStatus','OwnershipType','MilestoneProjectNotes','ProjectEffort','GlobalDigitalOBTLead','RegionalDigitalOBTLead','LocalDigitalOBTLead','GlobalDigitalPortraitLead','RegionalDigitalPortraitLead','GlobalDigitalHRFeedSpeciallist','GDS','ComplexityScore','AssignmentDate_c','Project_Start_Date','Milestone_Due_Date','Proposed_Start_Date','Go_Live_Date','Proposed_End_Date','CompleteDuration','PerCompleted','FirstWeek','SecondWeek','ThirdWeek','FourthWeek','FivthWeek','SixthWeek','SeventhWeek','EighthWeek','NinthWeek','TenthWeek','EleventhWeek','twelvethWeek','C13thweek','C14thWeek','C15thWeek','C16thWeek','C17thWeek','C18thWeek','C19thWeek','C20thWeek','C21stWeek','C22ndWeek','C23rdWeek','C24thWeek'];
+  displayedColumns_h: string[] = ['Client_h','Country_h','Region_h','RevenueID_h','iMeetWorkspaceTitle_h','GManager_h','RManager_h','LManager_h','RevenueVolume_h','Project_Level_h','ImplementationType_h','ProjectStatus_h','OwnershipType_h','MilestoneProjectNotes_h','ProjectEffort_h','GlobalDigitalOBTLead_h','RegionalDigitalOBTLead_h','LocalDigitalOBTLead_h','GlobalDigitalPortraitLead_h','RegionalDigitalPortraitLead_h','GlobalDigitalHRFeedSpeciallist_h','GDS_h','ComplexityScore_h','AssignmentDate_c_h','Project_Start_Date_h','Milestone_Due_Date_h','Proposed_Start_Date_h','Go_Live_Date_h','Proposed_End_Date_h','CompleteDuration_h','PerCompleted_h','FirstWeek_h'];//,'SecondWeek_h','ThirdWeek_h','FourthWeek_h','FivthWeek_h','SixthWeek_h','SeventhWeek_h','EighthWeek_h','NinthWeek_h','TenthWeek_h','EleventhWeek_h','twelvethWeek_h','C13thweek_h','C14thWeek_h','C15thWeek_h','C16thWeek_h','C17thWeek_h','C18thWeek_h','C19thWeek_h','C20thWeek_h','C21stWeek_h','C22ndWeek_h','C23rdWeek_h','C24thWeek_h'
   // displayedColumns: string[] = ['Region', 'Country','GManager','RManager','LManager','Client','iMeetWorkspaceTitle','RevenueVolume','Project_Level','ImplementationType','ProjectStatus','Proposed_Start_Date','Proposed_End_Date','Go_Live_Date','ProjectEffort','CompleteDuration','PerCompleted'];
   // displayedColumns_h: string[] = ['Region_h', 'Country_h','GManager_h','RManager_h','LManager_h','Client_h','iMeetWorkspaceTitle_h','RevenueVolume_h','Project_Level_h','ImplementationType_h','ProjectStatus_h','Proposed_Start_Date_h','Proposed_End_Date_h','Go_Live_Date_h','ProjectEffort_h','CompleteDuration_h','PerCompleted_h'];
   filteredValues : MyFilter = { RevenueID : '',
@@ -98,6 +99,7 @@ export class TrackerComponent implements OnInit {
     PerCompleted : '',
     MilestoneProjectNotes : '',
     Project_Start_Date : '',
+    AssignmentDate_c : '',
     Milestone_Due_Date : '',
     OwnershipType : ''};
   screenWidth : number;
@@ -130,6 +132,7 @@ export class TrackerComponent implements OnInit {
   PerCompletedFilter = new FormControl();
   MilestoneProjectNotesFilter = new FormControl();
   Project_Start_DateFilter = new FormControl();
+  AssignmentDate_cFilter = new FormControl();
   Milestone_Due_DateFilter = new FormControl();
   OwnershipTypeFilter = new FormControl();
   TrackerData : Data[];
@@ -210,6 +213,7 @@ export class TrackerComponent implements OnInit {
         data.PerCompleted.toString().trim().toLowerCase().indexOf(searchString.PerCompleted.toLowerCase()) !== -1  &&
         data.MilestoneProjectNotes.toString().trim().toLowerCase().indexOf(searchString.MilestoneProjectNotes.toLowerCase()) !== -1  &&
         data.Project_Start_Date.toString().trim().toLowerCase().indexOf(searchString.Project_Start_Date.toLowerCase()) !== -1  &&
+        data.AssignmentDate_c.toString().trim().toLowerCase().indexOf(searchString.AssignmentDate_c.toLowerCase()) !== -1  &&
         data.Milestone_Due_Date.toString().trim().toLowerCase().indexOf(searchString.Milestone_Due_Date.toLowerCase()) !== -1  &&
         data.OwnershipType.toString().trim().toLowerCase().indexOf(searchString.OwnershipType.toLowerCase()) !== -1 
       )
@@ -391,6 +395,12 @@ export class TrackerComponent implements OnInit {
       this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolume).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
       this.FilteredCount = this.dataSource.filteredData.length;
     });
+    this.AssignmentDate_cFilter.valueChanges.subscribe(value => {
+      this.filteredValues["AssignmentDate_c"] = value;
+      this.dataSource.filter = JSON.stringify(this.filteredValues);
+      this.FilteredVolume = this.dataSource.filteredData.map(t => t.RevenueVolume).reduce((acc,value) => acc + value,0).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
+      this.FilteredCount = this.dataSource.filteredData.length;
+    });
     this.OwnershipTypeFilter.valueChanges.subscribe(value => {
       this.filteredValues["OwnershipType"] = value;
       this.dataSource.filter = JSON.stringify(this.filteredValues);
@@ -458,6 +468,11 @@ export class TrackerComponent implements OnInit {
           }else{
             this.TrackerData[i].CompleteDuration = Math.round(this.TrackerData[i].ProjectDelay)+' Weeks';
           }
+          if(this.TrackerData[i].AssignmentDate == null){
+            this.TrackerData[i].AssignmentDate_c = "---";
+          }else{
+            this.TrackerData[i].AssignmentDate_c = this.datepipe.transform(this.TrackerData[i].AssignmentDate, "yyyy-MMM-dd");
+          }
           if(this.TrackerData[i].ProjectStartDate == null){
             this.TrackerData[i].Project_Start_Date = "---";
           }else{
@@ -467,6 +482,11 @@ export class TrackerComponent implements OnInit {
             this.TrackerData[i].Milestone_Due_Date = "---";
           }else{
             this.TrackerData[i].Milestone_Due_Date = this.datepipe.transform(this.TrackerData[i].MilestoneDueDate, "yyyy-MMM-dd");
+          }
+          if(this.TrackerData[i].MilestoneDueDateByLevel == null){
+            this.TrackerData[i].MilestoneDueDate_ByLevel = "---";
+          }else{
+            this.TrackerData[i].MilestoneDueDate_ByLevel = this.datepipe.transform(this.TrackerData[i].MilestoneDueDateByLevel, "yyyy-MMM-dd");
           }
           this.TrackerData[i].RevenueVolumeUSD = Math.round(this.TrackerData[i].RevenueVolume).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
           this.TrackerData[i].FirstWeek = this.TrackerData[i].FirstWeek ?? 0;
@@ -541,6 +561,7 @@ export class TrackerComponent implements OnInit {
     this.PerCompletedFilter.setValue("");
     this.MilestoneProjectNotesFilter.setValue("");
     this.Project_Start_DateFilter.setValue("");
+    this.AssignmentDate_cFilter.setValue("");
     this.Milestone_Due_DateFilter.setValue("");
     this.OwnershipTypeFilter.setValue("");
   }
@@ -633,15 +654,25 @@ export class TrackerComponent implements OnInit {
           }else{
             data.Data[i].CompleteDuration = Math.round(data.Data[i].ProjectDelay)+' Weeks';
           }
-          if(data.Data[i].ProjectStartDate == null){
-            data.Data[i].Project_Start_Date = "---";
+          if(data.Data[i].AssignmentDate == null){
+            data.Data[i].AssignmentDate = null;
           }else{
-            data.Data[i].Project_Start_Date = this.datepipe.transform(data.Data[i].ProjectStartDate, "yyyy-MMM-dd");
+            data.Data[i].AssignmentDate = new Date(data.Data[i].AssignmentDate);
+          }
+          if(data.Data[i].ProjectStartDate == null){
+            data.Data[i].ProjectStartDate = null;
+          }else{
+            data.Data[i].ProjectStartDate = new Date(data.Data[i].ProjectStartDate);
           }
           if(data.Data[i].MilestoneDueDate == null){
-            data.Data[i].Milestone_Due_Date = "---";
+            data.Data[i].MilestoneDueDate = null;
           }else{
-            data.Data[i].Milestone_Due_Date = this.datepipe.transform(data.Data[i].MilestoneDueDate, "yyyy-MMM-dd");
+            data.Data[i].MilestoneDueDate = new Date(data.Data[i].MilestoneDueDate);
+          }
+          if(data.Data[i].MilestoneDueDateByLevel == null){
+            data.Data[i].MilestoneDueDateByLevel = null;
+          }else{
+            data.Data[i].MilestoneDueDateByLevel = new Date(data.Data[i].MilestoneDueDateByLevel);
           }
         }
         const CustomizedData = data.Data.map(o => {
@@ -669,8 +700,10 @@ export class TrackerComponent implements OnInit {
             'RegionalDigitalPortraitLead' : o.RegionalDigitalPortraitLead,
             'GlobalDigitalHRFeedSpeciallist' : o.GlobalDigitalHRFeedSpeciallist,
             'Milestone Project Notes' : o.MilestoneProjectNotes,
-            'Project Start Date' : o.Project_Start_Date,
-            'Milestone Due Date' : o.Milestone_Due_Date,
+            'Assignment Date' : o.AssignmentDate,
+            'Project Start Date' : o.ProjectStartDate,
+            'Milestone Due Date' : o.MilestoneDueDate,
+            'Milestone Due Date By Level' : o.MilestoneDueDateByLevel,
             'Host External Kickoff Date/ Proposed Start Date'  : o.Proposed_Start_Date__iMeet_,
             'Go-Live Date' : o.Go_Live_Date__iMeet_,
             'End of HyperCare' : o.Proposed_End_Date__Formula_,

@@ -38,6 +38,7 @@ export class LivedashboardComponent implements OnInit, OnDestroy {
   NPS: string;
   LastUpdatedText : string;
   ShowIMPS : boolean = false;
+  ShowSteeringCommittee : boolean = false;
   ShowCTO : boolean = false;
   ShowLL : boolean = false;
   ShowSGT : boolean = false;
@@ -80,58 +81,102 @@ export class LivedashboardComponent implements OnInit, OnDestroy {
       }
     })
   }
-  @HostListener('document:mousemove', ['$event']) onMouseMove(event) {
-    if(event) {
-      this.timeLeft = 1800;
-      this.SecondsLeft = 60;
-      this.date = new Date();
-      localStorage.setItem("LastLoggedIn",this.date);
-    }
-  }
-  @HostListener('document:mouseenter', ['$event'])onMouseEnter(event: any) {     
-    if(event) {
-      this.timeLeft = 1800;
-      this.SecondsLeft = 60;
-      this.date = new Date();
-      localStorage.setItem("LastLoggedIn",this.date);
-    }
-  }
-  @HostListener('document:click', ['$event'])onClick(event: string) {
-    if(event) {
-      this.timeLeft = 1800;
-      this.SecondsLeft = 60;
-      this.date = new Date();
-      localStorage.setItem("LastLoggedIn",this.date);
-    }
-  }
-  @HostListener('document:keydown', ['$event']) onKeydownHandler(event: KeyboardEvent) {
-    if(event) {
-      this.timeLeft = 1800;
-      this.SecondsLeft = 60;
-      this.date = new Date();
-      localStorage.setItem("LastLoggedIn",this.date);
-    }
-  }
-  @HostListener('document:scroll', ['$event']) onScroll(event: Event): void {
-    if(event) {
-      this.timeLeft = 1800;
-      this.SecondsLeft = 60;
-      this.date = new Date();
-      localStorage.setItem("LastLoggedIn",this.date);
-    }
-  }
+  datechecking;
+  // @HostListener('document:mousemove', ['$event']) onMouseMove(event) {
+  //   if(event) {
+  //     this.timeLeft = 1800;
+  //     this.SecondsLeft = 60;
+  //     this.date = new Date();
+  //     this.datechecking = new Date(localStorage.getItem("LastLoggedIn"));
+  //     this.datechecking.setMinutes(this.datechecking.getMinutes() + 30);
+  //     if(this.date > this.datechecking){
+  //       clearInterval(this.interval);
+  //       localStorage.clear();
+  //       this.router.navigate(["/Login"]);
+  //     }else{
+  //       localStorage.setItem("LastLoggedIn",this.date);
+  //     }
+  //   }
+  // }
+  // @HostListener('document:mouseenter', ['$event'])onMouseEnter(event: any) {     
+  //   if(event) {
+  //     this.timeLeft = 1800;
+  //     this.SecondsLeft = 60;
+  //     this.date = new Date();
+  //     this.datechecking = new Date(localStorage.getItem("LastLoggedIn"));
+  //     this.datechecking.setMinutes(this.datechecking.getMinutes() + 30);
+  //       if(this.date > this.datechecking){
+  //         clearInterval(this.interval);
+  //         localStorage.clear();
+  //         this.router.navigate(["/Login"]);
+  //       }else{
+  //         localStorage.setItem("LastLoggedIn",this.date);
+  //       }
+  //   }
+  // }
+  // @HostListener('document:click', ['$event'])onClick(event: string) {
+  //   if(event) {
+  //     this.timeLeft = 1800;
+  //     this.SecondsLeft = 60;
+  //     this.date = new Date();
+  //     this.datechecking = new Date(localStorage.getItem("LastLoggedIn"));
+  //     this.datechecking.setMinutes(this.datechecking.getMinutes() + 30);
+  //     if(this.date > this.datechecking){
+  //       clearInterval(this.interval);
+  //       localStorage.clear();
+  //       this.router.navigate(["/Login"]);
+  //     }else{
+  //       localStorage.setItem("LastLoggedIn",this.date);
+  //     }
+  //   }
+  // }
+  // @HostListener('document:keydown', ['$event']) onKeydownHandler(event: KeyboardEvent) {
+  //   if(event) {
+  //     this.timeLeft = 1800;
+  //     this.SecondsLeft = 60;
+  //     this.date = new Date();
+  //     this.datechecking = new Date(localStorage.getItem("LastLoggedIn"));
+  //     this.datechecking.setMinutes(this.datechecking.getMinutes() + 30);
+  //     if(this.date > this.datechecking){
+  //       clearInterval(this.interval);
+  //       localStorage.clear();
+  //       this.router.navigate(["/Login"]);
+  //     }else{
+  //       localStorage.setItem("LastLoggedIn",this.date);
+  //     }
+  //   }
+  // }
+  // @HostListener('document:scroll', ['$event']) onScroll(event: Event): void {
+  //   if(event) {
+  //     this.timeLeft = 1800;
+  //     this.SecondsLeft = 60;
+  //     this.date = new Date();
+  //     this.datechecking = new Date(localStorage.getItem("LastLoggedIn"));
+  //     this.datechecking.setMinutes(this.datechecking.getMinutes() + 30);
+  //     if(this.date > this.datechecking){
+  //       clearInterval(this.interval);
+  //       localStorage.clear();
+  //       this.router.navigate(["/Login"]);
+  //     }else{
+  //       localStorage.setItem("LastLoggedIn",this.date);
+  //     }
+  //   }
+  // }
   date;
-  @HostListener('window:beforeunload', ['$event']) onWindowClose(event: any): void {
-    if(event) {
-      event.preventDefault();
-      event.returnValue = false;
-    }
-  }
+  // @HostListener('window:beforeunload', ['$event']) onWindowClose(event: any): void {
+  //   if(event) {
+  //     event.preventDefault();
+  //     event.returnValue = false;
+  //   }
+  // }
   interval;timeLeft: number = 1800;
   SecondsLeft :number = 60;
   Time;
+  testcount : number = 0;
   startTimer() {
     this.interval = setInterval(() => {
+      this.testcount++;
+      // console.log(this.testcount);
       if(this.timeLeft > 0) {
         this.timeLeft--;
         if(this.SecondsLeft > 0 && this.timeLeft >= 60){
@@ -198,168 +243,168 @@ export class LivedashboardComponent implements OnInit, OnDestroy {
     this.ReportSelected = "Stats";
     this.LastUpdatedText = "";
   }
-
   NpsCount : number;npshidden : boolean = true;
   ngOnInit() {
-    this.startTimer();
-    // if(localStorage.getItem('LoggedIn') == "true"){
-      // this._router.navigate(["Dashboard/HomePage"]);
-      // this._router.navigate(["HomePage"],{relativeTo : this.route});
-      this.LoginUID = localStorage.getItem("UID");
-      this.LoginUserName = localStorage.getItem("Username");
-      // if(this.CLREditOption == null || this.CLREditOption == ""){
-      //   localStorage.clear();
-      //   this._router.navigate(["/Login"]);
-      // }
-      if(this.LoginUserName == null || this.LoginUserName == ""){
+    this.sub = this.route.paramMap.subscribe(data =>{
+      this.LoggedINID = data.get("UID");
+    })
+    this.LoginUID = localStorage.getItem("UID");
+    this.LoginUserName = localStorage.getItem("Username");
+    this.datechecking = new Date(localStorage.getItem("LastLoggedIn"));
+    if(this.LoginUserName == null || this.LoginUserName == "" || this.datechecking == null || this.datechecking == ""){
+      localStorage.clear();
+      this.router.navigate(["/Login"]);
+    }else{
+      this.date = new Date();
+      this.datechecking.setMinutes(this.datechecking.getMinutes() + 30);
+      if(this.date > this.datechecking){
+        clearInterval(this.interval);
         localStorage.clear();
-        this.router.navigate(["/Dashboard"]);
-      }
-      this.sub = this.route.paramMap.subscribe(data =>{
-        this.LoggedINID = data.get("UID");
-      })
-      this.showSpinner = true;
-      this.service.UserReportAccess(this.LoginUID).subscribe(data=>{
-        if(data.code == 200){
-          this.showSpinner = false;
-          this.hidden = false;
-          if(data.Data[0].IMPS == true){
-            this.ShowIMPS = true;
-          }else{
-            this.ShowIMPS = false;
-          }
-          if(data.Data[0].CTO == true){
-            this.ShowCTO = true;
-          }else{
-            this.ShowCTO = false;
-          }
-          if(data.Data[0].LessonsLearnt == true){
-            this.ShowLL = true;
-          }else{
-            this.ShowLL = false;
-          }
-          if(data.Data[0].StageGate == true){
-            this.ShowSGT = true;
-          }else{
-            this.ShowSGT = false;
-          }
-          if(data.Data[0].AutomatedCLR == true){
-            this.ShowAutomatedCLR = true;
-          }else{
-            this.ShowAutomatedCLR = false;
-          }
-          if(data.Data[0].MarketReport == true){
-            this.ShowMarketReport = true;
-          }else{
-            this.ShowMarketReport = false;
-          }
-          if(data.Data[0].ELTReport == true){
-            this.ShowELT = true;
-          }else{
-            this.ShowELT = false;
-          }
-          if(data.Data[0].CycleTime == true){
-            this.ShowCycleTime = true;
-          }else{
-            this.ShowCycleTime = false;
-          }
-          if(data.Data[0].CapacityTracker == true){
-            this.ShowCapacityTracker = true;
-          }else{
-            this.ShowCapacityTracker = false;
-          }
-          if(data.Data[0].ResourceUtilization == true){
-            this.ShowResourceUtilization = true;
-          }else{
-            this.ShowResourceUtilization = false;
-          }
-          if(data.Data[0].C_Hierarchy == true){
-            this.ShowHierarchy = true;
-          }else{
-            this.ShowHierarchy = false;
-          }
-          if(data.Data[0].NPS == true){
-            this.ShowNPS = true;
-          }else{
-            this.ShowNPS = false;
-          }
-          this.NpsCount = data.RevenueID;
-          if(this.NpsCount > 0){
-            this.npshidden = false;
-          }else{
-            this.npshidden = true;
-          }
-          if(data.Data[0].CapacityTracker == true || data.Data[0].ResourceUtilization == true || data.Data[0].C_Hierarchy == true){
-            this.ShowTrackerReports = true;
-          }else{
-            this.ShowTrackerReports = false;
-          }
-          if(data.Data[0].NPSAdmin == true || data.Data[0].NPSClientInfo == true || data.Data[0].NPS == true){
-            this.ShowNpsReports = true;
-          }else{
-            this.ShowNpsReports = false;
-          }
-          if(data.Data[0].NPSAdmin == true){
-            this.ShowNpsAdmin = true;
-          }else{
-            this.ShowNpsAdmin = false;
-          }
-          if(data.Data[0].NPSClientInfo == true){
-            this.ShowNpsSurvey = true;
-          }else{
-            this.ShowNpsSurvey = false;
-          }
-          if(data.Data[0].PerformanceAnalysis == true){
-            this.ShowPerformanceAnalysis = true;
-          }else{
-            this.ShowPerformanceAnalysis = false;
-          }
-          if(data.Data[0].DigitalReport == true){
-            this.ShowDigitalReport = true;
-          }else{
-            this.ShowDigitalReport = false;
-          }
-          this.NotificationsCount = data.Data[0].Notifications;
-          if(data.Data[0].AccountStatus == "Admin"){
-            this.ShowAdminPanel = true;
-          }else{
-            this.ShowAdminPanel = false;
-          }
-          if(this.NotificationsCount == 0){
+        this.router.navigate(["/Login"]);
+      }else{
+        // this.startTimer();
+        localStorage.setItem("LastLoggedIn",this.date);
+        this.showSpinner = true;
+        this.service.UserReportAccess(this.LoginUID).subscribe(data=>{
+          if(data.code == 200){
+            this.showSpinner = false;
+            this.hidden = false;
+            if(data.Data[0].IMPS == true){
+              this.ShowIMPS = true;
+            }else{
+              this.ShowIMPS = false;
+            }
+            if(data.Data[0].CTO == true){
+              this.ShowCTO = true;
+            }else{
+              this.ShowCTO = false;
+            }
+            if(data.Data[0].LessonsLearnt == true){
+              this.ShowLL = true;
+            }else{
+              this.ShowLL = false;
+            }
+            if(data.Data[0].StageGate == true){
+              this.ShowSGT = true;
+            }else{
+              this.ShowSGT = false;
+            }
+            if(data.Data[0].AutomatedCLR == true){
+              this.ShowAutomatedCLR = true;
+            }else{
+              this.ShowAutomatedCLR = false;
+            }
+            if(data.Data[0].MarketReport == true){
+              this.ShowMarketReport = true;
+            }else{
+              this.ShowMarketReport = false;
+            }
+            if(data.Data[0].ELTReport == true){
+              this.ShowELT = true;
+            }else{
+              this.ShowELT = false;
+            }
+            if(data.Data[0].CycleTime == true){
+              this.ShowCycleTime = true;
+            }else{
+              this.ShowCycleTime = false;
+            }
+            if(data.Data[0].CapacityTracker == true){
+              this.ShowCapacityTracker = true;
+            }else{
+              this.ShowCapacityTracker = false;
+            }
+            if(data.Data[0].ResourceUtilization == true){
+              this.ShowResourceUtilization = true;
+            }else{
+              this.ShowResourceUtilization = false;
+            }
+            if(data.Data[0].C_Hierarchy == true){
+              this.ShowHierarchy = true;
+            }else{
+              this.ShowHierarchy = false;
+            }
+            if(data.Data[0].NPS == true){
+              this.ShowNPS = true;
+            }else{
+              this.ShowNPS = false;
+            }
+            if(data.Data[0].SteeringCommittee == true){
+              this.ShowSteeringCommittee = true;
+            }else{
+              this.ShowSteeringCommittee = false;
+            }
+            this.NpsCount = data.RevenueID;
+            if(this.NpsCount > 0){
+              this.npshidden = false;
+            }else{
+              this.npshidden = true;
+            }
+            if(data.Data[0].CapacityTracker == true || data.Data[0].ResourceUtilization == true || data.Data[0].C_Hierarchy == true){
+              this.ShowTrackerReports = true;
+            }else{
+              this.ShowTrackerReports = false;
+            }
+            if(data.Data[0].NPSAdmin == true || data.Data[0].NPSClientInfo == true || data.Data[0].NPS == true){
+              this.ShowNpsReports = true;
+            }else{
+              this.ShowNpsReports = false;
+            }
+            if(data.Data[0].NPSAdmin == true){
+              this.ShowNpsAdmin = true;
+            }else{
+              this.ShowNpsAdmin = false;
+            }
+            if(data.Data[0].NPSClientInfo == true){
+              this.ShowNpsSurvey = true;
+            }else{
+              this.ShowNpsSurvey = false;
+            }
+            if(data.Data[0].PerformanceAnalysis == true){
+              this.ShowPerformanceAnalysis = true;
+            }else{
+              this.ShowPerformanceAnalysis = false;
+            }
+            if(data.Data[0].DigitalReport == true){
+              this.ShowDigitalReport = true;
+            }else{
+              this.ShowDigitalReport = false;
+            }
+            this.NotificationsCount = data.Data[0].Notifications;
             if(data.Data[0].AccountStatus == "Admin"){
-              this.hidden = true;
+              this.ShowAdminPanel = true;
+            }else{
+              this.ShowAdminPanel = false;
+            }
+            if(this.NotificationsCount == 0){
+              if(data.Data[0].AccountStatus == "Admin"){
+                this.hidden = true;
+              }else{
+                this.hidden = false;
+              }
             }else{
               this.hidden = false;
             }
-          }else{
-            this.hidden = false;
           }
-        }
-      })
-      this.showSpinner = true;
-      this.service.LastUpdatedOn().subscribe(data =>{
-        if(data.code == 200){
-          this.LLData = this.datepipe.transform(data.Data[0].LLData,"MMM-d-y, h:mm a");
-          this.SGData = this.datepipe.transform(data.Data[0].SGData,"MMM-d-y, h:mm a");
-          this.IMPSData = this.datepipe.transform(data.Data[0].IMPSData,"MMM-d-y, h:mm a");
-          this.CTOData = this.datepipe.transform(data.Data[0].CTOData,"MMM-d-y, h:mm a");
-          this.AutomatedCLR = this.datepipe.transform(data.Data[0].AutomatedCLR,"MMM-d-y, h:mm a");
-          // this.ELT = this.datepipe.transform(data.Data[0].ELT,"MMM-d-y, h:mm a");
-          localStorage.setItem("ELTLastUpdatedOn",this.datepipe.transform(data.Data[0].ELT,"dd-MMM-yyyy"));
-          this.NPS = this.datepipe.transform(data.Data[0].NPS,"MMM-d-y, h:mm a");
-          this.LastUpdatedText = "(Last Updated On : " + this.AutomatedCLR+" IST)";
-        }else{
-        }
-        this.showSpinner = false;
-      })
-      // this.service.KnowledgeBase().subscribe(data=>{
-      //   this.KB_SearchData = [];
-      //   this.KnowledgeBaseData = data.Data;
-      //   this.onFilterValueChange();
-      // })
-    // }else{
-    //   this._router.navigate(["/Login"]);
-    // }
+        })
+        this.showSpinner = true;
+        this.service.LastUpdatedOn().subscribe(data =>{
+          if(data.code == 200){
+            this.LLData = this.datepipe.transform(data.Data[0].LLData,"MMM-d-y, h:mm a");
+            this.SGData = this.datepipe.transform(data.Data[0].SGData,"MMM-d-y, h:mm a");
+            this.IMPSData = this.datepipe.transform(data.Data[0].IMPSData,"MMM-d-y, h:mm a");
+            this.CTOData = this.datepipe.transform(data.Data[0].CTOData,"MMM-d-y, h:mm a");
+            this.AutomatedCLR = this.datepipe.transform(data.Data[0].AutomatedCLR,"MMM-d-y, h:mm a");
+            // this.ELT = this.datepipe.transform(data.Data[0].ELT,"MMM-d-y, h:mm a");
+            localStorage.setItem("ELTLastUpdatedOn",this.datepipe.transform(data.Data[0].ELT,"dd-MMM-yyyy"));
+            this.NPS = this.datepipe.transform(data.Data[0].NPS,"MMM-d-y, h:mm a");
+            this.LastUpdatedText = "(Last Updated On : " + this.AutomatedCLR+" IST)";
+          }else{
+          }
+          this.showSpinner = false;
+        })
+      }
+    }
   }
   // Search_resultsData : boolean = false;
   // KnowledgeBaseData : KB_Data[];
@@ -585,15 +630,15 @@ export class LivedashboardComponent implements OnInit, OnDestroy {
       // }
       // break;
       case 21 : {
-        this.ReportSelected = "Steering Committee";
+        this.ReportSelected = "Steering Committee Update";
         this.LastUpdatedText = "";
       }
       break;
-      case 22 : {
-        this.ReportSelected = "Steering Committee View";
-        this.LastUpdatedText = "";
-      }
-      break;
+      // case 22 : {
+      //   this.ReportSelected = "Steering Committee View";
+      //   this.LastUpdatedText = "";
+      // }
+      // break;
       default : {
         this.ReportSelected = "Home Page";
         this.LastUpdatedText = "";

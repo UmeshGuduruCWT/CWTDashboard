@@ -74,7 +74,7 @@ export class NPSViewComponent implements OnInit {
   public CompanyNameData : ReplaySubject<FilterAccountName[]> = new ReplaySubject<FilterAccountName[]>(1);
   Commentoneother;Commenttwoother;Commentthreeother;searchbar;
   ngOnInit(): void {
-    this.AssignLeader_data = ["Anette Brydensholt","Anurag Chopra","Cenise Roland","Dalles Weldon","Deb Westerlund","Heber Calcic","Izabela Hiller","Jill Summerville","Joanna Clare","Peter Bot","Simon Owen","Tenille Lockyer","Vincent vanReenen"];
+    this.AssignLeader_data = ["Anette Brydensholt","Anurag Chopra","Cenise Roland","Dalles Weldon","Deb Westerlund","Heber Calcic","Izabela Hiller","Jill Summerville","Joanna Clare","Peter Bot","Simon Owen","Tenille Lockyer","Vincent vanReenen","Yi Xu"];
     this.NPSScore_data = [0,1,2,3,4,5,6,7,8,9,10];
     this.NPSIndicator_data = ["Promoter","Passive","Detractor"];
     // this.Nps_Comment_One = ["Quick responses/Co-ordination","Good Project Management","Great Ownership/Very Helpful","Good Service / Support/Organized","Great Team/Focused","Reactive CWT team","Short weekly meetings","Imps was quick/Very Approachable","Very Helpful / Clear explanation","Good Service / Good Performance","Professional Team / Approach","Smooth Transition / Organised","Professionalism","Excellent Communication","Efficiency/Responses","Great Project Team/Team work","Very experienced CWT Imps team","Excellent Stakeholder","Dedicated","Client Management Capability","Knowledgeable","Excellent Project Management","Flexible Team","Others"];

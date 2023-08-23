@@ -23,8 +23,10 @@ export class MyFilter {
   Comments : string;
 }
 export interface ResourceDialogData {
-  Dailog_ID : number;
-  Dailog_Comment : string;
+  Dailog_ID? : number;
+  Dailog_Comment? : string;
+  Data? : Data[];
+  Role? : String;
 }
 @Component({
   selector: 'app-resource-utilization',
@@ -32,6 +34,8 @@ export interface ResourceDialogData {
   styleUrls: ['./resource-utilization.component.css']
 })
 export class ResourceUtilizationComponent implements OnInit {
+  isLoading = true;
+  imageUrl : string = "assets/images/cwt.png";
   dataSource;PdataSource;
   ResUtilData : Data[];
   ProspectData : Data[];
@@ -164,6 +168,7 @@ export class ResourceUtilizationComponent implements OnInit {
     this.dataSource.sort = this.sort;
   }
   ngOnInit(): void {
+    this.isLoading = true;
     var day = this.date.getDay();
     var diff = this.date.getDate() - day + (day == 0 ? -6:1);
     this.C1stweek = this.datepipe.transform(this.date.setDate(diff), "dd-MMM-yyyy");
@@ -226,6 +231,205 @@ export class ResourceUtilizationComponent implements OnInit {
     // })
     this.GetResUtil();
   }
+  TrackerData : Data[];
+  GetTracker(){
+    this.isLoading = true;
+    // this.dashboard.ShowSpinnerHandler(true);
+    this.service.Tracker().subscribe(data =>{
+      if(data.code == 200){
+        this.TrackerData = data.Data;
+        for(let i = 0;i<data.Data.length;i++){
+          if(this.TrackerData[i].Proposed_End_Date__Formula_ == null){
+            this.TrackerData[i].Proposed_End_Date__Formula_ = null;
+          }else{
+            this.TrackerData[i].Proposed_End_Date__Formula_ = new Date(this.TrackerData[i].Proposed_End_Date__Formula_);
+          }
+          if(this.TrackerData[i].Proposed_Start_Date__iMeet_ == null){
+            this.TrackerData[i].Proposed_Start_Date__iMeet_ = null;
+          }else{
+            this.TrackerData[i].Proposed_Start_Date__iMeet_ = new Date(this.TrackerData[i].Proposed_Start_Date__iMeet_);
+          }
+          if(this.TrackerData[i].Go_Live_Date__iMeet_ == null){
+            this.TrackerData[i].Go_Live_Date__iMeet_ = null;
+          }else{
+            this.TrackerData[i].Go_Live_Date__iMeet_ = new Date(this.TrackerData[i].Go_Live_Date__iMeet_);
+          }
+          if(this.TrackerData[i].ProjectDelay == null){
+            this.TrackerData[i].CompleteDuration = "0 Weeks";
+          }else{
+            this.TrackerData[i].CompleteDuration = Math.round(this.TrackerData[i].ProjectDelay)+' Weeks';
+          }
+          if(this.TrackerData[i].ProjectStartDate == null){
+            this.TrackerData[i].ProjectStartDate = null;
+          }else{
+            this.TrackerData[i].ProjectStartDate = new Date(this.TrackerData[i].ProjectStartDate);
+          }
+          if(this.TrackerData[i].MilestoneDueDate == null){
+            this.TrackerData[i].MilestoneDueDate = null;
+          }else{
+            this.TrackerData[i].MilestoneDueDate = new Date(this.TrackerData[i].MilestoneDueDate);
+          }
+          if(this.TrackerData[i].MilestoneDueDateByLevel == null){
+            this.TrackerData[i].MilestoneDueDateByLevel = null;
+          }else{
+            this.TrackerData[i].MilestoneDueDateByLevel = new Date(this.TrackerData[i].MilestoneDueDateByLevel);
+          }
+        }
+        this.isLoading = false;
+      }else{
+        this.isLoading = false;
+      }
+    });
+  }
+  currentweekdate = new Date;
+  DisplayClients(Role : string,Manager : string,Effort : number,SelectedColumn : string){
+    var FilteredData = this.TrackerData;
+    if(Role == "Digital"){
+      FilteredData = FilteredData.filter(data => (data.GlobalDigitalOBTLead == Manager || data.RegionalDigitalOBTLead == Manager || data.LocalDigitalOBTLead == Manager || data.GlobalDigitalPortraitLead == Manager || data.RegionalDigitalPortraitLead == Manager || data.GlobalDigitalHRFeedSpeciallist == Manager))
+    }else{
+      FilteredData = FilteredData.filter(data => (data.GManager == Manager || data.RManager == Manager || data.LManager == Manager))
+    }
+    var day = this.currentweekdate.getDay();
+    var diff = this.currentweekdate.getDate() - day + (day == 0 ? -6:1);
+    var FirstWeek = new Date(this.currentweekdate.setDate(diff));
+    var SecondWeek = new Date(this.currentweekdate.setDate(this.currentweekdate.getDate()+7));
+    var ThirdWeek = new Date(this.currentweekdate.setDate(this.currentweekdate.getDate()+7));
+    var FourthWeek = new Date(this.currentweekdate.setDate(this.currentweekdate.getDate()+7));
+    var FivthWeek = new Date(this.currentweekdate.setDate(this.currentweekdate.getDate()+7));
+    var SixthWeek = new Date(this.currentweekdate.setDate(this.currentweekdate.getDate()+7));
+    var SeventhWeek = new Date(this.currentweekdate.setDate(this.currentweekdate.getDate()+7));
+    var EighthWeek = new Date(this.currentweekdate.setDate(this.currentweekdate.getDate()+7));
+    var NinthWeek = new Date(this.currentweekdate.setDate(this.currentweekdate.getDate()+7));
+    var TenthWeek = new Date(this.currentweekdate.setDate(this.currentweekdate.getDate()+7));
+    var EleventhWeek = new Date(this.currentweekdate.setDate(this.currentweekdate.getDate()+7));
+    var twelvethWeek = new Date(this.currentweekdate.setDate(this.currentweekdate.getDate()+7));
+    var C13thweek = new Date(this.currentweekdate.setDate(this.currentweekdate.getDate()+7));
+    var C14thWeek = new Date(this.currentweekdate.setDate(this.currentweekdate.getDate()+7));
+    var C15thWeek = new Date(this.currentweekdate.setDate(this.currentweekdate.getDate()+7));
+    var C16thWeek = new Date(this.currentweekdate.setDate(this.currentweekdate.getDate()+7));
+    var C17thWeek = new Date(this.currentweekdate.setDate(this.currentweekdate.getDate()+7));
+    var C18thWeek = new Date(this.currentweekdate.setDate(this.currentweekdate.getDate()+7));
+    var C19thWeek = new Date(this.currentweekdate.setDate(this.currentweekdate.getDate()+7));
+    var C20thWeek = new Date(this.currentweekdate.setDate(this.currentweekdate.getDate()+7));
+    var C21stWeek = new Date(this.currentweekdate.setDate(this.currentweekdate.getDate()+7));
+    var C22ndWeek = new Date(this.currentweekdate.setDate(this.currentweekdate.getDate()+7));
+    var C23rdWeek = new Date(this.currentweekdate.setDate(this.currentweekdate.getDate()+7));
+    var C24thWeek = new Date(this.currentweekdate.setDate(this.currentweekdate.getDate()+7));
+    // console.log(FirstWeek)
+    switch(SelectedColumn){
+      case "C1stweek" : {
+        FilteredData = FilteredData.filter(data => data.FirstWeek == 1 && this.ProjectStatusFilter.value.indexOf(data.ProjectStatus) > -1).concat(FilteredData.filter(data => data.FirstWeek == 0 && this.ProjectStatusFilter.value.indexOf(data.ProjectStatus) > -1 && FirstWeek >= data.MilestoneDueDateByLevel && FirstWeek <= data.Proposed_End_Date__Formula_ && data.Project_Level == "Global" && data.GManager == Manager)).concat(FilteredData.filter(data => data.FirstWeek == 0 && this.ProjectStatusFilter.value.indexOf(data.ProjectStatus) > -1 && FirstWeek >= data.MilestoneDueDateByLevel && FirstWeek <= data.Proposed_End_Date__Formula_ && data.Project_Level == "Regional" && data.RManager == Manager))
+      }
+      break;
+      case "C2ndweek" : {
+        FilteredData = FilteredData.filter(data => data.SecondWeek == 1 && this.ProjectStatusFilter.value.indexOf(data.ProjectStatus) > -1).concat(FilteredData.filter(data => data.SecondWeek == 0 && this.ProjectStatusFilter.value.indexOf(data.ProjectStatus) > -1 && SecondWeek >= data.MilestoneDueDateByLevel && SecondWeek <= data.Proposed_End_Date__Formula_ && data.Project_Level == "Global" && data.GManager == Manager)).concat(FilteredData.filter(data => data.SecondWeek == 0 && this.ProjectStatusFilter.value.indexOf(data.ProjectStatus) > -1 && SecondWeek >= data.MilestoneDueDateByLevel && SecondWeek <= data.Proposed_End_Date__Formula_ && data.Project_Level == "Regional" && data.RManager == Manager))
+      }
+      break;
+      case "C3rdweek" : {
+        FilteredData = FilteredData.filter(data => data.ThirdWeek == 1 && this.ProjectStatusFilter.value.indexOf(data.ProjectStatus) > -1).concat(FilteredData.filter(data => data.ThirdWeek == 0 && this.ProjectStatusFilter.value.indexOf(data.ProjectStatus) > -1 && ThirdWeek >= data.MilestoneDueDateByLevel && ThirdWeek <= data.Proposed_End_Date__Formula_ && data.Project_Level == "Global" && data.GManager == Manager)).concat(FilteredData.filter(data => data.ThirdWeek == 0 && this.ProjectStatusFilter.value.indexOf(data.ProjectStatus) > -1 && ThirdWeek >= data.MilestoneDueDateByLevel && ThirdWeek <= data.Proposed_End_Date__Formula_ && data.Project_Level == "Regional" && data.RManager == Manager))
+      }
+      break;
+      case "C4thweek" : {
+        FilteredData = FilteredData.filter(data => data.FourthWeek == 1 && this.ProjectStatusFilter.value.indexOf(data.ProjectStatus) > -1).concat(FilteredData.filter(data => data.FourthWeek == 0 && this.ProjectStatusFilter.value.indexOf(data.ProjectStatus) > -1 && FourthWeek >= data.MilestoneDueDateByLevel && FourthWeek <= data.Proposed_End_Date__Formula_ && data.Project_Level == "Global" && data.GManager == Manager)).concat(FilteredData.filter(data => data.FourthWeek == 0 && this.ProjectStatusFilter.value.indexOf(data.ProjectStatus) > -1 && FourthWeek >= data.MilestoneDueDateByLevel && FourthWeek <= data.Proposed_End_Date__Formula_ && data.Project_Level == "Regional" && data.RManager == Manager))
+      }
+      break;
+      case "C5thweek" : {
+        FilteredData = FilteredData.filter(data => data.FivthWeek == 1 && this.ProjectStatusFilter.value.indexOf(data.ProjectStatus) > -1).concat(FilteredData.filter(data => data.FivthWeek == 0 && this.ProjectStatusFilter.value.indexOf(data.ProjectStatus) > -1 && FivthWeek >= data.MilestoneDueDateByLevel && FivthWeek <= data.Proposed_End_Date__Formula_ && data.Project_Level == "Global" && data.GManager == Manager)).concat(FilteredData.filter(data => data.FivthWeek == 0 && this.ProjectStatusFilter.value.indexOf(data.ProjectStatus) > -1 && FivthWeek >= data.MilestoneDueDateByLevel && FivthWeek <= data.Proposed_End_Date__Formula_ && data.Project_Level == "Regional" && data.RManager == Manager))
+      }
+      break;
+      case "C6thweek" : {
+        FilteredData = FilteredData.filter(data => data.SixthWeek == 1 && this.ProjectStatusFilter.value.indexOf(data.ProjectStatus) > -1).concat(FilteredData.filter(data => data.SixthWeek == 0 && this.ProjectStatusFilter.value.indexOf(data.ProjectStatus) > -1 && SixthWeek >= data.MilestoneDueDateByLevel && SixthWeek <= data.Proposed_End_Date__Formula_ && data.Project_Level == "Global" && data.GManager == Manager)).concat(FilteredData.filter(data => data.SixthWeek == 0 && this.ProjectStatusFilter.value.indexOf(data.ProjectStatus) > -1 && SixthWeek >= data.MilestoneDueDateByLevel && SixthWeek <= data.Proposed_End_Date__Formula_ && data.Project_Level == "Regional" && data.RManager == Manager))
+      }
+      break;
+      case "C7thweek" : {
+        FilteredData = FilteredData.filter(data => data.SeventhWeek == 1 && this.ProjectStatusFilter.value.indexOf(data.ProjectStatus) > -1).concat(FilteredData.filter(data => data.SeventhWeek == 0 && this.ProjectStatusFilter.value.indexOf(data.ProjectStatus) > -1 && SeventhWeek >= data.MilestoneDueDateByLevel && SeventhWeek <= data.Proposed_End_Date__Formula_ && data.Project_Level == "Global" && data.GManager == Manager)).concat(FilteredData.filter(data => data.SeventhWeek == 0 && this.ProjectStatusFilter.value.indexOf(data.ProjectStatus) > -1 && SeventhWeek >= data.MilestoneDueDateByLevel && SeventhWeek <= data.Proposed_End_Date__Formula_ && data.Project_Level == "Regional" && data.RManager == Manager))
+      }
+      break;
+      case "C8thweek" : {
+        FilteredData = FilteredData.filter(data => data.EighthWeek == 1 && this.ProjectStatusFilter.value.indexOf(data.ProjectStatus) > -1).concat(FilteredData.filter(data => data.EighthWeek == 0 && this.ProjectStatusFilter.value.indexOf(data.ProjectStatus) > -1 && EighthWeek >= data.MilestoneDueDateByLevel && EighthWeek <= data.Proposed_End_Date__Formula_ && data.Project_Level == "Global" && data.GManager == Manager)).concat(FilteredData.filter(data => data.EighthWeek == 0 && this.ProjectStatusFilter.value.indexOf(data.ProjectStatus) > -1 && EighthWeek >= data.MilestoneDueDateByLevel && EighthWeek <= data.Proposed_End_Date__Formula_ && data.Project_Level == "Regional" && data.RManager == Manager))
+      }
+      break;
+      case "C9thweek" : {
+        FilteredData = FilteredData.filter(data => data.NinthWeek == 1 && this.ProjectStatusFilter.value.indexOf(data.ProjectStatus) > -1).concat(FilteredData.filter(data => data.NinthWeek == 0 && this.ProjectStatusFilter.value.indexOf(data.ProjectStatus) > -1 && NinthWeek >= data.MilestoneDueDateByLevel && NinthWeek <= data.Proposed_End_Date__Formula_ && data.Project_Level == "Global" && data.GManager == Manager)).concat(FilteredData.filter(data => data.NinthWeek == 0 && this.ProjectStatusFilter.value.indexOf(data.ProjectStatus) > -1 && NinthWeek >= data.MilestoneDueDateByLevel && NinthWeek <= data.Proposed_End_Date__Formula_ && data.Project_Level == "Regional" && data.RManager == Manager))
+      }
+      break;
+      case "C10thweek" : {
+        FilteredData = FilteredData.filter(data => data.TenthWeek == 1 && this.ProjectStatusFilter.value.indexOf(data.ProjectStatus) > -1).concat(FilteredData.filter(data => data.TenthWeek == 0 && this.ProjectStatusFilter.value.indexOf(data.ProjectStatus) > -1 && TenthWeek >= data.MilestoneDueDateByLevel && TenthWeek <= data.Proposed_End_Date__Formula_ && data.Project_Level == "Global" && data.GManager == Manager)).concat(FilteredData.filter(data => data.TenthWeek == 0 && this.ProjectStatusFilter.value.indexOf(data.ProjectStatus) > -1 && TenthWeek >= data.MilestoneDueDateByLevel && TenthWeek <= data.Proposed_End_Date__Formula_ && data.Project_Level == "Regional" && data.RManager == Manager))
+      }
+      break;
+      case "C11thweek" : {
+        FilteredData = FilteredData.filter(data => data.EleventhWeek == 1 && this.ProjectStatusFilter.value.indexOf(data.ProjectStatus) > -1).concat(FilteredData.filter(data => data.EleventhWeek == 0 && this.ProjectStatusFilter.value.indexOf(data.ProjectStatus) > -1 && EleventhWeek >= data.MilestoneDueDateByLevel && EleventhWeek <= data.Proposed_End_Date__Formula_ && data.Project_Level == "Global" && data.GManager == Manager)).concat(FilteredData.filter(data => data.EleventhWeek == 0 && this.ProjectStatusFilter.value.indexOf(data.ProjectStatus) > -1 && EleventhWeek >= data.MilestoneDueDateByLevel && EleventhWeek <= data.Proposed_End_Date__Formula_ && data.Project_Level == "Regional" && data.RManager == Manager))
+      }
+      break;
+      case "C12thweek" : {
+        FilteredData = FilteredData.filter(data => data.twelvethWeek == 1 && this.ProjectStatusFilter.value.indexOf(data.ProjectStatus) > -1).concat(FilteredData.filter(data => data.twelvethWeek == 0 && this.ProjectStatusFilter.value.indexOf(data.ProjectStatus) > -1 && twelvethWeek >= data.MilestoneDueDateByLevel && twelvethWeek <= data.Proposed_End_Date__Formula_ && data.Project_Level == "Global" && data.GManager == Manager)).concat(FilteredData.filter(data => data.twelvethWeek == 0 && this.ProjectStatusFilter.value.indexOf(data.ProjectStatus) > -1 && twelvethWeek >= data.MilestoneDueDateByLevel && twelvethWeek <= data.Proposed_End_Date__Formula_ && data.Project_Level == "Regional" && data.RManager == Manager))
+      }
+      break;
+      case "c13thweek" : {
+        FilteredData = FilteredData.filter(data => data.C13thweek == 1 && this.ProjectStatusFilter.value.indexOf(data.ProjectStatus) > -1).concat(FilteredData.filter(data => data.C13thweek == 0 && this.ProjectStatusFilter.value.indexOf(data.ProjectStatus) > -1 && C13thweek >= data.MilestoneDueDateByLevel && C13thweek <= data.Proposed_End_Date__Formula_ && data.Project_Level == "Global" && data.GManager == Manager)).concat(FilteredData.filter(data => data.C13thweek == 0 && this.ProjectStatusFilter.value.indexOf(data.ProjectStatus) > -1 && C13thweek >= data.MilestoneDueDateByLevel && C13thweek <= data.Proposed_End_Date__Formula_ && data.Project_Level == "Regional" && data.RManager == Manager))
+      }
+      break;
+      case "c14thweek" : {
+        FilteredData = FilteredData.filter(data => data.C14thWeek == 1 && this.ProjectStatusFilter.value.indexOf(data.ProjectStatus) > -1).concat(FilteredData.filter(data => data.C14thWeek == 0 && this.ProjectStatusFilter.value.indexOf(data.ProjectStatus) > -1 && C14thWeek >= data.MilestoneDueDateByLevel && C14thWeek <= data.Proposed_End_Date__Formula_ && data.Project_Level == "Global" && data.GManager == Manager)).concat(FilteredData.filter(data => data.C14thWeek == 0 && this.ProjectStatusFilter.value.indexOf(data.ProjectStatus) > -1 && C14thWeek >= data.MilestoneDueDateByLevel && C14thWeek <= data.Proposed_End_Date__Formula_ && data.Project_Level == "Regional" && data.RManager == Manager))
+      }
+      break;
+      case "c15thweek" : {
+        FilteredData = FilteredData.filter(data => data.C15thWeek == 1 && this.ProjectStatusFilter.value.indexOf(data.ProjectStatus) > -1).concat(FilteredData.filter(data => data.C15thWeek == 0 && this.ProjectStatusFilter.value.indexOf(data.ProjectStatus) > -1 && C15thWeek >= data.MilestoneDueDateByLevel && C15thWeek <= data.Proposed_End_Date__Formula_ && data.Project_Level == "Global" && data.GManager == Manager)).concat(FilteredData.filter(data => data.C15thWeek == 0 && this.ProjectStatusFilter.value.indexOf(data.ProjectStatus) > -1 && C15thWeek >= data.MilestoneDueDateByLevel && C15thWeek <= data.Proposed_End_Date__Formula_ && data.Project_Level == "Regional" && data.RManager == Manager))
+      }
+      break;
+      case "c16thweek" : {
+        FilteredData = FilteredData.filter(data => data.C16thWeek == 1 && this.ProjectStatusFilter.value.indexOf(data.ProjectStatus) > -1).concat(FilteredData.filter(data => data.C16thWeek == 0 && this.ProjectStatusFilter.value.indexOf(data.ProjectStatus) > -1 && C16thWeek >= data.MilestoneDueDateByLevel && C16thWeek <= data.Proposed_End_Date__Formula_ && data.Project_Level == "Global" && data.GManager == Manager)).concat(FilteredData.filter(data => data.C16thWeek == 0 && this.ProjectStatusFilter.value.indexOf(data.ProjectStatus) > -1 && C16thWeek >= data.MilestoneDueDateByLevel && C16thWeek <= data.Proposed_End_Date__Formula_ && data.Project_Level == "Regional" && data.RManager == Manager))
+      }
+      break;
+      case "c17thweek" : {
+        FilteredData = FilteredData.filter(data => data.C17thWeek == 1 && this.ProjectStatusFilter.value.indexOf(data.ProjectStatus) > -1).concat(FilteredData.filter(data => data.C17thWeek == 0 && this.ProjectStatusFilter.value.indexOf(data.ProjectStatus) > -1 && C17thWeek >= data.MilestoneDueDateByLevel && C17thWeek <= data.Proposed_End_Date__Formula_ && data.Project_Level == "Global" && data.GManager == Manager)).concat(FilteredData.filter(data => data.C17thWeek == 0 && this.ProjectStatusFilter.value.indexOf(data.ProjectStatus) > -1 && C17thWeek >= data.MilestoneDueDateByLevel && C17thWeek <= data.Proposed_End_Date__Formula_ && data.Project_Level == "Regional" && data.RManager == Manager))
+      }
+      break;
+      case "c18thweek" : {
+        FilteredData = FilteredData.filter(data => data.C18thWeek == 1 && this.ProjectStatusFilter.value.indexOf(data.ProjectStatus) > -1).concat(FilteredData.filter(data => data.C18thWeek == 0 && this.ProjectStatusFilter.value.indexOf(data.ProjectStatus) > -1 && C18thWeek >= data.MilestoneDueDateByLevel && C18thWeek <= data.Proposed_End_Date__Formula_ && data.Project_Level == "Global" && data.GManager == Manager)).concat(FilteredData.filter(data => data.C18thWeek == 0 && this.ProjectStatusFilter.value.indexOf(data.ProjectStatus) > -1 && C18thWeek >= data.MilestoneDueDateByLevel && C18thWeek <= data.Proposed_End_Date__Formula_ && data.Project_Level == "Regional" && data.RManager == Manager))
+      }
+      break;
+      case "c19thweek" : {
+        FilteredData = FilteredData.filter(data => data.C19thWeek == 1 && this.ProjectStatusFilter.value.indexOf(data.ProjectStatus) > -1).concat(FilteredData.filter(data => data.C19thWeek == 0 && this.ProjectStatusFilter.value.indexOf(data.ProjectStatus) > -1 && C19thWeek >= data.MilestoneDueDateByLevel && C19thWeek <= data.Proposed_End_Date__Formula_ && data.Project_Level == "Global" && data.GManager == Manager)).concat(FilteredData.filter(data => data.C19thWeek == 0 && this.ProjectStatusFilter.value.indexOf(data.ProjectStatus) > -1 && C19thWeek >= data.MilestoneDueDateByLevel && C19thWeek <= data.Proposed_End_Date__Formula_ && data.Project_Level == "Regional" && data.RManager == Manager))
+      }
+      break;
+      case "c20thweek" : {
+        FilteredData = FilteredData.filter(data => data.C20thWeek == 1 && this.ProjectStatusFilter.value.indexOf(data.ProjectStatus) > -1).concat(FilteredData.filter(data => data.C20thWeek == 0 && this.ProjectStatusFilter.value.indexOf(data.ProjectStatus) > -1 && C20thWeek >= data.MilestoneDueDateByLevel && C20thWeek <= data.Proposed_End_Date__Formula_ && data.Project_Level == "Global" && data.GManager == Manager)).concat(FilteredData.filter(data => data.C20thWeek == 0 && this.ProjectStatusFilter.value.indexOf(data.ProjectStatus) > -1 && C20thWeek >= data.MilestoneDueDateByLevel && C20thWeek <= data.Proposed_End_Date__Formula_ && data.Project_Level == "Regional" && data.RManager == Manager))
+      }
+      break;
+      case "c21thweek" : {
+        FilteredData = FilteredData.filter(data => data.C21stWeek == 1 && this.ProjectStatusFilter.value.indexOf(data.ProjectStatus) > -1).concat(FilteredData.filter(data => data.C21stWeek == 0 && this.ProjectStatusFilter.value.indexOf(data.ProjectStatus) > -1 && C21stWeek >= data.MilestoneDueDateByLevel && C21stWeek <= data.Proposed_End_Date__Formula_ && data.Project_Level == "Global" && data.GManager == Manager)).concat(FilteredData.filter(data => data.C21stWeek == 0 && this.ProjectStatusFilter.value.indexOf(data.ProjectStatus) > -1 && C21stWeek >= data.MilestoneDueDateByLevel && C21stWeek <= data.Proposed_End_Date__Formula_ && data.Project_Level == "Regional" && data.RManager == Manager))
+      }
+      break;
+      case "c22thweek" : {
+        FilteredData = FilteredData.filter(data => data.C22ndWeek == 1 && this.ProjectStatusFilter.value.indexOf(data.ProjectStatus) > -1).concat(FilteredData.filter(data => data.C22ndWeek == 0 && this.ProjectStatusFilter.value.indexOf(data.ProjectStatus) > -1 && C22ndWeek >= data.MilestoneDueDateByLevel && C22ndWeek <= data.Proposed_End_Date__Formula_ && data.Project_Level == "Global" && data.GManager == Manager)).concat(FilteredData.filter(data => data.C22ndWeek == 0 && this.ProjectStatusFilter.value.indexOf(data.ProjectStatus) > -1 && C22ndWeek >= data.MilestoneDueDateByLevel && C22ndWeek <= data.Proposed_End_Date__Formula_ && data.Project_Level == "Regional" && data.RManager == Manager))
+      }
+      break;
+      case "c23thweek" : {
+        FilteredData = FilteredData.filter(data => data.C23rdWeek == 1 && this.ProjectStatusFilter.value.indexOf(data.ProjectStatus) > -1).concat(FilteredData.filter(data => data.C23rdWeek == 0 && this.ProjectStatusFilter.value.indexOf(data.ProjectStatus) > -1 && C23rdWeek >= data.MilestoneDueDateByLevel && C23rdWeek <= data.Proposed_End_Date__Formula_ && data.Project_Level == "Global" && data.GManager == Manager)).concat(FilteredData.filter(data => data.C23rdWeek == 0 && this.ProjectStatusFilter.value.indexOf(data.ProjectStatus) > -1 && C23rdWeek >= data.MilestoneDueDateByLevel && C23rdWeek <= data.Proposed_End_Date__Formula_ && data.Project_Level == "Regional" && data.RManager == Manager))
+      }
+      break;
+      case "c24thweek" : {
+        FilteredData = FilteredData.filter(data => data.C24thWeek == 1 && this.ProjectStatusFilter.value.indexOf(data.ProjectStatus) > -1).concat(FilteredData.filter(data => data.C24thWeek == 0 && this.ProjectStatusFilter.value.indexOf(data.ProjectStatus) > -1 && C24thWeek >= data.MilestoneDueDateByLevel && C24thWeek <= data.Proposed_End_Date__Formula_ && data.Project_Level == "Global" && data.GManager == Manager)).concat(FilteredData.filter(data => data.C24thWeek == 0 && this.ProjectStatusFilter.value.indexOf(data.ProjectStatus) > -1 && C24thWeek >= data.MilestoneDueDateByLevel && C24thWeek <= data.Proposed_End_Date__Formula_ && data.Project_Level == "Regional" && data.RManager == Manager))
+      }
+      break;
+    }
+    console.log(FilteredData)
+    if(FilteredData.length > 0){
+      let data: ResourceDialogData ={
+        Dailog_ID : Effort,
+        Dailog_Comment : Manager,
+        Data : FilteredData,
+        Role : Role
+      }
+      const dialogRef = this.dialog.open(ResourceClientDetails, {
+        // width: '400px',
+        data : data
+      });
+      dialogRef.afterClosed().subscribe(result => {
+      });
+    }
+  }
   P_statuslists : any;
   DisableButton : boolean = true;
   applyFilter(){
@@ -234,8 +438,8 @@ export class ResourceUtilizationComponent implements OnInit {
     this.DisableButton = true;
   }
   GetResUtil(){
-    this.dashboard.ShowSpinnerHandler(true);
-    this.service.ResourceUtilization(this.SelectedStatus).subscribe(data =>{
+    this.isLoading = true;
+    this.service.ResourceUtilizationNew(this.SelectedStatus).subscribe(data =>{
       if(data.code == 200){
         this.ResUtilData = data.Data;
         this.Global_Count = this.ResUtilData.filter(item => item.ProjectLevel === 'Global' && item.Level != 'Digital').length;
@@ -343,10 +547,10 @@ export class ResourceUtilizationComponent implements OnInit {
         this.dataSource = new MatTableDataSource(this.ResUtilData);
         this.onFilterValueChange();
         this.FilteredCount = this.dataSource.filteredData.length;
-        this.dashboard.ShowSpinnerHandler(false);
+        this.GetTracker();
       }else{
         this.dataSource = null;
-        this.dashboard.ShowSpinnerHandler(false);
+        this.isLoading = false;
       }
     });
   }
@@ -621,5 +825,54 @@ export class ResourceComment {
         }
       })
     }
+  }
+}
+@Component({
+  selector: 'app-resource-client-details',
+  templateUrl: './resource-client-details.component.html',
+  styleUrls: ['./resource-client-details.component.css'],
+  encapsulation: ViewEncapsulation.None
+})
+export class ResourceClientDetails {
+  constructor(
+    public dialogRef: MatDialogRef<ResourceClientDetails>,
+    @Inject(MAT_DIALOG_DATA) public data: ResourceDialogData) {
+      this.screenWidth = window.innerWidth;
+      this.screenHeight = window.innerHeight;
+      window.onresize = () => {
+        // set screenWidth on screen size change
+        this.screenWidth = window.innerWidth;
+        this.screenHeight = window.innerHeight;
+      };
+      this.TrackerData = data.Data;
+      this.Manager = data.Dailog_Comment;
+      this.TotalEffort = data.Dailog_ID;
+      if(data.Role == "Digital"){
+        this.Digital = true;
+      }else{
+        this.Digital = false;
+      }
+    }
+    screenWidth
+    screenHeight
+  TrackerData : Data[];
+  TotalEffort : number;
+  Manager : string;
+  Digital : Boolean = false;
+  // OnCloseClick(): void {
+  //   this.dialogRef.close({SelectionType : 'Cancel'});
+  // }
+  ngOnInit(){
+    for(let i = 0;this.TrackerData.length;i++){
+
+      var count;
+      if(this.Digital == true){
+        count = (this.TrackerData[i].GlobalCISOBTLead == this.Manager ? 1 : 0) + (this.TrackerData[i].RegionalDigitalOBTLead == this.Manager ? 1 : 0) + (this.TrackerData[i].LocalDigitalOBTLead == this.Manager ? 1 : 0) + (this.TrackerData[i].GlobalDigitalPortraitLead == this.Manager ? 1 : 0)+ (this.TrackerData[i].RegionalDigitalPortraitLead == this.Manager ? 1 : 0)+ (this.TrackerData[i].GlobalDigitalHRFeedSpeciallist == this.Manager ? 1 : 0)
+      }else{
+        count = (this.TrackerData[i].GManager == this.Manager ? 1 : 0) + (this.TrackerData[i].RManager == this.Manager ? 1 : 0) + (this.TrackerData[i].LManager == this.Manager ? 1 : 0)
+      }
+      this.TrackerData[i].CalculatedEffort = this.TrackerData[i].ProjectEffort +" * "+count+" = "+(this.TrackerData[i].ProjectEffort * count);
+    }
+    console.log(this.TrackerData)
   }
 }

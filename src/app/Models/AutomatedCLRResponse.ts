@@ -70,6 +70,8 @@ export class DataCLR {
     RevenueID: string;
     Client: string;
     DTID : number;
+    RecordHistory : Date;
+    RecordHistory_C : string;
     ComplexityScore : number;
     iMeet_Workspace_Title: string;
     Date_added_to_the_CLR : Date;

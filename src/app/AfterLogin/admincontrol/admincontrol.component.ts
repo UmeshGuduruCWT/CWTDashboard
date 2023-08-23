@@ -32,6 +32,8 @@ export interface ParsingData{
   DigitalReport : boolean;
   PerformanceAnalysis : boolean;
   JobType : string;
+  SteeringCommittee : boolean;
+  SteeringCommitteeEdits : boolean;
   // Prospect: boolean;
 }
 @Component({
@@ -46,7 +48,7 @@ export class AdmincontrolComponent implements OnInit {
   SemiAnnual;Year;
   screenHeight : number;ShowNotificationsTable:boolean = false;
   //displayedColumns : string[] = ['UID', 'UserName','IMPS','CTO','LessonsLearnt','StageGate','MarketReport','AutomatedCLR','CLREdits','CapacityTracker','ELTReport','CycleTime','C_Hierarchy','UserAccessStatus','ResourceUtilization','Prospect','InsertedOn','UpdatedOn','UpdatedBy'];
-  displayedColumns : string[] = ['UID', 'UserName','JobType','AutomatedCLR','CLREdits','MarketReport','MarketCommentsEdit','ELTReport','CycleTime','IMPS','CTO','LessonsLearnt','StageGate','CapacityTracker','ResourceUtilization','C_Hierarchy','C_HierarchyEdits','PerformanceAnalysis','NPS','NPSAdmin','NPSClientInfo','NPSEdit','DigitalReport','UserAccessStatus','AccountStatus','InsertedOn_s','UpdatedOn_s','UpdatedBy','actions'];
+  displayedColumns : string[] = ['UID', 'UserName','JobType','AutomatedCLR','CLREdits','MarketReport','MarketCommentsEdit','ELTReport','CycleTime','IMPS','CTO','LessonsLearnt','StageGate','CapacityTracker','ResourceUtilization','C_Hierarchy','C_HierarchyEdits','PerformanceAnalysis','NPS','NPSAdmin','NPSClientInfo','NPSEdit','DigitalReport','SteeringCommittee','SteeringCommitteeEdits','UserAccessStatus','AccountStatus','InsertedOn_s','UpdatedOn_s','UpdatedBy','actions'];
   displayedColumns_notifications : string[] = ['UID','Username','ReportName','RequestedOn','TicketStatuts','actions'];
   constructor(
     public service : DashboardServiceService,public dashboard : LivedashboardComponent,public dialog: MatDialog,public datepipe : DatePipe,) { 
@@ -187,6 +189,16 @@ export class AdmincontrolComponent implements OnInit {
           }else{
             data.Data[i].DigitalReport_icon ="cancel";
           }
+          if(data.Data[i].SteeringCommittee == true){
+            data.Data[i].SteeringCommittee_icon = "check_circle";
+          }else{
+            data.Data[i].SteeringCommittee_icon ="cancel";
+          }
+          if(data.Data[i].SteeringCommitteeEdits == true){
+            data.Data[i].SteeringCommitteeEdits_icon = "check_circle";
+          }else{
+            data.Data[i].SteeringCommitteeEdits_icon ="cancel";
+          }
         }
         this.dataSource = new MatTableDataSource(data.Data);
         // this.dataSource.paginator = this.paginator;
@@ -271,7 +283,7 @@ export class AdmincontrolComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
     this.FilteredCount = this.dataSource.filteredData.length;
   }
-  RowSelected(j,UID : string,UserName : string,IMPS : boolean,CTO : boolean,LessonsLearnt : boolean,StageGate : boolean,AutomatedCLR : boolean,CLREdits : boolean,MarketReport : boolean,MarketCommentsEdit : boolean,ELTReport : boolean,UserAccessStatus : string,AccountStatus : string,CycleTime : boolean,CapacityTracker :boolean,ResourceUtilization : boolean,C_Hierarchy : boolean,C_HierarchyEdits : boolean,NPS : boolean,NPSEdit : boolean,NPSClientInfo : boolean,NPSAdmin : boolean,DigitalReport : boolean,PerformanceAnalysis : boolean,JobType : string){
+  RowSelected(j,UID : string,UserName : string,IMPS : boolean,CTO : boolean,LessonsLearnt : boolean,StageGate : boolean,AutomatedCLR : boolean,CLREdits : boolean,MarketReport : boolean,MarketCommentsEdit : boolean,ELTReport : boolean,UserAccessStatus : string,AccountStatus : string,CycleTime : boolean,CapacityTracker :boolean,ResourceUtilization : boolean,C_Hierarchy : boolean,C_HierarchyEdits : boolean,NPS : boolean,NPSEdit : boolean,NPSClientInfo : boolean,NPSAdmin : boolean,DigitalReport : boolean,PerformanceAnalysis : boolean,JobType : string,SteeringCommittee : boolean,SteeringCommitteeEdits : boolean){
     let p_data : ParsingData = {
       UID : UID,
       UserName : UserName,
@@ -297,7 +309,9 @@ export class AdmincontrolComponent implements OnInit {
       NPSEdit : NPSEdit,
       DigitalReport : DigitalReport,
       PerformanceAnalysis : PerformanceAnalysis,
-      JobType : JobType
+      JobType : JobType,
+      SteeringCommittee : SteeringCommittee,
+      SteeringCommitteeEdits : SteeringCommitteeEdits
     }
     const dialogRef = this.dialog.open(EditUserAccess, {
       // width: '600px',
@@ -418,6 +432,8 @@ export class EditUserAccess {
   AccountStatus : string;
   screenWidth: number;
   screenHeight : number;
+  SteeringCommittee : boolean;
+  SteeringCommitteeEdits : boolean;
   constructor(
     public dialogRef: MatDialogRef<EditUserAccess>,
     public service : DashboardServiceService,
@@ -447,6 +463,8 @@ export class EditUserAccess {
       this.CapacityHierarchy = data.CapacityHierarchy;
       this.CapacityHierarchyEdits = data.CapacityHierarchyEdits;
       this.JobType = data.JobType;
+      this.SteeringCommittee = data.SteeringCommittee;
+      this.SteeringCommitteeEdits = data.SteeringCommitteeEdits;
       // set screenWidth on page load
       this.screenWidth = window.innerWidth;
       this.screenHeight = window.innerHeight;
@@ -474,7 +492,8 @@ export class EditUserAccess {
         this.CapacityTracker+"",this.ResourceUtilization+"",
         this.CapacityHierarchy+"",this.CapacityHierarchyEdits+"",
         this.NPS+"",this.NPSAdmin+"",this.NPSClientInfo+"",
-        this.NPSEdit+"",this.DigitalReport+"",this.PerformanceAnalysis+"").subscribe(data =>{
+        this.NPSEdit+"",this.SteeringCommittee+"",this.SteeringCommitteeEdits+"",
+        this.DigitalReport+"",this.PerformanceAnalysis+"").subscribe(data =>{
           if(data.code == 200){
             alert("Updated Succesfully");
             this.dialogRef.close();

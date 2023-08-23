@@ -1,0 +1,42 @@
+.showlessText{
+    /* text-overflow : clip; */
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 140px;
+    cursor: pointer;
+    padding-top: 3px;
+    margin: 0px;
+    white-space: nowrap;
+}
+table {
+    width: 100%;
+    border-collapse: separate;
+}
+.example-container {
+    /* max-height: 500px; */
+    overflow: auto; 
+    width: 100%;
+    margin-top: 15px;
+    margin-bottom: 20px;
+  }
+  .mat-cell,.mat-header-cell {
+    min-width: 100px;
+    max-width: 250px;
+    /* word-wrap: break-word !important; */
+    text-align:  center;
+    border-right: 1px solid rgb(196, 196, 196);
+    padding-left: 10px;
+    padding-right: 10px;
+    white-space: nowrap;
+  }
+  .mat-cell{
+    font-size: 13px;
+    text-align: center;
+  }
+  ::ng-deep .mat-sort-header-container {
+    display:flex;
+    justify-content:center;
+  }
+  ::ng-deep .mat-sort-header-arrow {
+    color: #fff;
+  }

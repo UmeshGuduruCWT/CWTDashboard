@@ -10,10 +10,10 @@
             </div>
             <!-- <label style="color: #FEFEFF;margin-top : 8px;margin-left:15px;font-family: Montserrat, sans-serif;font-size: 20px"><strong>{{ReportSelected}}</strong>&nbsp;<label style="font-size: 12px;margin-top: 10px;color:#ff0000;font-weight: bold;">{{LastUpdatedText}}</label></label>
             <label style="width: 100%;text-align: center;font-weight: bold;color: #ff0000;margin-top : 8px;margin-right:15px;font-family: Montserrat, sans-serif;font-size: 16px;">{{Time}}</label> -->
-            <div style="width: 100%;">
+            <!-- <div style="width: 100%;">
                 <div style="width: 100%;text-align: center;font-weight: bold;color: white;font-family: Montserrat, sans-serif;margin-top: -15px;font-size: 12px;height: 10px;">Session Logs Off In</div>
                 <div style="width: 100%;text-align: center;font-weight: bold;color: #ff0000;height: 20px;font-family: Montserrat, sans-serif;margin-top: 10px;font-size: 18px;">{{Time}}</div>
-            </div>
+            </div> -->
             <span class="spacer"></span>
             <!-- <mat-form-field appearance="outline" class="my-form-field col-md-3" style="margin-top: 2px;position: relative;">
                 <div *ngIf="Search_resultsData" class="Search_results">
@@ -117,6 +117,7 @@
                         <!-- <mat-list-item (click)= "[sidenav.close(), SelectedReport(12)]" routerLinkActive="active-list-item" [routerLink]="['Prospect']">Prospect</mat-list-item> -->
                     </mat-nav-list>
                 </mat-expansion-panel>
+                <mat-list-item *ngIf="ShowSteeringCommittee" (click)= "[sidenav.close(),SelectedReport(21)]" routerLinkActive="active-list-item" [routerLink]="['SteeringCommittee']">Steering Committee Update</mat-list-item>
                 <mat-expansion-panel *ngIf="ShowNpsReports"  class="mat-elevation-z0" [ngStyle]="{'background-color': npshidden == true ?  '#D5DBDB' : '#EC7063'}" #npsdara (opened)="npsdara.expanded = true" (closed)="npsdara.expanded = false">
                     <mat-expansion-panel-header style="padding: 0px 15px 0px 15px;">
                         <mat-panel-title style="font-size: 15px;">

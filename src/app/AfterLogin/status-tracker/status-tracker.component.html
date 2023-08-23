@@ -1,0 +1,81 @@
+<div class="row" style="margin: 0px;padding: 0px;position: relative;">
+    <div class="row col-md-12">
+        <div class="col-md-12" style="margin-top: 25px;text-align: center;">
+            <label style="margin: 8px 0px 0px 15px;font-size: 16px;font-weight: bold;font-family: Arial, Helvetica, sans-serif;">Filtered Count  :&nbsp;&nbsp;</label>
+            <label style="margin: 8px 25px 0px 0px;font-size: 16px;font-weight: bold;font-family: Arial, Helvetica, sans-serif;">{{FilteredCount}}</label>
+            <mat-form-field style="width: 60%;margin-left: 10px;">
+                <mat-label style="padding-left: 5px;font-weight: bold;">Search</mat-label>
+                <input matInput (keyup)="applyFilter($event)" #input>
+                <mat-icon matSuffix>search</mat-icon>
+            </mat-form-field>
+            <!-- <button mat-raised-button style="height: 33px;background-color: #F16950;margin-left: 30px;color: white;" (click)="Export()">Export
+                <mat-icon style="font-size: 18px;color: white;">save_alt</mat-icon>
+            </button> -->
+        </div>
+        <div class="col-md-12">
+            <div class="example-container" [ngStyle]="{'height' : (screenHeight-185)+'px'}" style="margin-left: 15px;border: 2px solid black;">
+                <table mat-table [dataSource]="dataSource" #GMSort="matSort" matSort>
+                    <ng-container matColumnDef="Client">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="padding-left: 10px;background-color:  #34495E;color: white;">Client</th>
+                        <td mat-cell *matCellDef="let element" style="padding-left: 10px;"> {{element.Client}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="RevenueID">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="max-width: 100px;width: 100px;background-color:  #34495E;color: white;">Revenue ID</th>
+                        <td mat-cell *matCellDef="let element"> {{element.RevenueID}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="Country">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #34495E;color: white;">Country</th>
+                        <td mat-cell *matCellDef="let element"> {{element.Country}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="Region">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #34495E;color: white;"> Region</th>
+                        <td mat-cell *matCellDef="let element"> {{element.Region}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="NewValue">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #34495E;color: white;">Current Value</th>
+                        <td mat-cell *matCellDef="let element" > <label (click)="ShowComment(element.Client,element.RevenueID,element.Country)" class="showlessText"> {{element.NewValue}}</label></td>
+                    </ng-container>
+                    <ng-container matColumnDef="OldValue">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #34495E;color: white;">Old Value</th>
+                        <td mat-cell *matCellDef="let element" >{{element.OldValue}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="UpdatedDate">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="background-color:  #34495E;color: white;">Changed Date</th>
+                        <td mat-cell *matCellDef="let element" >{{element.UpdatedDate_text}}</td>
+                    </ng-container>
+                    <ng-container  matColumnDef="loader" sticky>
+                        <!-- [ngStyle]="{'height' : isLoading == true ? (screenHeight-365)+'px' : '0px'}" -->
+                        <th mat-header-cell *matHeaderCellDef style="text-align: center;width: 100%;border-right: none;border-bottom: none;padding-left: 0px;padding-right: 0px;" colspan="7">
+                            <div *ngIf="isLoading" style="display: flex; justify-content: center;align-items: center;" [ngStyle]="{'height' : (screenHeight-365)+'px','width' : (screenWidth-50)+'px'}">
+                                <div class="sk-circle">
+                                    <a style="width: 100%">
+                                        <img [src]="imageUrl" style="height: 50px;margin: 85px 0px 0px 0px;">
+                                    </a>
+                                    <div class="sk-circle1 sk-child"></div>
+                                    <div class="sk-circle2 sk-child"></div>
+                                    <div class="sk-circle3 sk-child"></div>
+                                    <div class="sk-circle4 sk-child"></div>
+                                    <div class="sk-circle5 sk-child"></div>
+                                    <div class="sk-circle6 sk-child"></div>
+                                    <div class="sk-circle7 sk-child"></div>
+                                    <div class="sk-circle8 sk-child"></div>
+                                    <div class="sk-circle9 sk-child"></div>
+                                    <div class="sk-circle10 sk-child"></div>
+                                    <div class="sk-circle11 sk-child"></div>
+                                    <div class="sk-circle12 sk-child"></div>
+                                </div>
+                                <!-- <mat-progress-spinner
+                                color="primary"
+                                mode="indeterminate">
+                                </mat-progress-spinner> -->
+                            </div>
+                        </th>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky : true;" ></tr>
+                    <tr mat-header-row *matHeaderRowDef="['loader']; sticky: true" style="padding-top: 0px;margin-top: 0px;" [ngStyle]="{'height' : isLoading == true ? (screenHeight-365)+'px' : '0px'}"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;" style="height: 20px;max-height: 20px;"></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

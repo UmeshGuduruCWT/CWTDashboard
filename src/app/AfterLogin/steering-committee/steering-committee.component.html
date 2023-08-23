@@ -2,16 +2,16 @@
 <div class="row" style="margin: 0px;padding: 0px;">
     <div class="row col-md-12">
         <div class="col-md-12">
-            <button mat-raised-button (click)="AddNewSteeringCommittee()" style="background-color: #F16950;color: white;margin : 20px 0px 0px 15px;" matTooltip="Data issues">Add New</button>
+            <a [ngStyle]="{'display' : displayeditButton == true ? 'inline' : 'none'}"><button mat-raised-button (click)="AddNewSteeringCommittee()" style="background-color: #F16950;color: white;margin : 20px 0px 0px 15px;" matTooltip="Data issues">Add New</button></a>
             <div *ngIf="ShowForm" style="margin: 20px 0px 0px 15px;">
                 <app-add-update-steering-committee [SteeringCommitteeSelectedData]="SteeringCommitteeSelectedData" (SendOutput)="RecievedOutput($event)"></app-add-update-steering-committee>
             </div>
             <!-- <div *ngIf="ShowDataView">
                 <app-steering-committee-record-view [SteeringCommitteeRecordView]="SteeringCommitteeRecordView"></app-steering-committee-record-view>
             </div> -->
-            <div class="example-container" [ngStyle]="{'height' : (screenHeight-190)+'px'}" style="border: 2px solid black;margin : 20px 0px 0px 15px;">
-                <table mat-table [dataSource]="sc_datasource" matSort multiTemplateDataRows [matSortActive]="matSortActiveColumn" matSortDirection="asc">
-                    <!-- [matSortActive]="matSortActiveColumn" matSortDirection="desc" -->
+            <div class="example-container" [ngStyle]="{'height' : displayeditButton == true ? (screenHeight-190)+'px' : (screenHeight-115)+'px'}" style="border: 2px solid black;margin : 20px 0px 0px 15px;">
+                <table mat-table [dataSource]="sc_datasource" matSort multiTemplateDataRows [matSortActive]="matSortActiveColumn" matSortDirection="desc">
+                    <!-- [matSortActive]="matSortActiveColumn" matSortDirection="asc" -->
                     <ng-container matColumnDef="RecordStatus">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="border-left: none;border-bottom: 2px solid black;width : 300px;text-align: center;background-color:#34495E;color: white;"> Record Status </th>
                         <td mat-cell *matCellDef="let element" style="width : 300px;border-left: none"> {{element.RecordStatus}} </td>
@@ -65,8 +65,8 @@
                         <td mat-cell *matCellDef="let element" style="width : 350px;" ><label (click)="ShowComment(element.ClientName,element.ClientType,element.ScheduledKeyDeliverables)" class="showlessText"> {{element.ScheduledKeyDeliverables}}</label> </td>
                     </ng-container>
                     <ng-container matColumnDef="AdditionalNotes">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="border-bottom: 2px solid black;text-align: center;background-color:#34495E;color: white;"> Additional Notes </th>
-                        <td mat-cell *matCellDef="let element"  > {{element.AdditionalNotes}} </td>
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="border-bottom: 2px solid black;width : 350px;text-align: center;background-color:#34495E;color: white;"> Additional Notes </th>
+                        <td mat-cell *matCellDef="let element" style="width : 350px;" ><label (click)="ShowComment(element.ClientName,element.ClientType,element.AdditionalNotes)" class="showlessText"> {{element.AdditionalNotes}}</label> </td>
                     </ng-container>
                     <ng-container matColumnDef="InsertedBy">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="border-bottom: 2px solid black;text-align: center;background-color:#34495E;color: white;"> Created By </th>
@@ -161,6 +161,12 @@
                                         <th mat-header-cell *matHeaderCellDef class="textSizes" style="border-right: none;border-bottom: 2px solid black;text-align: center;background-color:#34495E;color: white;"> Last Updated Date </th>
                                         <td mat-cell *matCellDef="let element" style="padding-right: 10px;border-right: none;"> {{element.LastUpdatedDate_text}} </td>
                                     </ng-container>
+                                    <ng-container matColumnDef="actions" stickyEnd>
+                                        <th mat-header-cell *matHeaderCellDef class="textSizes" style="border-right: none;border-bottom: 2px solid black;text-align: center;background-color:#34495E;color: white;min-width: 60px;max-width: 60px"> Delete </th>
+                                        <td mat-cell *matCellDef="let element" style="border-right: none;text-align: center;min-width: 60px;max-width: 60px">
+                                            <mat-icon style="display: inline;margin-right: 8px;cursor: pointer;" aria-label="Delete" (click)="DeleteRiskgap(element.RGID)">delete</mat-icon>
+                                        </td>
+                                    </ng-container>
                                     <tr mat-header-row *matHeaderRowDef="RiskGapColumns; sticky: true" style="padding-top: 0px;margin-top: 0px;height: 35px"></tr>
                                     <tr mat-row *matRowDef="let row; columns: RiskGapColumns;" class="element-row"></tr>
                                 </table>
@@ -201,6 +207,12 @@
                                     <ng-container matColumnDef="LastUpdatedDate">
                                         <th mat-header-cell *matHeaderCellDef class="textSizes" style="border-right: none;border-bottom: 2px solid black;text-align: center;background-color:#34495E;color: white;"> Last Updated Date </th>
                                         <td mat-cell *matCellDef="let element" style="padding-right: 10px;border-right: none;"> {{element.LastUpdatedDate_text}} </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="actions" stickyEnd>
+                                        <th mat-header-cell *matHeaderCellDef class="textSizes" style="border-right: none;border-bottom: 2px solid black;text-align: center;background-color:#34495E;color: white;min-width: 60px;max-width: 60px"> Delete </th>
+                                        <td mat-cell *matCellDef="let element" style="border-right: none;text-align: center;min-width: 60px;max-width: 60px">
+                                            <mat-icon style="display: inline;cursor: pointer;" aria-label="Delete" (click)="DeleteWaves(element.WaveID)">delete</mat-icon>
+                                        </td>
                                     </ng-container>
                                     <tr mat-header-row *matHeaderRowDef="wavescolumns; sticky: true" style="padding-top: 0px;margin-top: 0px;height: 35px"></tr>
                                     <tr mat-row *matRowDef="let row; columns: wavescolumns;" class="element-row"></tr>

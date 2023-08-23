@@ -79,7 +79,8 @@
             <div class="col-md-3">
                 <mat-form-field style="width: 100%;">
                     <mat-label>Resource Requested Date</mat-label>
-                    <input matInput [matDatepicker]="Resource_Requested_Date" [min]="todayDate" [(ngModel)]="dateResourceRequested">
+                    <input matInput [matDatepicker]="Resource_Requested_Date" [(ngModel)]="dateResourceRequested">
+                    <!-- [min]="todayDate" -->
                     <mat-datepicker-toggle matSuffix [for]="Resource_Requested_Date"></mat-datepicker-toggle>
                     <mat-datepicker #Resource_Requested_Date color="primary"></mat-datepicker>
                 </mat-form-field>
@@ -115,7 +116,8 @@
             <div class="col-md-3">
                 <mat-form-field style="width: 100%;">
                     <mat-label>Assignment date</mat-label>
-                    <input matInput [matDatepicker]="Assignment_date" [min]="todayDate" [(ngModel)]="dateAssignment">
+                    <input matInput [matDatepicker]="Assignment_date" [(ngModel)]="dateAssignment">
+                    <!-- [min]="todayDate" -->
                     <mat-datepicker-toggle matSuffix [for]="Assignment_date"></mat-datepicker-toggle>
                     <mat-datepicker #Assignment_date color="primary"></mat-datepicker>
                 </mat-form-field>

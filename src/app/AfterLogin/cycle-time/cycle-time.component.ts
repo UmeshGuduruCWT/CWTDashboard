@@ -43,7 +43,7 @@ export class CycleTimeComponent implements OnInit {
   c_SelectedYears : any;c_SelectedMonths : any;c_SelectedLevels : any;c_SelectedMilestonestatus : any;c_SelectedRegions : any;c_SelectedImplementation : any;
   displayedColumns: string[] = ['CycleTimeCategory', 'January_A','February_A','March_A','April_A','May_A','June_A','July_A','August_A','September_A','October_A','November_A','December_A','Total_A','Target_A',];//'H_One_A','TargetH1','H_Two_A','TargetCycleTime'//,'Total_A'
   // 'TargetH1',
-  displayedColumns_data: string[] = ['Client', 'RevenueID','Workspace_Title','MilestoneTitle','ImplementationType','Region','Country','ProjectStatus','ProjectLevel','GoLive','ProjectStart','CycleTime','CycleTimeCategories','CycleTimeDelayCode','GoLiveYear','GoLiveMonth'];
+  displayedColumns_data: string[] = ['Client', 'RevenueID','Workspace_Title','MilestoneTitle','ImplementationType','Region','Country','ProjectStatus','ProjectLevel','GoLive','ProjectStart','CycleTime','CycleTimeCategories','CycleTimeDelayCode','EltClientDelayDescription','GoLiveYear','GoLiveMonth'];
   constructor(public datepipe : DatePipe,public service : DashboardServiceService,public dialog: MatDialog,
     public dashboard : LivedashboardComponent,private excelService:ExcelService) {
     //set screenWidth on page load
@@ -805,7 +805,7 @@ export class CycleTimeComponent implements OnInit {
       this.m_loader = false;
       this.dataSource = null;
       this.dataSource = this.CycleTimeData;
-      console.log(this.dataSource);
+      // console.log(this.dataSource);
     })
   }
   CycleTimeDataSearch;
@@ -840,6 +840,7 @@ export class CycleTimeComponent implements OnInit {
             'ProjectStart_ForCycleTime' : o.ProjectStart_ForCycleTime,
             'CycleTime' : o.CycleTime,
             'CycleTimeCategories' : o.CycleTimeCategories,
+            'EltClientDelayDescription' : o.EltClientDelayDescription,
             'GoLiveYear' : o.GoLiveYear,
             'GoLiveMonth' : o.GoLiveMonth,
             'CycleTimeDelayCode' : o.CycleTimeDelayCode

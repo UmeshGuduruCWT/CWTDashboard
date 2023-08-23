@@ -261,6 +261,10 @@
                                 <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="text-align: center;background-color:  #34495E;color: white"> Cycle Time Delay Code </th>
                                 <td mat-cell *matCellDef="let element"><label (click)="ShowComment(element.Client,element.RevenueID,element.CycleTimeDelayCode)" class="showlessText"> {{element.CycleTimeDelayCode}}</label> </td>
                             </ng-container>
+                            <ng-container matColumnDef="EltClientDelayDescription">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="text-align: center;background-color:  #34495E;color: white"> Elt Client Delay Description </th>
+                                <td mat-cell *matCellDef="let element"><label (click)="ShowComment(element.Client,element.RevenueID,element.CycleTimeDelayCode)" class="showlessText"> {{element.EltClientDelayDescription}}</label> </td>
+                            </ng-container>
                             <ng-container matColumnDef="GoLiveYear">
                                 <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="text-align: center;background-color:  #34495E;color: white"> Go Live Year</th>
                                 <td mat-cell *matCellDef="let element"> {{element.GoLiveYear}} </td>

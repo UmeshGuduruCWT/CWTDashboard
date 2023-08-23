@@ -47,6 +47,7 @@ import { SteeringCommitteeComponent } from './AfterLogin/steering-committee/stee
 import { AddUpdateSteeringCommitteeComponent } from './AfterLogin/add-update-steering-committee/add-update-steering-committee.component';
 import { KnowledgeBaseComponent } from './AfterLogin/knowledge-base/knowledge-base.component';
 import { SteeringCommitteeRecordViewComponent } from './AfterLogin/steering-committee-record-view/steering-committee-record-view.component';
+import { StatusTrackerComponent } from './AfterLogin/status-tracker/status-tracker.component';
 const routes: Routes = [
   { path:'',redirectTo: 'Dashboard', pathMatch: 'full'},
   { path:'Login',component:LoginComponent},
@@ -60,7 +61,7 @@ const routes: Routes = [
   },
   { path:'ForgotPassword',component:ForgotPasswordComponent},
   { path:'Dashboard/:UID',
-    component: DashboardComponent,
+    component: LivedashboardComponent,
     // canActivate : [DashboardactivateGuard],
     children : [
       {path:'',redirectTo: 'HomePage', pathMatch: 'full'},
@@ -104,6 +105,7 @@ const routes: Routes = [
       {path:'DigitalReport',component:DigitalReportComponent},
       {path:'RollingNps',component:RollingNPSComponent},
       {path:'KnowledgeBase',component:KnowledgeBaseComponent},
+      {path:'StatusTracker',component:StatusTrackerComponent},
   ]},
   // {path:'refresh',component : RefreshComponent}
 ];

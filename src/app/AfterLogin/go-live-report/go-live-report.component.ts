@@ -206,7 +206,7 @@ export class GoLiveReportComponent implements OnInit {
       }
       this.GolivedataSource = new MatTableDataSource(data.Data);
       this.GolivedataSource.sort = this.sort;
-      console.log(this.GolivedataSource)
+      // console.log(this.GolivedataSource)
     })
   }
   

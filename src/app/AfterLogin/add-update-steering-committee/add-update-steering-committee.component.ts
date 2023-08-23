@@ -1,6 +1,7 @@
 import { DatePipe } from '@angular/common';
-import { Component, Input, EventEmitter, OnInit, Output, SimpleChanges } from '@angular/core';
-import { IDropdownSettings } from 'ng-multiselect-dropdown';
+import { Component, Input, EventEmitter, OnInit, Output, SimpleChanges, Inject, ViewChild } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { IDropdownSettings, MultiSelectComponent } from 'ng-multiselect-dropdown';
 import { DashboardServiceService } from 'src/app/dashboard-service.service';
 import { RegionCountry, SC_Country, SC_Region } from 'src/app/Models/SteeringCommitte';
 import { SC_Data } from 'src/app/Models/SteeringCommittee';
@@ -41,7 +42,7 @@ export class AddUpdateSteeringCommitteeComponent implements OnInit {
 
   @Input() SteeringCommitteeSelectedData : SC_Data[];
   @Output() SendOutput = new EventEmitter<any>();
-  constructor(public service : DashboardServiceService,public datepipe : DatePipe) { }
+  constructor(public service : DashboardServiceService,public datepipe : DatePipe,public dialog: MatDialog,) { }
   Record_Status : string;
   ClientName : string;
   Client_Type : string;
@@ -69,21 +70,23 @@ export class AddUpdateSteeringCommitteeComponent implements OnInit {
   RegionCountry : RegionCountry[];
   SC_Region : SC_Region[];
   SC_Country : SC_Country[];
+  @ViewChild("RegionListForm", { static: true }) regionmultiSelectComponent: MultiSelectComponent;
+  @ViewChild("CountryListForm", { static: true }) countrymultiSelectComponent: MultiSelectComponent;
+  // @ViewChild("WaveRegionListForm", { static: true }) waveRegionmultiSelectComponent: MultiSelectComponent;
+  // @ViewChild("WaveCountryListForm", { static: true }) WavecountrymultiSelectComponent: MultiSelectComponent;
+  onCtrlBlur( ) {
+    // console.log("testing");
+    const ctrl = <MultiSelectComponent>(<unknown>this);
+    ctrl._settings.defaultOpen = true;
+  }
+  ngAfterViewInit( ) {
+    this.regionmultiSelectComponent.registerOnTouched(this.onCtrlBlur);
+    this.countrymultiSelectComponent.registerOnTouched(this.onCtrlBlur);
+    // this.waveRegionmultiSelectComponent.registerOnTouched(this.onCtrlBlur);
+    // this.WavecountrymultiSelectComponent.registerOnTouched(this.onCtrlBlur);
+  }
   ngOnInit(): void {
-    this.service.SteeringCommitteeFilters().subscribe(data =>{
-      this.OwnersList = data.Owner;
-      this.RegionCountry = data.RegionCountry;
-      this.SC_Region = [];
-      this.SC_Country = [];
-      data.RegionCountry.forEach(item =>{
-        if (this.SC_Region.find((x) => x.Region === item.Region) === undefined) {
-          this.SC_Region.push({Region : item.Region});
-        }
-        if (this.SC_Country.find((x) => x.Country === item.Country) === undefined) {
-          this.SC_Country.push({Country : item.Country});
-        }
-      })
-    })
+    this.getFilters();
     // if(this.SCID > 0){
     // }else{
     //   this.SCID = 1;
@@ -113,7 +116,7 @@ export class AddUpdateSteeringCommitteeComponent implements OnInit {
       noDataAvailablePlaceholderText: 'No Regions Found',
       closeDropDownOnSelection: false,
       showSelectedItemsAtTop: false,
-      defaultOpen: false,
+      defaultOpen: true,
     }
     this.CountrySettings = {
       singleSelection: false,
@@ -131,7 +134,7 @@ export class AddUpdateSteeringCommitteeComponent implements OnInit {
       noDataAvailablePlaceholderText: 'No Countries Found',
       closeDropDownOnSelection: false,
       showSelectedItemsAtTop: false,
-      defaultOpen: false,
+      defaultOpen: true,
     }
     this.dropdownSettings = {
       singleSelection: false,
@@ -152,11 +155,39 @@ export class AddUpdateSteeringCommitteeComponent implements OnInit {
       defaultOpen: false,
     }
   }
+  getFilters(){
+    this.service.SteeringCommitteeFilters().subscribe(data =>{
+      this.OwnersList = data.Owner;
+      this.RegionCountry = data.RegionCountry;
+      this.SC_Region = [];
+      this.SC_Country = [];
+      data.RegionCountry.forEach(item =>{
+        if (this.SC_Region.find((x) => x.Region === item.Region) === undefined) {
+          this.SC_Region.push({Region : item.Region});
+        }
+        if (this.SC_Country.find((x) => x.Country === item.Country) === undefined) {
+          this.SC_Country.push({Country : item.Country});
+        }
+      })
+    })
+  }
+  onCountryChange(){
+    this.CountrySettings.defaultOpen = true;
+  }
+  onCountryChangeAll(item :any){
+    this.CountrySettings.defaultOpen = true;
+  }
   onRegionChange(){
+  // this.onCtrlBlur();
+      // const ctrl = <MultiSelectComponent>(<unknown>);
+      // ctrl._settings.defaultOpen = true;
+    this.RegionSettings.defaultOpen = true;
     this.Changingvaluesincountry();
   }
   onRegionChangeAll(item :any){
+    // this.onCtrlBlur();
     this.Region = item;
+    this.RegionSettings.defaultOpen = true;
     this.Changingvaluesincountry();
   }
   onWaveRegionChange(index : any){
@@ -168,21 +199,31 @@ export class AddUpdateSteeringCommitteeComponent implements OnInit {
   }
   Changingvaluesincountry(){
     this.SC_Country = [];
-    this.Country = [];
+    // this.Country = [];
+    let Country = [];
     this.RegionCountry.forEach(item =>{
       if (this.Region.find((x) => x.Region === item.Region)) {
         this.SC_Country.push({Country : item.Country});
+        if(this.Country.find((x) => x.Country === item.Country)){
+          Country.push({Country : item.Country})
+        }
       }
     })
+    this.Country = Country;
   }
   ChangingWavevaluesincountry(index : any){
     this.waves[index].SC_Country = [];
-    this.waves[index].arr_Country = [];
+    // this.waves[index].arr_Country = [];
+    let Country = [];
     this.RegionCountry.forEach(item =>{
       if (this.waves[index].arr_Region.find((x) => x.Region === item.Region)) {
         this.waves[index].SC_Country.push({Country : item.Country});
+        if(this.waves[index].arr_Country.find((x) => x.Country === item.Country)){
+          Country.push({Country : item.Country})
+        }
       }
     })
+    this.waves[index].arr_Country = Country;
   }
   addnewriskgap(){
     let riskgap : RisksGap = {
@@ -265,10 +306,11 @@ export class AddUpdateSteeringCommitteeComponent implements OnInit {
       this.ErrorMessage += "Select atleast One Country" + '\n';
       this.Errors = this.Errors+1;
     }
-    if(this.waves == undefined || this.waves.length == 0){
-      this.ErrorMessage += "Please add atleast one Wave" + '\n';
-      this.Errors = this.Errors+1;
-    }else{
+    // if(this.waves == undefined || this.waves.length == 0){
+    //   this.ErrorMessage += "Please add atleast one Wave" + '\n';
+    //   this.Errors = this.Errors+1;
+    // }
+    if(this.waves.length > 0){
       this.waves.map((each : any)=>{
         if(each.Status == "" || each.Status == null || each.Status == undefined){
           this.ErrorMessage += "Status Should not be empty in all Waves" + '\n';
@@ -280,10 +322,11 @@ export class AddUpdateSteeringCommitteeComponent implements OnInit {
         }
       })
     }
-    if(this.RisksGap == undefined || this.RisksGap.length == 0){
-      this.ErrorMessage += "Please add atleast one Risk/Gap" + '\n';
-      this.Errors = this.Errors+1;
-    }else{
+    // if(this.RisksGap == undefined || this.RisksGap.length == 0){
+    //   this.ErrorMessage += "Please add atleast one Risk/Gap" + '\n';
+    //   this.Errors = this.Errors+1;
+    // }
+    if(this.RisksGap.length > 0){
       this.RisksGap.map((each : any)=>{
         if(each.Status == "" || each.Status == null || each.Status == undefined){
           this.ErrorMessage += "Status Should not be empty in all Risk/Gap" + '\n';
@@ -304,69 +347,74 @@ export class AddUpdateSteeringCommitteeComponent implements OnInit {
       this.SelectedRegions = this.Region.map((obj) => obj.Region).join(', ');
       this.SelectedCountries = this.Country.map((obj) => obj.Country).join(', ');
       if(this.ButtonName == "Update"){
-        console.log("Update Section")
-        this.service.SteeringCommitteeUpdate(this.SCID,this.Record_Status,this.ClientName,this.Client_Type,this.Project_Lead,this.Project_Status,this.Project_Trend,
-          this.TotalBusinessVolume,this.NewBusinessVolume,this.SelectedRegions,this.SelectedCountries,this.CurrentState,
-          this.CompletedKeyDeliverables,this.ScheduledKeyDeliverables,this.AdditionalNotes,localStorage.getItem("UID")).subscribe(data => {
-            console.log(data)
-            if(data.code == 200){
-              for(let i = 0;i< this.waves.length;i++){
-                if(this.waves[i].GoLive == null){
-                  this.waves[i].GoLiveDate = null
-                }else{
-                  this.waves[i].GoLiveDate = this.datepipe.transform(this.waves[i].GoLive, "MM-dd-yyyy")+"";
-                }
-                if(this.waves[i].arr_Region == undefined){
-                  this.waves[i].Region = "";
-                }else{
-                  if(this.waves[i].arr_Region.length > 0){
-                    this.waves[i].Region = this.waves[i].arr_Region.map((obj) => obj.Region).join(', ');
-                  }else{
-                    this.waves[i].Region = "";
-                  }
-                }
-                if(this.waves[i].arr_Country == undefined){
-                  this.waves[i].Country = "";
-                }else{
-                  if(this.waves[i].arr_Country.length > 0){
-                    this.waves[i].Country = this.waves[i].arr_Country.map((obj) => obj.Country).join(', ');
-                  }else{
-                    this.waves[i].Country = "";
-                  }
-                }
-                if(this.waves[i].WaveID == null){
-                  this.waves[i].SCID = this.SCID;
-                  this.service.WavesInsert(this.SCID,"Wave - "+(i+1),this.waves[i].Region,this.waves[i].Country,this.waves[i].Scope,this.waves[i].GoLiveDate,this.waves[i].Status,localStorage.getItem("UID")).subscribe(data => {
-                  });
-                }else{
-                  this.service.WavesUpdate(this.waves[i].WaveID,this.waves[i].SCID,"Wave - "+(i+1),this.waves[i].Region,this.waves[i].Country,this.waves[i].Scope,this.waves[i].GoLiveDate,this.waves[i].Status,localStorage.getItem("UID")).subscribe(data => {
-                  });
-                }
-              }
-              for(let i = 0;i< this.RisksGap.length;i++){
-                if(this.RisksGap[i].Due_Date == null){
-                  this.RisksGap[i].DueDate = null
-                }else{
-                  this.RisksGap[i].DueDate = this.datepipe.transform(this.RisksGap[i].Due_Date, "MM-dd-yyyy")+"";
-                }
-                this.RisksGap[i].Owner = this.RisksGap[i].Owners;
-                if(this.RisksGap[i].RGID == null){
-                  this.waves[i].SCID = this.SCID;
-                  this.service.RiskGapInsert(this.SCID,"Risk - "+(i+1),this.RisksGap[i].RisksGaps,this.RisksGap[i].MitigationPlan,this.RisksGap[i].SteeringCommitteeSupportNeed,this.RisksGap[i].DueDate,this.RisksGap[i].Owner,this.RisksGap[i].Status,localStorage.getItem("UID")).subscribe(data => {
-                  });
-                }else{
-                  this.service.RiskGapUpdate(this.RisksGap[i].RGID,this.RisksGap[i].SCID,"Risk - "+(i+1),this.RisksGap[i].RisksGaps,this.RisksGap[i].MitigationPlan,this.RisksGap[i].SteeringCommitteeSupportNeed,this.RisksGap[i].DueDate,this.RisksGap[i].Owner,this.RisksGap[i].Status,localStorage.getItem("UID")).subscribe(data => {
-                  });
-                }
-              }
-              alert("Steering Committee Updated Succesfully");
-              this.SendOutput.emit([{SelectionType : "Updated"}]);
-            }else{
-              console.log("Update Section failure")
-            }
-        })
+        console.log(this.waves)
+        console.log(this.RisksGap);
+        // this.service.SteeringCommitteeUpdate(this.SCID,this.Record_Status,this.ClientName,this.Client_Type,this.Project_Lead,this.Project_Status,this.Project_Trend,
+        //   this.TotalBusinessVolume,this.NewBusinessVolume,this.SelectedRegions,this.SelectedCountries,this.CurrentState,
+        //   this.CompletedKeyDeliverables,this.ScheduledKeyDeliverables,this.AdditionalNotes,localStorage.getItem("UID")).subscribe(data => {
+        //     if(data.code == 200){
+        //       if(this.waves.length > 0){
+        //         for(let i = 0;i< this.waves.length;i++){
+        //           if(this.waves[i].GoLive == null){
+        //             this.waves[i].GoLiveDate = null
+        //           }else{
+        //             this.waves[i].GoLiveDate = this.datepipe.transform(this.waves[i].GoLive, "MM-dd-yyyy")+"";
+        //           }
+        //           if(this.waves[i].arr_Region == undefined){
+        //             this.waves[i].Region = "";
+        //           }else{
+        //             if(this.waves[i].arr_Region.length > 0){
+        //               this.waves[i].Region = this.waves[i].arr_Region.map((obj) => obj.Region).join(', ');
+        //             }else{
+        //               this.waves[i].Region = "";
+        //             }
+        //           }
+        //           if(this.waves[i].arr_Country == undefined){
+        //             this.waves[i].Country = "";
+        //           }else{
+        //             if(this.waves[i].arr_Country.length > 0){
+        //               this.waves[i].Country = this.waves[i].arr_Country.map((obj) => obj.Country).join(', ');
+        //             }else{
+        //               this.waves[i].Country = "";
+        //             }
+        //           }
+        //           if(this.waves[i].WaveID == null){
+        //             this.waves[i].SCID = this.SCID;
+        //             this.service.WavesInsert(this.SCID,""+(i+1),this.waves[i].Region,this.waves[i].Country,this.waves[i].Scope,this.waves[i].GoLiveDate,this.waves[i].Status,localStorage.getItem("UID")).subscribe(data => {
+        //             });
+        //           }else{
+        //             this.service.WavesUpdate(this.waves[i].WaveID,this.waves[i].SCID,""+(i+1),this.waves[i].Region,this.waves[i].Country,this.waves[i].Scope,this.waves[i].GoLiveDate,this.waves[i].Status,localStorage.getItem("UID")).subscribe(data => {
+        //             });
+        //           }
+        //         }
+        //       }
+        //       if(this.RisksGap.length > 0){
+        //         for(let i = 0;i< this.RisksGap.length;i++){
+        //           if(this.RisksGap[i].Due_Date == null){
+        //             this.RisksGap[i].DueDate = null
+        //           }else{
+        //             this.RisksGap[i].DueDate = this.datepipe.transform(this.RisksGap[i].Due_Date, "MM-dd-yyyy")+"";
+        //           }
+        //           this.RisksGap[i].Owner = this.RisksGap[i].Owners;
+        //           if(this.RisksGap[i].RGID == null){
+        //             this.RisksGap[i].SCID = this.SCID;
+        //             this.service.RiskGapInsert(this.SCID,""+(i+1),this.RisksGap[i].RisksGaps,this.RisksGap[i].MitigationPlan,this.RisksGap[i].SteeringCommitteeSupportNeed,this.RisksGap[i].DueDate,this.RisksGap[i].Owner,this.RisksGap[i].Status,localStorage.getItem("UID")).subscribe(data => {
+        //               // console.log(data)
+        //             });
+        //           }else{
+        //             this.service.RiskGapUpdate(this.RisksGap[i].RGID,this.RisksGap[i].SCID,""+(i+1),this.RisksGap[i].RisksGaps,this.RisksGap[i].MitigationPlan,this.RisksGap[i].SteeringCommitteeSupportNeed,this.RisksGap[i].DueDate,this.RisksGap[i].Owner,this.RisksGap[i].Status,localStorage.getItem("UID")).subscribe(data => {
+        //               // console.log(data)
+        //             });
+        //           }
+        //         }
+        //       }
+        //       alert("Steering Committee Updated Succesfully");
+        //       this.SendOutput.emit([{SelectionType : "Updated"}]);
+        //     }else{
+        //       console.log("Update Section failure")
+        //     }
+        // })
       }else{
-        console.log("Save Section")
         this.service.SteeringCommitteeInsert(this.Record_Status,this.ClientName,this.Client_Type,this.Project_Lead,this.Project_Status,this.Project_Trend,
           this.TotalBusinessVolume,this.NewBusinessVolume,this.SelectedRegions,this.SelectedCountries,this.CurrentState,
           this.CompletedKeyDeliverables,this.ScheduledKeyDeliverables,this.AdditionalNotes,localStorage.getItem("UID")).subscribe(data => {
@@ -389,7 +437,7 @@ export class AddUpdateSteeringCommitteeComponent implements OnInit {
                     this.waves[i].Country = "";
                   }
                   this.waves[i].SCID = data.SCId;
-                  this.service.WavesInsert(this.waves[i].SCID,"Wave - "+(i+1),this.waves[i].Region,this.waves[i].Country,this.waves[i].Scope,this.waves[i].GoLiveDate,this.waves[i].Status,localStorage.getItem("UID")).subscribe(data => {
+                  this.service.WavesInsert(this.waves[i].SCID,""+(i+1),this.waves[i].Region,this.waves[i].Country,this.waves[i].Scope,this.waves[i].GoLiveDate,this.waves[i].Status,localStorage.getItem("UID")).subscribe(data => {
                   });
                 }
               }
@@ -402,7 +450,7 @@ export class AddUpdateSteeringCommitteeComponent implements OnInit {
                   }
                   this.RisksGap[i].Owner = this.RisksGap[i].Owners;
                   this.RisksGap[i].SCID = data.SCId;
-                  this.service.RiskGapInsert(this.RisksGap[i].SCID,"Risk - "+(i+1),this.RisksGap[i].RisksGaps,this.RisksGap[i].MitigationPlan,this.RisksGap[i].SteeringCommitteeSupportNeed,this.RisksGap[i].DueDate,this.RisksGap[i].Owner,this.RisksGap[i].Status,localStorage.getItem("UID")).subscribe(data => {
+                  this.service.RiskGapInsert(this.RisksGap[i].SCID,""+(i+1),this.RisksGap[i].RisksGaps,this.RisksGap[i].MitigationPlan,this.RisksGap[i].SteeringCommitteeSupportNeed,this.RisksGap[i].DueDate,this.RisksGap[i].Owner,this.RisksGap[i].Status,localStorage.getItem("UID")).subscribe(data => {
                   });
                 }
               }
@@ -459,44 +507,48 @@ export class AddUpdateSteeringCommitteeComponent implements OnInit {
     this.waves = this.SteeringCommitteeSelectedData[0].Waves;
     if(this.RisksGap == undefined){
       this.RisksGap = [];
+    }else{
+      this.RisksGap.forEach((i) => {
+        // if(i.Owner == null){
+        //   i.Owners = [];
+        // }else{
+          i.Owners = i.Owner;
+        // }
+        i.Due_Date = this.datepipe.transform(i.DueDate, "yyyy-MM-dd");
+      });
     }
     if(this.waves == undefined){
       this.waves = [];
-    }
-    this.RisksGap.forEach((i) => {
-      // if(i.Owner == null){
-      //   i.Owners = [];
-      // }else{
-        i.Owners = i.Owner;
-      // }
-      i.Due_Date = this.datepipe.transform(i.DueDate, "yyyy-MM-dd");
-    });
-    this.waves.forEach((i) => {
-      i.GoLive = this.datepipe.transform(i.GoLiveDate, "yyyy-MM-dd");
-      i.arr_Region = [];
-      if(i.Region == null){
+    }else{
+      this.waves.forEach((i) => {
+        i.GoLive = this.datepipe.transform(i.GoLiveDate, "yyyy-MM-dd");
         i.arr_Region = [];
-      }else{
-        var Regions = i.Region.split(', ');
-        Regions.map((each : any) => {
-          i.arr_Region.push({Region : each});
-        })
-      }
-      i.arr_Country = [];
-      if(i.Country == null){
-        i.arr_Country = [];
-      }else{
-        var Countries = i.Country.split(', ');
-        Countries.map((each : any) => {
-          i.arr_Country.push({Country : each});
-        })
-      }
-      this.RegionCountry.forEach(item =>{
-        if (i.arr_Region.find((x) => x.Region === item.Region)) {
-          i.SC_Country.push({Country : item.Country});
+        if(i.Region == null){
+          i.arr_Region = [];
+        }else{
+          var Regions = i.Region.split(', ');
+          Regions.map((each : any) => {
+            i.arr_Region.push({Region : each});
+          })
         }
-      })
-    });
+        // this.RegionCountry.forEach(item =>{
+        //   if (i.arr_Region.find((x) => x.Region === item.Region)) {
+        //     i.SC_Country.push({Country : item.Country});
+        //   }
+        // })
+        i.arr_Country = [];
+        if(i.Country == null){
+          i.arr_Country = [];
+        }else{
+          var Countries = i.Country.split(', ');
+          Countries.map((each : any) => {
+            i.arr_Country.push({Country : each});
+          })
+        }
+      });
+    }
+    console.log(this.RisksGap);
+    console.log(this.waves);
     // this.Record_Status = this.SteeringCommitteeSelectedData[0].RecordStatus;
     // this.Record_Status = this.SteeringCommitteeSelectedData[0].RecordStatus;
     // this.Record_Status = this.SteeringCommitteeSelectedData[0].RecordStatus;
@@ -504,36 +556,45 @@ export class AddUpdateSteeringCommitteeComponent implements OnInit {
     // this.Record_Status = this.SteeringCommitteeSelectedData[0].RecordStatus;
     // this.Record_Status = this.SteeringCommitteeSelectedData[0].RecordStatus;
   }
+  
   OppID;
   OppIDErrorMessage : string = "";
   OnApplyClick(){
     this.service.GetSCDataUsingOppID(this.OppID).subscribe(data => {
       if(data.code == 200){
-        this.OppIDErrorMessage = "";
-        this.ClientName = data.Data[0].op_Account_Name;
-        this.Project_Lead = data.Data[0].op_ProjectLead;
-        this.TotalBusinessVolume = data.Data[0].op_TotalVolume;
-        this.NewBusinessVolume = data.Data[0].op_RevenueVolume;
-        if(data.Data[0].op_CycleTimeCategory == "New Global Including Upsell" || data.Data[0].op_CycleTimeCategory == "New Local Including Upsell" || data.Data[0].op_CycleTimeCategory == "New Global/regional/local"){
-          this.Client_Type = "New Client Implementation";
-        }else if(data.Data[0].op_CycleTimeCategory == "Existing Service Config Change (catch all including Spins/Mergers)" || data.Data[0].op_CycleTimeCategory == "Existing Add/Change OBT"){
-          this.Client_Type = "Existing Client Implementation";
+        if(data.Data.length > 0){
+          this.OppIDErrorMessage = "";
+          this.ClientName = data.Data[0].op_Account_Name;
+          this.Record_Status = "Active";
+          this.Project_Lead = data.Data[0].op_ProjectLead;
+          this.TotalBusinessVolume = Math.round(data.Data[0].op_TotalVolume);
+          this.NewBusinessVolume = Math.round(data.Data[0].op_RevenueVolume);
+          if(data.Data[0].op_CycleTimeCategory == "New Global Including Upsell" || data.Data[0].op_CycleTimeCategory == "New Local Including Upsell" || data.Data[0].op_CycleTimeCategory == "New Global/regional/local"){
+            this.Client_Type = "New Client Implementation";
+          }else if(data.Data[0].op_CycleTimeCategory == "Existing Service Config Change (catch all including Spins/Mergers)" || data.Data[0].op_CycleTimeCategory == "Existing Add/Change OBT"){
+            this.Client_Type = "Existing Client Implementation";
+          }
+          if(data.Data[0].op_ELTProjectStatus == "On Track - Green"){
+            this.Project_Status = "Green";
+            this.Project_Trend = "Up";
+          }else if(data.Data[0].op_ELTProjectStatus == "Issue - Red"){
+            this.Project_Status = "Red";
+            this.Project_Trend = "Stable";
+          }else if(data.Data[0].op_ELTProjectStatus == "Risk - Amber"){
+            this.Project_Status = "Amber";
+            this.Project_Trend = "Down";
+          }
+          this.Region = [];
+          this.Country = [];
+          data.Data[0].op_Regions.forEach(item =>{
+            this.Region.push({Region : item.Region});
+          })
+          data.Data[0].op_Countries.forEach(item =>{
+            this.Country.push({Country : item.Country});
+          })
+        }else{
+          this.OppIDErrorMessage = "No data found using "+ this.OppID +" Opportunity ID";
         }
-        if(data.Data[0].op_ELTProjectStatus == "On Track - Green"){
-          this.Project_Status = "Green";
-        }else if(data.Data[0].op_ELTProjectStatus == "Issue - Red"){
-          this.Project_Status = "Red";
-        }else if(data.Data[0].op_ELTProjectStatus == "Risk - Amber"){
-          this.Project_Status = "Amber";
-        }
-        this.Region = [];
-        this.Country = [];
-        data.Data[0].op_Regions.forEach(item =>{
-          this.Region.push({Region : item.Region});
-        })
-        data.Data[0].op_Countries.forEach(item =>{
-          this.Country.push({Country : item.Country});
-        })
       }else {
         this.ClientName = "";
         this.Project_Lead = "";

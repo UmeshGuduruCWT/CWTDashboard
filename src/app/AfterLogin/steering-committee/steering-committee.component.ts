@@ -8,6 +8,8 @@ import { Data, Router } from '@angular/router';
 import { DashboardServiceService } from 'src/app/dashboard-service.service';
 import { SC_Data } from 'src/app/Models/SteeringCommittee';
 import { CLRCommentdailog } from '../automated-clr/automated-clr.component';
+import { LivedashboardComponent } from '../livedashboard/livedashboard.component';
+import { DashboardComponent } from '../dashboard/dashboard.component';
 
 @Component({
   selector: 'app-steering-committee',
@@ -23,7 +25,7 @@ import { CLRCommentdailog } from '../automated-clr/automated-clr.component';
 })
 export class SteeringCommitteeComponent implements OnInit {
   @ViewChild(MatSort, {static: true}) sort: MatSort;
-  constructor(public service : DashboardServiceService,public dialog: MatDialog,public datepipe : DatePipe,private router : Router) {
+  constructor(public dashboard : LivedashboardComponent,public service : DashboardServiceService,public dialog: MatDialog,public datepipe : DatePipe,private router : Router) {
     //set screenWidth on page load
     this.screenWidth = window.innerWidth;
     this.screenHeight = window.innerHeight;
@@ -39,12 +41,51 @@ export class SteeringCommitteeComponent implements OnInit {
   screenWidth : number;
   screenHeight : number;
   expandedElement: Data | null;
-  matSortActiveColumn : string = "RecordStatus";
+  matSortActiveColumn : string = "LastUpdatedDate";
   displaycolumns = ["expand","RecordStatus","ClientName","ClientType","ProjectLead","ProjectStatus","ProjectTrend","TotalBusineesVolume","NewBusinessVolume","Region","Country","CurrentState","CompletedKeyDeliverables","ScheduledKeyDeliverables","AdditionalNotes","InsertedBy","InsertedDate","LastUpdatedDate","actions"]
-  wavescolumns = ["Waves","Region","Country","Scope","GoLiveDate","Status","InsertedBy","InsertedDate","LastUpdatedDate"];
-  RiskGapColumns = ["Risks","RisksGaps","MitigationPlan","SteeringCommitteeSupportNeed","DueDate","Owner","Status","InsertedBy","InsertedDate","LastUpdatedDate"];
+  wavescolumns = ["Waves","Region","Country","Scope","GoLiveDate","Status","InsertedBy","InsertedDate","LastUpdatedDate","actions"];
+  RiskGapColumns = ["Risks","RisksGaps","MitigationPlan","SteeringCommitteeSupportNeed","DueDate","Owner","Status","InsertedBy","InsertedDate","LastUpdatedDate","actions"];
+  displayeditButton : boolean = false;
   ngOnInit(): void {
+    this.dashboard.ShowSpinnerHandler(true);
+    this.service.UserReportAccess(localStorage.getItem("UID")).subscribe(data=>{
+      if(data.code == 200){
+        if(data.Data[0].SteeringCommitteeEdits == true){
+          this.displayeditButton = true;
+        }else{
+          this.displaycolumns.pop();
+          this.displayeditButton = false;
+        }
+      }
+      this.dashboard.ShowSpinnerHandler(false);
+    })
     this.GetData();
+  }
+  DeleteWaves(ID : string){
+    let d_data : WRDeleteData = {
+      Type : "Wave",
+      ID : ID
+    }
+    const dialogRef = this.dialog.open(DeleteWaveOrRiskGapDailog, {
+      // width: '1000px',
+      data : d_data
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      this.GetData();
+    });
+  }
+  DeleteRiskgap(ID : string){
+    let d_data : WRDeleteData = {
+      Type : "RiskGap",
+      ID : ID
+    }
+    const dialogRef = this.dialog.open(DeleteWaveOrRiskGapDailog, {
+      // width: '1000px',
+      data : d_data
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      this.GetData();
+    });
   }
   GetData(){
     this.service.SteeringCommitteeData().subscribe(data => {
@@ -85,7 +126,7 @@ export class SteeringCommitteeComponent implements OnInit {
           }else{
             data.Data[i].Waves[j].GoLiveDate_text = this.datepipe.transform(data.Data[i].Waves[j].GoLiveDate, "yyyy-MM-dd");
           }
-          data.Data[i].Waves[j].Waves = "Wave-"+(j+1);
+          data.Data[i].Waves[j].Waves = "Wave-"+data.Data[i].Waves[j].Waves;
         }
         for(let k = 0;k<data.Data[i].RiskGaps.length;k++){
           if(data.Data[i].RiskGaps[k].LastUpdatedDate == null){
@@ -103,7 +144,7 @@ export class SteeringCommitteeComponent implements OnInit {
           }else{
             data.Data[i].RiskGaps[k].DueDate_text = this.datepipe.transform(data.Data[i].RiskGaps[k].DueDate, "yyyy-MM-dd");
           }
-          data.Data[i].RiskGaps[k].Risks = "Risk-"+(k+1);
+          data.Data[i].RiskGaps[k].Risks = "Risk-"+data.Data[i].RiskGaps[k].Risks;
         }
       }
       this.SC_Data = data.Data;
@@ -166,8 +207,9 @@ export class SteeringCommitteeComponent implements OnInit {
   RowSelected(ClientName : string,SCID : number){
     this.SteeringCommitteeSelectedData = [];
     const result = this.SC_Data.filter((obj) => {
-      return obj.SCID.toString().search(SCID+"") > -1 
+      return obj.SCID == SCID
     });
+    console.log(result)
     this.SteeringCommitteeSelectedData = result;
     this.SteeringCommitteeSelectedData[0].Action = "Update";
     this.ShowForm = true;
@@ -219,6 +261,58 @@ export class DeleteSteeringCommitteeDailog {
         this.dialogRef.close();
       }
     })
+  }
+  onNoClick(){
+    this.dialogRef.close();
+  }
+}
+
+export interface WRDeleteData {
+  Type : string;
+  ID : string;
+}
+@Component({
+  selector: 'app-deletewaveorriskgapdailog',
+  templateUrl: './deletewaveorriskgapdailog.component.html'
+})
+export class DeleteWaveOrRiskGapDailog {
+  constructor(
+    public datepipe : DatePipe,
+    public service : DashboardServiceService,
+    public dialogRef: MatDialogRef<DeleteWaveOrRiskGapDailog>,
+    @Inject(MAT_DIALOG_DATA) public data: WRDeleteData) {
+      this.ID = data.ID;
+      // this.ClientName = data.Client_Name;
+      this.Type = data.Type;
+    }
+    ID;
+    Type
+    UserLoggedIn : string = localStorage.getItem("Username");
+  ngOnInit() {
+  }
+  onYesClick(){
+    if(this.Type == "Wave"){
+      this.service.DeleteWave(this.ID,localStorage.getItem("UID")).subscribe(data=>{
+        if(data.code == 200){
+          alert(data.message);
+          this.dialogRef.close();
+        }else{
+          alert(data.message);
+          this.dialogRef.close();
+        }
+      })
+    }else{
+      this.service.DeleteRiskGap(this.ID,localStorage.getItem("UID")).subscribe(data=>{
+        if(data.code == 200){
+          alert(data.message);
+          this.dialogRef.close();
+        }else{
+          alert(data.message);
+          this.dialogRef.close();
+        }
+      })
+    }
+    
   }
   onNoClick(){
     this.dialogRef.close();

@@ -298,3 +298,8 @@ table {
               transform: scale(1);
   }
 }
+.hoverchange:hover{
+  font-weight: bold;
+  text-decoration: underline;
+  color: black;
+}

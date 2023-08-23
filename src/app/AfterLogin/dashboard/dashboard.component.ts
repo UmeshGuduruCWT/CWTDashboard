@@ -56,7 +56,7 @@ export class DashboardComponent implements OnInit{
         }
       }
     })
-    this.startTimer();
+    // this.startTimer();
     // this.LoggedINID = this.route.snapshot.paramMap.get("UID");
     // alert("");
     // this.sub = this.route.paramMap.subscribe(data =>{
@@ -64,71 +64,8 @@ export class DashboardComponent implements OnInit{
     //   alert(this.LoggedINID);
     // })
   }
-  @HostListener('document:mousemove', ['$event']) onMouseMove(event) {
-    if(event) {
-      this.SecondsLeft = 60;
-      this.timeLeft = 1800;
-    }
-  }
-  @HostListener('document:mouseenter', ['$event'])onMouseEnter(event: any) {     
-    if(event) {
-      this.timeLeft = 1800;
-      this.SecondsLeft = 60;
-    }
-  }
-  @HostListener('document:click', ['$event'])onClick(event: string) {
-    if(event) {
-      this.SecondsLeft = 60;
-      this.timeLeft = 1800;
-    }
-  }
-  @HostListener('document:keydown', ['$event']) onKeydownHandler(event: KeyboardEvent) {
-    if(event) {
-      this.timeLeft = 1800;
-      this.SecondsLeft = 60;
-    }
-  }
-  @HostListener('document:scroll', ['$event']) onScroll(event: Event): void {
-    if(event) {
-      this.timeLeft = 1800;
-      this.SecondsLeft = 60;
-    }
-  }
   date;
-  @HostListener('window:beforeunload', ['$event']) onWindowClose(event: any): void {
-     event.preventDefault();
-     event.returnValue = false;
-     this.date = new Date();
-     localStorage.setItem("LastLoggedIn",this.date);
-  }
-  interval;timeLeft: number = 1800;
-  SecondsLeft :number = 60;
-  Time;
   NpsCount : number;npshidden : boolean = true;
-  startTimer() {
-    this.interval = setInterval(() => {
-      if(this.timeLeft > 0) {
-        this.timeLeft--;
-        if(this.SecondsLeft > 0 && this.SecondsLeft >= 30){
-          this.SecondsLeft--;
-          this.Time = Math.round((this.timeLeft/60)-1)+" : "+ this.SecondsLeft;
-        }else if(this.SecondsLeft > 0 && this.SecondsLeft < 30){
-          this.SecondsLeft--;
-          this.Time = Math.round(this.timeLeft/60)+" : "+ this.SecondsLeft;
-        }else{
-          this.SecondsLeft = 59;
-          this.Time = Math.round(this.timeLeft/60)+" : "+ this.SecondsLeft;
-        }
-      }else {
-        clearInterval(this.interval);
-        localStorage.clear();
-        this.router.navigate(["/Login"]);
-      }
-    },1801)
-  }
-  pauseTimer() {
-    clearInterval(this.interval);
-  }
   ShowSpinnerHandler(value){
     this.showSpinner = value;
   }

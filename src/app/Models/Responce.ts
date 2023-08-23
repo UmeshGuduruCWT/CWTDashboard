@@ -45,6 +45,7 @@ export class CycleTimeData{
     GoLive : string;
     ProjectStart_ForCycleTime : Date;
     CycleTimeDelayCode : string;
+    EltClientDelayDescription : string;
     ProjectStart : string;
     CycleTime : string;
     CycleTimeCategories : string;
@@ -331,6 +332,8 @@ export class Data {
     ComplexityScore : number;
     ProjectDelay : number;
     ProjectEffort?: number;
+    CalculatedEffort?: string;
+    AssignmentDate? : Date;
     Proposed_Start_Date__iMeet_?: Date;
     Proposed_End_Date__Formula_?: Date;
     Go_Live_Date__iMeet_?: Date;
@@ -338,8 +341,11 @@ export class Data {
     Project_Start_Date : string;
     MilestoneProjectNotes : string;
     MilestoneDueDate : Date;
+    MilestoneDueDateByLevel : Date;
+    MilestoneDueDate_ByLevel : string;
     Milestone_Due_Date : string;
     OwnershipType : string;
+    AssignmentDate_c : string;
     Proposed_Start_Date: string;
     Proposed_End_Date: string;
     Go_Live_Date: string;
@@ -388,4 +394,27 @@ export class Data {
     DataSourceType : string;
     GrandTotal : number;
     Target_A : number;
+
+    //CLR Activity
+    ColumnName : string;
+    UpdatedDate : string;
+    UpdatedDate_text : string
+
+    //Record History
+    EPDate : string;
+    HPDate : string;
+    PDate : string;
+    Assignment: string;
+    ResourceRequested : string;
+    ProjectStart : string;
+    GoLive : string;
+
+    EPDate_c : Date;
+    HPDate_c : Date;
+    PDate_c : Date;
+    Assignment_c: Date;
+    ResourceRequested_c : Date;
+    ProjectStart_c : Date;
+    GoLive_c : Date;
+
 }

@@ -87,7 +87,7 @@
             <div class="col-md-3" style="padding: 5px 0px 0px 15px;">
                 <p style="font-size: 14px;">Region</p>
                 <ng-multiselect-dropdown
-                    #multiSelect
+                    #multiSelect #RegionListForm
                     [settings]="RegionSettings"
                     [data]="SC_Region"
                     [(ngModel)]="Region"
@@ -102,10 +102,14 @@
                 <p style="font-size: 14px;">Country</p>
                 <!-- [placeholder]="'Country'" -->
                 <ng-multiselect-dropdown
-                    #multiSelect
+                    #multiSelect #CountryListForm
                     [settings]="CountrySettings"
                     [data]="SC_Country"
                     [(ngModel)]="Country"
+                    (onSelect)="onCountryChange()" 
+                    (onDeSelect)="onCountryChange()"
+                    (onSelectAll)="onCountryChangeAll($event)"
+                    (onDeSelectAll)="onCountryChangeAll($event)"
                     [disabled]="false">
                 </ng-multiselect-dropdown>
             </div>
@@ -147,6 +151,10 @@
                     <div class="col-12">
                         <div class="col-12">
                             <label style="font-size: 12px;font-weight: bold;font-family: Arial, Helvetica, sans-serif;">Risks/Gaps - {{j+1}}</label>
+                            <!-- <span class="spacer"></span>
+                            <button mat-icon-button (click)= "DeleteRiskgap()" style="margin-left: 20px;" matTooltip="Delete Risk Gap">
+                                <mat-icon matSuffix style="font-size: 21px;"><span class="material-symbols-outlined">delete</span></mat-icon>
+                            </button> -->
                         </div>
                     </div>
                 </mat-panel-title>
@@ -220,6 +228,10 @@
                     <div class="col-12">
                         <div class="col-12">
                             <label style="font-size: 12px;font-weight: bold;font-family: Arial, Helvetica, sans-serif;">Wave - {{k+1}}</label>
+                            <!-- <span class="spacer"></span>
+                            <button mat-icon-button (click)="DeleteWaves()" style="margin-left: 20px;" matTooltip="Delete Wave">
+                                <mat-icon matSuffix style="font-size: 21px;"><span class="material-symbols-outlined">delete</span></mat-icon>
+                            </button> -->
                         </div>
                     </div>
                 </mat-panel-title>
@@ -228,7 +240,7 @@
                 <div class="row" style="margin : 0px;width: 100%;" >
                     <div class="col-md-3" style="padding: 5px 0px 0px 15px;">
                         <ng-multiselect-dropdown
-                            #multiSelect
+                            #multiSelect 
                             [placeholder]="'Region'"
                             [settings]="RegionSettings"
                             [data]="SC_Region"
@@ -242,7 +254,7 @@
                     </div>
                     <div class="col-md-3" style="padding: 5px 0px 0px 15px;">
                         <ng-multiselect-dropdown
-                            #multiSelect
+                            #multiSelect 
                             [placeholder]="'Country'"
                             [settings]="CountrySettings"
                             [data]="wave_list.SC_Country"
@@ -260,7 +272,10 @@
                         <mat-icon matSuffix><span class="material-symbols-outlined">task_alt</span></mat-icon>
                         <mat-label style="font-size: 15px;">Status</mat-label>
                         <mat-select [(value)]="wave_list.Status" required>
-                            <mat-option value="On Track">On Track</mat-option>
+                            <mat-option value="Red - Issue">Red - Issue</mat-option>
+                            <mat-option value="Amber - Risk">Amber - Risk</mat-option>
+                            <mat-option value="Green - On Track">Green - On Track</mat-option>
+                            <!-- <mat-option value="On Track">On Track</mat-option> -->
                             <mat-option value="Live">Live</mat-option>
                             <mat-option value="Not Started">Not Started</mat-option>
                         </mat-select>

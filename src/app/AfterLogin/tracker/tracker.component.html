@@ -389,6 +389,18 @@
                     </mat-form-field>
                 </th>
             </ng-container>
+            <ng-container matColumnDef="AssignmentDate_c">
+                <th mat-header-cell *matHeaderCellDef class="maintextSizes" mat-sort-header style="background-color: #7030A0;color: white;max-width: 120px;width: 120px;"> Assignment Date </th>
+                <td mat-cell *matCellDef="let element" class="texttd" style="max-width: 120px;width: 120px;"> {{element.AssignmentDate_c}} </td>
+            </ng-container>
+            <ng-container matColumnDef="AssignmentDate_c_h">
+                <th mat-header-cell *matHeaderCellDef colspan="1" class="formheader" style="max-width: 120px;width: 120px;" [ngStyle]="{'background-color' : AssignmentDate_cFilter.value == '' || AssignmentDate_cFilter.value == null ? '#FFFFFF' : '#F5B7B1'}" >
+                    <mat-form-field class="mat-form-wrap" appearance="outline">
+                        <mat-label>Assignment Date</mat-label>
+                        <input style="font-weight: bold" matInput [formControl]="AssignmentDate_cFilter">
+                    </mat-form-field>
+                </th>
+            </ng-container>
             <ng-container matColumnDef="Project_Start_Date">
                 <th mat-header-cell *matHeaderCellDef class="maintextSizes" mat-sort-header style="background-color: #FFC000;max-width: 120px;width: 120px;"> Project Start Date </th>
                 <td mat-cell *matCellDef="let element" class="texttd" style="max-width: 120px;width: 120px;"> {{element.Project_Start_Date}} </td>
