@@ -70,21 +70,6 @@ export class AddUpdateSteeringCommitteeComponent implements OnInit {
   RegionCountry : RegionCountry[];
   SC_Region : SC_Region[];
   SC_Country : SC_Country[];
-  @ViewChild("RegionListForm", { static: true }) regionmultiSelectComponent: MultiSelectComponent;
-  @ViewChild("CountryListForm", { static: true }) countrymultiSelectComponent: MultiSelectComponent;
-  // @ViewChild("WaveRegionListForm", { static: true }) waveRegionmultiSelectComponent: MultiSelectComponent;
-  // @ViewChild("WaveCountryListForm", { static: true }) WavecountrymultiSelectComponent: MultiSelectComponent;
-  onCtrlBlur( ) {
-    // console.log("testing");
-    const ctrl = <MultiSelectComponent>(<unknown>this);
-    ctrl._settings.defaultOpen = true;
-  }
-  ngAfterViewInit( ) {
-    this.regionmultiSelectComponent.registerOnTouched(this.onCtrlBlur);
-    this.countrymultiSelectComponent.registerOnTouched(this.onCtrlBlur);
-    // this.waveRegionmultiSelectComponent.registerOnTouched(this.onCtrlBlur);
-    // this.WavecountrymultiSelectComponent.registerOnTouched(this.onCtrlBlur);
-  }
   ngOnInit(): void {
     this.getFilters();
     // if(this.SCID > 0){
@@ -155,6 +140,12 @@ export class AddUpdateSteeringCommitteeComponent implements OnInit {
       defaultOpen: false,
     }
   }
+  deleteriskgap(index) {
+    this.RisksGap.splice(index, 1)
+  }
+  deleteWave(index){
+    this.waves.splice(index, 1)
+  }
   getFilters(){
     this.service.SteeringCommitteeFilters().subscribe(data =>{
       this.OwnersList = data.Owner;
@@ -196,6 +187,10 @@ export class AddUpdateSteeringCommitteeComponent implements OnInit {
   onWaveRegionChangeAll(item :any,index : any){
     this.waves[index].arr_Region = item;
     this.ChangingWavevaluesincountry(index);
+  }
+  registerOnTouched(onTouched: Function) {
+    // this.onTouched = onTouched();
+    console.log(onTouched)
   }
   Changingvaluesincountry(){
     this.SC_Country = [];
@@ -547,8 +542,6 @@ export class AddUpdateSteeringCommitteeComponent implements OnInit {
         }
       });
     }
-    console.log(this.RisksGap);
-    console.log(this.waves);
     // this.Record_Status = this.SteeringCommitteeSelectedData[0].RecordStatus;
     // this.Record_Status = this.SteeringCommitteeSelectedData[0].RecordStatus;
     // this.Record_Status = this.SteeringCommitteeSelectedData[0].RecordStatus;

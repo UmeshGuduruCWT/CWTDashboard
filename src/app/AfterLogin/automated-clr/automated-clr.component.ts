@@ -2783,7 +2783,7 @@ export class AutomatedCLRComponent implements OnInit {
       });
     }
   }
-  RowSelected(j,CLRID : number,ManualID : number,Client : string,iMeet_Workspace_Title : string,Date_added_to_the_CLR : Date,Implementation_Type : string,CLR_Country : string,Pipeline_status : string,Pipeline_comments : string,Service_configuration : string,OBT_Reseller___Direct : string,Servicing_location : string,Assignment_date : Date,ResourseRequestedDate : Date,New_Business_volume__US__ : number,RevenueID : number,Implementation_Fee__PSD_ : number,EMEA_Country_to_charge : string,EMEA_Client : string,EMEA_OBT_standard_fee : number,EMEA_Included_for_accrual : string,EMEA_Accrual_date : Date,EMEA_Scope_description : string,EMEA_Billing_notes : string,Manual_Entry__Wave_2__Wave_3__etc_ : string,Project_Effort : number,Priority : number,Resource_Status : string,Global_Project_Manager_replacement : string,Regional_Project_Manager_replacement : string,Milestone__Assignee__Full_Name_replacement : string,Global_CIS_OBT_Lead_replacement : string,Global_CIS_HR_Feed_Specialist_replacement : string,Global_CIS_Portrait_Lead_replacement : string,Global_CIS_RoomIT_Integration_Lead_replacement : string,GoLiveDate :Date,ProjectStatus : string,ProjectLevel : string,GlobalProjectManager : string,RegionalProjectManager : string,AssigneeFullName : string,RecordStatus : string,DataSourceType : string)
+  RowSelected(j,CLRID : number,ManualID : number,Client : string,iMeet_Workspace_Title : string,Date_added_to_the_CLR : Date,Implementation_Type : string,CLR_Country : string,Pipeline_status : string,Pipeline_comments : string,Service_configuration : string,OBT_Reseller___Direct : string,Servicing_location : string,Assignment_date : any,ResourseRequestedDate : any,New_Business_volume__US__ : number,RevenueID : number,Implementation_Fee__PSD_ : number,EMEA_Country_to_charge : string,EMEA_Client : string,EMEA_OBT_standard_fee : number,EMEA_Included_for_accrual : string,EMEA_Accrual_date : Date,EMEA_Scope_description : string,EMEA_Billing_notes : string,Manual_Entry__Wave_2__Wave_3__etc_ : string,Project_Effort : number,Priority : number,Resource_Status : string,Global_Project_Manager_replacement : string,Regional_Project_Manager_replacement : string,Milestone__Assignee__Full_Name_replacement : string,Global_CIS_OBT_Lead_replacement : string,Global_CIS_HR_Feed_Specialist_replacement : string,Global_CIS_Portrait_Lead_replacement : string,Global_CIS_RoomIT_Integration_Lead_replacement : string,GoLiveDate :any,ProjectStatus : string,ProjectLevel : string,GlobalProjectManager : string,RegionalProjectManager : string,AssigneeFullName : string,RecordStatus : string,DataSourceType : string)
   {
     if(localStorage.getItem('AutomatedFilters') == null){
       localStorage.setItem('AutomatedFilters',JSON.stringify(this.filteredValues));
@@ -2802,11 +2802,11 @@ export class AutomatedCLRComponent implements OnInit {
         Implementation_Type : Implementation_Type,
         Pipeline_status : Pipeline_status,
         Pipeline_comments : Pipeline_comments,
-        Assignment_date : Assignment_date,
-        ResourseRequestedDate : ResourseRequestedDate,
+        Assignment_date : Assignment_date == "---" ? null : Assignment_date,
+        ResourseRequestedDate : ResourseRequestedDate == "---" ? null : ResourseRequestedDate,
         RevenueID : RevenueID,
         Project_Effort : Project_Effort,
-        GoLiveDate : GoLiveDate,
+        GoLiveDate : GoLiveDate == "---" ? null : GoLiveDate,
         ProjectStatus : ProjectStatus,
         ProjectLevel : ProjectLevel,
         GlobalProjectManager : GlobalProjectManager,
@@ -4799,19 +4799,19 @@ export class ProjectTeamDailog {
     }else{
       this.Loader = true;
       var Date;
-      if(this.dateAssignment == null){
+      if(this.dateAssignment == null || this.dateAssignment == undefined){
         Date = null;
       }else{
         Date = this.datepipe.transform(this.dateAssignment, "MM-dd-yyyy")+"";
       }
       var date_Resource_Requested;
-      if(this.dateResourceRequested == null){
+      if(this.dateResourceRequested == null || this.dateResourceRequested == undefined){
         date_Resource_Requested = null;
       }else{
         date_Resource_Requested = this.datepipe.transform(this.dateResourceRequested, "MM-dd-yyyy")+"";
       }
       var DateGo_Live
-      if(this.DateGolive == null){
+      if(this.DateGolive == null || this.DateGolive == undefined){
         DateGo_Live = null;
       }else{
         DateGo_Live = this.datepipe.transform(this.DateGolive, "MM-dd-yyyy")+"";

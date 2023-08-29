@@ -20,6 +20,9 @@
     padding-top: 10px;
     color: #F16950;
 }
+button:focus{
+    outline: none;
+}
 .header_text_ad{
     height: 50px;
     padding: 22px 0px;

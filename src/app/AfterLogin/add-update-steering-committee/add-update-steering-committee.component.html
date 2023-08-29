@@ -87,7 +87,7 @@
             <div class="col-md-3" style="padding: 5px 0px 0px 15px;">
                 <p style="font-size: 14px;">Region</p>
                 <ng-multiselect-dropdown
-                    #multiSelect #RegionListForm
+                    #multiSelect
                     [settings]="RegionSettings"
                     [data]="SC_Region"
                     [(ngModel)]="Region"
@@ -102,7 +102,7 @@
                 <p style="font-size: 14px;">Country</p>
                 <!-- [placeholder]="'Country'" -->
                 <ng-multiselect-dropdown
-                    #multiSelect #CountryListForm
+                    #multiSelect
                     [settings]="CountrySettings"
                     [data]="SC_Country"
                     [(ngModel)]="Country"
@@ -150,7 +150,9 @@
                 <mat-panel-title>
                     <div class="col-12">
                         <div class="col-12">
-                            <label style="font-size: 12px;font-weight: bold;font-family: Arial, Helvetica, sans-serif;">Risks/Gaps - {{j+1}}</label>
+                            <button mat-raised-button style="padding: 0px;background: none;box-shadow: none;background-color: transparent;border: none;font-size: 12px;font-weight: bold;font-family: Arial, Helvetica, sans-serif;">
+                                <mat-icon *ngIf="risk_gap.RGID ? false : true" style="display: inline;cursor: pointer;font-size: 24px;margin-right: 15px;" aria-label="Delete"  (click)="deleteriskgap(j)">delete</mat-icon>Risks/Gaps - {{j+1}}
+                            </button>
                             <!-- <span class="spacer"></span>
                             <button mat-icon-button (click)= "DeleteRiskgap()" style="margin-left: 20px;" matTooltip="Delete Risk Gap">
                                 <mat-icon matSuffix style="font-size: 21px;"><span class="material-symbols-outlined">delete</span></mat-icon>
@@ -227,11 +229,9 @@
                 <mat-panel-title>
                     <div class="col-12">
                         <div class="col-12">
-                            <label style="font-size: 12px;font-weight: bold;font-family: Arial, Helvetica, sans-serif;">Wave - {{k+1}}</label>
-                            <!-- <span class="spacer"></span>
-                            <button mat-icon-button (click)="DeleteWaves()" style="margin-left: 20px;" matTooltip="Delete Wave">
-                                <mat-icon matSuffix style="font-size: 21px;"><span class="material-symbols-outlined">delete</span></mat-icon>
-                            </button> -->
+                            <button mat-raised-button style="padding: 0px;background: none;box-shadow: none;background-color: transparent;border: none;font-size: 12px;font-weight: bold;font-family: Arial, Helvetica, sans-serif;">
+                                <mat-icon *ngIf="wave_list.WaveID ? false : true" style="display: inline;cursor: pointer;font-size: 24px;margin-right: 15px;" (click)="deleteWave(k)" aria-label="Delete">delete</mat-icon>Wave - {{k+1}}
+                            </button>
                         </div>
                     </div>
                 </mat-panel-title>
