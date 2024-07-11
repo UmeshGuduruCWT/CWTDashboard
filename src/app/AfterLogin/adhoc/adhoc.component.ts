@@ -446,7 +446,6 @@ export class AdhocComponent implements OnChanges, OnInit {
         }else if(this.ButtonName == "Update"){
           this.service.AdhocUpdate(this.RevenueID+"",this.Client,StartDate,GoLiveDate,this.Country.value,this.Region.value,this.Comments,this.ProjectStatus.value,this.GlobalDQSLead.value,this.GlobalCISOBTLead.value,this.RegionalCISOBTLead.value,this.LocalDigitalOBTLead.value,this.GlobalCISPortraitLead.value,this.RegionalCISPortraitLead.value,this.GlobalCISHRFeedSpecialist.value,this.GDS.value,this.ComplexityScore+"",this.ActivityType,this.Record_Status,this.LoginUID).subscribe(data =>{
             if(data.code == 200){
-              alert(data.message);
               this.SendOutput.emit([{SelectionType : 'Updated',RevenueID : this.RevenueID,GlobalCISOBTLead : this.GlobalCISOBTLead.value,
               RegionalCISOBTLead : this.RegionalCISOBTLead.value,LocalDigitalOBTLead : this.LocalDigitalOBTLead.value,GlobalCISPortraitLead : this.GlobalCISPortraitLead.value,
               RegionalCISPortraitLead : this.RegionalCISPortraitLead.value,GlobalCISHRFeedSpecialist : this.GlobalCISHRFeedSpecialist.value, GlobalDQSLead : this.GlobalDQSLead.value,ActivityType : this.ActivityType,

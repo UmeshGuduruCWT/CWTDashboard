@@ -1,11 +1,11 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ReplaySubject, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { max, takeUntil } from 'rxjs/operators';
 import { DashboardServiceService } from 'src/app/dashboard-service.service';
 import { ExcelService } from 'src/app/excel.service';
 import { FilterAccountName, FilterCountry, FilterGlobalProjectManager, FilterReasonTypeList, NPSComment } from 'src/app/Models/AutomatedCLRFilters';
@@ -52,7 +52,7 @@ export class NPSViewComponent implements OnInit {
   AssignLeader = new FormControl();
   NPSScore = new FormControl();
   NPSIndicator = new FormControl();
-  displayedColumns : string[] = ['Company','ClientName','Updated_On','AssignLeaderForClosedLoop','ClientType','DateServey_Sent','Language','NPSScore','NPSIndicator','DateSurvey_Received','Country','Region','RecordStatus','actions'];
+  displayedColumns : string[] = ['Company','ClientName','Updated_On','AssignLeaderForClosedLoop','ClientType','DateServey_Sent','Language','RecipientId','NPSScore','NPSIndicator','DateSurvey_Received','Country','Region','RecordStatus','actions'];
   dataSource;
   NPSViewData : NPSViewData[];
   GManagerList : FilterGlobalProjectManager[];
@@ -74,7 +74,7 @@ export class NPSViewComponent implements OnInit {
   public CompanyNameData : ReplaySubject<FilterAccountName[]> = new ReplaySubject<FilterAccountName[]>(1);
   Commentoneother;Commenttwoother;Commentthreeother;searchbar;
   ngOnInit(): void {
-    this.AssignLeader_data = ["Anette Brydensholt","Anurag Chopra","Cenise Roland","Dalles Weldon","Deb Westerlund","Heber Calcic","Izabela Hiller","Jill Summerville","Joanna Clare","Peter Bot","Simon Owen","Tenille Lockyer","Vincent vanReenen","Yi Xu"];
+    this.AssignLeader_data = ["Anette Brydensholt","Anurag Chopra","Cenise Roland","Dalles Weldon","Heber Calcic","Izabela Hiller","Joanna Clare","Niti Morrison","Sandeep Mehlawat","Simon Owen","Tenille Lockyer","Vincent vanReenen"];
     this.NPSScore_data = [0,1,2,3,4,5,6,7,8,9,10];
     this.NPSIndicator_data = ["Promoter","Passive","Detractor"];
     // this.Nps_Comment_One = ["Quick responses/Co-ordination","Good Project Management","Great Ownership/Very Helpful","Good Service / Support/Organized","Great Team/Focused","Reactive CWT team","Short weekly meetings","Imps was quick/Very Approachable","Very Helpful / Clear explanation","Good Service / Good Performance","Professional Team / Approach","Smooth Transition / Organised","Professionalism","Excellent Communication","Efficiency/Responses","Great Project Team/Team work","Very experienced CWT Imps team","Excellent Stakeholder","Dedicated","Client Management Capability","Knowledgeable","Excellent Project Management","Flexible Team","Others"];
@@ -502,6 +502,16 @@ export class NPSViewComponent implements OnInit {
       Errors = Errors+1;
       ErrorMessage += "Assign Leader should not be empty";
     }
+    if(this.ClientName == null || this.ClientName == "")
+    {
+      Errors = Errors+1;
+      ErrorMessage += "Client Name Should Not be empty";
+    }
+    if(this.Country.value == null || this.Country.value == "")
+    {
+      Errors = Errors+1;
+      ErrorMessage += "Country Should Not be empty";
+    }
     if(Errors == 0){
       this.service.NPSViewUpdate(this.NPSID,this.ClientName,this.CompanyName,this.Email,this.Country.value,this.Region,this.Language.value,this.RManager.value,this.GManager.value,
         this.LManager.value,this.ClientType,this.ClientContactNumber,Survey_Sent,this.ClientScope,Survey_Received,this.Status,this.AssignLeader.value,this.OpportunityId,this.NPSScore.value,this.NPSIndicator.value,this.Nps_comments_positive,this.Nps_comments_improve,this.Nps_comments_happier,
@@ -548,6 +558,7 @@ export class NPSViewComponent implements OnInit {
         "Client Type" : o.ClientType,
         // "Single Resource" : o.SingleResource,
         "Language" : o.Language,
+        "RecipientId" : o.RecipientId,
         "NPS Comments What was Positive" : o.NPSCommentsWhatwasPositive,
         "What had a Positive Experience during your Implementation" : o.NPSCommentsOne,
         "NPS Comments-How could we have improved" : o.NPSComments_Howcouldwehaveimproved,
@@ -718,6 +729,79 @@ export class NPSViewComponent implements OnInit {
   Deleterow(NPSID : string,client : string){
     this.openDeleteDialog(NPSID,client);
   }
+  SendMail(NPSID : string,ClientName : string,Company : string,Email : string,Language : string,RecipientId : string){
+    var maxRecipientIdid;
+    if(RecipientId == "---"){
+      this.service.NpsMaxRecipientId().subscribe(data => {
+        maxRecipientIdid = data.code + 1;
+        if(ClientName == null || ClientName == "" || ClientName == "---"){
+          alert("Client name should not be empty");
+        }else {
+          if(Company == null || Company == "" || Company == "---") {
+            alert("Company name should not be empty");
+          }else {
+            if(Email == null || Email == "" || Email == "---"){
+              alert("Email should not be empty");
+            }else{
+              const dialogRef = this.dialog.open(ConfirmationDailog, {
+                data: {
+                  NPSID : NPSID,
+                  ClientName : ClientName,
+                  Company : Company,
+                  Email : Email,
+                  Language : Language,
+                  RecipientId : maxRecipientIdid
+                }
+              });
+              dialogRef.afterClosed().subscribe(result => {
+                var SelectionType = result.SelectionType;
+                var Message = result.Message;
+                if(SelectionType == "No"){
+                }else if(SelectionType == "Yes" && Message == "Success"){
+                  this.GetNPSData();
+                }else{
+                }
+              });
+            }
+          }
+        }
+      })
+    }else{
+      maxRecipientIdid = RecipientId;
+      if(ClientName == null || ClientName == "" || ClientName == "---"){
+        alert("Client name should not be empty");
+      }else {
+        if(Company == null || Company == "" || Company == "---") {
+          alert("Company name should not be empty");
+        }else {
+          if(Email == null || Email == "" || Email == "---"){
+            alert("Email should not be empty");
+          }else{
+            const dialogRef = this.dialog.open(ConfirmationDailog, {
+              data: {
+                NPSID : NPSID,
+                ClientName : ClientName,
+                Company : Company,
+                Email : Email,
+                Language : Language,
+                RecipientId : maxRecipientIdid
+              }
+            });
+            dialogRef.afterClosed().subscribe(result => {
+              var SelectionType = result.SelectionType;
+              var Message = result.Message;
+              if(SelectionType == "No"){
+              }else if(SelectionType == "Yes" && Message == "Success"){
+                this.GetNPSData();
+              }else{
+              }
+            });
+          }
+        }
+      }
+    }
+    
+  }
   OnCancelClick(){
     this.ShowForm = false;
     this.ClientName = "";
@@ -749,5 +833,58 @@ export class NPSViewComponent implements OnInit {
     this.NpsCommentwo.setValue("");
     this.NpsCommentthree.setValue("");
     this.NPSID = "";
+  }
+}
+export interface NPSMailSendingData {
+  NPSID : string;
+  ClientName : string;
+  Company : string;
+  Email : string;
+  Language : string;
+  RecipientId : string;
+}
+@Component({
+  selector: 'app-confirmation',
+  templateUrl: './confirmation.component.html',
+  encapsulation: ViewEncapsulation.None
+})
+export class ConfirmationDailog {
+  constructor(
+    public datepipe : DatePipe,
+    public service : DashboardServiceService,
+    @Inject(MAT_DIALOG_DATA) public data: NPSMailSendingData,
+    public dialogRef: MatDialogRef<ConfirmationDailog>) {
+      this.screenWidth = window.innerWidth;
+      this.screenHeight = window.innerHeight;
+      window.onresize = () => {
+        // set screenWidth on screen size change
+        this.screenWidth = window.innerWidth;
+        this.screenHeight = window.innerHeight;
+      };
+    }
+    screenWidth
+    screenHeight
+    SelectedLanguage = new FormControl();
+    ClientName;
+    Company;
+  onYesClick(): void {
+    // console.log(this.data.NPSID,this.ClientName,this.Company,this.data.Email,this.SelectedLanguage.value,localStorage.getItem("UID"));
+    this.service.NPSSendMail(this.data.NPSID,this.ClientName,this.Company,this.data.Email,this.SelectedLanguage.value,localStorage.getItem("UID")).subscribe(data => {
+      if(data.code == 200){
+        alert("Mail Sent Succesfully");
+        this.dialogRef.close({SelectionType : 'Yes',Message : "Success"});
+      }else{
+        alert(data.message);
+        this.dialogRef.close({SelectionType : 'Yes',Message : data.message});
+      }
+    })
+  }
+  onNoClick(){
+    this.dialogRef.close({SelectionType : 'No',Message : ""});
+  }
+  ngOnInit(){
+    this.SelectedLanguage.setValue(this.data.Language);
+    this.ClientName = this.data.ClientName;
+    this.Company = this.data.Company;
   }
 }

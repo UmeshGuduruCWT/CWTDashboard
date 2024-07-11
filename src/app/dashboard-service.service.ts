@@ -245,12 +245,12 @@ export class DashboardServiceService {
     let params = new HttpParams();
     return this.http.post<CtoFilters>(`${this.Baseurl+"CriticalTaskFiltersList"}`,params);
   }
-  public CriticalTaskOverDue(Group_Name : string,Workspace__Project_Level : string,Milestone__Region : string,Milestone__Assignee__Full_Name : string){
+  public CriticalTaskOverDue(TaskType : string,Group_Name : string,Workspace__Project_Level : string,Milestone__Region : string){
     let params = new HttpParams();
+    params = params.append('TaskType',TaskType);
     params = params.append('Group_Name',Group_Name);
     params = params.append('Workspace__Project_Level',Workspace__Project_Level);
     params = params.append('Milestone__Region',Milestone__Region);
-    params = params.append('Milestone__Assignee__Full_Name',Milestone__Assignee__Full_Name);
     // params = params.append('Milestone__Country',Milestone__Country);
     return this.http.post<CTOResponce>(`${this.Baseurl+"CriticalTaskOverDue"}`,params);
   }
@@ -265,20 +265,20 @@ export class DashboardServiceService {
     params = params.append('Milestone__Region',Milestone__Region);
     return this.http.post<CTOResponce>(`${this.Baseurl+"StatusWiseCount"}`,params);
   }
-  public RegionWiseCount(Group_Name : string,Workspace__Project_Level : string,Milestone__Region : string,Milestone__Assignee__Full_Name : string){
+  public RegionWiseCount(TaskType : string,Group_Name : string,Workspace__Project_Level : string,Milestone__Region : string){
     let params = new HttpParams();
+    params = params.append('TaskType',TaskType);
     params = params.append('Group_Name',Group_Name);
     params = params.append('Workspace__Project_Level',Workspace__Project_Level);
     params = params.append('Milestone__Region',Milestone__Region);
-    params = params.append('Milestone__Assignee__Full_Name',Milestone__Assignee__Full_Name);
     return this.http.post<CTOResponce>(`${this.Baseurl+"RegionWiseCount"}`,params);
   }
-  public GroupNameCountCTO(Group_Name : string,Workspace__Project_Level : string,Milestone__Region : string,Milestone__Assignee__Full_Name : string){
+  public GroupNameCountCTO(TaskType : string,Group_Name : string,Workspace__Project_Level : string,Milestone__Region : string){
     let params = new HttpParams();
+    params = params.append('TaskType',TaskType);
     params = params.append('Group_Name',Group_Name);
     params = params.append('Workspace__Project_Level',Workspace__Project_Level);
     params = params.append('Milestone__Region',Milestone__Region);
-    params = params.append('Milestone__Assignee__Full_Name',Milestone__Assignee__Full_Name);
     return this.http.post<CTOResponce>(`${this.Baseurl+"GroupNameCountCTO"}`,params);
   }
   // public ImeetTableNameResponce(){
@@ -702,15 +702,10 @@ export class DashboardServiceService {
   }
   //End Of Hierarchy Api's
 
-  public ResourceUtilization(Comments : string){
-    let params = new HttpParams();
-    params = params.append('Comments',Comments);
-    return this.http.post<Responce>(`${this.Baseurl+"ResourceUtilization"}`,params);
-  }
   public ResourceUtilizationNew(Comments : string){
     let params = new HttpParams();
     params = params.append('Comments',Comments);
-    return this.http.post<Responce>(`${this.Baseurl+"ResourceUtilizationNew"}`,params);
+    return this.http.post<Responce>(`${this.Baseurl+"ResourceUtilization"}`,params);
   }
   public Tracker(){
     let params = new HttpParams();
@@ -895,7 +890,7 @@ export class DashboardServiceService {
     Pipeline_status : string,
     Pipeline_comments : string,
     // Service_configuration : string,
-    // OBT_Reseller___Direct : string,
+    ExpectedDecisionDate : string,
     Assignment_date : string,
     ResourseRequestedDate : string,
     RevenueID : number,
@@ -910,7 +905,7 @@ export class DashboardServiceService {
     params = params.append('Pipeline_status',Pipeline_status);
     params = params.append('Pipeline_comments',Pipeline_comments);
     // params = params.append('Service_configuration',Service_configuration+"");
-    // params = params.append('OBT_Reseller___Direct',OBT_Reseller___Direct+"");
+    params = params.append('ExpectedDecisionDate',ExpectedDecisionDate+"");
     params = params.append('Assignment_date',Assignment_date+"");
     params = params.append('ResourseRequestedDate',ResourseRequestedDate+"");
     params = params.append('RevenueID',RevenueID+"");
@@ -949,6 +944,7 @@ export class DashboardServiceService {
     // Service_configuration : string,
     // OBT_Reseller___Direct : string,
     //Servicing_location : string,
+    ExpectedDecisionDate : string,
     Assignment_date : string,
     ResourseRequestedDate : string,
     //New_Business_volume__US__ : number,
@@ -988,7 +984,7 @@ export class DashboardServiceService {
     params = params.append('Pipeline_status',Pipeline_status);
     params = params.append('Pipeline_comments',Pipeline_comments);
     // params = params.append('Service_configuration',Service_configuration+"");
-    // params = params.append('OBT_Reseller___Direct',OBT_Reseller___Direct+"");
+    params = params.append('ExpectedDecisionDate',ExpectedDecisionDate+"");
     params = params.append('Assignment_date',Assignment_date+"");
     params = params.append('ResourseRequestedDate',ResourseRequestedDate+"");
     params = params.append('RevenueID',RevenueID+"");
@@ -1018,7 +1014,7 @@ export class DashboardServiceService {
     Pipeline_status : string,
     Pipeline_comments : string,
     // Service_configuration : string,
-    // OBT_Reseller___Direct : string,
+    ExpectedDecisionDate : string,
     Assignment_date : string,
     ResourceRequest_date : string,
     RevenueID : string,
@@ -1034,6 +1030,7 @@ export class DashboardServiceService {
     Pipeline_comments_check : boolean,
     // Service_configuration_check : boolean,
     // OBT_Reseller___Direct_check : boolean,
+    ExpectedDecision_date_check : boolean,
     Assignment_date_check : boolean,
     ResourceRequest_date_check : boolean,
     Project_Effort_check : boolean,
@@ -1070,7 +1067,7 @@ export class DashboardServiceService {
     params = params.append('Pipeline_status',Pipeline_status);
     params = params.append('Pipeline_comments',Pipeline_comments);
     // params = params.append('Service_configuration',Service_configuration+"");
-    // params = params.append('OBT_Reseller___Direct',OBT_Reseller___Direct+"");
+    params = params.append('ExpectedDecisionDate',ExpectedDecisionDate+"");
     params = params.append('Assignment_date',Assignment_date+"");
     params = params.append('ResourceRequest_date',ResourceRequest_date+"");
     params = params.append('RevenueID',RevenueID+"");
@@ -1085,7 +1082,7 @@ export class DashboardServiceService {
     params = params.append('Pipeline_status_check',Pipeline_status_check+"");
     params = params.append('Pipeline_comments_check',Pipeline_comments_check+"");
     // params = params.append('Service_configuration_check',Service_configuration_check+"");
-    // params = params.append('OBT_Reseller___Direct_check',OBT_Reseller___Direct_check+"");
+    params = params.append('ExpectedDecision_date_check',ExpectedDecision_date_check+"");
     params = params.append('Assignment_date_check',Assignment_date_check+"");
     params = params.append('ResourceRequest_date_check',ResourceRequest_date_check+"");
     params = params.append('Project_Effort_check',Project_Effort_check+"");
@@ -1204,7 +1201,7 @@ export class DashboardServiceService {
     return this.http.post<UserReportAccess>(`${this.Baseurl+"RequestAccessNotifications"}`,params);
   }
   public UpdatingAccessDetails(UID : string,IMPS:string,CTO : string,StageGate : string,LessonsLearnt : string,AutomatedCLR : string,CLREdits : string,MarketReport : string,MarketCommentsEdit: string,ELTReport : string,UserAccessStatus : string,UpdatedBy : string,CycleTime : string,CapacityTracker : string,ResourceUtilization : string,C_Hierarchy : string,C_HierarchyEdits : string,NPS : string,
-    NPSAdmin : string,NPSClientInfo : string,NPSEdit : string,SteeringCommittee : string,SteeringCommitteeEdits : string,DigitalReport : string,PerformanceAnalysis : string,){
+    NPSAdmin : string,NPSClientInfo : string,NPSEdit : string,SteeringCommittee : string,SteeringCommitteeEdits : string,DDO : string,DDOHome : string,DigitalReport : string,PerformanceAnalysis : string,){
     let params = new HttpParams();
     params = params.append('UID',UID);
     params = params.append('IMPS',IMPS);
@@ -1227,6 +1224,8 @@ export class DashboardServiceService {
     params = params.append('NPSEdit',NPSEdit);
     params = params.append('SteeringCommittee',SteeringCommittee);
     params = params.append('SteeringCommitteeEdits',SteeringCommitteeEdits);
+    params = params.append('DDO',DDO);
+    params = params.append('DDOHome',DDOHome);
     params = params.append('DigitalReport',DigitalReport);
     params = params.append('PerformanceAnalysis',PerformanceAnalysis);
     params = params.append('UserAccessStatus',UserAccessStatus);
@@ -1430,13 +1429,24 @@ export class DashboardServiceService {
     params = params.append('Months',Months);
     return this.http.post<Responce>(`${this.Baseurl+"TargetCycleTimeInsert"}`,params);
   }
-  public NPSData(){
+  public NPSData(YearMonth: string){
     let params = new HttpParams();
+    params = params.append('YearMonth',YearMonth);
     return this.http.post<NPSData>(`${this.Baseurl+"NPSData"}`,params);
   }
   public NpsViewData(){
     let params = new HttpParams();
     return this.http.post<NPSData>(`${this.Baseurl+"NpsViewData"}`,params);
+  }
+  public NPSSendMail(NpsId :string,ClientName : string,Company : string,Email : string,Language : string,UpdatedBy : string){
+    let params = new HttpParams();
+    params = params.append('NpsId',NpsId);
+    params = params.append('ClientName',ClientName);
+    params = params.append('Company',Company);
+    params = params.append('Email',Email);
+    params = params.append('Language',Language);
+    params = params.append('UpdatedBy',UpdatedBy)
+    return this.http.post<NPSData>(`${this.Baseurl+"NPSSendMail"}`,params);
   }
   public NpsInsert(ClientName : string,Company : string,Email : string,Country : string,Region : string,RegionalProjectManager : string,GlobalProjectManager : string,LocalProjectManager : string,GoLiveDate : string,ClientType : string,CustomerContactNumber : string,Language : string,RecordStatus : string,InsertedBy : string){
     let params = new HttpParams();
@@ -1481,6 +1491,10 @@ export class DashboardServiceService {
     params = params.append('NpsId',NpsId);
     params = params.append('UpdatedBy',UpdatedBy);
     return this.http.post<UserReportAccess>(`${this.Baseurl+"NPSDelete"}`,params);
+  }
+  public NpsMaxRecipientId(){
+    let params = new HttpParams();
+    return this.http.post<Responce>(`${this.Baseurl+"NpsMaxRecipientId"}`,params);
   }
   public NPSViewUpdate(NpsId : string,ClientName : string,Company : string,Email : string,Country : string,Region : string,Language : string,RegionalProjectManager : string,GlobalProjectManager : string,LocalProjectManager : string,ClientType : string,CustomerContactNumber : string,DateServeySent : string,ClientScope : string,DateSurveyReceived : string,
     Status : string,AssignLeaderForClosedLoop : string,OpprtunityId : string,NPSScore : string,NPSIndicator : string,NPSCommentsWhatwasPositive : string,NPSComments_Howcouldwehaveimproved : string,NPSComments_Whatistheonethingwecandotomakeyouhappier : string,ClientFeedback : string,Action : string,ReasonType : string,UpdatedBy : string,NPSCommentsOne : string,NPSCommentsTwo : string,NPSCommentsThree : string,RecordStatus : string){
@@ -1734,7 +1748,6 @@ export class DashboardServiceService {
     params = params.append('LastUpdatedBy',LastUpdatedBy);
     return this.http.post<SteeringCommittee>(`${this.Baseurl+"DeleteRiskGap"}`,params);
   }
-  
   public CLRActivityData(){
     let params = new HttpParams();
     return this.http.post<Responce>(`${this.Baseurl+"CLRActivityData"}`,params);
@@ -1743,5 +1756,10 @@ export class DashboardServiceService {
     let params = new HttpParams();
     params = params.append('Revenue_ID',Revenue_ID+"");
     return this.http.post<Responce>(`${this.Baseurl+"RecordHistoryData"}`,params);
+  }
+  public GetCRMDataByUsingRevenueID(Opportunity_ID : string){
+    let params = new HttpParams();
+    params = params.append('Opportunity_ID',Opportunity_ID+"");
+    return this.http.post<Responce>(`${this.Baseurl+"GetCRMDataByUsingRevenueID"}`,params);
   }
 }

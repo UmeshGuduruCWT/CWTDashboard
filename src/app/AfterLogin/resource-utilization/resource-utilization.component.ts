@@ -286,7 +286,9 @@ export class ResourceUtilizationComponent implements OnInit {
     var FilteredData = this.TrackerData;
     if(Role == "Digital"){
       FilteredData = FilteredData.filter(data => (data.GlobalDigitalOBTLead == Manager || data.RegionalDigitalOBTLead == Manager || data.LocalDigitalOBTLead == Manager || data.GlobalDigitalPortraitLead == Manager || data.RegionalDigitalPortraitLead == Manager || data.GlobalDigitalHRFeedSpeciallist == Manager))
-    }else{
+    }else if(Role == "Digital & PM"){
+      FilteredData = FilteredData.filter(data => (data.GManager == Manager || data.RManager == Manager || data.LManager == Manager || data.GlobalDigitalOBTLead == Manager || data.RegionalDigitalOBTLead == Manager || data.LocalDigitalOBTLead == Manager || data.GlobalDigitalPortraitLead == Manager || data.RegionalDigitalPortraitLead == Manager || data.GlobalDigitalHRFeedSpeciallist == Manager))
+    }else {
       FilteredData = FilteredData.filter(data => (data.GManager == Manager || data.RManager == Manager || data.LManager == Manager))
     }
     var day = this.currentweekdate.getDay();
@@ -414,7 +416,6 @@ export class ResourceUtilizationComponent implements OnInit {
       }
       break;
     }
-    console.log(FilteredData)
     if(FilteredData.length > 0){
       let data: ResourceDialogData ={
         Dailog_ID : Effort,
@@ -442,30 +443,31 @@ export class ResourceUtilizationComponent implements OnInit {
     this.service.ResourceUtilizationNew(this.SelectedStatus).subscribe(data =>{
       if(data.code == 200){
         this.ResUtilData = data.Data;
-        this.Global_Count = this.ResUtilData.filter(item => item.ProjectLevel === 'Global' && item.Level != 'Digital').length;
+        this.Global_Count = this.ResUtilData.filter(item => item.ProjectLevel === 'Global' && item.Level != 'Digital' && item.Level != 'Digital & PM').length;
         this.Global_Count_D = this.ResUtilData.filter(item => item.ProjectLevel === 'Global' && item.Level === 'Digital').length;
-        this.GLOBAL_Rc = this.ResUtilData.filter(item => item.ProjectLevel === 'Global' && item.Level != 'Digital').reduce((sum,current) => sum + current.AvgUtil, 0);
+        this.GLOBAL_Rc = this.ResUtilData.filter(item => item.ProjectLevel === 'Global' && item.Level != 'Digital' && item.Level != 'Digital & PM').reduce((sum,current) => sum + current.AvgUtil, 0);
         this.GLOBAL_Rc_D = this.ResUtilData.filter(item => item.ProjectLevel === 'Global' && item.Level === 'Digital').reduce((sum,current) => sum + current.AvgUtil, 0);
-        this.Local_Count = this.ResUtilData.filter(item => item.ProjectLevel != 'Global' && item.ProjectLevel != "Regional" && item.Level != 'Digital').length;
+        this.Local_Count = this.ResUtilData.filter(item => item.ProjectLevel != 'Global' && item.ProjectLevel != "Regional" && item.Level != 'Digital' && item.Level != 'Digital & PM').length;
         this.Local_Count_D = this.ResUtilData.filter(item => item.ProjectLevel != 'Global' && item.ProjectLevel != "Regional" && item.Level === 'Digital').length;
-        this.LOCAL_RC = this.ResUtilData.filter(item => item.ProjectLevel != 'Global' && item.ProjectLevel != "Regional" && item.Level != 'Digital').reduce((sum,current) => sum + current.AvgUtil, 0);
+        this.LOCAL_RC = this.ResUtilData.filter(item => item.ProjectLevel != 'Global' && item.ProjectLevel != "Regional" && item.Level != 'Digital' && item.Level != 'Digital & PM').reduce((sum,current) => sum + current.AvgUtil, 0);
         this.LOCAL_RC_D = this.ResUtilData.filter(item => item.ProjectLevel != 'Global' && item.ProjectLevel != "Regional" && item.Level === 'Digital').reduce((sum,current) => sum + current.AvgUtil, 0);
-        this.APACR_Count = this.ResUtilData.filter(item => item.ProjectLevel === 'Regional' && item.Region === 'APAC' && item.Level != 'Digital').length;
+        this.APACR_Count = this.ResUtilData.filter(item => item.ProjectLevel === 'Regional' && item.Region === 'APAC' && item.Level != 'Digital' && item.Level != 'Digital & PM').length;
         this.APACR_Count_D = this.ResUtilData.filter(item => item.ProjectLevel === 'Regional' && item.Region === 'APAC' && item.Level === 'Digital').length;
-        this.APACR_RC = this.ResUtilData.filter(item => item.ProjectLevel === 'Regional' && item.Region === 'APAC' && item.Level != 'Digital').reduce((sum,current) => sum + current.AvgUtil, 0);
+        this.APACR_RC = this.ResUtilData.filter(item => item.ProjectLevel === 'Regional' && item.Region === 'APAC' && item.Level != 'Digital' && item.Level != 'Digital & PM').reduce((sum,current) => sum + current.AvgUtil, 0);
         this.APACR_RC_D = this.ResUtilData.filter(item => item.ProjectLevel === 'Regional' && item.Region === 'APAC' && item.Level === 'Digital').reduce((sum,current) => sum + current.AvgUtil, 0);
-        this.EMEAR_Count = this.ResUtilData.filter(item => item.ProjectLevel === 'Regional' && item.Region === 'EMEA' && item.Level != 'Digital').length;
+        this.EMEAR_Count = this.ResUtilData.filter(item => item.ProjectLevel === 'Regional' && item.Region === 'EMEA' && item.Level != 'Digital' && item.Level != 'Digital & PM').length;
         this.EMEAR_Count_D = this.ResUtilData.filter(item => item.ProjectLevel === 'Regional' && item.Region === 'EMEA' && item.Level === 'Digital').length;
-        this.EMEAR_RC = this.ResUtilData.filter(item => item.ProjectLevel === 'Regional' && item.Region === 'EMEA' && item.Level != 'Digital').reduce((sum,current) => sum + current.AvgUtil, 0);
+        this.EMEAR_RC = this.ResUtilData.filter(item => item.ProjectLevel === 'Regional' && item.Region === 'EMEA' && item.Level != 'Digital' && item.Level != 'Digital & PM').reduce((sum,current) => sum + current.AvgUtil, 0);
         this.EMEAR_RC_D = this.ResUtilData.filter(item => item.ProjectLevel === 'Regional' && item.Region === 'EMEA' && item.Level === 'Digital').reduce((sum,current) => sum + current.AvgUtil, 0);
-        this.LATAMR_Count = this.ResUtilData.filter(item => item.ProjectLevel === 'Regional' && item.Region === 'LATAM' && item.Level != 'Digital').length;
+        this.LATAMR_Count = this.ResUtilData.filter(item => item.ProjectLevel === 'Regional' && item.Region === 'LATAM' && item.Level != 'Digital' && item.Level != 'Digital & PM').length;
         this.LATAMR_Count_D = this.ResUtilData.filter(item => item.ProjectLevel === 'Regional' && item.Region === 'LATAM' && item.Level === 'Digital').length;
-        this.LATAMR_RC = this.ResUtilData.filter(item => item.ProjectLevel === 'Regional' && item.Region === 'LATAM' && item.Level != 'Digital').reduce((sum,current) => sum + current.AvgUtil, 0);
+        this.LATAMR_RC = this.ResUtilData.filter(item => item.ProjectLevel === 'Regional' && item.Region === 'LATAM' && item.Level != 'Digital' && item.Level != 'Digital & PM').reduce((sum,current) => sum + current.AvgUtil, 0);
         this.LATAMR_RC_D = this.ResUtilData.filter(item => item.ProjectLevel === 'Regional' && item.Region === 'LATAM' && item.Level === 'Digital').reduce((sum,current) => sum + current.AvgUtil, 0);
-        this.NORAMR_Count = this.ResUtilData.filter(item => item.ProjectLevel === 'Regional' && item.Region === 'NORAM' && item.Level != 'Digital').length;
+        this.NORAMR_Count = this.ResUtilData.filter(item => item.ProjectLevel === 'Regional' && item.Region === 'NORAM' && item.Level != 'Digital' && item.Level != 'Digital & PM').length;
         this.NORAMR_Count_D = this.ResUtilData.filter(item => item.ProjectLevel === 'Regional' && item.Region === 'NORAM' && item.Level === 'Digital').length;
-        this.NORAMR_RC = this.ResUtilData.filter(item => item.ProjectLevel === 'Regional' && item.Region === 'NORAM' && item.Level != 'Digital').reduce((sum,current) => sum + current.AvgUtil, 0);
+        this.NORAMR_RC = this.ResUtilData.filter(item => item.ProjectLevel === 'Regional' && item.Region === 'NORAM' && item.Level != 'Digital' && item.Level != 'Digital & PM').reduce((sum,current) => sum + current.AvgUtil, 0);
         this.NORAMR_RC_D = this.ResUtilData.filter(item => item.ProjectLevel === 'Regional' && item.Region === 'NORAM' && item.Level === 'Digital').reduce((sum,current) => sum + current.AvgUtil, 0);
+        
         for(let i = 0;i<data.Data.length;i++){
           this.ResUtilData[i].C1stweek = Math.round(this.ResUtilData[i].C1stweek);
           this.ResUtilData[i].C2ndweek = Math.round(this.ResUtilData[i].C2ndweek);
@@ -506,7 +508,9 @@ export class ResourceUtilizationComponent implements OnInit {
           }else{
             this.ResUtilData[i].CATUWDColor = "Red";
           }
-          if(this.ResUtilData[i].ProjectLevel == "Global" && this.ResUtilData[i].Level != "Digital"){
+          if(this.ResUtilData[i].Level == "Digital & PM"){
+            this.ResUtilData[i].RelativeCapacity = 0;
+          }else if(this.ResUtilData[i].ProjectLevel == "Global" && this.ResUtilData[i].Level != "Digital"){
             this.ResUtilData[i].RelativeCapacity = (this.ResUtilData[i].AvgUtil/(this.GLOBAL_Rc/this.Global_Count)).toFixed(2);
           }else if(this.ResUtilData[i].ProjectLevel == "Global" && this.ResUtilData[i].Level == "Digital"){
             this.ResUtilData[i].RelativeCapacity = (this.ResUtilData[i].AvgUtil/(this.GLOBAL_Rc_D/this.Global_Count_D)).toFixed(2);
@@ -849,8 +853,13 @@ export class ResourceClientDetails {
       this.TotalEffort = data.Dailog_ID;
       if(data.Role == "Digital"){
         this.Digital = true;
+        this.PM = false;
+      }else if(data.Role == "Digital & PM"){
+        this.Digital = true;
+        this.PM = true;
       }else{
         this.Digital = false;
+        this.PM = true;
       }
     }
     screenWidth
@@ -859,20 +868,44 @@ export class ResourceClientDetails {
   TotalEffort : number;
   Manager : string;
   Digital : Boolean = false;
+  PM : Boolean = false;
   // OnCloseClick(): void {
   //   this.dialogRef.close({SelectionType : 'Cancel'});
   // }
+  tooltipOptions = {
+    placement: 'bottom',
+    'show-delay': 300,
+    // width: 1000,
+    width : 400,
+    maxwidth: 400,
+    theme: 'light',
+  };
   ngOnInit(){
-    for(let i = 0;this.TrackerData.length;i++){
-
+    for(let i = 0;i < this.TrackerData.length;i++){
       var count;
-      if(this.Digital == true){
-        count = (this.TrackerData[i].GlobalCISOBTLead == this.Manager ? 1 : 0) + (this.TrackerData[i].RegionalDigitalOBTLead == this.Manager ? 1 : 0) + (this.TrackerData[i].LocalDigitalOBTLead == this.Manager ? 1 : 0) + (this.TrackerData[i].GlobalDigitalPortraitLead == this.Manager ? 1 : 0)+ (this.TrackerData[i].RegionalDigitalPortraitLead == this.Manager ? 1 : 0)+ (this.TrackerData[i].GlobalDigitalHRFeedSpeciallist == this.Manager ? 1 : 0)
+      var Digital_count;
+      var isDigital;
+      var PM_count;
+      if(this.Digital == true && this.PM == true){
+        if(this.TrackerData[i].GlobalDigitalOBTLead == this.Manager || this.TrackerData[i].RegionalDigitalOBTLead == this.Manager || this.TrackerData[i].LocalDigitalOBTLead == this.Manager || this.TrackerData[i].GlobalDigitalPortraitLead == this.Manager || this.TrackerData[i].RegionalDigitalPortraitLead == this.Manager || this.TrackerData[i].GlobalDigitalHRFeedSpeciallist == this.Manager){
+          isDigital = true;
+        }else{
+          isDigital = false;
+        }
+        if(this.TrackerData[i].GManager == this.Manager || this.TrackerData[i].RManager == this.Manager || this.TrackerData[i].LManager == this.Manager){
+          PM_count = 1;
+        }else{
+          PM_count = 0;
+        }
+        count = PM_count == 1 ? (this.TrackerData[i].GManager == this.Manager ? 1 : 0) + (this.TrackerData[i].RManager == this.Manager ? 1 : 0) + (this.TrackerData[i].LManager == this.Manager ? 1 : 0) : 0
+        Digital_count = isDigital == true ? this.TrackerData[i].ComplexityScore : 0;
+        this.TrackerData[i].CalculatedEffort = "("+this.TrackerData[i].ProjectEffort +" * "+count+") + " + Digital_count+ " = "+((this.TrackerData[i].ProjectEffort * count)+Digital_count);
+      }else if(this.Digital == true && this.PM == false){
+        count = 0;
       }else{
         count = (this.TrackerData[i].GManager == this.Manager ? 1 : 0) + (this.TrackerData[i].RManager == this.Manager ? 1 : 0) + (this.TrackerData[i].LManager == this.Manager ? 1 : 0)
+        this.TrackerData[i].CalculatedEffort = this.TrackerData[i].ProjectEffort +" * "+count+" = "+(this.TrackerData[i].ProjectEffort * count);
       }
-      this.TrackerData[i].CalculatedEffort = this.TrackerData[i].ProjectEffort +" * "+count+" = "+(this.TrackerData[i].ProjectEffort * count);
     }
-    console.log(this.TrackerData)
   }
 }

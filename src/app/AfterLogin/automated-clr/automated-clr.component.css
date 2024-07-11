@@ -98,9 +98,9 @@
   padding-left: 10px;
   padding-right: 10px;
   padding-bottom: 0px;
-  padding-top: 10px;
+  padding-top: 0px;
   margin : 0px;
-  height: 80px;
+  height: 70px;
   width: 100%;
   border-right : 1px solid black;
 }
@@ -302,4 +302,21 @@ table {
   font-weight: bold;
   text-decoration: underline;
   color: black;
+}
+::ng-deep  .mat-form-wrap .mat-form-field-appearance-outline .mat-form-field-wrapper{
+  margin: 0px;
+}
+::ng-deep .mat-form-wrap .mat-form-field-wrapper{
+  padding-bottom: 0px;
+}
+
+/* .mat-form-field-appearance-outline .mat-form-field-infix{
+
+}
+.mat-form-field-appearance-outline .mat-form-field-wrapper */
+::ng-deep .mat-form-wrap .mat-form-field{
+  line-height: 1;
+}
+::ng-deep .mat-form-wrap .mat-form-field-appearance-outline .mat-form-field-wrapper{
+  margin: 0px;
 }

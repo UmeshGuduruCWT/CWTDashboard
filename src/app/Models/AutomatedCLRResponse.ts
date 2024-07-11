@@ -88,6 +88,7 @@ export class DataCLR {
     CreatedDate_c : string;
     TaskStatus : string;
     Servicing_location : string;
+    ExpectedDecisionDate : Date;
     Assignment_date : Date;
     ResourseRequestedDate : Date;
     New_Business_volume__US__ : number;
@@ -166,6 +167,7 @@ export class DataCLR {
     Global_CIS_RoomIT_Integration_Lead_replacement : string;
     Date_added_to_the_CLR_c : string;
     TestingDate : Date;
+    ExpectedDecisionDate_c : string;
     Assignment_date_c : string;
     ResourseRequestedDate_c : string;
     UpdateOn : Date;

@@ -182,6 +182,7 @@ export class NPSClientEntriesComponent implements OnInit {
       this.dashboard.ShowSpinnerHandler(false);
     })
   }
+  
   protected AFNfilter() {
     if (!this.LManagerList) {
       return;
@@ -283,6 +284,9 @@ export class NPSClientEntriesComponent implements OnInit {
     if(this.Email.value == "null" || this.Email.value  == null){
       this.Email.setValue("");
     }
+    if(this.Country.value == "null" || this.Country.value == null || this.Country.value == "---"){
+      this.Country.setValue("");
+    }
     if(this.GManager.value == "null" || this.GManager.value  == null){
       this.GManager.setValue("To Be Assigned");
     }
@@ -303,6 +307,8 @@ export class NPSClientEntriesComponent implements OnInit {
       this.ClientType.markAsTouched();
     }else{
       if(this.ButtonName == "Save"){
+        // console.log(this.ClientName.value,this.CompanyName.value,this.Email.value,this.Country.value,this.Region.value,this.RManager.value,this.GManager.value,
+        //     this.LManager.value,DateGo_Live,this.ClientType.value,this.ClientContactNumber,this.Language.value,"New Record",localStorage.getItem("UID"))
         this.service.NpsInsert(this.ClientName.value,this.CompanyName.value,this.Email.value,this.Country.value,this.Region.value,this.RManager.value,this.GManager.value,
           this.LManager.value,DateGo_Live,this.ClientType.value,this.ClientContactNumber,this.Language.value,"New Record",localStorage.getItem("UID")).subscribe(data=>{
             if(data.code == 200){
@@ -345,6 +351,24 @@ export class NPSClientEntriesComponent implements OnInit {
     this.FilteredCount = this.dataSource.filteredData.length;
   }
   RecordNO;ButtonName;
+  
+  OppID;
+  OppIDErrorMessage : string = "";
+  OnApplyClick(){
+    this.service.GetSCDataUsingOppID(this.OppID).subscribe(data => {
+      if(data.code == 200){
+        if(data.Data.length > 0){
+          this.OppIDErrorMessage = "";
+          this.CompanyName.setValue(data.Data[0].op_Account_Name);
+        }else{
+          this.OppIDErrorMessage = "No data found using "+ this.OppID +" Opportunity ID";
+        }
+      }else {
+        this.CompanyName.setValue("");
+        this.OppIDErrorMessage = data.message;
+      }
+    })
+  }
   RowSelected(npsId : number){
     for(let i= 0;i<this.NPSViewData.length;i++){
       if(npsId == this.NPSViewData[i].NpsId){

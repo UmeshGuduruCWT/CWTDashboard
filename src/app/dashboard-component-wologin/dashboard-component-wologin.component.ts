@@ -15,7 +15,7 @@ export class DashboardComponentWOLoginComponent implements OnInit {
   screenWidth: number;
   screenHeight : number;
   imageUrl : string = "assets/images/cwt.png";
-  Userimage : string = "assets/images/CWTlogo.jpg";
+  Userimage : string = "assets/images/CWT.jpg";
   constructor(public service : DashboardServiceService,public datepipe : DatePipe,private route : ActivatedRoute,private breakpointObserver: BreakpointObserver,private router : Router) {
     // set screenWidth on page load
     this.screenWidth = window.innerWidth;

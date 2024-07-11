@@ -100,27 +100,27 @@
                             </ng-container>
                             <ng-container matColumnDef="January_A">
                                 <th mat-header-cell *matHeaderCellDef class="textSizes" style="text-align: center;background-color:  #34495E;color: white"> Jan </th>
-                                <td mat-cell *matCellDef="let element" [ngStyle]="{'font-weight' : element.CycleTimeCategory == 'Overall' ? 'bold' : 'normal','background-color' : element.CycleTimeCategory == 'Overall' ? 'rgba(133, 146, 158,3)' : '#FFFFFF'}"> {{element.January_A}} </td>
+                                <td mat-cell *matCellDef="let element" class="ref" [ngStyle]="{'font-weight' : element.CycleTimeCategory == 'Overall' ? 'bold' : 'normal','background-color' : SelectedMonth == 'Jan' && element.CycleTimeCategory == SelectedCategory ? 'rgb(245, 176, 65)' : SelectedMonth != 'Overall' && element.CycleTimeCategory == 'Overall' ? 'rgba(133, 146, 158,3)' : '#FFFFFF'}" (click)="onCategoryMonthClick(element.CycleTimeCategory,'Jan')"> {{element.January_A}} </td>
                             </ng-container>
                             <ng-container matColumnDef="February_A">
                                 <th mat-header-cell *matHeaderCellDef class="textSizes" style="text-align: center;background-color:  #34495E;color: white"> Feb </th>
-                                <td mat-cell *matCellDef="let element" [ngStyle]="{'font-weight' : element.CycleTimeCategory == 'Overall' ? 'bold' : 'normal','background-color' : element.CycleTimeCategory == 'Overall' ? 'rgba(133, 146, 158,3)' : '#FFFFFF'}"> {{element.February_A}} </td>
+                                <td mat-cell *matCellDef="let element" class="ref" [ngStyle]="{'font-weight' : element.CycleTimeCategory == 'Overall' ? 'bold' : 'normal','background-color' : SelectedMonth == 'Feb' && element.CycleTimeCategory == SelectedCategory ? 'rgb(245, 176, 65)' : SelectedMonth != 'Overall' && element.CycleTimeCategory == 'Overall' ? 'rgba(133, 146, 158,3)' : '#FFFFFF'}" (click)="onCategoryMonthClick(element.CycleTimeCategory,'Feb')"> {{element.February_A}} </td>
                             </ng-container>
                             <ng-container matColumnDef="March_A">
                                 <th mat-header-cell *matHeaderCellDef class="textSizes" style="text-align: center;background-color:  #34495E;color: white"> Mar </th>
-                                <td mat-cell *matCellDef="let element" [ngStyle]="{'font-weight' : element.CycleTimeCategory == 'Overall' ? 'bold' : 'normal','background-color' : element.CycleTimeCategory == 'Overall' ? 'rgba(133, 146, 158,3)' : '#FFFFFF'}"> {{element.March_A}} </td>
+                                <td mat-cell *matCellDef="let element" class="ref" [ngStyle]="{'font-weight' : element.CycleTimeCategory == 'Overall' ? 'bold' : 'normal','background-color' : SelectedMonth == 'Mar' && element.CycleTimeCategory == SelectedCategory ? 'rgb(245, 176, 65)' : SelectedMonth != 'Overall' && element.CycleTimeCategory == 'Overall' ? 'rgba(133, 146, 158,3)' : '#FFFFFF'}" (click)="onCategoryMonthClick(element.CycleTimeCategory,'Mar')"> {{element.March_A}} </td>
                             </ng-container>
                             <ng-container matColumnDef="April_A">
                                 <th mat-header-cell *matHeaderCellDef class="textSizes" style="text-align: center;background-color:  #34495E;color: white"> Apr </th>
-                                <td mat-cell *matCellDef="let element" [ngStyle]="{'font-weight' : element.CycleTimeCategory == 'Overall' ? 'bold' : 'normal','background-color' : element.CycleTimeCategory == 'Overall' ? 'rgba(133, 146, 158,3)' : '#FFFFFF'}"> {{element.April_A}} </td>
+                                <td mat-cell *matCellDef="let element" class="ref" [ngStyle]="{'font-weight' : element.CycleTimeCategory == 'Overall' ? 'bold' : 'normal','background-color' : SelectedMonth == 'Apr' && element.CycleTimeCategory == SelectedCategory ? 'rgb(245, 176, 65)' : SelectedMonth != 'Overall' && element.CycleTimeCategory == 'Overall' ? 'rgba(133, 146, 158,3)' : '#FFFFFF'}" (click)="onCategoryMonthClick(element.CycleTimeCategory,'Apr')"> {{element.April_A}} </td>
                             </ng-container>
                             <ng-container matColumnDef="May_A">
                                 <th mat-header-cell *matHeaderCellDef class="textSizes" style="text-align: center;background-color:  #34495E;color: white"> May </th>
-                                <td mat-cell *matCellDef="let element" [ngStyle]="{'font-weight' : element.CycleTimeCategory == 'Overall' ? 'bold' : 'normal','background-color' : element.CycleTimeCategory == 'Overall' ? 'rgba(133, 146, 158,3)' : '#FFFFFF'}"> {{element.May_A}} </td>
+                                <td mat-cell *matCellDef="let element" class="ref" [ngStyle]="{'font-weight' : element.CycleTimeCategory == 'Overall' ? 'bold' : 'normal','background-color' : SelectedMonth == 'May' && element.CycleTimeCategory == SelectedCategory ? 'rgb(245, 176, 65)' : SelectedMonth != 'Overall' && element.CycleTimeCategory == 'Overall' ? 'rgba(133, 146, 158,3)' : '#FFFFFF'}" (click)="onCategoryMonthClick(element.CycleTimeCategory,'May')"> {{element.May_A}} </td>
                             </ng-container>
                             <ng-container matColumnDef="June_A">
                                 <th mat-header-cell *matHeaderCellDef class="textSizes" style="text-align: center;background-color:  #34495E;color: white"> Jun </th>
-                                <td mat-cell *matCellDef="let element" [ngStyle]="{'font-weight' : element.CycleTimeCategory == 'Overall' ? 'bold' : 'normal','background-color' : element.CycleTimeCategory == 'Overall' ? 'rgba(133, 146, 158,3)' : '#FFFFFF'}"> {{element.June_A}} </td>
+                                <td mat-cell *matCellDef="let element" class="ref" [ngStyle]="{'font-weight' : element.CycleTimeCategory == 'Overall' ? 'bold' : 'normal','background-color' : SelectedMonth == 'Jun' && element.CycleTimeCategory == SelectedCategory ? 'rgb(245, 176, 65)' : SelectedMonth != 'Overall' && element.CycleTimeCategory == 'Overall' ? 'rgba(133, 146, 158,3)' : '#FFFFFF'}" (click)="onCategoryMonthClick(element.CycleTimeCategory,'Jun')"> {{element.June_A}} </td>
                             </ng-container>
                             <!-- <ng-container matColumnDef="H_One_A">
                                 <th mat-header-cell *matHeaderCellDef class="textSizes" style="text-align: center;background-color:  #34495E;color: white"> H-1 </th>
@@ -132,27 +132,27 @@
                             </ng-container> -->
                             <ng-container matColumnDef="July_A">
                                 <th mat-header-cell *matHeaderCellDef class="textSizes" style="text-align: center;background-color:  #34495E;color: white"> Jul </th>
-                                <td mat-cell *matCellDef="let element" [ngStyle]="{'font-weight' : element.CycleTimeCategory == 'Overall' ? 'bold' : 'normal','background-color' : element.CycleTimeCategory == 'Overall' ? 'rgba(133, 146, 158,3)' : '#FFFFFF'}"> {{element.July_A}} </td>
+                                <td mat-cell *matCellDef="let element" class="ref" [ngStyle]="{'font-weight' : element.CycleTimeCategory == 'Overall' ? 'bold' : 'normal','background-color' : SelectedMonth == 'Jul' && element.CycleTimeCategory == SelectedCategory ? 'rgb(245, 176, 65)' : SelectedMonth != 'Overall' && element.CycleTimeCategory == 'Overall' ? 'rgba(133, 146, 158,3)' : '#FFFFFF'}" (click)="onCategoryMonthClick(element.CycleTimeCategory,'Jul')"> {{element.July_A}} </td>
                             </ng-container>
                             <ng-container matColumnDef="August_A">
                                 <th mat-header-cell *matHeaderCellDef class="textSizes" style="text-align: center;background-color:  #34495E;color: white"> Aug </th>
-                                <td mat-cell *matCellDef="let element" [ngStyle]="{'font-weight' : element.CycleTimeCategory == 'Overall' ? 'bold' : 'normal','background-color' : element.CycleTimeCategory == 'Overall' ? 'rgba(133, 146, 158,3)' : '#FFFFFF'}"> {{element.August_A}} </td>
+                                <td mat-cell *matCellDef="let element" class="ref" [ngStyle]="{'font-weight' : element.CycleTimeCategory == 'Overall' ? 'bold' : 'normal','background-color' : SelectedMonth == 'Aug' && element.CycleTimeCategory == SelectedCategory ? 'rgb(245, 176, 65)' : SelectedMonth != 'Overall' && element.CycleTimeCategory == 'Overall' ? 'rgba(133, 146, 158,3)' : '#FFFFFF'}" (click)="onCategoryMonthClick(element.CycleTimeCategory,'Aug')"> {{element.August_A}} </td>
                             </ng-container>
                             <ng-container matColumnDef="September_A">
                                 <th mat-header-cell *matHeaderCellDef class="textSizes" style="text-align: center;background-color:  #34495E;color: white"> Sep </th>
-                                <td mat-cell *matCellDef="let element" [ngStyle]="{'font-weight' : element.CycleTimeCategory == 'Overall' ? 'bold' : 'normal','background-color' : element.CycleTimeCategory == 'Overall' ? 'rgba(133, 146, 158,3)' : '#FFFFFF'}"> {{element.September_A}} </td>
+                                <td mat-cell *matCellDef="let element" class="ref" [ngStyle]="{'font-weight' : element.CycleTimeCategory == 'Overall' ? 'bold' : 'normal','background-color' : SelectedMonth == 'Sep' && element.CycleTimeCategory == SelectedCategory ? 'rgb(245, 176, 65)' : SelectedMonth != 'Overall' && element.CycleTimeCategory == 'Overall' ? 'rgba(133, 146, 158,3)' : '#FFFFFF'}" (click)="onCategoryMonthClick(element.CycleTimeCategory,'Sep')"> {{element.September_A}} </td>
                             </ng-container>
                             <ng-container matColumnDef="October_A">
                                 <th mat-header-cell *matHeaderCellDef class="textSizes" style="text-align: center;background-color:  #34495E;color: white"> Oct </th>
-                                <td mat-cell *matCellDef="let element" [ngStyle]="{'font-weight' : element.CycleTimeCategory == 'Overall' ? 'bold' : 'normal','background-color' : element.CycleTimeCategory == 'Overall' ? 'rgba(133, 146, 158,3)' : '#FFFFFF'}"> {{element.October_A}} </td>
+                                <td mat-cell *matCellDef="let element" class="ref" [ngStyle]="{'font-weight' : element.CycleTimeCategory == 'Overall' ? 'bold' : 'normal','background-color' : SelectedMonth == 'Oct' && element.CycleTimeCategory == SelectedCategory ? 'rgb(245, 176, 65)' : SelectedMonth != 'Overall' && element.CycleTimeCategory == 'Overall' ? 'rgba(133, 146, 158,3)' : '#FFFFFF'}" (click)="onCategoryMonthClick(element.CycleTimeCategory,'Oct')"> {{element.October_A}} </td>
                             </ng-container>
                             <ng-container matColumnDef="November_A">
                                 <th mat-header-cell *matHeaderCellDef class="textSizes" style="text-align: center;background-color:  #34495E;color: white"> Nov </th>
-                                <td mat-cell *matCellDef="let element" [ngStyle]="{'font-weight' : element.CycleTimeCategory == 'Overall' ? 'bold' : 'normal','background-color' : element.CycleTimeCategory == 'Overall' ? 'rgba(133, 146, 158,3)' : '#FFFFFF'}"> {{element.November_A}} </td>
+                                <td mat-cell *matCellDef="let element" class="ref" [ngStyle]="{'font-weight' : element.CycleTimeCategory == 'Overall' ? 'bold' : 'normal','background-color' : SelectedMonth == 'Nov' && element.CycleTimeCategory == SelectedCategory ? 'rgb(245, 176, 65)' : SelectedMonth != 'Overall' && element.CycleTimeCategory == 'Overall' ? 'rgba(133, 146, 158,3)' : '#FFFFFF'}" (click)="onCategoryMonthClick(element.CycleTimeCategory,'Nov')"> {{element.November_A}} </td>
                             </ng-container>
                             <ng-container matColumnDef="December_A">
                                 <th mat-header-cell *matHeaderCellDef class="textSizes" style="text-align: center;background-color:  #34495E;color: white"> Dec </th>
-                                <td mat-cell *matCellDef="let element" [ngStyle]="{'font-weight' : element.CycleTimeCategory == 'Overall' ? 'bold' : 'normal','background-color' : element.CycleTimeCategory == 'Overall' ? 'rgba(133, 146, 158,3)' : '#FFFFFF'}"> {{element.December_A}} </td>
+                                <td mat-cell *matCellDef="let element" class="ref" [ngStyle]="{'font-weight' : element.CycleTimeCategory == 'Overall' ? 'bold' : 'normal','background-color' : SelectedMonth == 'Dec' && element.CycleTimeCategory == SelectedCategory ? 'rgb(245, 176, 65)' : SelectedMonth != 'Overall' && element.CycleTimeCategory == 'Overall' ? 'rgba(133, 146, 158,3)' : '#FFFFFF'}" (click)="onCategoryMonthClick(element.CycleTimeCategory,'Dec')"> {{element.December_A}} </td>
                             </ng-container>
                             <!-- <ng-container matColumnDef="H_Two_A">
                                 <th mat-header-cell *matHeaderCellDef class="textSizes" style="text-align: center;background-color:  #34495E;color: white"> H-2 </th>
@@ -190,6 +190,9 @@
                         </table>
                     </div>
                 </div>
+                <div class="col-md-12">
+                    <label style="color: red;font-weight:  bold;margin-left: 15px;"> *Please click on the overall Cycle Time for a particular month and view the detail in the table below.</label>
+                </div>
                 <div class="row col-md-12" style="margin: 0px">
                     <div class="col-md-7" style="margin-top: 25px;text-align: right;">
                         <mat-form-field style="width: 60%;margin-left: 10px;">
@@ -201,6 +204,9 @@
                     <div class="col-md-5" style="text-align: right;margin-top: 25px;padding-right: 30px;">
                         <button mat-raised-button style="background-color: #F16950;color: white;" (click)="exportCycleTimeData()">Export <mat-icon style="color: white;font-size: 20px;margin-top: 4px;">save_alt</mat-icon></button>
                     </div>
+                </div>
+                <div class="col-md-12">
+                    <label style="color: red;font-weight:  bold;margin-left: 15px;"> *Above 365 Cycle time records are excluded in this report.</label>
                 </div>
                 <div class="col-md-12">
                     <div class="example-container" [ngStyle]="{'height' : (screenHeight-80)+'px'}" style="margin-left: 15px;border: 1px solid rgb(196, 196, 196);">

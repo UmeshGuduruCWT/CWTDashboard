@@ -1,0 +1,126 @@
+<div style="margin: 20px;">
+    <div class="row col-md-12" style="margin: 0px;padding : 0px">
+        <div class="col-md-12">
+            <label class="main_heading">Errors Allocated</label>
+            <button mat-raised-button (click)="NewRecord()" style="background-color: #F16950;color: white;margin-left: 30px;margin-top: 15px;">New Record</button>
+            <button mat-raised-button style="height: 33px;background-color: #F16950;margin-left: 30px;color: white;margin-top: 15px;" (click)="Export()">Export
+                <mat-icon style="font-size: 18px;color: white;">save_alt</mat-icon>
+            </button>
+            <mat-form-field style="width: 40%;margin-left: 50px;">
+                <mat-label style="padding-left: 5px;font-weight: bold;">Search</mat-label>
+                <input matInput (keyup)="applyFilter($event)" #input>
+                <mat-icon matSuffix>search</mat-icon>
+            </mat-form-field>
+            <label style="margin: 8px 0px 0px 15px;font-size: 16px;font-weight: bold;font-family: Arial, Helvetica, sans-serif;">Filtered Count  :&nbsp;&nbsp;</label>
+            <label style="margin: 8px 25px 0px 0px;font-size: 16px;font-weight: bold;font-family: Arial, Helvetica, sans-serif;">{{FilteredCount}}</label>
+        </div>
+    </div>
+</div>
+<div *ngIf="ShowForm" class="mat-elevation-z2" style="margin: 15px 20px 0px 20px;">
+    <div class="row col-md-12" style="margin: 0px;padding : 0px">
+        <div class="col-md-12">
+            <label class="heading">{{HeadingName}}</label>
+        </div>
+        <div class="col-md-4">
+            <mat-form-field class="mat-form">
+                <mat-label style="font-size: 15px;">Con</mat-label>
+                <input style="color: gray;" [formControl]="Con" type="text" required matInput [errorStateMatcher]="matcher">
+                <mat-error *ngIf="Con.hasError('required')">
+                    Con is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="col-md-4">
+            <mat-form-field class="mat-form">
+                <mat-label style="font-size: 15px;">Owner</mat-label>
+                <input style="color: gray;" [formControl]="Owner" type="text" matInput required [errorStateMatcher]="matcher">
+                <mat-error *ngIf="Owner.hasError('required')">
+                    Owner is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="col-md-4">
+            <mat-form-field class="mat-form">
+                <mat-label style="font-size: 15px;">New Owner</mat-label>
+                <input style="color: gray;" [formControl]="NewOwner" type="text" matInput required [errorStateMatcher]="matcher">
+                <mat-error *ngIf="NewOwner.hasError('required')">
+                    New Owner is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="col-md-4">
+            <mat-form-field class="mat-form" >
+                <mat-label style="font-size: 15px;">Average Count</mat-label>
+                <input style="color: gray;" [formControl]="AverageCount" type="text" name="AverageCount" matInput>
+            </mat-form-field>
+        </div>
+        <div class="col-md-4">
+            <mat-form-field class="mat-form" >
+                <mat-label style="font-size: 15px;">Type</mat-label>
+                <input style="color: gray;" [formControl]="Type" type="text" name="Type" matInput>
+            </mat-form-field>
+        </div>
+        <div class="col-md-4">
+            <mat-form-field class="mat-form" >
+                <mat-label style="font-size: 15px;">Comments</mat-label>
+                <input style="color: gray;" [formControl]="Comments" type="text" name="Comments" matInput>
+            </mat-form-field>
+        </div>
+        <div class="col-md-12" style="margin: 0px;padding: 0px;">
+            <button mat-raised-button (click)="OnSaveClick()" style="background-color: #F16950;color: white;margin-left: 30px;margin-bottom: 30px;margin-top: 15px;">{{ButtonName}}</button>
+            <label style="color: #F16950;margin-top: 15px;margin-left: 30px;margin-bottom: 30px;text-decoration: underline;" (click)="OnCancelClick()">Cancel</label>
+        </div>
+    </div>
+</div>
+<div style="margin: 15px 20px 20px 20px;">
+    <div class="row col-md-12" style="margin: 0px;padding : 0px">
+        <div class="example-container mat-elevation-z2" [ngStyle]="{'height' : (screenHeight-230)+'px'}" style="border: 2px solid black;">
+            <table mat-table [dataSource]="dataSource" matSort>
+                <ng-container matColumnDef="Con">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef class="maintextSizes" style="padding-left: 10px;"> Con </th>
+                    <td mat-cell *matCellDef="let element" class="texttd" style="padding-left: 0px;"> {{element.Con}} </td>
+                </ng-container>
+                <ng-container matColumnDef="Owner">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef class="maintextSizes">Owner</th>
+                    <td mat-cell *matCellDef="let element" class="texttd"> {{element.Owner}} </td>
+                </ng-container>
+                <ng-container matColumnDef="NewOwner">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef class="maintextSizes"> New Owner</th>
+                    <td mat-cell *matCellDef="let element" class="texttd"> {{element.NewOwner}} </td>
+                </ng-container>
+                <ng-container matColumnDef="AverageCount">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef class="maintextSizes">AverageCount</th>
+                    <td mat-cell *matCellDef="let element" class="texttd"> {{element.AverageCount}} </td>
+                </ng-container>
+                <ng-container matColumnDef="Type">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef class="maintextSizes">Type</th>
+                    <td mat-cell *matCellDef="let element" class="texttd"> {{element.Type}} </td>
+                </ng-container>
+                <ng-container matColumnDef="Comments">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef class="maintextSizes">Comments</th>
+                    <td mat-cell *matCellDef="let element" class="texttd"> {{element.Comments}} </td>
+                </ng-container>
+                <ng-container matColumnDef="InsertedBy">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef class="maintextSizes">Created By</th>
+                    <td mat-cell *matCellDef="let element" class="texttd"> {{element.InsertedBy}} </td>
+                </ng-container>
+                <ng-container matColumnDef="Inserted_On">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef class="maintextSizes">Created On</th>
+                    <td mat-cell *matCellDef="let element" class="texttd"> {{element.Inserted_On}} </td>
+                </ng-container>
+                <ng-container matColumnDef="actions" stickyEnd>
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef class="maintextSizes" style="max-width: 150px;padding-right: 10px;border-left: 1px solid rgb(196, 196, 196)">Edit</th>
+                    <td mat-cell *matCellDef="let element;let j=index;" style="max-width: 150px;padding-right: 10px;border-right: none;border-left: 1px solid rgb(196, 196, 196);">
+                        <!-- <button mat-icon-button style="color:gray;"> -->
+                            <mat-icon style="display: inline;margin-left: 8px;margin-right: 6px;cursor: pointer;" aria-label="Edit" (click)="RowSelected(element.ErrorAllocatedID)">edit</mat-icon>
+                            <p style="display: inline;margin-right: 6px;font-size: 26px;">|</p>
+                            <mat-icon style="display: inline;margin-right: 8px;cursor: pointer;" aria-label="Delete" (click)="Deleterow(element.ErrorAllocatedID)">delete</mat-icon>
+                        <!-- </button> -->
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="columnsToDisplay;sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: columnsToDisplay;" style="height: 23px;"></tr>
+            </table>
+        </div>
+    </div>
+</div>

@@ -115,6 +115,15 @@
             </div>
             <div class="col-md-3">
                 <mat-form-field style="width: 100%;">
+                    <mat-label>Expected Decision Date</mat-label>
+                    <input matInput [matDatepicker]="Expected_Decision_Date" [(ngModel)]="dateExpectedDecision">
+                    <!-- [min]="todayDate" -->
+                    <mat-datepicker-toggle matSuffix [for]="Expected_Decision_Date"></mat-datepicker-toggle>
+                    <mat-datepicker #Expected_Decision_Date color="primary"></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field style="width: 100%;">
                     <mat-label>Assignment date</mat-label>
                     <input matInput [matDatepicker]="Assignment_date" [(ngModel)]="dateAssignment">
                     <!-- [min]="todayDate" -->

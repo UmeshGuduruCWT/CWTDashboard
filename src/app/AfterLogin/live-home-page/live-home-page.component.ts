@@ -116,7 +116,8 @@ export class LiveHomePageComponent implements OnInit {
       this.PipelineRecords = data.PipelineRecords+"";
       this.HighPotentialVolume = this.NumberConverter(data.HighPotentialVolume);
       this.HighPotentialRecords = data.HighPotentialRecords+"";
-      this.PotentialVolume = this.NumberConverter(data.PotentialVolume);
+      let Potential_Volume = Number(data.HighPotentialVolume)+Number(data.PipelineVolume)+Number(data.HoldVolume)+Number(data.FutureYearsVolume);
+      this.PotentialVolume = this.NumberConverter(Potential_Volume);
       this.PotentialRecords = data.PotentialRecords+"";
       this.CountryList = data.Countries;
       this.CountryNG = [];
@@ -392,7 +393,8 @@ export class LiveHomePageComponent implements OnInit {
         this.PipelineRecords = data.PipelineRecords+"";
         this.HighPotentialVolume = this.NumberConverter(data.HighPotentialVolume);
         this.HighPotentialRecords = data.HighPotentialRecords+"";
-        this.PotentialVolume = this.NumberConverter(data.PotentialVolume);
+        let Potential_Volume = Number(data.HighPotentialVolume)+Number(data.PipelineVolume)+Number(data.HoldVolume)+Number(data.FutureYearsVolume);
+        this.PotentialVolume = this.NumberConverter(Potential_Volume);
         this.PotentialRecords = data.PotentialRecords+"";
         // this.ResponseReceived = data.NpsData[0].NESurveyReceived;
         // this.NPSScore = data.NpsData[0].NESurveyReceived == 0 ? 0 : (Math.round(((data.NpsData[0].NEPromoter/data.NpsData[0].NESurveyReceived)-(data.NpsData[0].NEDetractor/data.NpsData[0].NESurveyReceived))*100*100)/100).toFixed(1);

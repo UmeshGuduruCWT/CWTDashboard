@@ -1,4 +1,10 @@
-<div class="col-md-12" style="text-align: right;"> 
+<div class="col-md-12" style="text-align: right;padding-top: 15px;"> 
+    <mat-form-field class="col-md-2" style="margin-top: 10px;" >
+        <mat-label style="font-size: 15px;">Years</mat-label>
+        <mat-select [formControl]="Year" (selectionChange)="onYearchange()">
+            <mat-option *ngFor="let year of YearsList" [value]="year">{{year}}</mat-option>
+        </mat-select>
+    </mat-form-field>
     <button  mat-raised-button (click)="downloadAsPDF()" style="background-color: #F16950;color: white;margin-right: 30px;margin-top: 15px;">Export To PDF</button>
 </div>
 <div style="background-color: white;text-align: center;">

@@ -90,6 +90,7 @@ export interface NPSViewData{
     UpdatedBy : string;
     UpdatedOn  : string;
     Updated_On : string;
+    RecipientId : string;
 }
 export interface ExistingRegionWiseNPSScore{
     Region : string;

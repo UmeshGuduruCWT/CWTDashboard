@@ -1,10 +1,11 @@
-import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener, ViewChild } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable, Subject, Subscription } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { ActivatedRoute, Router, NavigationExtras, RouterEvent, NavigationEnd } from '@angular/router';
 import { ViewportScroller,Location } from '@angular/common';
 import { DashboardServiceService } from 'src/app/dashboard-service.service';
+import { CountdownComponent, CountdownConfig, CountdownEvent } from 'ngx-countdown';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -66,6 +67,58 @@ export class DashboardComponent implements OnInit{
   }
   date;
   NpsCount : number;npshidden : boolean = true;
+  LastUpdatedText : string;
+  @ViewChild('countdown', { static: false }) private countdown: CountdownComponent;
+  datechecking;
+  config: CountdownConfig = { leftTime: 3600, notify: [1] };
+  handleEvent(e: CountdownEvent) {
+    // this.notify = e.action.toUpperCase();
+    if (e.action === 'notify') {
+      this.countdown.stop();
+      localStorage.clear();
+      this.router.navigate(["/Login"]);
+    }
+  }
+  LogOutorStay(){
+    this.date = new Date();
+    this.datechecking = new Date(localStorage.getItem("LastLoggedIn"));
+    this.datechecking.setMinutes(this.datechecking.getMinutes() + 60);
+    if(this.date > this.datechecking){
+      this.countdown.stop();
+      localStorage.clear();
+      this.router.navigate(["/Login"]);
+      console.log("test")
+    }else{
+      this.countdown.restart();
+      localStorage.setItem("LastLoggedIn",this.date);
+      console.log("test")
+    }
+  }
+  @HostListener('document:mousemove', ['$event']) onMouseMove(event) {
+    if(event) {
+      this.LogOutorStay();
+    }
+  }
+  @HostListener('document:mouseenter', ['$event'])onMouseEnter(event: any) {     
+    if(event) {
+      this.LogOutorStay();
+    }
+  }
+  @HostListener('document:click', ['$event'])onClick(event: string) {
+    if(event) {
+      this.LogOutorStay();
+    }
+  }
+  @HostListener('document:keydown', ['$event']) onKeydownHandler(event: KeyboardEvent) {
+    if(event) {
+      this.LogOutorStay();
+    }
+  }
+  @HostListener('document:scroll', ['$event']) onScroll(event: Event): void {
+    if(event) {
+      this.LogOutorStay();
+    }
+  }
   ShowSpinnerHandler(value){
     this.showSpinner = value;
   }

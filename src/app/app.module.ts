@@ -41,7 +41,7 @@ import { MatTableFilterModule } from 'mat-table-filter';
 import { ProfileComponent, ProfileDialog } from './AfterLogin/profile/profile.component';
 import { StatsComponent } from './AfterLogin/stats/stats.component';
 import { AdmincontrolComponent,EditUserAccess,GrantAccessDialog,AdminDeleteDialog } from './AfterLogin/admincontrol/admincontrol.component';
-import { AutomatedCLRComponent, CLRCommentdailog,DigitalTeamdailog, ProjectTeamDailog,AuditLogdailog, ReplicateDailog,RecordLevelAuditLogdailog,RecordLevelHistorydailog } from './AfterLogin/automated-clr/automated-clr.component';
+import { AutomatedCLRComponent, CLRCommentdailog,DigitalTeamdailog, ProjectTeamDailog,AuditLogdailog, ReplicateDailog,RecordLevelAuditLogdailog,RecordLevelHistorydailog,RecordAvailabilitydailog } from './AfterLogin/automated-clr/automated-clr.component';
 import { NPSComponent } from './AfterLogin/nps/nps.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { AdhocComponent } from './AfterLogin/adhoc/adhoc.component';
@@ -53,7 +53,7 @@ import { ResourceAssignmentComponent } from './AfterLogin/resource-assignment/re
 import { PrioritizationComponent } from './AfterLogin/prioritization/prioritization.component';
 import { NpsImplementationComponent } from './AfterLogin/nps-implementation/nps-implementation.component';
 import { NPSClientEntriesComponent,DeleteNPSClient } from './AfterLogin/npsclient-entries/npsclient-entries.component';
-import { NPSViewComponent } from './AfterLogin/npsview/npsview.component';
+import { ConfirmationDailog, NPSViewComponent } from './AfterLogin/npsview/npsview.component';
 import { DigitalReportComponent } from './AfterLogin/digital-report/digital-report.component';
 import { RollingNPSComponent } from './AfterLogin/rolling-nps/rolling-nps.component';
 import { TooltipModule } from 'ng2-tooltip-directive';
@@ -64,6 +64,12 @@ import { AddUpdateSteeringCommitteeComponent } from './AfterLogin/add-update-ste
 import { KnowledgeBaseComponent } from './AfterLogin/knowledge-base/knowledge-base.component';
 import { SteeringCommitteeRecordViewComponent } from './AfterLogin/steering-committee-record-view/steering-committee-record-view.component';
 import { StatusTrackerComponent } from './AfterLogin/status-tracker/status-tracker.component';
+import { CountdownModule } from 'ngx-countdown';
+import { GpnContactComponent } from './DDO/gpn-contact/gpn-contact.component';
+import { ErrorsAllocatedComponent} from './DDO/errors-allocated/errors-allocated.component';
+import { DeleteRequestDialogComponent } from './DDO/delete-request-dialog/delete-request-dialog.component';
+import { HomeComponent } from './DDO/home/home.component';
+import { DDODataComponent } from './DDO/ddodata/ddodata.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -83,7 +89,7 @@ import { StatusTrackerComponent } from './AfterLogin/status-tracker/status-track
     ConfigDeleteDialog,ManagerPojectDetails,DigitalManagerDetails,
     LessonsLearntComponent,EltDailog, CLRCommentdailog,LessonsLearntdailog, 
     PriorMonthData,DigitalTeamdailog,AuditLogdailog,RecordLevelAuditLogdailog,
-    HomepageComponent,AddingUser,DeleteUser,RecordLevelHistorydailog,
+    HomepageComponent,AddingUser,DeleteUser,RecordLevelHistorydailog,RecordAvailabilitydailog,
     CommentsDialog,DataDialog, RefreshComponent, CycleTimeComponent,
     HierarchyComponent, PerformanceLeaderComponent,
     //  MarketImplementationComponent
@@ -117,17 +123,22 @@ import { StatusTrackerComponent } from './AfterLogin/status-tracker/status-track
     AddUpdateSteeringCommitteeComponent,
     KnowledgeBaseComponent,
     SteeringCommitteeRecordViewComponent,
-    StatusTrackerComponent
+    StatusTrackerComponent,
+    GpnContactComponent,
+    ErrorsAllocatedComponent,
+    DeleteRequestDialogComponent,
+    HomeComponent,ConfirmationDailog,
+    DDODataComponent
   ],
   imports: [
     BrowserModule, CommonModule,
-    AppRoutingModule, MaterialModule,TooltipModule.forRoot({}),
+    AppRoutingModule, MaterialModule,TooltipModule.forRoot({}),CountdownModule,
     ReactiveFormsModule, FormsModule,PdfViewerModule,NgxMatSelectSearchModule,
     MatTableFilterModule,ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'}),
     BrowserAnimationsModule, HttpClientModule,NgMultiSelectDropDownModule.forRoot()
     //,SelectAutocompleteModule
   ],
-  entryComponents: [ELTReportComponent, EltDailog,PriorMonthData,CLRCommentdailog,ResourceComment,ResourceClientDetails,ManagerPojectDetails,DigitalManagerDetails,AuditLogdailog,RecordLevelAuditLogdailog,RecordLevelHistorydailog,ConfigDeleteDialog,DigitalTeamdailog,MatTableFilterModule,TrackerCommentdailog,LessonsLearntdailog,ImplementationProjectStatusdailog, CommentsDialog, DataDialog, AddingUser, DeleteUser, CapacityHierarchyDailog,ProfileDialog,EditUserAccess,GrantAccessDialog,DeleteUserDailog,DeleteSteeringCommitteeDailog,DeleteNPSClient,AdminDeleteDialog,ProjectTeamDailog,ReplicateDailog],
+  entryComponents: [ELTReportComponent,EltDailog,ConfirmationDailog,PriorMonthData,CLRCommentdailog,ResourceComment,ResourceClientDetails,ManagerPojectDetails,DigitalManagerDetails,AuditLogdailog,RecordLevelAuditLogdailog,RecordLevelHistorydailog,RecordAvailabilitydailog,ConfigDeleteDialog,DigitalTeamdailog,MatTableFilterModule,TrackerCommentdailog,LessonsLearntdailog,ImplementationProjectStatusdailog, CommentsDialog, DataDialog, AddingUser, DeleteUser, CapacityHierarchyDailog,ProfileDialog,EditUserAccess,GrantAccessDialog,DeleteUserDailog,DeleteSteeringCommitteeDailog,DeleteNPSClient,DeleteRequestDialogComponent,AdminDeleteDialog,ProjectTeamDailog,ReplicateDailog],
   providers: [DatePipe, ExcelService],
   // BnNgIdleService
   bootstrap: [AppComponent]

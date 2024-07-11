@@ -38,11 +38,11 @@ export class GoLiveReportComponent implements OnInit {
   screenHeight : number;
 
   GolivedataSource;
-  GolivedisplayedColumns : any[] = ['CurrentMonth','NextMonth','NextMonthPlusOne'];
+  GolivedisplayedColumns : any[] = ['CurrentMonth','NextMonth','NextMonthPlusOne','NextMonthPlusTwo','NextMonthPlusThree'];
   GolivedisplayedColumnsWithExpand : any[] = ['expand','Client','Country','EltStatus',...this.GolivedisplayedColumns];
   expandedElement: Data | null;
   GoliveinnerdisplayedColumns : any[] = ['expand','Client','Country','EltStatus',...this.GolivedisplayedColumns]; 
-  displayedColumns_footer : any[] = ['ecc_footer','CurrentMonth_footer','NextMonth_footer','NextMonthPlusOne_footer'];
+  displayedColumns_footer : any[] = ['ecc_footer','CurrentMonth_footer','NextMonth_footer','NextMonthPlusOne_footer','NextMonthPlusTwo_footer','NextMonthPlusThree_footer'];
   columnsToDisplay_footer : string[]  = this.displayedColumns_footer.slice();
   columnsToDisplay: string[] = this.GolivedisplayedColumnsWithExpand.slice();
   columnsToDisplay_h: string[] = this.GoliveinnerdisplayedColumns.slice();
@@ -80,6 +80,8 @@ export class GoLiveReportComponent implements OnInit {
   CurrentMonthYear : string;
   NextMonthYear : string;
   NextMonthYearPlusOne : string;
+  NextMonthYearPlusTwo : string;
+  NextMonthYearPlusThree : string;
   isLoggedIn : boolean;
   EltHideColumns : boolean = true;
   ELTHideorUnhide : string = "Un-Hide ELT Columns";
@@ -104,6 +106,8 @@ export class GoLiveReportComponent implements OnInit {
       this.CurrentMonthYear = today_forMonth.toLocaleString('en-us', { month: 'short' }) + " - " + today_forYear.getFullYear();
       this.NextMonthYear = new Date(today_forMonth.setMonth(today_forMonth.getMonth()+1)).toLocaleString('en-us', { month: 'short' }) + " - " + new Date(today_forYear.setMonth(today_forYear.getMonth()+1)).getFullYear();
       this.NextMonthYearPlusOne = new Date(today_forMonth.setMonth(today_forMonth.getMonth()+1)).toLocaleString('en-us', { month: 'short' }) + " - " + new Date(today_forYear.setMonth(today_forYear.getMonth()+1)).getFullYear();
+      this.NextMonthYearPlusTwo = new Date(today_forMonth.setMonth(today_forMonth.getMonth()+1)).toLocaleString('en-us', { month: 'short' }) + " - " + new Date(today_forYear.setMonth(today_forYear.getMonth()+1)).getFullYear();
+      this.NextMonthYearPlusThree = new Date(today_forMonth.setMonth(today_forMonth.getMonth()+1)).toLocaleString('en-us', { month: 'short' }) + " - " + new Date(today_forYear.setMonth(today_forYear.getMonth()+1)).getFullYear();
       this.OwnerShipList = data.OwnerShip;
       this.masterownerShip = true;
       // for (var i = 0; i < this.OwnerShipList.length; i++) {
@@ -187,21 +191,27 @@ export class GoLiveReportComponent implements OnInit {
       this.ELTHideorUnhide = "Hide ELT Comments";
     }
   }
-  CurrentMonth_Total;NextMonth_Total;NextMonthPlusOne_Total;
+  CurrentMonth_Total;NextMonth_Total;NextMonthPlusOne_Total;NextMonthPlusTwo_Total;NextMonthPlusThree_Total;
   SetGraph(){
     this.service.MarketGoliveReport(this.RegionFilter.value,this.SelectedLevels,this.SelectedMilestonestatus,this.SelectedImplementation,this.SelectedOwnership).subscribe(data =>{
       this.CurrentMonth_Total = Math.round(data.Data.map(t => t.CurrentMonth).reduce((acc,value) => acc + value,0)).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
       this.NextMonth_Total = Math.round(data.Data.map(t => t.NextMonth).reduce((acc,value) => acc + value,0)).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
       this.NextMonthPlusOne_Total = Math.round(data.Data.map(t => t.NextMonthPlusOne).reduce((acc,value) => acc + value,0)).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
+      this.NextMonthPlusTwo_Total = Math.round(data.Data.map(t => t.NextMonthPlusTwo).reduce((acc,value) => acc + value,0)).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
+      this.NextMonthPlusThree_Total = Math.round(data.Data.map(t => t.NextMonthPlusThree).reduce((acc,value) => acc + value,0)).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
       for(let i = 0;i<data.Data.length;i++){
         data.Data[i].CurrentMonth_n = Math.round(data.Data[i].CurrentMonth).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
         data.Data[i].NextMonth_n = Math.round(data.Data[i].NextMonth).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
         data.Data[i].NextMonthPlusOne_n = Math.round(data.Data[i].NextMonthPlusOne).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
+        data.Data[i].NextMonthPlusTwo_n = Math.round(data.Data[i].NextMonthPlusTwo).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
+        data.Data[i].NextMonthPlusThree_n = Math.round(data.Data[i].NextMonthPlusThree).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
         data.Data[i].Country = ""+ data.Data[i].CountrywiseSum.length;
         for(let j = 0;j<data.Data[i].CountrywiseSum.length;j++){
           data.Data[i].CountrywiseSum[j].CurrentMonth_n = Math.round(data.Data[i].CountrywiseSum[j].CurrentMonth).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
           data.Data[i].CountrywiseSum[j].NextMonth_n = Math.round(data.Data[i].CountrywiseSum[j].NextMonth).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
           data.Data[i].CountrywiseSum[j].NextMonthPlusOne_n = Math.round(data.Data[i].CountrywiseSum[j].NextMonthPlusOne).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
+          data.Data[i].CountrywiseSum[j].NextMonthPlusTwo_n = Math.round(data.Data[i].CountrywiseSum[j].NextMonthPlusTwo).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
+          data.Data[i].CountrywiseSum[j].NextMonthPlusThree_n = Math.round(data.Data[i].CountrywiseSum[j].NextMonthPlusThree).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
         }
       }
       this.GolivedataSource = new MatTableDataSource(data.Data);

@@ -147,9 +147,13 @@ export class Data {
     CurrentMonth : any;
     NextMonth : any;
     NextMonthPlusOne : any;
+    NextMonthPlusTwo : any;
+    NextMonthPlusThree : any;
     CurrentMonth_n : any;
     NextMonth_n : any;
     NextMonthPlusOne_n : any;
+    NextMonthPlusTwo_n : any;
+    NextMonthPlusThree_n : any;
     Jan: any;
     Feb: any;
     Mar: any;
@@ -378,8 +382,6 @@ export class Data {
     CountryStatus : string;
     ActivityType : string;
     OBTReseller : string;
-
-
     iMeet_Workspace_Title : string;
     OBT_Reseller___Direct : string;
     GlobalCISOBTLead  : string;
@@ -394,27 +396,35 @@ export class Data {
     DataSourceType : string;
     GrandTotal : number;
     Target_A : number;
-
     //CLR Activity
     ColumnName : string;
     UpdatedDate : string;
     UpdatedDate_text : string
-
     //Record History
     EPDate : string;
     HPDate : string;
     PDate : string;
     Assignment: string;
+    ExpectedDecision : string;
     ResourceRequested : string;
     ProjectStart : string;
     GoLive : string;
-
-    EPDate_c : Date;
-    HPDate_c : Date;
-    PDate_c : Date;
-    Assignment_c: Date;
-    ResourceRequested_c : Date;
-    ProjectStart_c : Date;
-    GoLive_c : Date;
-
+    EPDate_c : any;
+    HPDate_c : any;
+    PDate_c : any;
+    ExpectedDecision_c : any;
+    Assignment_c: any;
+    ResourceRequested_c : any;
+    ProjectStart_c : any;
+    GoLive_c : any;
+    CycleTime : any;
+    Close_Date : Date;
+    Line_Win_Probability : number;
+    Opportunity_Scope : string;
+    Opportunity_Total_Volume_USD : number;
+    Region__Revenue_ : string;
+    Revenue_Id : number;
+    Revenue_Opportunity_Type : string;
+    Revenue_Status : string;
+    Sales_Stage_Name : string;
 }

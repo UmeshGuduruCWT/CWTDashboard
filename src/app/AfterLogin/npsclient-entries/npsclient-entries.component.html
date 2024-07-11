@@ -21,14 +21,20 @@
         <div class="col-md-12">
             <label class="heading">{{HeadingName}}</label>
         </div>
-        <div class="col-md-4">
-            <mat-form-field class="mat-form" >
-                <mat-label style="font-size: 15px;">Client First and Last Name</mat-label>
-                <input style="color: gray;" [formControl]="ClientName" type="text" matInput required [errorStateMatcher]="matcher">
-                <mat-error *ngIf="ClientName.hasError('required')">
-                    Client name is <strong>required</strong>
-                </mat-error>
-            </mat-form-field>
+        <div class="col-md-12" *ngIf="ButtonName == 'Save' ? true : false">
+            <div class="row" style="margin: 20px 0px 0px 0px;">
+                <label style="font-size: 15px;color: #7a7a7a;padding: 0px 0px 0px 15px;">Get details from CLR by using Opportunity ID in below input fields</label>
+            </div>
+            <div class="row" style="margin: 5px 0px 0px 0px;">
+                <mat-form-field appearance="outline" class="col-md-3">
+                    <mat-label style="font-size: 15px;">Opportunity ID </mat-label>
+                    <input style="color: gray;" [(ngModel)]="OppID" name="OppID" matInput>
+                </mat-form-field>
+                <button mat-raised-button (click)="OnApplyClick()" style="height: 35px;background-color: #F16950;color: white;margin-left: 20px;margin-top: 10px;"><span class="material-icons">forward</span></button>    
+            </div>
+            <div class="row" style="margin: 0px;">
+                <label style="font-size: 13px;color: rgb(255, 56, 56);padding: 0px 0px 0px 20px;">{{OppIDErrorMessage}}</label>
+            </div>
         </div>
         <div class="col-md-4">
             <mat-form-field class="mat-form">
@@ -37,17 +43,15 @@
                 <mat-error *ngIf="CompanyName.hasError('required')">
                     Company Name is <strong>required</strong>
                 </mat-error>
-                <!-- <mat-select [formControl]="CompanyName">
-                    <mat-option>
-                        <ngx-mat-select-search
-                          [formControl]="CompanyNameSearch"
-                          placeholderLabel=""
-                          noEntriesFoundLabel="'no match found'">
-                        </ngx-mat-select-search>
-                    </mat-option>
-                    <mat-option *ngFor="let C_name of CompanyNameData | async" [value]="C_name.Account_Name">{{C_name.Account_Name}}</mat-option>
-                </mat-select> -->
-                <!-- <input style="color: gray;" [(ngModel)]="Country" name="Country" matInput> -->
+            </mat-form-field>
+        </div>
+        <div class="col-md-4">
+            <mat-form-field class="mat-form">
+                <mat-label style="font-size: 15px;">Client First and Last Name</mat-label>
+                <input style="color: gray;" [formControl]="ClientName" type="text" matInput required [errorStateMatcher]="matcher">
+                <mat-error *ngIf="ClientName.hasError('required')">
+                    Client name is <strong>required</strong>
+                </mat-error>
             </mat-form-field>
         </div>
         <div class="col-md-4">

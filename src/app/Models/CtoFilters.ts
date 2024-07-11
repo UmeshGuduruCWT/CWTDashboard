@@ -10,6 +10,10 @@ export interface GroupName {
     Group_Name: string;
     isSelected: boolean;
 }
+export interface TaskType {
+    TaskType: string;
+    isSelected: boolean;
+}
 export interface ProjectLevel {
     Workspace__Project_Level: string;
     isSelected: boolean;
@@ -31,6 +35,7 @@ export interface CtoFilters {
     code: number;
     ProjectStatus: ProjectStatus[];
     CriticalOverDue: CriticalOverDue[];
+    TaskType: TaskType[];
     GroupName: GroupName[];
     ProjectLevel: ProjectLevel[];
     Region: Region[];

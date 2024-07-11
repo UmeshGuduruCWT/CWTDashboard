@@ -9,6 +9,7 @@ import { Chart } from 'chart.js';
 import jspdf from 'jspdf';
 import html2canvas from 'html2canvas';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
+import { FormControl } from '@angular/forms';
 @Component({
   selector: 'app-nps-implementation',
   templateUrl: './nps-implementation.component.html',
@@ -66,10 +67,22 @@ export class NpsImplementationComponent implements OnInit {
   ne_commenttwocount = [];
   ne_commentthree = [];
   ne_commentthreecount = [];
+  YearsList  : any = [];
+  Year= new FormControl();
   ngOnInit(): void {
     this.CurrentYear = (new Date()).getFullYear();
+    var s_year = 2019;
+    for(let i = 2019;i <= this.CurrentYear;i++){
+      s_year = i;
+      this.YearsList.push(s_year);
+    }
+    this.GetData();
+  }
+  GetData(){
+    this.Year.setValue(this.CurrentYear);
+    
     this.TargetNPSScore = 70;
-    this.service.NPSData().subscribe(data => {
+    this.service.NPSData(this.CurrentYear).subscribe(data => {
       if(data.code == 200){
         this.SurveySent = data.NPSvalues[0].NewBusinessSurveySent;
         this.E_SurveySent = data.NPSvalues[0].ExistingSurveySent;
@@ -856,6 +869,10 @@ export class NpsImplementationComponent implements OnInit {
         })
       }
     })
+  }
+  onYearchange(){
+    this.CurrentYear = this.Year.value;
+    this.GetData();
   }
   downloadAsPDF(){
     var data = document.getElementById('pdfdata');

@@ -238,8 +238,18 @@
                                 <!-- <td mat-footer-cell *matFooterCellDef style="background-color:  rgb(213, 216, 220);color: black;"></td> -->
                             </ng-container>
                             <ng-container matColumnDef="NextMonthPlusOne">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="border-bottom: 2px solid black;text-align: center;min-width : 150px;max-width:200px;padding-right: 10px;border-right: none;background-color:#34495E;color: white;"> {{NextMonthYearPlusOne}} </th>
-                                <td mat-cell *matCellDef="let element" style="min-width : 150px;max-width:200px;padding-right: 10px;border-right: none;"> {{element.NextMonthPlusOne_n}} </td>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="border-bottom: 2px solid black;text-align: center;min-width : 150px;max-width:200px;background-color:#34495E;color: white;"> {{NextMonthYearPlusOne}} </th>
+                                <td mat-cell *matCellDef="let element" style="min-width : 150px;max-width:200px;"> {{element.NextMonthPlusOne_n}} </td>
+                                <!-- <td mat-footer-cell *matFooterCellDef style="background-color:  rgb(213, 216, 220);color: black;"></td> -->
+                            </ng-container>
+                            <ng-container matColumnDef="NextMonthPlusTwo">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="border-bottom: 2px solid black;text-align: center;min-width : 150px;max-width:200px;background-color:#34495E;color: white;"> {{NextMonthYearPlusTwo}} </th>
+                                <td mat-cell *matCellDef="let element" style="min-width : 150px;max-width:200px;"> {{element.NextMonthPlusTwo_n}} </td>
+                                <!-- <td mat-footer-cell *matFooterCellDef style="background-color:  rgb(213, 216, 220);color: black;"></td> -->
+                            </ng-container>
+                            <ng-container matColumnDef="NextMonthPlusThree">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="textSizes" style="border-bottom: 2px solid black;text-align: center;min-width : 150px;max-width:200px;padding-right: 10px;border-right: none;background-color:#34495E;color: white;"> {{NextMonthYearPlusThree}} </th>
+                                <td mat-cell *matCellDef="let element" style="min-width : 150px;max-width:200px;padding-right: 10px;border-right: none;"> {{element.NextMonthPlusThree_n}} </td>
                                 <!-- <td mat-footer-cell *matFooterCellDef style="background-color:  rgb(213, 216, 220);color: black;"></td> -->
                             </ng-container>
                             <ng-container matColumnDef="expand">
@@ -280,7 +290,13 @@
                                                 <td mat-cell *matCellDef="let element" style="min-width : 150px;max-width:200px;"> {{element.NextMonth_n}} </td>
                                             </ng-container>
                                             <ng-container matColumnDef="NextMonthPlusOne">
-                                                <td mat-cell *matCellDef="let element" style="padding-right: 10px;border-right: none;min-width : 150px;max-width:200px;"> {{element.NextMonthPlusOne_n}} </td>
+                                                <td mat-cell *matCellDef="let element" style="min-width : 150px;max-width:200px;"> {{element.NextMonthPlusOne_n}} </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="NextMonthPlusTwo">
+                                                <td mat-cell *matCellDef="let element" style="min-width : 150px;max-width:200px;"> {{element.NextMonthPlusTwo_n}} </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="NextMonthPlusThree">
+                                                <td mat-cell *matCellDef="let element" style="padding-right: 10px;border-right: none;min-width : 150px;max-width:200px;"> {{element.NextMonthPlusThree_n}} </td>
                                             </ng-container>
                                             <tr mat-row *matRowDef="let row; columns: columnsToDisplay_h;" class="element-row">
                                             </tr>
@@ -298,7 +314,13 @@
                                 <td mat-footer-cell *matFooterCellDef class="footer_cell">{{NextMonth_Total}}</td>
                             </ng-container>
                             <ng-container matColumnDef="NextMonthPlusOne_footer">
-                                <td mat-footer-cell *matFooterCellDef class="footer_cell" style="padding-right: 10px;border-right: none;">{{NextMonthPlusOne_Total}}</td>
+                                <td mat-footer-cell *matFooterCellDef class="footer_cell">{{NextMonthPlusOne_Total}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="NextMonthPlusTwo_footer">
+                                <td mat-footer-cell *matFooterCellDef class="footer_cell">{{NextMonthPlusTwo_Total}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="NextMonthPlusThree_footer">
+                                <td mat-footer-cell *matFooterCellDef class="footer_cell" style="padding-right: 10px;border-right: none;">{{NextMonthPlusThree_Total}}</td>
                             </ng-container>
                             <tr mat-header-row *matHeaderRowDef="columnsToDisplay; sticky: true" style="padding-top: 0px;margin-top: 0px;height: 35px"></tr>
                             <tr mat-row *matRowDef="let row; columns: columnsToDisplay;" style="height: 35px;"

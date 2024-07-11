@@ -342,73 +342,71 @@ export class AddUpdateSteeringCommitteeComponent implements OnInit {
       this.SelectedRegions = this.Region.map((obj) => obj.Region).join(', ');
       this.SelectedCountries = this.Country.map((obj) => obj.Country).join(', ');
       if(this.ButtonName == "Update"){
-        console.log(this.waves)
-        console.log(this.RisksGap);
-        // this.service.SteeringCommitteeUpdate(this.SCID,this.Record_Status,this.ClientName,this.Client_Type,this.Project_Lead,this.Project_Status,this.Project_Trend,
-        //   this.TotalBusinessVolume,this.NewBusinessVolume,this.SelectedRegions,this.SelectedCountries,this.CurrentState,
-        //   this.CompletedKeyDeliverables,this.ScheduledKeyDeliverables,this.AdditionalNotes,localStorage.getItem("UID")).subscribe(data => {
-        //     if(data.code == 200){
-        //       if(this.waves.length > 0){
-        //         for(let i = 0;i< this.waves.length;i++){
-        //           if(this.waves[i].GoLive == null){
-        //             this.waves[i].GoLiveDate = null
-        //           }else{
-        //             this.waves[i].GoLiveDate = this.datepipe.transform(this.waves[i].GoLive, "MM-dd-yyyy")+"";
-        //           }
-        //           if(this.waves[i].arr_Region == undefined){
-        //             this.waves[i].Region = "";
-        //           }else{
-        //             if(this.waves[i].arr_Region.length > 0){
-        //               this.waves[i].Region = this.waves[i].arr_Region.map((obj) => obj.Region).join(', ');
-        //             }else{
-        //               this.waves[i].Region = "";
-        //             }
-        //           }
-        //           if(this.waves[i].arr_Country == undefined){
-        //             this.waves[i].Country = "";
-        //           }else{
-        //             if(this.waves[i].arr_Country.length > 0){
-        //               this.waves[i].Country = this.waves[i].arr_Country.map((obj) => obj.Country).join(', ');
-        //             }else{
-        //               this.waves[i].Country = "";
-        //             }
-        //           }
-        //           if(this.waves[i].WaveID == null){
-        //             this.waves[i].SCID = this.SCID;
-        //             this.service.WavesInsert(this.SCID,""+(i+1),this.waves[i].Region,this.waves[i].Country,this.waves[i].Scope,this.waves[i].GoLiveDate,this.waves[i].Status,localStorage.getItem("UID")).subscribe(data => {
-        //             });
-        //           }else{
-        //             this.service.WavesUpdate(this.waves[i].WaveID,this.waves[i].SCID,""+(i+1),this.waves[i].Region,this.waves[i].Country,this.waves[i].Scope,this.waves[i].GoLiveDate,this.waves[i].Status,localStorage.getItem("UID")).subscribe(data => {
-        //             });
-        //           }
-        //         }
-        //       }
-        //       if(this.RisksGap.length > 0){
-        //         for(let i = 0;i< this.RisksGap.length;i++){
-        //           if(this.RisksGap[i].Due_Date == null){
-        //             this.RisksGap[i].DueDate = null
-        //           }else{
-        //             this.RisksGap[i].DueDate = this.datepipe.transform(this.RisksGap[i].Due_Date, "MM-dd-yyyy")+"";
-        //           }
-        //           this.RisksGap[i].Owner = this.RisksGap[i].Owners;
-        //           if(this.RisksGap[i].RGID == null){
-        //             this.RisksGap[i].SCID = this.SCID;
-        //             this.service.RiskGapInsert(this.SCID,""+(i+1),this.RisksGap[i].RisksGaps,this.RisksGap[i].MitigationPlan,this.RisksGap[i].SteeringCommitteeSupportNeed,this.RisksGap[i].DueDate,this.RisksGap[i].Owner,this.RisksGap[i].Status,localStorage.getItem("UID")).subscribe(data => {
-        //               // console.log(data)
-        //             });
-        //           }else{
-        //             this.service.RiskGapUpdate(this.RisksGap[i].RGID,this.RisksGap[i].SCID,""+(i+1),this.RisksGap[i].RisksGaps,this.RisksGap[i].MitigationPlan,this.RisksGap[i].SteeringCommitteeSupportNeed,this.RisksGap[i].DueDate,this.RisksGap[i].Owner,this.RisksGap[i].Status,localStorage.getItem("UID")).subscribe(data => {
-        //               // console.log(data)
-        //             });
-        //           }
-        //         }
-        //       }
-        //       alert("Steering Committee Updated Succesfully");
-        //       this.SendOutput.emit([{SelectionType : "Updated"}]);
-        //     }else{
-        //       console.log("Update Section failure")
-        //     }
-        // })
+        this.service.SteeringCommitteeUpdate(this.SCID,this.Record_Status,this.ClientName,this.Client_Type,this.Project_Lead,this.Project_Status,this.Project_Trend,
+          this.TotalBusinessVolume,this.NewBusinessVolume,this.SelectedRegions,this.SelectedCountries,this.CurrentState,
+          this.CompletedKeyDeliverables,this.ScheduledKeyDeliverables,this.AdditionalNotes,localStorage.getItem("UID")).subscribe(data => {
+            if(data.code == 200){
+              if(this.waves.length > 0){
+                for(let i = 0;i< this.waves.length;i++){
+                  if(this.waves[i].GoLive == null){
+                    this.waves[i].GoLiveDate = null
+                  }else{
+                    this.waves[i].GoLiveDate = this.datepipe.transform(this.waves[i].GoLive, "MM-dd-yyyy")+"";
+                  }
+                  if(this.waves[i].arr_Region == undefined){
+                    this.waves[i].Region = "";
+                  }else{
+                    if(this.waves[i].arr_Region.length > 0){
+                      this.waves[i].Region = this.waves[i].arr_Region.map((obj) => obj.Region).join(', ');
+                    }else{
+                      this.waves[i].Region = "";
+                    }
+                  }
+                  if(this.waves[i].arr_Country == undefined){
+                    this.waves[i].Country = "";
+                  }else{
+                    if(this.waves[i].arr_Country.length > 0){
+                      this.waves[i].Country = this.waves[i].arr_Country.map((obj) => obj.Country).join(', ');
+                    }else{
+                      this.waves[i].Country = "";
+                    }
+                  }
+                  if(this.waves[i].WaveID == null){
+                    this.waves[i].SCID = this.SCID;
+                    this.service.WavesInsert(this.SCID,""+(i+1),this.waves[i].Region,this.waves[i].Country,this.waves[i].Scope,this.waves[i].GoLiveDate,this.waves[i].Status,localStorage.getItem("UID")).subscribe(data => {
+                    });
+                  }else{
+                    this.service.WavesUpdate(this.waves[i].WaveID,this.waves[i].SCID,""+(i+1),this.waves[i].Region,this.waves[i].Country,this.waves[i].Scope,this.waves[i].GoLiveDate,this.waves[i].Status,localStorage.getItem("UID")).subscribe(data => {
+                    });
+                  }
+                }
+              }
+              if(this.RisksGap.length > 0){
+                for(let i = 0;i< this.RisksGap.length;i++){
+                  if(this.RisksGap[i].Due_Date == null){
+                    this.RisksGap[i].DueDate = null
+                  }else{
+                    this.RisksGap[i].DueDate = this.datepipe.transform(this.RisksGap[i].Due_Date, "MM-dd-yyyy")+"";
+                  }
+                  this.RisksGap[i].Owner = this.RisksGap[i].Owners;
+                  if(this.RisksGap[i].RGID == null){
+                    this.RisksGap[i].SCID = this.SCID;
+                    this.service.RiskGapInsert(this.SCID,""+(i+1),this.RisksGap[i].RisksGaps,this.RisksGap[i].MitigationPlan,this.RisksGap[i].SteeringCommitteeSupportNeed,this.RisksGap[i].DueDate,this.RisksGap[i].Owner,this.RisksGap[i].Status,localStorage.getItem("UID")).subscribe(data => {
+                      // console.log(data)
+                    });
+                  }else{
+                    this.service.RiskGapUpdate(this.RisksGap[i].RGID,this.RisksGap[i].SCID,""+(i+1),this.RisksGap[i].RisksGaps,this.RisksGap[i].MitigationPlan,this.RisksGap[i].SteeringCommitteeSupportNeed,this.RisksGap[i].DueDate,this.RisksGap[i].Owner,this.RisksGap[i].Status,localStorage.getItem("UID")).subscribe(data => {
+                      // console.log(data)
+                    });
+                  }
+                }
+              }
+              alert("Steering Committee Updated Succesfully");
+              this.SendOutput.emit([{SelectionType : "Updated"}]);
+            }else{
+              console.log("Update Section failure")
+            }
+        })
       }else{
         this.service.SteeringCommitteeInsert(this.Record_Status,this.ClientName,this.Client_Type,this.Project_Lead,this.Project_Status,this.Project_Trend,
           this.TotalBusinessVolume,this.NewBusinessVolume,this.SelectedRegions,this.SelectedCountries,this.CurrentState,

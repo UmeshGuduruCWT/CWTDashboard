@@ -1377,7 +1377,6 @@ export class ImplementationMarketReportComponent implements OnInit {
       });
       this.VolumeCountCycleTime = [];
       this.dataSource_VCtPc = null;
-      console.log(this.SelectedYears,this.SelectedMonths,this.SelectedLevels,this.SelectedRegions,this.SelectedMilestonestatus,this.SelectedImplementation,this.SelectedCountry,this.SelectedOwnership)
       this.service.ChartVolumeCycleTimeCounts(this.SelectedYears,this.SelectedMonths,this.SelectedLevels,this.SelectedRegions,this.SelectedMilestonestatus,this.SelectedImplementation,this.SelectedCountry,this.SelectedOwnership).subscribe(data => {
         this.VolumeCountCycleTime = data.VolumeCountCycleTime;
         // this.dataSource_VCtPc = data.VolumeCountCycleTime;

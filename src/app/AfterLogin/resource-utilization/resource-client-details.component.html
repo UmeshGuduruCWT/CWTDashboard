@@ -1,39 +1,72 @@
 <div style="max-height : 500px;overflow: auto;">
-  <p style="font-size: 14px;color: black;">Total Project Effort :- {{TotalEffort}}</p>
+  <p style="font-size: 14px;color: black;font-weight: bold;letter-spacing: 1px;">Total Calculated Effort :- {{TotalEffort}}</p>
   <table class="tooltip_table">
     <tr>
       <th class="tooltip_th">Client</th>
       <th class="tooltip_th">Revenue ID</th>
       <th class="tooltip_th">Project Level</th>
-      <th *ngIf="!Digital" class="tooltip_th">Global Project Manager</th>
-      <th *ngIf="!Digital" class="tooltip_th">Regional Project Manager</th>
-      <th *ngIf="!Digital" class="tooltip_th">Local Project Manager</th>
+      <th *ngIf="PM" class="tooltip_th">Global Project Manager</th>
+      <th *ngIf="PM" class="tooltip_th">Regional Project Manager</th>
+      <th *ngIf="PM" class="tooltip_th">Local Project Manager</th>
       <th *ngIf="Digital" class="tooltip_th">Global Digital OBT Lead</th>
       <th *ngIf="Digital" class="tooltip_th">Regional Digital OBT Lead</th>
       <th *ngIf="Digital" class="tooltip_th">Local Digital OBT Lead</th>
       <th *ngIf="Digital" class="tooltip_th">Global Digital Portrait Lead</th>
       <th *ngIf="Digital" class="tooltip_th">Regional Digital Portrait Lead</th>
       <th *ngIf="Digital" class="tooltip_th">Global Digital HRFeed Speciallist</th>
-      <th *ngIf="!Digital" class="tooltip_th">Project Effort</th>
-      <th *ngIf="!Digital" class="tooltip_th">Calculated Effort</th>
+      <th *ngIf="PM" class="tooltip_th">Project Effort</th>
       <th *ngIf="Digital" class="tooltip_th">Complexity Score</th>
+      <ng-template #HtmlContentCE style="padding : 10px">
+        <style>
+            .tooltip_table, .tooltip_th, .tooltip_td {
+                border: 1px solid rgb(196, 196, 196);
+                border-collapse: collapse;
+                text-align : center;
+                padding : 3px
+            }
+            .tooltip_table{
+                padding : 0px;
+                margin: 0px;
+                background-color: #FF0000;
+            }
+            .tooltip_th {
+                background-color: #FF0000;
+                color: white;
+                text-align: center;
+                font-size: 12px;
+                font-weight: bold;
+            }
+            .tooltip_td{
+                padding: 5px;
+                font-size: 12px;
+                color: black;
+                background-color: white;
+            }
+        </style>
+        <table class="tooltip_table">
+          <tr>
+            <td class="tooltip_td">(Project Effort * count based on manager included in PM Related Columns) + Complexity Score if Manager is included in atleast one of the Digital Related Columns</td>
+          </tr>
+        </table>
+      </ng-template>
+      <th *ngIf="PM && Digital" class="tooltip_th" [options]="tooltipOptions" [tooltip]="HtmlContentCE" content-type="template">Calculated Effort</th>
     </tr>
     <tr *ngFor="let data of TrackerData">
       <td class="tooltip_td">{{data.Client}}</td>
       <td class="tooltip_td">{{data.RevenueID}}</td>
       <td class="tooltip_td">{{data.Project_Level}}</td>
-      <td *ngIf="!Digital" class="tooltip_td">{{data.GManager}}</td>
-      <td *ngIf="!Digital" class="tooltip_td">{{data.RManager}}</td>
-      <td *ngIf="!Digital" class="tooltip_td">{{data.LManager}}</td>
+      <td *ngIf="PM" class="tooltip_td">{{data.GManager}}</td>
+      <td *ngIf="PM" class="tooltip_td">{{data.RManager}}</td>
+      <td *ngIf="PM" class="tooltip_td">{{data.LManager}}</td>
       <td *ngIf="Digital" class="tooltip_td">{{data.GlobalDigitalOBTLead}}</td>
       <td *ngIf="Digital" class="tooltip_td">{{data.RegionalDigitalOBTLead}}</td>
       <td *ngIf="Digital" class="tooltip_td">{{data.LocalDigitalOBTLead}}</td>
       <td *ngIf="Digital" class="tooltip_td">{{data.GlobalDigitalPortraitLead}}</td>
       <td *ngIf="Digital" class="tooltip_td">{{data.RegionalDigitalPortraitLead}}</td>
       <td *ngIf="Digital" class="tooltip_td">{{data.GlobalDigitalHRFeedSpeciallist}}</td>
-      <td *ngIf="!Digital" class="tooltip_td">{{data.ProjectEffort}}</td>
-      <td *ngIf="!Digital" class="tooltip_td">{{data.CalculatedEffort}}</td>
+      <td *ngIf="PM" class="tooltip_td">{{data.ProjectEffort}}</td>
       <td *ngIf="Digital" class="tooltip_td">{{data.ComplexityScore}}</td>
+      <td *ngIf="PM && Digital" class="tooltip_td" >{{data.CalculatedEffort}}</td>
     </tr>
     <!-- <tr style="position: sticky;bottom: 0px;">
       <td class="tooltip_footer" style="text-align: right;padding-right: 15px;" colspan="7">Total</td>

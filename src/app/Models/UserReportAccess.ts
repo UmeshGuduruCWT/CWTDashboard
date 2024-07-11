@@ -43,6 +43,10 @@ export interface ReportSAccess {
     CLREdits_icon : string;
     MarketReport_icon : string;
     ResourceUtilization_icon : string;
+    DDO : boolean;
+    DDO_icon : string;
+    DDOHome : boolean;
+    DDOHome_icon : string;
     UserStatus: string;
     Prospect: boolean;
     InsertedOn: Date;

@@ -26,7 +26,6 @@ import { LivedashboardComponent } from './AfterLogin/livedashboard/livedashboard
 import { LiveHomePageComponent } from './AfterLogin/live-home-page/live-home-page.component';
 import { ProfileComponent } from './AfterLogin/profile/profile.component';
 import { StatsComponent } from './AfterLogin/stats/stats.component';
-import { DashboardServiceService } from './dashboard-service.service';
 import { AdmincontrolComponent } from './AfterLogin/admincontrol/admincontrol.component';
 import { AutomatedCLRComponent } from './AfterLogin/automated-clr/automated-clr.component';
 import { NPSComponent } from './AfterLogin/nps/nps.component';
@@ -48,6 +47,9 @@ import { AddUpdateSteeringCommitteeComponent } from './AfterLogin/add-update-ste
 import { KnowledgeBaseComponent } from './AfterLogin/knowledge-base/knowledge-base.component';
 import { SteeringCommitteeRecordViewComponent } from './AfterLogin/steering-committee-record-view/steering-committee-record-view.component';
 import { StatusTrackerComponent } from './AfterLogin/status-tracker/status-tracker.component';
+import { ErrorsAllocatedComponent } from './DDO/errors-allocated/errors-allocated.component';
+import { GpnContactComponent } from './DDO/gpn-contact/gpn-contact.component';
+import { HomeComponent } from './DDO/home/home.component';
 const routes: Routes = [
   { path:'',redirectTo: 'Dashboard', pathMatch: 'full'},
   { path:'Login',component:LoginComponent},
@@ -66,6 +68,7 @@ const routes: Routes = [
     children : [
       {path:'',redirectTo: 'HomePage', pathMatch: 'full'},
       //{path:'',redirectTo: 'HomePage', pathMatch: 'full'},
+      {path:'DDOHomePage',component:HomeComponent},
       {path:'HomePage',component:LiveHomePageComponent},
       {path:'INProgressHomePage',component:HomepageComponent},
       {path:'GoLiveReport',component:GoLiveReportComponent},
@@ -106,6 +109,8 @@ const routes: Routes = [
       {path:'RollingNps',component:RollingNPSComponent},
       {path:'KnowledgeBase',component:KnowledgeBaseComponent},
       {path:'StatusTracker',component:StatusTrackerComponent},
+      {path:'ErrorsAllocated',component:ErrorsAllocatedComponent},
+      {path:'GPNContact',component:GpnContactComponent},
   ]},
   // {path:'refresh',component : RefreshComponent}
 ];

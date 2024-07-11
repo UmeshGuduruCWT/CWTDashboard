@@ -1,0 +1,46 @@
+<div class="row" style="margin: 0px;padding: 0px;">
+    <div class="header_wrap">
+        <label class="col-md-12" style="font-size: 20px;padding-top: 15px;text-align: center;color: white">Steps to Make the record available in CLR</label>
+        <div class="inside_wrap">
+            <button mat-icon-button class="Cancel_button" tabindex="-1" (click)="OnCancelClick()">
+                <mat-icon style="font-size: 30px;">close</mat-icon>
+            </button>
+        </div>
+    </div>
+    <div class="col-12 record_availability_details">
+        <div class="error_message">{{ErrorMessage}}</div>
+        <div *ngIf="ErrorCode == 200 ? true : false">
+            <div>
+                <div class="status_headline">Revenue Id's which are not available in CLR</div>
+                <div class="status_default_message" style="width: 100%;">{{revenue_ids}}</div>
+            </div>
+            <div *ngIf="Pipeline?.length > 0">
+                <div class="status_headline">Project Status : Pipeline</div>
+                <div class="status_default_message">In order to get this record in CLR as Pipeline Project Status, Please follow below steps</div>
+                <div class="steps_for_crm_changes">
+                    <ol>
+                        <li *ngFor="let pipeline of Pipeline"><b>{{pipeline.Column_name}} : </b><br><b>Current Status : </b> {{pipeline.Current_Status}}, <b>Required Status : </b> {{pipeline.value}}</li>
+                    </ol>
+                </div>
+            </div>
+            <div *ngIf="EarlyPotential?.length > 0">
+                <div class="status_headline">Project Status : Early Potential</div>
+                <div class="status_default_message">In order to get the record in CLR as Early Potential Project Status, Please follow below steps</div>
+                <div class="steps_for_crm_changes">
+                    <ol>
+                        <li *ngFor="let ep_pipeline of EarlyPotential"><b>{{ep_pipeline.Column_name}} : </b><br><b>Current Status : </b> {{ep_pipeline.Current_Status}}, <b>Required Status : </b> {{ep_pipeline.value}}</li>
+                    </ol>
+                </div>
+            </div>
+            <div *ngIf="HighPotential?.length > 0">
+                <div class="status_headline">Project Status : High Potential</div>
+                <div class="status_default_message">In order to get the record in CLR as High Potential Project Status, Please follow below steps</div>
+                <div class="steps_for_crm_changes">
+                    <ol>
+                        <li *ngFor="let hp_pipeline of HighPotential"><b>{{hp_pipeline.Column_name}} : </b><br><b>Current Status : </b> {{hp_pipeline.Current_Status}}, <b>Required Status : </b> {{hp_pipeline.value}}</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

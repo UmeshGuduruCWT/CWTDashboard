@@ -132,6 +132,15 @@
                         </mat-form-field>
                     </div>
                     <div class="col-md-3">
+                        <mat-checkbox [(ngModel)]="ExpectedDecisionDatechecked" style="margin-right: 16px;"  class="checkboxFields"></mat-checkbox>
+                        <mat-form-field style="width: 85%">
+                            <mat-label>Expected Decision Date</mat-label>
+                            <input matInput [matDatepicker]="ExpectedDecisionDate" [(ngModel)]="dateExpectedDecision">
+                            <mat-datepicker-toggle matSuffix [for]="ExpectedDecisionDate"></mat-datepicker-toggle>
+                            <mat-datepicker #ExpectedDecisionDate color="primary"></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3">
                         <mat-checkbox [(ngModel)]="AssignmentDatechecked" style="margin-right: 16px;"  class="checkboxFields"></mat-checkbox>
                         <mat-form-field style="width: 85%">
                             <mat-label>Assignment date</mat-label>

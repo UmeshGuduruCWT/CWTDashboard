@@ -1,0 +1,36 @@
+<h2 mat-dialog-title>{{data.ClientName}}, RecipientId : {{data.RecipientId}}</h2>
+<mat-dialog-content style="margin-bottom: 15px;">
+    <div>
+        <mat-form-field class="mat-form" appearance="outline">
+            <mat-label style="font-size: 15px;">Client Name</mat-label>
+            <input style="color: gray;" min="14" max="16" [(ngModel)]="ClientName" name="ClientName" matInput>
+        </mat-form-field>
+    </div>
+    <div>
+        <mat-form-field class="mat-form" appearance="outline">
+            <mat-label style="font-size: 15px;">Company</mat-label>
+            <input style="color: gray;" min="14" max="16" [(ngModel)]="Company" name="Company" matInput>
+        </mat-form-field>
+    </div>
+    Choose the preferred language to sent a Survey
+    <mat-form-field class="mat-form" style="margin-left: 15px;">
+        <mat-label style="font-size: 15px;">Language</mat-label>
+        <mat-select [formControl]="SelectedLanguage" required>
+            <!-- [errorStateMatcher]="matcher" -->
+            <mat-option value="English">English</mat-option>
+            <mat-option value="French">French</mat-option>
+            <mat-option value="Spanish">Spanish</mat-option>
+            <mat-option value="German">German</mat-option>
+            <mat-option value="Italian">Italian</mat-option>
+            <mat-option value="Portuguese">Portuguese</mat-option>
+            <mat-option value="Chinese">Chinese</mat-option>
+        </mat-select>
+        <!-- <mat-error *ngIf="Language.hasError('required')">
+            Language is <strong>required</strong>
+        </mat-error> -->
+    </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions style="margin-bottom: 10px;">
+  <button mat-raised-button style="height: 33px;background-color: #F16950;color: white;margin-right: 10px;" (click)="onNoClick()">Cancel</button>
+  <button mat-raised-button style="height: 33px;background-color: #F16950;color: white;" (click)="onYesClick()">Send</button>
+</mat-dialog-actions>

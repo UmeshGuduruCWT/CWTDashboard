@@ -7,7 +7,6 @@ export interface CTOData {
     Workspace_Title : string;
     Milestone_Title_Country___Est_Go_Live_Date : string;
     Task_Title : string;
-    //Last_Comment : string;
     Milestone__Project_Status : string;
     ProjectsCount : number;
     Critical_Overdue : number;
@@ -31,5 +30,5 @@ export interface CTOData {
     OwnershipRevenue : string,
     Task_Due_Date_c : string,
     Workspace__Project_Level : string,
-    //Milestone__Project_Start_Date : string,
+    TaskType : string
 }

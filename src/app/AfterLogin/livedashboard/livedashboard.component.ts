@@ -1,10 +1,11 @@
-import { Component, OnInit, OnDestroy,HostListener } from '@angular/core';
+import { Component, OnInit, OnDestroy,HostListener, ViewChild } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable, Subject, Subscription } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { ActivatedRoute, Router, NavigationExtras, RouterEvent, NavigationEnd } from '@angular/router';
 import { ViewportScroller,Location, DatePipe } from '@angular/common';
 import { DashboardServiceService } from 'src/app/dashboard-service.service';
+import { CountdownConfig, CountdownEvent, CountdownComponent } from 'ngx-countdown';
 // import { FormControl } from '@angular/forms';
 // import { KB_Data } from 'src/app/Models/SteeringCommitte';
 @Component({
@@ -60,6 +61,8 @@ export class LivedashboardComponent implements OnInit, OnDestroy {
   ShowNpsAdmin : boolean = false;
   ShowNpsSurvey : boolean = false;
   ShowDigitalReport : boolean = false;
+  ShowDDOReports : boolean = false;
+  ShowDDOHome : boolean = false;
   constructor(public service : DashboardServiceService,public datepipe : DatePipe,private route : ActivatedRoute,private breakpointObserver: BreakpointObserver,private router : Router,public _location : Location) {
     // set screenWidth on page load
     this.screenWidth = window.innerWidth;
@@ -81,149 +84,62 @@ export class LivedashboardComponent implements OnInit, OnDestroy {
       }
     })
   }
+  @ViewChild('countdown', { static: false }) private countdown: CountdownComponent;
   datechecking;
-  // @HostListener('document:mousemove', ['$event']) onMouseMove(event) {
-  //   if(event) {
-  //     this.timeLeft = 1800;
-  //     this.SecondsLeft = 60;
-  //     this.date = new Date();
-  //     this.datechecking = new Date(localStorage.getItem("LastLoggedIn"));
-  //     this.datechecking.setMinutes(this.datechecking.getMinutes() + 30);
-  //     if(this.date > this.datechecking){
-  //       clearInterval(this.interval);
-  //       localStorage.clear();
-  //       this.router.navigate(["/Login"]);
-  //     }else{
-  //       localStorage.setItem("LastLoggedIn",this.date);
-  //     }
-  //   }
-  // }
-  // @HostListener('document:mouseenter', ['$event'])onMouseEnter(event: any) {     
-  //   if(event) {
-  //     this.timeLeft = 1800;
-  //     this.SecondsLeft = 60;
-  //     this.date = new Date();
-  //     this.datechecking = new Date(localStorage.getItem("LastLoggedIn"));
-  //     this.datechecking.setMinutes(this.datechecking.getMinutes() + 30);
-  //       if(this.date > this.datechecking){
-  //         clearInterval(this.interval);
-  //         localStorage.clear();
-  //         this.router.navigate(["/Login"]);
-  //       }else{
-  //         localStorage.setItem("LastLoggedIn",this.date);
-  //       }
-  //   }
-  // }
-  // @HostListener('document:click', ['$event'])onClick(event: string) {
-  //   if(event) {
-  //     this.timeLeft = 1800;
-  //     this.SecondsLeft = 60;
-  //     this.date = new Date();
-  //     this.datechecking = new Date(localStorage.getItem("LastLoggedIn"));
-  //     this.datechecking.setMinutes(this.datechecking.getMinutes() + 30);
-  //     if(this.date > this.datechecking){
-  //       clearInterval(this.interval);
-  //       localStorage.clear();
-  //       this.router.navigate(["/Login"]);
-  //     }else{
-  //       localStorage.setItem("LastLoggedIn",this.date);
-  //     }
-  //   }
-  // }
-  // @HostListener('document:keydown', ['$event']) onKeydownHandler(event: KeyboardEvent) {
-  //   if(event) {
-  //     this.timeLeft = 1800;
-  //     this.SecondsLeft = 60;
-  //     this.date = new Date();
-  //     this.datechecking = new Date(localStorage.getItem("LastLoggedIn"));
-  //     this.datechecking.setMinutes(this.datechecking.getMinutes() + 30);
-  //     if(this.date > this.datechecking){
-  //       clearInterval(this.interval);
-  //       localStorage.clear();
-  //       this.router.navigate(["/Login"]);
-  //     }else{
-  //       localStorage.setItem("LastLoggedIn",this.date);
-  //     }
-  //   }
-  // }
-  // @HostListener('document:scroll', ['$event']) onScroll(event: Event): void {
-  //   if(event) {
-  //     this.timeLeft = 1800;
-  //     this.SecondsLeft = 60;
-  //     this.date = new Date();
-  //     this.datechecking = new Date(localStorage.getItem("LastLoggedIn"));
-  //     this.datechecking.setMinutes(this.datechecking.getMinutes() + 30);
-  //     if(this.date > this.datechecking){
-  //       clearInterval(this.interval);
-  //       localStorage.clear();
-  //       this.router.navigate(["/Login"]);
-  //     }else{
-  //       localStorage.setItem("LastLoggedIn",this.date);
-  //     }
-  //   }
-  // }
+  config: CountdownConfig = { leftTime: 7200, notify: [1] };
+  handleEvent(e: CountdownEvent) {
+    // this.notify = e.action.toUpperCase();
+    if (e.action === 'notify') {
+      this.countdown.stop();
+      localStorage.clear();
+      this.router.navigate(["/Login"]);
+    }
+  }
+  @HostListener('document:mousemove', ['$event']) onMouseMove(event) {
+    if(event) {
+      this.LogOutorStay();
+    }
+  }
+  @HostListener('document:mouseenter', ['$event'])onMouseEnter(event: any) {     
+    if(event) {
+      this.LogOutorStay();
+    }
+  }
+  @HostListener('document:click', ['$event'])onClick(event: string) {
+    if(event) {
+      this.LogOutorStay();
+    }
+  }
+  @HostListener('document:keydown', ['$event']) onKeydownHandler(event: KeyboardEvent) {
+    if(event) {
+      this.LogOutorStay();
+    }
+  }
+  @HostListener('document:scroll', ['$event']) onScroll(event: Event): void {
+    if(event) {
+      this.LogOutorStay();
+    }
+  }
+  LogOutorStay(){
+    this.date = new Date();
+    this.datechecking = new Date(localStorage.getItem("LastLoggedIn"));
+    this.datechecking.setMinutes(this.datechecking.getMinutes() + 120);
+    if(this.date > this.datechecking){
+      this.countdown.stop();
+      localStorage.clear();
+      this.router.navigate(["/Login"]);
+    }else{
+      this.countdown.restart();
+      localStorage.setItem("LastLoggedIn",this.date);
+    }
+  }
   date;
-  // @HostListener('window:beforeunload', ['$event']) onWindowClose(event: any): void {
-  //   if(event) {
-  //     event.preventDefault();
-  //     event.returnValue = false;
-  //   }
-  // }
-  interval;timeLeft: number = 1800;
-  SecondsLeft :number = 60;
-  Time;
-  testcount : number = 0;
-  startTimer() {
-    this.interval = setInterval(() => {
-      this.testcount++;
-      // console.log(this.testcount);
-      if(this.timeLeft > 0) {
-        this.timeLeft--;
-        if(this.SecondsLeft > 0 && this.timeLeft >= 60){
-          this.SecondsLeft--;
-          if(this.SecondsLeft >= 30){
-            this.Time = Math.round((this.timeLeft/60)-1)+" : "+ this.SecondsLeft;
-          }else{
-            this.Time = Math.round((this.timeLeft/60))+" : "+ this.SecondsLeft;
-          }
-        }else if(this.SecondsLeft > 0 && this.timeLeft < 60){
-          this.SecondsLeft--;
-          this.Time = "00 : "+ this.SecondsLeft;
-        }else{
-          this.SecondsLeft = 59;
-          this.Time = Math.round((this.timeLeft/60)-1)+" : "+ this.SecondsLeft;
-        }
-        // if(this.timeLeft > 60){
-          // if(this.SecondsLeft > 0 && this.SecondsLeft >= 30){
-          //   this.SecondsLeft--;
-          //   this.Time = Math.round((this.timeLeft/60)-1)+" : "+ this.SecondsLeft;
-          // }else if(this.SecondsLeft > 0 && this.SecondsLeft < 30){
-          //   this.SecondsLeft--;
-          //   this.Time = Math.round(this.timeLeft/60)+" : "+ this.SecondsLeft;
-          // }else{
-          //   this.SecondsLeft = 59;
-          //   this.Time = Math.round(this.timeLeft/60)+" : "+ this.SecondsLeft;
-          // }
-        // }else{
-        //   if(this.SecondsLeft > 0 && this.SecondsLeft >= 30){
-        //     this.SecondsLeft--;
-        //     this.Time = Math.round((this.timeLeft/60)-1)+" : "+ this.SecondsLeft;
-        //   }
-        // }
-      }else {
-        clearInterval(this.interval);
-        localStorage.clear();
-        this.router.navigate(["/Login"]);
-      }
-    },1801)
-  }
-  pauseTimer() {
-    clearInterval(this.interval);
-  }
+  
   ngOnDestroy(){
     this.sub.unsubscribe();
   }
   Logout(){
+    this.countdown.stop();
     localStorage.clear();
     this.router.navigate(["Login"]);
   }
@@ -256,13 +172,11 @@ export class LivedashboardComponent implements OnInit, OnDestroy {
       this.router.navigate(["/Login"]);
     }else{
       this.date = new Date();
-      this.datechecking.setMinutes(this.datechecking.getMinutes() + 30);
+      this.datechecking.setMinutes(this.datechecking.getMinutes() + 60);
       if(this.date > this.datechecking){
-        clearInterval(this.interval);
         localStorage.clear();
         this.router.navigate(["/Login"]);
       }else{
-        // this.startTimer();
         localStorage.setItem("LastLoggedIn",this.date);
         this.showSpinner = true;
         this.service.UserReportAccess(this.LoginUID).subscribe(data=>{
@@ -385,6 +299,18 @@ export class LivedashboardComponent implements OnInit, OnDestroy {
             }else{
               this.hidden = false;
             }
+            if(data.Data[0].DDO == true){
+              this.ShowDDOReports = true;
+            }else{
+              this.ShowDDOReports = false;
+            }
+            if(data.Data[0].DDOHome == true){
+              this.ShowDDOHome = true;
+              this.router.navigate(["/Dashboard/"+localStorage.getItem("UID")+"/DDOHomePage"]);
+            }else{
+              this.ShowDDOHome = false;
+              this.router.navigate(["/Dashboard/"+localStorage.getItem("UID")+"/HomePage"]);
+            }
           }
         })
         this.showSpinner = true;
@@ -433,6 +359,9 @@ export class LivedashboardComponent implements OnInit, OnDestroy {
   }
   Help(){
     window.open('https://cwt.imeetcentral.com/gcsreporting/folder/WzIwLDEzMTk0ODA5XQ', "_blank");
+  }
+  GloryErrorCorrection(){
+    window.open('https://app.powerbi.com/view?r=eyJrIjoiMWY3NDQ5ZmQtZjZjNC00ZWE2LTk5ZWMtYmI2NDMxZDYzOGM1IiwidCI6ImNhZmU0YTY3LTk0NzUtNDc3Ni04OWZkLTRiNDcyODYwMDk2MiIsImMiOjN9', "_blank");
   }
   ShowSpinnerHandler(value){
     this.showSpinner = value;
@@ -555,7 +484,7 @@ export class LivedashboardComponent implements OnInit, OnDestroy {
         if(this.NPS == null || this.NPS == ""){
           this.LastUpdatedText = "";
         }else{
-          this.LastUpdatedText = "(Last Updated On : " + this.NPS+" IST)";
+          this.LastUpdatedText = "";
         }
         this.service.UsersUsageofReports(this.LoginUID,"NPS","PanelClick").subscribe(data =>{
         })
@@ -639,6 +568,21 @@ export class LivedashboardComponent implements OnInit, OnDestroy {
       //   this.LastUpdatedText = "";
       // }
       // break;
+      case 23 : {
+        this.ReportSelected = "Errors Allocated";
+        this.LastUpdatedText = "";
+      }
+      break;
+      case 24 : {
+        this.ReportSelected = "GPN Contact";
+        this.LastUpdatedText = "";
+      }
+      break;
+      case 25 : {
+        this.ReportSelected = "DDO Home";
+        this.LastUpdatedText = "";
+      }
+      break;
       default : {
         this.ReportSelected = "Home Page";
         this.LastUpdatedText = "";

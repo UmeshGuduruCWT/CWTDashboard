@@ -34,6 +34,7 @@ export class CycleTimeComponent implements OnInit {
   c_levelListSelected : c_ProjectLevel[];
   c_regionList : Region[];
   SelectedCategory : string;
+  SelectedMonth : string;
   c_MilestonestatusList : c_MilestoneStatus[];
   c_implementationtypeList: c_ImplementationType[];
   dataSource;
@@ -92,12 +93,35 @@ export class CycleTimeComponent implements OnInit {
   ResetFilters(){
     this.ngOnInit();
   }
-  CategoryClick(SelectedCaegory : string){
+  CategoryClick(SelectedCategory : string){
     this.dashboard.ShowSpinnerHandler(true);
-    this.SelectedCategory = SelectedCaegory;
-    this.SetChartGraph(SelectedCaegory);
+    this.SelectedCategory = SelectedCategory;
+    this.SetChartGraph(SelectedCategory);
     this.dashboard.ShowSpinnerHandler(false);
-    // this.SetGraph(SelectedCaegory);
+    this.FilterValuesinDataSource(SelectedCategory)
+    
+  }
+  FilterValuesinDataSource(SelectedCategory : string){
+    if(SelectedCategory == "Overall"){
+      this.filteredData = this.OriginalData
+    }else{
+      this.filteredData = this.OriginalData.filter(item => {return item.CycleTimeCategories == SelectedCategory})
+    }
+    this.dataSource_data = new MatTableDataSource(this.filteredData);
+    this.dataSource_data.sort = this.sort;
+  }
+  OriginalData = [];
+  filteredData = [];
+  onCategoryMonthClick(SelectedCategory : string,SelecetedMonth : string){
+    this.SelectedCategory = SelectedCategory;
+    this.SelectedMonth = SelecetedMonth;
+    if(SelectedCategory == "Overall"){
+      this.filteredData = this.OriginalData.filter(item => { return item.GoLiveMonth == SelecetedMonth})
+    }else{
+      this.filteredData = this.OriginalData.filter(item => { return item.GoLiveMonth == SelecetedMonth && item.CycleTimeCategories == SelectedCategory})
+    }
+    this.dataSource_data = new MatTableDataSource(this.filteredData);
+    this.dataSource_data.sort = this.sort;
   }
   NewGlobal : number = 0;NewRegional : number = 0;NewLocal : number = 0;Overall : number = 0;ExistingAddChangeOBT : number = 0;ExistingServiceConfigChange : number = 0;TargetID;
   // H_NewGlobal : number = 0;H_NewRegional : number = 0;H_NewLocal : number = 0;H_Overall : number = 0;H_ExistingAddChangeOBT : number = 0;H_ExistingServiceConfigChange : number = 0;H_TargetID;
@@ -106,6 +130,10 @@ export class CycleTimeComponent implements OnInit {
   SetGraph(SelectedCaegory : string){
     this.dataSource = null;
     this.dataSource_data = null;
+    this.OriginalData = null;
+    this.filteredData = null;
+    this.SelectedCategory = SelectedCaegory;
+    this.SelectedMonth = "";
     var backgroundColor = [
       'rgb(241, 145, 65)','rgb(59, 138, 217,0.5)','rgb(14, 61, 89)', 'rgb(255, 219, 105)', 'rgb(217,37,38)', 'rgb(75, 192, 192)', 'rgb(255, 99, 132)'
     ]
@@ -323,7 +351,9 @@ export class CycleTimeComponent implements OnInit {
                 data.CycleTimeData[i].GoLive = this.datepipe.transform(data.CycleTimeData[i].GoLiveDate, "yyyy-MMM-dd");
               }
             }
-            this.dataSource_data = new MatTableDataSource(data.CycleTimeData);
+            this.OriginalData = data.CycleTimeData;
+            this.filteredData = data.CycleTimeData;
+            this.dataSource_data = new MatTableDataSource(this.OriginalData);
             this.dataSource_data.sort = this.sort;
           }
           if(SelectedCaegory == 'Overall'){

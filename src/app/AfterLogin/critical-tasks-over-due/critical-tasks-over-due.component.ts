@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { DashboardServiceService } from '../../dashboard-service.service';
 import { Chart } from 'chart.js';
-import { ProjectStatus, CriticalOverDue, GroupName, ProjectLevel, Region, Country, AssigneFullName } from '../../Models/CtoFilters';
+import { ProjectStatus, CriticalOverDue, GroupName, TaskType, ProjectLevel, Region, Country, AssigneFullName } from '../../Models/CtoFilters';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort} from '@angular/material/sort';
 import { ExcelService } from '../../excel.service';
@@ -9,6 +9,7 @@ import { LivedashboardComponent } from '../livedashboard/livedashboard.component
 import { DatePipe } from '@angular/common';
 import { DashboardComponent } from '../dashboard/dashboard.component';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-critical-tasks-over-due',
@@ -18,22 +19,26 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 export class CriticalTasksOverDueComponent implements OnInit {
   //SelectedStatus : any; SelectedOverDue : any; 
-  SelectedGroupName : any; SelectedLevel : any; SelectedRegions : any; SelectedAssigne : any;
+  SelectedGroupName : any; SelectedLevel : any; SelectedRegions : any; SelectedTaskType : any;
+  // SelectedAssigne : any;
   //masterstatus : boolean; masteroverdue : boolean;
-  mastergname : boolean; masterlevel  :boolean; masterregion : boolean; masterassigne : boolean; 
+  mastergname : boolean; masterlevel  :boolean; masterregion : boolean; mastertasktype : boolean;
+  // masterassigne : boolean;
   //mastercountry : boolean; SelectedCountry : any;
   // statusList : ProjectStatus[];
   // statusListSelected : ProjectStatus[];
   // overdueList : CriticalOverDue[];
   // overdueListSelected : CriticalOverDue[];
+  TaskTypeList : TaskType[];
+  TaskTypeListSelected : TaskType[];
   groupnameList : GroupName[];
   groupnameListSelected : GroupName[];
   levelList : ProjectLevel[];
   levelListSelected : ProjectLevel[];
   regionList : Region[];
   regionListSelected : Region[];
-  AssigneFullNameList : AssigneFullName[];
-  AssigneFullNameListSelected : AssigneFullName[];
+  // AssigneFullNameList : AssigneFullName[];
+  // AssigneFullNameListSelected : AssigneFullName[];
   //countryList : Country[];
   Apply_disable : boolean;
   dataSource;
@@ -67,6 +72,9 @@ export class CriticalTasksOverDueComponent implements OnInit {
     this.dashboard.ShowSpinnerHandler(true);
     this.service.CriticalTaskFiltersList().subscribe(data =>{
       if(data.code == 200){
+        this.TaskTypeList = data.TaskType;
+        this.mastertasktype = true;
+        this.getSelectedTaskType();
         this.groupnameList = data.GroupName;
         this.mastergname = true;
         this.getSelectedGName();
@@ -76,16 +84,16 @@ export class CriticalTasksOverDueComponent implements OnInit {
         this.regionList = data.Region;
         this.masterregion = true;
         this.getSelectedRegion();
-        this.AssigneFullNameList = data.AssigneFullName;
-        this.masterassigne = true;
-        this.getSelectedAssigne();
+        // this.AssigneFullNameList = data.AssigneFullName;
+        // this.masterassigne = true;
+        // this.getSelectedAssigne();
         this.SetGraph();
       }
     });
     this.Apply_disable = true;
   }
   SetGraph(){
-    if(this.SelectedGroupName == null || this.SelectedLevel == null || this.SelectedRegions == null || this.SelectedAssigne == null){
+    if(this.SelectedGroupName == null || this.SelectedLevel == null || this.SelectedRegions == null){
       alert("Please Select all Filters");
     }else{
       this.dashboard.ShowSpinnerHandler(true);
@@ -93,9 +101,11 @@ export class CriticalTasksOverDueComponent implements OnInit {
       this.ProjectCount = [];
       this.GroupNameCount = [];
       this.GroupNames = [];
-      this.service.CriticalTaskOverDue(this.SelectedGroupName,this.SelectedLevel,this.SelectedRegions,this.SelectedAssigne).subscribe(data =>{
+      console.log(this.SelectedTaskType,this.SelectedGroupName,this.SelectedLevel,this.SelectedRegions)
+      this.service.CriticalTaskOverDue(this.SelectedTaskType,this.SelectedGroupName,this.SelectedLevel,this.SelectedRegions).subscribe(data =>{
         this.Apply_disable = true;
         if(data.code == 200){
+          console.log(data.Data);
           for(let i=0;i < data.Data.length;i++){
             if(data.Data[i].Task_Due_Date == null){
               data.Data[i].Task_Due_Date_c = null;
@@ -112,7 +122,7 @@ export class CriticalTasksOverDueComponent implements OnInit {
         this.dashboard.ShowSpinnerHandler(false);
       })
       this.dashboard.ShowSpinnerHandler(true);
-      this.service.RegionWiseCount(this.SelectedGroupName,this.SelectedLevel,this.SelectedRegions,this.SelectedAssigne).subscribe(data =>{
+      this.service.RegionWiseCount(this.SelectedTaskType,this.SelectedGroupName,this.SelectedLevel,this.SelectedRegions).subscribe(data =>{
         this.Apply_disable = true;
         var Options = {
           responsive : true,
@@ -215,7 +225,7 @@ export class CriticalTasksOverDueComponent implements OnInit {
         }
         this.dashboard.ShowSpinnerHandler(false);
       });
-      this.service.GroupNameCountCTO(this.SelectedGroupName,this.SelectedLevel,this.SelectedRegions,this.SelectedAssigne).subscribe(data =>{
+      this.service.GroupNameCountCTO(this.SelectedTaskType,this.SelectedGroupName,this.SelectedLevel,this.SelectedRegions).subscribe(data =>{
         this.Apply_disable = true;
         var Options = {
           responsive : true,
@@ -327,7 +337,7 @@ export class CriticalTasksOverDueComponent implements OnInit {
   }
   exportData(){
     this.dashboard.ShowSpinnerHandler(true);
-    this.service.CriticalTaskOverDue(this.SelectedGroupName,this.SelectedLevel,this.SelectedRegions,this.SelectedAssigne).subscribe(data =>{
+    this.service.CriticalTaskOverDue(this.SelectedTaskType,this.SelectedGroupName,this.SelectedLevel,this.SelectedRegions).subscribe(data =>{
       if(data.code == 200){
         for(let i=0;i < data.Data.length;i++){
           if(data.Data[i].Estimated_Go_Live == null){
@@ -374,6 +384,7 @@ export class CriticalTasksOverDueComponent implements OnInit {
             'Task Start Date' : o.Task_Start_Date_c,
             'Task Due Date' : o.Task_Due_Date_c,
             'Workspace Project Level' : o.Workspace__Project_Level,
+            'TaskType' : o.TaskType,
           };
         });
         this.excelService.exportAsExcelFile(CustomizedData, 'Critical Task Overdue');
@@ -385,6 +396,50 @@ export class CriticalTasksOverDueComponent implements OnInit {
       this.dashboard.ShowSpinnerHandler(false);
     });
   }
+  
+  
+  //Start of TaskType Methods
+  checkUncheckTaskType(){
+    for (var i = 0; i < this.TaskTypeList.length; i++) {
+      this.TaskTypeList[i].isSelected = this.mastertasktype;
+    }
+    this.getSelectedTaskType();
+  }
+  task_typeSelected() {
+    this.mastertasktype = this.TaskTypeList.every(function(item:any) {
+        return item.isSelected == true;
+    })
+    this.getSelectedTaskType();
+  }
+  getSelectedTaskType(){
+    this.Apply_disable = false;
+    this.SelectedTaskType = null;
+    for(let i=0;i<this.TaskTypeList.length;i++){
+      if(this.TaskTypeList[i].isSelected == true){
+        if(this.SelectedTaskType == null){
+          if(this.TaskTypeList[i].TaskType == null){
+            this.SelectedTaskType = "";
+          }else{
+            this.SelectedTaskType = this.TaskTypeList[i].TaskType;
+          }
+        }else{
+          this.SelectedTaskType += ","+this.TaskTypeList[i].TaskType;
+        }
+      }else{
+      }
+    }
+    this.TaskTypeListSelected = this.TaskTypeList.filter(s => s.isSelected == true);
+  }
+  deselectTaskType(val : string){
+    for(let i=0;i<this.TaskTypeList.length;i++){
+      if(this.TaskTypeList[i].TaskType == val){
+        this.TaskTypeList[i].isSelected = false;
+      }else{
+      }
+    }
+    this.task_typeSelected();
+  }
+  //End of TaskType Methods
   //Start of GroupName Methods
   checkUncheckGName() {
     for (var i = 0; i < this.groupnameList.length; i++) {
@@ -510,37 +565,37 @@ export class CriticalTasksOverDueComponent implements OnInit {
     }
     this.regionSelected();
   }
-  checkUncheckAssigne() {
-    for (var i = 0; i < this.AssigneFullNameList.length; i++) {
-      this.AssigneFullNameList[i].isSelected = this.masterassigne;
-    }
-    this.getSelectedAssigne();
-  }
-  AssigneSelected() {
-    this.masterassigne = this.AssigneFullNameList.every(function(item:any) {
-        return item.isSelected == true;
-    })
-    this.getSelectedAssigne();
-  }
-  getSelectedAssigne(){
-    this.Apply_disable = false;
-    this.SelectedAssigne = null;
-    for(let i=0;i<this.AssigneFullNameList.length;i++){
-      if(this.AssigneFullNameList[i].isSelected == true){
-        if(this.SelectedAssigne == null){
-          if(this.AssigneFullNameList[i].AssigneFullName == null){
-            this.SelectedAssigne = ""
-          }else{
-            this.SelectedAssigne = this.AssigneFullNameList[i].AssigneFullName;
-          }
-        }else{
-          this.SelectedAssigne += ","+this.AssigneFullNameList[i].AssigneFullName;
-        }
-      }else{
-      }
-    }
-    this.AssigneFullNameListSelected = this.AssigneFullNameList.filter(s => s.isSelected == true);
-  }
+  // checkUncheckAssigne() {
+  //   for (var i = 0; i < this.AssigneFullNameList.length; i++) {
+  //     this.AssigneFullNameList[i].isSelected = this.masterassigne;
+  //   }
+  //   this.getSelectedAssigne();
+  // }
+  // AssigneSelected() {
+  //   this.masterassigne = this.AssigneFullNameList.every(function(item:any) {
+  //       return item.isSelected == true;
+  //   })
+  //   this.getSelectedAssigne();
+  // }
+  // getSelectedAssigne(){
+  //   this.Apply_disable = false;
+  //   this.SelectedAssigne = null;
+  //   for(let i=0;i<this.AssigneFullNameList.length;i++){
+  //     if(this.AssigneFullNameList[i].isSelected == true){
+  //       if(this.SelectedAssigne == null){
+  //         if(this.AssigneFullNameList[i].AssigneFullName == null){
+  //           this.SelectedAssigne = ""
+  //         }else{
+  //           this.SelectedAssigne = this.AssigneFullNameList[i].AssigneFullName;
+  //         }
+  //       }else{
+  //         this.SelectedAssigne += ","+this.AssigneFullNameList[i].AssigneFullName;
+  //       }
+  //     }else{
+  //     }
+  //   }
+  //   this.AssigneFullNameListSelected = this.AssigneFullNameList.filter(s => s.isSelected == true);
+  // }
   //End of Region Methods
   //Start of Quarter Methods
   // checkUncheckCountry() {

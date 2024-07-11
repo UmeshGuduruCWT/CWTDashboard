@@ -10,10 +10,12 @@
             </div>
             <!-- <label style="color: #FEFEFF;margin-top : 8px;margin-left:15px;font-family: Montserrat, sans-serif;font-size: 20px"><strong>{{ReportSelected}}</strong>&nbsp;<label style="font-size: 12px;margin-top: 10px;color:#ff0000;font-weight: bold;">{{LastUpdatedText}}</label></label>
             <label style="width: 100%;text-align: center;font-weight: bold;color: #ff0000;margin-top : 8px;margin-right:15px;font-family: Montserrat, sans-serif;font-size: 16px;">{{Time}}</label> -->
-            <!-- <div style="width: 100%;">
+            <div style="width: 100%;">
                 <div style="width: 100%;text-align: center;font-weight: bold;color: white;font-family: Montserrat, sans-serif;margin-top: -15px;font-size: 12px;height: 10px;">Session Logs Off In</div>
-                <div style="width: 100%;text-align: center;font-weight: bold;color: #ff0000;height: 20px;font-family: Montserrat, sans-serif;margin-top: 10px;font-size: 18px;">{{Time}}</div>
-            </div> -->
+                <div style="width: 100%;text-align: center;font-weight: bold;color: #ff0000;height: 20px;font-family: Montserrat, sans-serif;margin-top: 10px;font-size: 18px;">
+                    <countdown #countdown [config]="config" (event)="handleEvent($event)"></countdown>
+                </div>
+            </div>
             <span class="spacer"></span>
             <!-- <mat-form-field appearance="outline" class="my-form-field col-md-3" style="margin-top: 2px;position: relative;">
                 <div *ngIf="Search_resultsData" class="Search_results">
@@ -75,7 +77,7 @@
     </mat-toolbar>
     <mat-sidenav-container class="sidenav-container">
         <mat-sidenav style="background-color: #D5DBDB;padding-top: 60px; overflow-x: hidden;position: fixed;" #sidenav [opened]="screenWidth < 840" mode = "over" class="sidenav mat-elevation-z3">
-            <div style="text-align: center;" (click)= "[sidenav.close(), SelectedReport(0)]" [routerLink]="['HomePage']" matTooltip="Home">
+            <div style="text-align: center;" (click)= "[sidenav.close(), SelectedReport(0)]" [routerLink]="ShowDDOHome ? ['DDOHomePage'] : ['HomePage']" matTooltip="Home">
                 <div style="text-align: center;padding-top :10px;">
                     <a><img [src]="imageUrl"  style="width: 70px; height: 45px;cursor: pointer;"></a>
                     <a style="vertical-align: bottom;"><label style="cursor: pointer;color:#F16950;margin-left: 7px;font-weight: bold;font-family: Playtoy;src : url(assets/font/Playtoy.ttf) format('opentype');font-size: 22px;">DashBoard</label></a>
@@ -135,6 +137,9 @@
                 <mat-list-item *ngIf="ShowCTO" (click)= "[sidenav.close(), SelectedReport(2)]" routerLinkActive="active-list-item" [routerLink]="['CriticalTaskOverdue']">Critical Tasks Overdue</mat-list-item>
                 <mat-list-item *ngIf="ShowAutomatedCLR" (click)="[sidenav.close(), SelectedReport(15)]" routerLinkActive="active-list-item" [routerLink]="['ResourceAssignment']">Resource Assignment</mat-list-item>
                 <mat-list-item *ngIf="ShowLL" (click)= "[sidenav.close(), SelectedReport(3)]" routerLinkActive="active-list-item" [routerLink]="['LessonsLearnt']">Lessons Learnt</mat-list-item>
+                <!-- <mat-list-item (click)= "[sidenav.close(), GloryErrorCorrection()]" matTooltip="Global Glory Error Correction">Global Glory Error Correction Dashboard</mat-list-item>
+                <mat-list-item (click)= "[sidenav.close(), SelectedReport(23)]" routerLinkActive="active-list-item" [routerLink]="['ErrorsAllocated']">Errors Allocated</mat-list-item>
+                <mat-list-item (click)= "[sidenav.close(), SelectedReport(24)]" routerLinkActive="active-list-item" [routerLink]="['GPNContact']">GPN Contact</mat-list-item> -->
                 <!-- <mat-list-item (click)= "[sidenav.close()]" routerLinkActive="active-list-item" [routerLink]="['KnowledgeBase']">Knowledge Base</mat-list-item> -->
                 <!-- <mat-list-item (click)= "[sidenav.close(), SelectedReport(21)]" routerLinkActive="active-list-item" [routerLink]="['SteeringCommittee']">Steering Committee</mat-list-item> -->
                 <!-- <mat-expansion-panel  class="mat-elevation-z0" style="background-color: #D5DBDB;"  #scdata (opened)="scdata.expanded = true" (closed)="scdata.expanded = false">
@@ -152,6 +157,20 @@
                 <!-- <mat-list-item *ngIf="ShowSGT" (click)= "[sidenav.close(), SelectedReport(4)]" routerLinkActive="active-list-item" [routerLink]="['StageGateTesting']">Stage Gate Testing</mat-list-item> -->
                 <!-- <mat-list-item (click)= "[sidenav.close(), SelectedReport(15)]" routerLinkActive="active-list-item" [routerLink]="['PerformanceLeader']">performanceleader</mat-list-item> -->
                 <!-- <mat-list-item (click)= "[sidenav.close(), SelectedReport(4)]" routerLinkActive="active-list-item" [routerLink]="['Adhoc']">Adhoc</mat-list-item> -->
+                <mat-expansion-panel *ngIf="ShowDDOReports"  class="mat-elevation-z0" [ngStyle]="{'background-color': npshidden == true ?  '#D5DBDB' : '#EC7063'}" #ddodata (opened)="ddodata.expanded = true" (closed)="ddodata.expanded = false">
+                    <mat-expansion-panel-header style="padding: 0px 15px 0px 15px;">
+                        <mat-panel-title style="font-size: 15px;">
+                            <label>DDO</label>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <mat-nav-list>
+                        <mat-list-item (click)= "[sidenav.close(), SelectedReport(23)]" routerLinkActive="active-list-item" [routerLink]="['DDOHomePage']"><li>DDO Home</li></mat-list-item>
+                        <mat-list-item (click)= "[sidenav.close(), SelectedReport(23)]" routerLinkActive="active-list-item" [routerLink]="['ErrorsAllocated']"><li>Errors Allocated</li></mat-list-item>
+                        <mat-list-item (click)= "[sidenav.close(), SelectedReport(24)]" routerLinkActive="active-list-item" [routerLink]="['GPNContact']"><li>GPN Contact</li></mat-list-item>
+                        <!-- <mat-list-item (click)= "[sidenav.close(), SelectedReport(25)]" routerLinkActive="active-list-item" [routerLink]="['DDOHomePage']"><li>Home</li></mat-list-item> -->
+                        <!-- <mat-list-item (click)= "[sidenav.close(), SelectedReport(12)]" routerLinkActive="active-list-item" [routerLink]="['Prospect']">Prospect</mat-list-item> -->
+                    </mat-nav-list>
+                </mat-expansion-panel>
             </mat-nav-list>
         </mat-sidenav>
         <mat-sidenav-content style="background-color: #FEFEFF;padding-top: 60px">
