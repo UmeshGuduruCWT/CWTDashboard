@@ -44,7 +44,7 @@ export class ErrorsAllocatedComponent implements OnInit {
   GetErrorsAllocatedData(){
     this.dashboard.ShowSpinnerHandler(true);
     this.service.ErrorsAllocatedData().subscribe(data=>{
-      if(data.code == 200){
+      if(data.Code == 200){
         console.log(data)
         for(let i = 0;i<data.ErrorsAllocatedData.length;i++){
           if(data.ErrorsAllocatedData[i].InsertedOn == null){
@@ -158,8 +158,8 @@ export class ErrorsAllocatedComponent implements OnInit {
     }else{
       if(this.ButtonName == "Save"){
         this.service.ErrorAllocatedInsert(this.Con.value,this.Owner.value,this.NewOwner.value,this.AverageCount.value,this.Type.value,this.Comments.value,localStorage.getItem("UID")).subscribe(data=>{
-            if(data.code == 200){
-              alert(data.message);
+            if(data.Code == 200){
+              alert(data.Message);
               this.GetErrorsAllocatedData();
               this.OnCancelClick();
             }else{
@@ -168,8 +168,8 @@ export class ErrorsAllocatedComponent implements OnInit {
         })
       }else{
         this.service.ErrorAllocatedUpdate(this.ErrorAllocatedID,this.Con.value,this.Owner.value,this.NewOwner.value,this.AverageCount.value,this.Type.value,this.Comments.value,localStorage.getItem("UID")).subscribe(data=>{
-            if(data.code == 200){
-              alert(data.message);
+            if(data.Code == 200){
+              alert(data.Message);
               this.GetErrorsAllocatedData();
               this.OnCancelClick();
             }else{

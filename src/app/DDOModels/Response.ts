@@ -1,6 +1,6 @@
 export interface Response {
-    message: string;
-    code: number;
+    Message: string;
+    Code: number;
     ErrorsAllocatedData: ErrorsAllocatedData[];
     GPNContactData : GPNContactData[];
 }

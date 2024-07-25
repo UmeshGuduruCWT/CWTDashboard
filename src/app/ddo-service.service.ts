@@ -7,7 +7,7 @@ import { ActivatedRoute } from '@angular/router';
   providedIn: 'root'
 })
 export class DdoServiceService {
-  // Baseurl = 'http://localhost:64046/';
+  // Baseurl = 'http://localhost:64047/';
   Baseurl = 'http://10.180.27.32:8008/';
   httpOptions = {
     headers: new HttpHeaders({

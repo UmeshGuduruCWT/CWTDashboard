@@ -27,21 +27,21 @@ export class DeleteRequestDialogComponent implements OnInit {
   onYesClick(){
     if(this.data.Service == "ErrorsAllocated"){
       this.service.DeleteErrorAllocated(this.data.ID,this.data.Name).subscribe(data=>{
-        if(data.code == 200){
-          alert(data.message);
+        if(data.Code == 200){
+          alert(data.Message);
           this.dialogRef.close();
         }else{
-          alert(data.message);
+          alert(data.Message);
           this.dialogRef.close();
         }
       })
     }else if(this.data.Service == "GPNContact"){
       this.service.DeleteGPNContact(this.data.ID,this.data.Name).subscribe(data=>{
-        if(data.code == 200){
-          alert(data.message);
+        if(data.Code == 200){
+          alert(data.Message);
           this.dialogRef.close();
         }else{
-          alert(data.message);
+          alert(data.Message);
           this.dialogRef.close();
         }
       })

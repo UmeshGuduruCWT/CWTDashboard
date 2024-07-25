@@ -46,7 +46,8 @@ export class GpnContactComponent implements OnInit {
   GetGPNContactData(){
     this.dashboard.ShowSpinnerHandler(true);
     this.service.GPNContactData().subscribe(data=>{
-      if(data.code == 200){
+      console.log(data)
+      if(data.Code == 200){
         for(let i = 0;i<data.GPNContactData.length;i++){
           if(data.GPNContactData[i].InsertedOn == null){
             data.GPNContactData[i].Inserted_On = "---";
@@ -55,8 +56,9 @@ export class GpnContactComponent implements OnInit {
           }
         }
         this.GPNContactData = data.GPNContactData;
-        this.dataSource = new MatTableDataSource(data.GPNContactData);
+        this.dataSource = new MatTableDataSource(this.GPNContactData);console.log(data)
         this.FilteredCount = this.dataSource.filteredData.length;
+        console.log(this.FilteredCount);
         this.dataSource.sort = this.sort;
       }
       this.dashboard.ShowSpinnerHandler(false);
@@ -189,8 +191,8 @@ export class GpnContactComponent implements OnInit {
       if(this.ButtonName == "Save"){
         this.service.GPNContactInsert(this.Region.value,this.Type.value,this.Country.value,this.Groups.value,this.Glory_DL_DLCBR.value,this.DataSubmitFrequency.value,this.SendErrorReportFrequency.value,
           this.MainContactGroupEmailAddress.value,this.GroupName.value,localStorage.getItem("UID")).subscribe(data=>{
-            if(data.code == 200){
-              alert(data.message);
+            if(data.Code == 200){
+              alert(data.Message);
               this.GetGPNContactData();
               this.OnCancelClick();
             }else{
@@ -200,8 +202,8 @@ export class GpnContactComponent implements OnInit {
       }else{
         this.service.GPNContactUpdate(this.GPNId,this.Region.value,this.Type.value,this.Country.value,this.Groups.value,this.Glory_DL_DLCBR.value,this.DataSubmitFrequency.value,this.SendErrorReportFrequency.value,
           this.MainContactGroupEmailAddress.value,this.GroupName.value,localStorage.getItem("UID")).subscribe(data=>{
-            if(data.code == 200){
-              alert(data.message);
+            if(data.Code == 200){
+              alert(data.Message);
               this.GetGPNContactData();
               this.OnCancelClick();
             }else{

@@ -151,6 +151,7 @@ export class GoLiveReportComponent implements OnInit {
         this.RegionList.push(item.Region__Opportunity_);
       })
       this.RegionFilter.setValue(this.RegionList);
+      this.getSelectedRegion();
       this.masterlevel = true;
       this.levelList = data.ProjectLevel;
       this.getSelectedLevel();
@@ -193,7 +194,7 @@ export class GoLiveReportComponent implements OnInit {
   }
   CurrentMonth_Total;NextMonth_Total;NextMonthPlusOne_Total;NextMonthPlusTwo_Total;NextMonthPlusThree_Total;
   SetGraph(){
-    this.service.MarketGoliveReport(this.RegionFilter.value,this.SelectedLevels,this.SelectedMilestonestatus,this.SelectedImplementation,this.SelectedOwnership).subscribe(data =>{
+    this.service.MarketGoliveReport(this.SelectedRegions,this.SelectedLevels,this.SelectedMilestonestatus,this.SelectedImplementation,this.SelectedOwnership).subscribe(data =>{
       this.CurrentMonth_Total = Math.round(data.Data.map(t => t.CurrentMonth).reduce((acc,value) => acc + value,0)).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
       this.NextMonth_Total = Math.round(data.Data.map(t => t.NextMonth).reduce((acc,value) => acc + value,0)).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
       this.NextMonthPlusOne_Total = Math.round(data.Data.map(t => t.NextMonthPlusOne).reduce((acc,value) => acc + value,0)).toLocaleString("en-US",{style:"currency", currency:"USD"}).slice(0,-3);
@@ -233,6 +234,7 @@ export class GoLiveReportComponent implements OnInit {
     }else{
       this.masterRegion = false;
     }
+    this.getSelectedRegion();
     this.SetGraph();
   }
   checkUncheckRegion(){
@@ -241,6 +243,7 @@ export class GoLiveReportComponent implements OnInit {
     }else{
       this.RegionFilter.setValue("");
     }
+    this.getSelectedRegion();
     this.SetGraph();
   }
   // checkUncheckRegion() {
@@ -255,21 +258,16 @@ export class GoLiveReportComponent implements OnInit {
   //   })
   //   this.getSelectedRegion();
   // }
-  // getSelectedRegion(){
-  //   this.Apply_disable = false;
-  //   this.SelectedRegions = null;
-  //   for(let i=0;i<this.regionList.length;i++){
-  //     if(this.regionList[i].isSelected == true){
-  //       if(this.SelectedRegions == null){
-  //         this.SelectedRegions = this.regionList[i].Region__Opportunity_;
-  //       }else{
-  //         this.SelectedRegions += ","+this.regionList[i].Region__Opportunity_;
-  //       }
-  //     }else{
-  //     }
-  //   }
-  //   this.regionListSelected = this.regionList.filter(s => s.isSelected == true);
-  // }
+  getSelectedRegion(){
+    this.SelectedRegions = null;
+    for(let i=0;i<this.RegionFilter.value.length;i++){
+      if(this.SelectedRegions == null){
+        this.SelectedRegions = this.RegionFilter.value[i];
+      }else{
+        this.SelectedRegions += ","+this.RegionFilter.value[i];
+      }
+    }
+  }
   checkUncheckLevel() {
     for (var i = 0; i < this.levelList.length; i++) {
       this.levelList[i].isSelected = this.masterlevel;

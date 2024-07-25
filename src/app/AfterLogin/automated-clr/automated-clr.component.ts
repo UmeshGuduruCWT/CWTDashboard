@@ -1868,7 +1868,6 @@ export class AutomatedCLRComponent implements OnInit {
       this.dashboard.ShowSpinnerHandler(true);
       this.service.GetCLRManualData(this.SelectedGoliveYear,this.SelectedStatus).subscribe(data =>{
         if(data.code == 200){
-          console.log(data.Data)
           this.DataCLR = data.Data;
           var datecheck6 = new Date();
           var datecheck10 = new Date();
